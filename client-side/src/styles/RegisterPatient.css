@@ -1,0 +1,67 @@
+.register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 7vw;
+}
+
+.register-welcome-info .welcome {
+    font-size: 3vw;
+    color: #502828;
+    font-weight: bold;
+    margin-top: 0.8vw;
+}
+
+.register-welcome-info .register-info {
+    width: 70vw;
+    font-size: 1.8vw;
+}
+
+.register .register-card-header {
+    padding: 2vw;
+    margin-bottom: 1vw;
+    box-shadow: 0.1vw 0.1vw 1vw 0.1vw rgb(204, 198, 198);
+}
+
+.register .register-form form {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    margin-bottom: 1.3vw;
+    padding: 3vw 1vw 3vw 1vw;
+    box-shadow: 0.1vw 0.1vw 1vw 0.1vw rgb(204, 198, 198);
+    border-radius: 0vw 0vw 0.5vw 0.5vw;
+}
+
+.register .register-form form input {
+    margin-bottom: 2vw;
+    width: 100%;
+    height: 2.7vw;
+}
+
+.register .register-form form select {
+    margin-bottom: 2.5vw;
+    width: 100%;
+    height: 2.7vw;
+}
+
+#first-name,
+#email-address,
+#password,
+#gender,
+#martial-status,
+#city {
+    margin-right: 1vw;
+}
+
+.register .register-form form button {
+    height: 2.5vw;
+    border-radius: 1.3vw;
+    border: none;
+    background-color: #665b5b;
+    font-size: 1.3vw;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+}

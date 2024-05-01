@@ -1,0 +1,77 @@
+.registerTherapist{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 7.5vw;
+    padding-bottom: 23px;
+}
+.container .welcome-title h3{
+    font-size: 2.5vw;
+    color: #502828;
+    margin-bottom: 0.8vw;
+}
+.reg-thera-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 60vw;
+}
+.reg-thera-form .reg-thera-card-header{
+    width: 50vw;
+    padding: 2vw;
+    box-shadow: 0.1vw 0.1vw 1vw 0.1vw rgb(204, 198, 198);
+    margin-bottom: 1vw;
+}
+.reg-thera-form form{
+    padding: 3vw 1vw 3vw 1vw;
+    width: 50vw;
+    box-shadow: 0.1vw 0.1vw 1vw 0.1vw rgb(204, 198, 198);
+}
+.reg-thera-form form input{
+    margin-bottom: 2vw;
+    width: 100%;
+    height: 2.7vw;
+}
+
+.reg-thera-form form select{
+    margin-bottom: 2.5vw;
+    width: 100%;
+    height: 2.7vw;
+}
+
+
+#first-name,
+#email-address,
+#password,
+#gender,
+#martial-status,
+#city, 
+#phonenumber,
+#experience{
+    margin-right: 1vw;
+}
+
+label{
+    margin-right: 38vw;
+    width: fit-content;
+}
+.reg-thera-form form button {
+    height: 2.5vw;
+    border-radius: 1.3vw;
+    border: none;
+    background-color: #665b5b;
+    font-size: 1.3vw;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0.5vw;
+}

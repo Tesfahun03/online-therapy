@@ -1,0 +1,62 @@
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 7vw;
+}
+.login .loginImage img{
+    padding-top: 1.3vw;
+    width: 60vw;
+    height: 42vw;
+    object-fit: cover;
+}
+.login .loginFormLogo img{
+    width: 14vw;
+    height: 12vw;
+    margin-bottom: 1vw;
+    margin-top: -1.5vw;
+}
+.login .loginFormLogo h2{
+    font-family: "Irish Grover", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2.2vw;
+    margin-bottom: 2.5vw;
+    text-align: center;
+}
+.loginForm .loginCard form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.loginForm .loginCard{
+    width: 24vw;
+    height: 20vw;
+    box-shadow: 0.1vw 0.3vw 0.6vw 0.1vw rgb(204, 198, 198);
+    padding-top: 2vw;
+    border-radius: 0vw 0vw 0.4vw 0.4vw;
+}
+.loginForm .loginCard form input{
+    height: 2.5vw;
+    width: 23vw;
+    margin-bottom: 2.3vw;
+    border-radius: 0.5vw;
+    border: 1px solid gray;
+    font-size: 0.8vw;
+    text-indent: 0.5vw;
+}
+
+.loginForm .loginCard form button{
+    width: 18vw;
+    height: 3vw;
+    margin-top: -0.6vw;
+    border-radius: 1.7vw;
+    border: none;
+    background: #665b5b;
+    color: white;
+    font-size: 1.3vw;
+}
+.loginCard h4{
+    font-size: 0.9vw;
+    margin-top: 1vw;
+}
