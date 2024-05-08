@@ -300,13 +300,6 @@ export default function RegisterTherapist() {
                 </form>
             </div>
         </div>
-        <footer className="bg-light text-center text-lg-start" style={{ backgroundColor: "#9A616D" }}>
-            <div
-                className="text-center p-3"
-            >
-                © BunnaMind 2024
-            </div>
-            </footer>
         </div>
   )
         }
