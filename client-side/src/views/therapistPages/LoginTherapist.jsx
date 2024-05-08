@@ -1,67 +1,95 @@
 import "../../styles/therapistlogin.css"
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+import AuthContext from "../../context/AuthContext";
+
 export default function LoginTherapist() {
-  return (
-    <div className='loginTherapist'>
-      <div className="containerWrapper">
-        <div className="container">
-          <div className="colomn">
-              <form action="">
-                  <div className="title">
-                      <span className="colomnTitle">Welcome to <b> BunnaMind</b></span>
-                  </div>
-                  <h5 className="signin">
-                      <b>Therapist</b> Portal
-                  </h5>
-                  <div className="loginrow">
-                    
-                    <div className="row">
-                        <div className="col">
+    const [t, i18n] = useTranslation("global");
+    const [selectedLanguage, setSelectedLanguage] = useState("english"); // State to store selected language
+
+    useEffect(() => {
+        // Check if a language is saved in local storage
+        const savedLanguage = localStorage.getItem("preferredLanguage");
+        if (savedLanguage) {
+            i18n.changeLanguage(savedLanguage);
+            setSelectedLanguage(savedLanguage); // Set selected language from local storage
+        }
+    }, []);
+
+    const handleChangeLanguage = (e) => {
+        const language = e.target.value;
+        i18n.changeLanguage(language);
+        setSelectedLanguage(language); // Update selected language in state
+        localStorage.setItem("preferredLanguage", language); // Save selected language in local storage
+    };
+
+    const { loginUser } = useContext(AuthContext);
+
+    const handleLoginSubmit = e => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        email.length > 0 && loginUser(email, password);
+
+        console.log(email);
+        console.log(password);
+    };
+
+    return (
+        <div className='loginTherapist'>
+            <div className="languageForTranslate">
+                <select
+                    className="preferedLanguage"
+                    onChange={handleChangeLanguage}
+                    value={selectedLanguage} // Set value to the selected language
+                >
+                    <option value="english">English</option>
+                    <option value="amharic">Amharic</option>
+                    <option value="oromo">Oromo</option>
+                    <option value="sumalic">Sumalic</option>
+                    <option value="tigrigna">Tigrigna</option>
+                </select>
+            </div>
+            <div className="container">
+                <div className="therapistLogin">
+                    <div className="loginTop">
+                        <span className="colomnTitle">{t("login.colomnTitle")}</span>
+                    </div>
+                    <div className="loginRow">
+                        <div className="loginLeft">
                             <div className='loginImg'>
-                                <img src="wonde.png" alt="no photo" />
+                                <img src="../../Images/home/PeopleBean.png" alt="no photo" />
                             </div>
                         </div>
-                        <div className="col">
-                            <label htmlFor="" className='colName'>Enter Your Email</label>
-                            <input 
-                                type="email" 
-                                className="input"
-                                placeholder='Email'
-                            />
-                            <label htmlFor="" className='colName'>Enter Password</label>
-                            <input 
-                                type="Password" 
-                                className="input"
-                                placeholder='Password'
-                            />
-                            <div className="col">
-                                <button className="loginbtn">
-                                    Login
+                        <div className="loginRight">
+                            <form onSubmit={handleLoginSubmit}>
+                                <input
+                                    type="email"
+                                    className="therapistLoginInput"
+                                    placeholder={t("login.therapistLoginEmail")}
+                                    name="email"
+                                    required
+                                />
+                                <input
+                                    type="Password"
+                                    className="therapistLoginInput"
+                                    placeholder={t("login.therapistLoginPassword")}
+                                    name="password"
+                                    required
+                                />
+                                <button
+                                    className="loginbtn"
+                                    type="submit"
+                                >
+                                    {t("login.therapistLoginbtn")}
                                 </button>
-                            </div>
-                            <p className='haveAccount'><a href=""><b>Forgot password</b></a></p>
-                            <p className="haveAccount" style={{ color: "#393f81" }}>
-                                If you haven't an account <a href=""><b>Register Now</b></a>                        
-                            </p>
-                        </div>                  
+                            </form>
+                            <span className="therapistForgot">{t("login.therapistForgot")}</span>
+                        </div>
                     </div>
-                  </div>
-              </form>
-          </div>
-        </div>
-        <footer className="bg-light text-center text-lg-start" style={{ backgroundColor: "#9A616D" }}>
-            {/* Copyright */}
-            <div
-              className="text-center p-3"
-              style={{ backgroundColor: "rgba(0, 0, 255, 0.6)", color: "white" }}
-            >
-              © BunnaMind 2024:
-              {/* <a className="text-dark" href="https://mdbootstrap.com/">
-                BunnaMind
-              </a> */}
+                </div>
             </div>
-            {/* Copyright */}
-          </footer>
-      </div>
-    </div>
-  )
+        </div>
+    )
 }
