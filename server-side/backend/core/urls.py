@@ -17,5 +17,7 @@ urlpatterns = [
     # Get profile
     path("profile/<int:pk>/", views.ProfileDetail.as_view()),
     path("search/<username>/", views.SearchUser.as_view()),
+    path('therapists/', views.TherapistDetailViews.as_view(), name='therapist_detail'),
+    path('patients/', views.PatientDetailViews.as_view(), name='patient_detail'),
 
 ]
