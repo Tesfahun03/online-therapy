@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css"
 import NavBar from './component/NavBar';
 import Home from './views/commonPages/Home';
 import { AuthProvider } from './context/AuthContext';
@@ -9,6 +9,9 @@ import {BrowserRouter as Router, Route,Switch} from "react-router-dom";
 import LoginTherapist from './views/therapistPages/LoginTherapist';
 import RegisterTherapist from './views/therapistPages/RegisterTherapist';
 import TherapistHome from './views/therapistPages/TherapistHome';
+import CommunitySpace from './views/commonPages/CommunitySpace';
+import Profile from './views/commonPages/Profile';
+import Notification from './views/commonPages/Notification';
 import Footer from './component/Footer';
 
 
@@ -25,7 +28,10 @@ function App() {
             <Route component={LandingPage} path="/home-p" exact/>
             <Route component={LoginTherapist} path="/login-d" exact/>            
             <Route component={RegisterTherapist} path="/register-d" exact/>                        
-            <Route component={TherapistHome} path="/therapist-home" exact/>                        
+            <Route component={TherapistHome} path="/therapist-home" exact/>  
+            <Route component={CommunitySpace} path="/community-space" exact/>                 
+            <Route component={Profile} path="/profile" exact/>                 
+            <Route component={Notification} path="/notification" exact/>                 
           </Switch>
           <Footer/>
         </AuthProvider>
