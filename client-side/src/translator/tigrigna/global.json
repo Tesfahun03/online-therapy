@@ -1,0 +1,9 @@
+{
+    "login":{
+        "colomnTitle": "BunnaMind Therapist Login",
+        "therapistLoginbtn": "Login",
+        "therapistForgot": "Forgot Password",
+        "therapistLoginEmail": "Email",
+        "therapistLoginPassword": "Password"
+    }
+}

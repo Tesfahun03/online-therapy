@@ -1,0 +1,9 @@
+{
+    "login":{
+        "colomnTitle": "BunnaMind ቴራፒስት መግቢያ",
+        "therapistLoginbtn": "ግባ",
+        "therapistForgot":"መክፈቻ ቁልፉን ረሳኽው",
+        "therapistLoginEmail": "ኢሜይል",
+        "therapistLoginPassword": "የይለፍ ቃል"
+    }
+}
