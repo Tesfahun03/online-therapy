@@ -46,7 +46,7 @@
     }
 }
 
-.container {
+.loginTherapist .container {
     margin-left: -2vw;
     width: 90vw;
     height: 50vw;   
@@ -129,7 +129,7 @@
     background-color: #7B444E;
 }
 @media (min-width: 768px) and (max-width:920px){
-    .container {
+    .loginTherapist .container {
         width: 100vw;
         height: auto;
     }
@@ -191,14 +191,15 @@
     }
 }
 @media (max-width: 768px) {
-    .container {
+    .loginTherapist .container {
+        margin-top: 2vw;
         width: 90vw;
         height: auto;
     }
 
     .therapistLogin {
         background-color: #4fec3018;
-        margin-top: -5vw;
+        margin-top: -2vw;
         width: 90vw;
         margin-left: -3vw;
         height: auto;

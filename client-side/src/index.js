@@ -4,7 +4,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { I18nextProvider} from 'react-i18next';
 import i18next from 'i18next';
 import global_oromo from "./translator/oromo/global.json"
 import global_english from "./translator/english/global.json"
@@ -37,11 +37,9 @@ i18next
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <I18nextProvider i18n={i18next}>
       <BrowserRouter> {/* Wrap the App component with BrowserRouter */}
         <App />
       </BrowserRouter>
-    </I18nextProvider> {/* Closing tag for I18nextProvider */}
-  </React.StrictMode>
+    </I18nextProvider> 
 );
