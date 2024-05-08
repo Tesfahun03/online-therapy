@@ -1,4 +1,3 @@
-import "./App.css"
 import NavBar from './component/NavBar';
 import Home from './views/commonPages/Home';
 import { AuthProvider } from './context/AuthContext';

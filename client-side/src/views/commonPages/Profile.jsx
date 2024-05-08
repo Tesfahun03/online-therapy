@@ -67,7 +67,7 @@ export default function Profile() {
             </div>
             <div className="card-body">
               <form action="">
-                <div className="row w-100 custom-row">
+                <div className="row w-100">
                   <div className="col col-auto col-lg-6 mb-3">
                     <label
                       htmlFor="firstName"
@@ -94,13 +94,13 @@ export default function Profile() {
                     </label>
                     <input
                       type="text"
-                      className="form-control w-100"
+                      className="form-control w-100 mb-2"
                       placeholder="Last name"
                       id="lastName"
                     />
                   </div>
                 </div>
-                <div className="row m-0 w-100">
+                <div className="row w-100">
                   <div className="col col-auto col-lg-6">
                     <label
                       htmlFor="phoneNumber"
