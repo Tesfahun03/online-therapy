@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: space-around;
     padding-top: 7vw;
+    text-align: center;
 }
 .login .loginImage img{
     padding-top: 1.3vw;
