@@ -4,62 +4,61 @@ import { Link } from "react-router-dom";
 
 export default function Profile() {
   return (
-    <div className="profile-page p-0 m-0">
-      <div
-        className="row row-auto bg-black m-0 w-100 "
+    <div className="profile-page">
+      {/* <div
+        className="row row-auto bg-black p-0 m-0 w-100 no-border-radius"
         style={{ height: "9vw" }}
       >
         <input type="file" className="" />
-      </div>
-      <div className="row d-flex justify-content-between py-5 m-0">
-        <div className="col col-auto col-3">
+      </div> */}
+      <div
+        className="row row-auto p-0 m-4 d-flex justify-content-between"
+      >
+        <div className="col col-auto col-lg-3 col-md-3 col-sm-4 mb-3 mt-2 me-5 ms-5">
           <div className="card">
-            <div className="card-header">
+            <div className="card-header text-center">
               <img
-                src="../Images/home/Bean.png"
+                src="../Images/landingPage/man.png"
                 alt=""
-                className="Img-fluid"
+                className="img-fluid w-100"
                 style={{
-                  width: "50%",
-                  height: "10vw",
+                  width: "20vw",
+                  height: "20vw",
                   objectFit: "contient",
                   border: "1px solid black",
                   borderRadius: "50%",
                 }}
               />
-              <h3>Yeabsra Habtu</h3>
+              <h5 className="fs-6">Yeabsra Habtu</h5>
               <h6 className="fw-light">Client</h6>
             </div>
             <div className="card-body"></div>
           </div>
         </div>
-        <div
-          className="col col-auto"
-          style={{ width: "75%", border: "1px solid black" }}
-        >
+        <div className="col w-100 p-0 mt-2 shadow" >
           <div className="card">
             <div className="card-header">
-              <div className="col d-flex justify-content-between p-2">
+              <div className="col d-flex justify-content-between p-2 text-center">
                 <Link
-                  className="fs-5"
+                  className="fs-6"
                   style={{ textDecoration: "none", color: "black" }}
                 >
                   Account setting
                 </Link>
                 <Link
-                  className="fs-5"
+                  className="fs-6"
                   style={{ textDecoration: "none", color: "gray" }}
                 >
                   Documents
                 </Link>
                 <Link
-                  className="fs-5"
+                  className="fs-6"
                   style={{ textDecoration: "none", color: "gray" }}
                 >
                   Billing
                 </Link>
                 <Link
-                  className="fs-5"
+                  className="fs-6"
                   style={{ textDecoration: "none", color: "gray" }}
                 >
                   Notfication
@@ -68,30 +67,69 @@ export default function Profile() {
             </div>
             <div className="card-body">
               <form action="">
-                <div className="row m-0 p-0">
-                  <div className="col col-auto col-lg-5">
-                    <label htmlFor="firstName" style={{ width: "max-content" }}>
-                      {" "}
-                      First name
+                <div className="row w-100">
+                  <div className="col col-auto col-lg-6 mb-3">
+                    <label
+                      htmlFor="firstName"
+                      style={{ width: "max-content" }}
+                      className="form-label m-0 p-0"
+                    >
+                      {"First name "}
                     </label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control w-100"
                       placeholder="First name"
                       id="firstName"
-                      style={{ width: "100%" }}
+                      style={{ width: "auto" }}
                     />
                   </div>
-                  <div className="col col-auto col-lg-5">
-                    <label htmlFor="lastName" style={{ width: "max-content" }}>
+                  <div className="col col-auto col-lg-6">
+                    <label
+                      htmlFor="lastName"
+                      style={{ width: "max-content" }}
+                      className="form-label m-0"
+                    >
                       Last name
                     </label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control w-100 mb-2"
                       placeholder="Last name"
                       id="lastName"
-                      style={{ width: "100%" }}
+                    />
+                  </div>
+                </div>
+                <div className="row w-100">
+                  <div className="col col-auto col-lg-6">
+                    <label
+                      htmlFor="phoneNumber"
+                      style={{ width: "max-content" }}
+                      className="form-label m-0 p-0"
+                    >
+                      Phone number
+                    </label>
+                    <input
+                      type="tel"
+                      className="form-control w-100 mb-3"
+                      placeholder="Phone number"
+                      id="phoneNumber"
+                      style={{ width: "auto" }}
+                    />
+                  </div>
+                  <div className="col col-auto col-lg-6">
+                    <label
+                      htmlFor="email"
+                      style={{ width: "max-content" }}
+                      className="form-label m-0"
+                    >
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control w-100"
+                      placeholder="Email address"
+                      id="email"
                     />
                   </div>
                 </div>

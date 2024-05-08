@@ -145,13 +145,6 @@ class SearchUser(generics.ListAPIView):
 
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data)
-    
-class TherapistDetailViews(generics.ListAPIView):
-    queryset = Therapist.objects.all()
-    serializer_class = TherapistSerializer 
 
-class PatientDetailViews(generics.ListAPIView):
-    queryset = Patient.objects.all()
-    serializer_class = PatientSerializer
 
 
