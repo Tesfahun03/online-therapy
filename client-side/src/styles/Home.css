@@ -57,6 +57,7 @@
     font-size: 2.8vw;
     top: 4.6vw;
     margin-bottom: 9vw;
+    text-align: center;
 }
 .Faq .faq-even{
     display: flex;

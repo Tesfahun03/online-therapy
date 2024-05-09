@@ -152,4 +152,6 @@ class TherapistDetailViews(generics.ListAPIView):
       
 class PatientDetailViews(generics.ListAPIView):
     queryset = Patient.objects.all()
-    serializer_class = PatientSerializer
+    serializer_class = PatientSerializer    
+
+
