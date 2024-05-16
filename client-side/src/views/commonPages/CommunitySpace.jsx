@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "../../styles/CommunitySpace.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 
 export default function CommunitySpace() {
   return (
@@ -11,11 +13,11 @@ export default function CommunitySpace() {
         <div className="col">
           <form className="d-flex align-items-center mt-5">
             <input
-              className="form-control ms-5 py-2 br-none "
+              className="form-control ms-5 rounded-0"
               placeholder="Start post"
             />
-            <button className="btn btn-secondary">
-              <h5>+</h5>
+            <button className="btn btn-secondary rounded-0">
+              <FontAwesomeIcon icon={faPlusSquare}/>
             </button>
           </form>
           <div className="card mt-4 ms-5 m-0 p-0 mb-5 shadow">
@@ -28,7 +30,7 @@ export default function CommunitySpace() {
                       Yeabsra Habtu<span className="ms-1 fw-light">1hr</span>
                     </h6>
                     <h6 className="fw-light ms-0">
-                      Posted in community space of BunnaMind
+                      Posted in community space
                     </h6>
                   </div>
                 </div>
@@ -43,7 +45,7 @@ export default function CommunitySpace() {
                 src="../Images/home/Bean.png"
                 alt=""
                 className="border"
-                style={{width:"100%", height:"80%", objectFit:"containt"}}
+                
               />
               <div className="d-flex align-items-center mt-2">
                 <img

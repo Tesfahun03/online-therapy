@@ -44,10 +44,7 @@
     height: 2.5vw;
     width: 23vw;
     margin-bottom: 2.3vw;
-    border-radius: 0.5vw;
-    border: 1px solid gray;
     font-size: 0.8vw;
-    text-indent: 0.5vw;
 }
 
 .loginForm .loginCard form button{

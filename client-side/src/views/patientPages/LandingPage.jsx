@@ -3,6 +3,8 @@ import useAxios from "../../utils/useAxios";
 import jwtDecode from "jwt-decode";
 import "../../styles/LandingPage.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSearch, } from "@fortawesome/free-solid-svg-icons";
 
 export default function LandingPage() {
   const baseURL = "http://127.0.0.1:8000/core";
@@ -13,15 +15,15 @@ export default function LandingPage() {
   //Getting the token and decode using jwtDecode
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
-  const history = useHistory;
+  const history = useHistory();
 
   //Get user data
   const first_name = decoded.first_name;
 
   //Get Therapists data and set the use state
-  const therapistData = async () => {
+  const therapistsData = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/core/therapists/3");
+      const response = await fetch("http://127.0.0.1:8000/core/therapists");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -33,8 +35,12 @@ export default function LandingPage() {
   };
 
   useEffect(() => {
-    therapistData();
+    therapistsData();
   }, []);
+
+  const handleTherapistSelect=(therapistid)=>{
+    history.push(`/viewtherapist/${therapistid}`);
+  }
 
   function handelSearch(event) {
     const { name, value } = event.target;
@@ -47,55 +53,73 @@ export default function LandingPage() {
     });
   }
 
-  console.log(therapists)
-
+  console.log(therapists);
 
   return (
     <div className="landingPage">
-      <h2 className="hi">Hi, {first_name}!</h2>
-      <div className="search">
-        <form>
+      <h2 className="hi text-center fw-bold fs-1 mt-3 mb-3">
+        Hi, {first_name}!
+      </h2>
+      <div className="search d-flex justify-content-around">
+        <form className="d-flex w-50">
           <input
             type="text"
             placeholder="Search Therapist"
             name="username"
-            className="searchBar"
+            className="searchBar form-control rounded-0 w-100"
             onChange={handelSearch}
           />
-          <button className="searchButton">
-            <img src="../Images/landingpage/search.png" />
+          <button className="searchButton btn btn-secondary rounded-0">
+            <FontAwesomeIcon icon={faSearch} />
           </button>
         </form>
       </div>
 
-      <div className="feeling">
-        <h2>How You feel Today?</h2>
-        <div className="how-you-feel">
-          <div className="emoji">
+      <div className="feeling text-center">
+        <h2 className="mb-3 mt-5">How You feel Today?</h2>
+        <div className="how-you-feel row row-auto d-flex m-0 p-0">
+          <div className="emoji col col-4 col-auto">
             <h3>😊</h3>
             <h4>Happy</h4>
           </div>
-          <div className="emoji">
+          <div className="emoji col col-4 col-auto">
             <h3>🙂</h3>
             <h4>Normal</h4>
           </div>
-          <div className="emoji">
+          <div className="emoji col col-4 col-auto">
             <h3>😐</h3>
             <h4>Sad</h4>
           </div>
         </div>
       </div>
 
-      <div className="ourTherapist">
-        <h2>Our Therapist</h2>
-        <div className="therapistList">
-          {therapists && (
-            <>
-              <img src={therapists.profile.image} className="licenses" />
-              <h5>{therapists.profile.first_name}</h5>
-              <h5>{therapists.specialization}</h5>
-            </>
-          )}
+      <div className="ourTherapist ms-5 me-5 mt-3">
+        <h2 className="text-center mt-5 fs-1">Our Therapist</h2>
+        <div className="therapistList row row-auto">
+          {therapists &&
+            therapists.map((therapist) => (
+              <div
+                className="col col-auto card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 me-5 mb-3 mt-4"
+                key={therapist.profile.user.id}
+                onClick={() => handleTherapistSelect(therapist.profile.user.id)}
+              >
+                <img
+                  key={therapist.profile.user.id}
+                  src={therapist.profile.image}
+                  className="licenses img-fluid ms-2"
+                />
+                <h5 key={therapist.profile.user.id} className="ms-2 fs-4 mb-2 mt-2">
+                  {therapist.profile.first_name} {therapist.profile.last_name}
+                </h5>
+                <h5
+                  key={therapist.profile.user.id}
+                  className="ms-2"
+                  style={{ color: "gray", marginTop: "-10" }}
+                >
+                  {therapist.specialization}
+                </h5>
+              </div>
+            ))}
         </div>
       </div>
     </div>

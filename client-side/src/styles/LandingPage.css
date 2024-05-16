@@ -1,54 +1,16 @@
 .landingPage {
     padding-top: 7vw;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .landingPage .hi {
-    font-size: 4vw;
-    margin: 1vw 0vw 1vw 0vw;
     color: rgb(70, 30, 30);
-    font-weight: bold;
-}
-
-.search form {
-    display: flex;
-    margin: 0vw 25vw 0vw 25vw;
-}
-
-.searchBar {
-    width: 50vw;
-    height: 3vw;
-    border: 1px solid gray;
-    border-radius: 5px 0px 0px 5px;
-    text-indent: 0.5vw;
-}
-
-.searchButton {
-    border: 1px solid gray;
-    width: 4vw;
-    border-radius: 0px 5px 5px 0px;
-}
-
-.searchButton img {
-    width: 30px;
-    height: 30px;
-    opacity: 50%;
-}
-
-.how-you-feel {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0vw 15vw 0vw 15vw;
 }
 
 .feeling {
     margin-top: 3vw;
 }
 
-.emoji {
-    cursor: pointer;
-}
 
 .emoji h3 {
     font-size: 7vw;
@@ -58,13 +20,13 @@
     font-size: 3vw;
 }
 
-.ourTherapist {
-    margin-top: 7vw;
-}
 
 .ourTherapist h2 {
     font-size: 3vw;
 }
+
 .licenses{
-    width: 200px;
+    width: 300px;
+    height: 250px;
+    object-fit: cover;
 }

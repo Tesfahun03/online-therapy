@@ -4,7 +4,7 @@ import "../styles/Footer.css";
 
 export default function Footer(){
     return (
-      <div className="footer d-flex justify-content-between align-items-center text-white fw-bold mt-5 p-3">
+      <div className="footer d-flex justify-content-between align-items-center text-white fw-bold p-3" style={{position:"bottom"}}>
         <h6>@ BunnaMind 2024</h6>
         <div className="d-flex">
           <h6 className='mr-5'>Privacy and Policy</h6>

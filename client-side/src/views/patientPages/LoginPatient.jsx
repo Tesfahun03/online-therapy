@@ -19,33 +19,24 @@ export default function LoginPatient(){
         console.log(password)
     }
 
-    return(
-        <div className='login'>
-            <div className="loginImage">
-                <img src="../Images/login/LoginImage.png" alt="" />
-            </div>
-            <div className="loginForm">
-                <div className="loginFormLogo">
-                    <img src="../Images/login/LoginLogo.png" alt="" />
-                    <h2>Login into your account</h2>
-                </div>
-                <div className='loginCard'>
-                    <form onSubmit={handleLoginSubmit}>
-                        <input 
-                            type="email"
-                            placeholder='Email Address'
-                            name='email'
-                        />
-                        <input 
-                            type="password"
-                            placeholder='Password'
-                            name='password'
-                        />
-                        <button className='loginButton'>Login</button>
-                    </form>
-                </div>
-                
-            </div>
+    return (
+      <div className="login">
+        <div className="loginImage">
+          <img src="../Images/login/LoginImage.png" alt="" />
         </div>
-    )
+        <div className="loginForm">
+          <div className="loginFormLogo">
+            <img src="../Images/login/LoginLogo.png" alt="" />
+            <h2>Login into your account</h2>
+          </div>
+          <div className="loginCard">
+            <form onSubmit={handleLoginSubmit}>
+              <input type="email" placeholder="Email Address" name="email"  className='form-control'/>
+              <input type="password" placeholder="Password" name="password" className='form-control'/>
+              <button className="loginButton">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
 }
