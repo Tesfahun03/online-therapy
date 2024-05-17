@@ -26,15 +26,17 @@ export default function LoginTherapist() {
 
     const { loginUser } = useContext(AuthContext);
 
-    const handleLoginSubmit = e => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        email.length > 0 && loginUser(email, password);
+    const handleLoginSubmit= e =>{
+        e.preventDefault()
+        const email = e.target.email.value
+        const password = e.target.password.value
+        const userType = "therapist"
 
-        console.log(email);
-        console.log(password);
-    };
+        email.length > 0 && loginUser(email, password, userType)
+
+        console.log(email)
+        console.log(password)
+    }
 
     return (
         <div className='loginTherapist'>

@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch, } from "@fortawesome/free-solid-svg-icons";
 
 export default function LandingPage() {
-  const baseURL = "http://127.0.0.1:8000/core";
+  const baseURL = "http://127.0.0.1:8000/api";
 
   const [searchTherapist, setSearchTherapist] = useState({ search: "" });
   const [therapists, setTherapists] = useState(null);
@@ -19,11 +19,14 @@ export default function LandingPage() {
 
   //Get user data
   const first_name = decoded.first_name;
+  const user_type = decoded.user_type;
+
+  console.log(decoded)
 
   //Get Therapists data and set the use state
   const therapistsData = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/core/therapists");
+      const response = await fetch("http://127.0.0.1:8000/api/therapists");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -58,7 +61,7 @@ export default function LandingPage() {
   return (
     <div className="landingPage">
       <h2 className="hi text-center fw-bold fs-1 mt-3 mb-3">
-        Hi, {first_name}!
+        Hi, {user_type} {first_name}!
       </h2>
       <div className="search d-flex justify-content-around">
         <form className="d-flex w-50">

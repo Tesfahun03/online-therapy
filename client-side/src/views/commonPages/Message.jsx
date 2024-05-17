@@ -77,7 +77,7 @@ export default function Message(){
           </div>
         </div>
         <div className="col d-block col-8 col-sm-0 p-0 m-0">
-          <div className="min-vh-100 border p-3">
+          <div className="min-vh-90 border p-3">
             <h6 className="fw-light position-relative text-end">
               this is the message from sender
             </h6>

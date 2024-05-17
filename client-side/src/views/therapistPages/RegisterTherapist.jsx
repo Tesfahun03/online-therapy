@@ -13,6 +13,7 @@ export default function RegisterTherapist() {
             username:"",
             password:"",
             confirmPassword:"",
+            user_type:"therapist",
             //image:null,
             bio:"",
             gender:"",
@@ -58,6 +59,7 @@ export default function RegisterTherapist() {
             const username = registerTherapistData.username
             const password = registerTherapistData.password
             const password2 = registerTherapistData.confirmPassword
+            const user_type = registerTherapistData.user_type
             //const image = registerTherapistData.image
             const bio = registerTherapistData.bio
             const prefered_language = registerTherapistData.languagePreference
@@ -82,6 +84,7 @@ export default function RegisterTherapist() {
                             password,
                             password2,
                         },
+                        user_type,
                         first_name,
                         last_name,
                         //image,

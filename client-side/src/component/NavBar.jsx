@@ -1,16 +1,79 @@
-import React, {useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/NavBar.css";
 import AuthContext from "../context/AuthContext";
+import jwtDecode from "jwt-decode";
 
 export default function NavBar() {
   const { user, logoutUser } = useContext(AuthContext);
 
   const token = localStorage.getItem("authTokens");
-  const isLoggedIn = token !== null;
+  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(token));
+  const location = useLocation();
+  const decodedToken = token ? jwtDecode(token) : null;
+
+  const user_type = decodedToken && decodedToken.user_type;
+
+  useEffect(() => {
+    const handleTokenChange = () => {
+      const updatedToken = localStorage.getItem("authTokens");
+      const updatedIsLoggedIn = Boolean(updatedToken);
+      setIsLoggedIn(updatedIsLoggedIn);
+    };
+
+    // Listen for changes to the "authTokens" item in local storage
+    window.addEventListener("storage", handleTokenChange);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", handleTokenChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const updatedToken = localStorage.getItem("authTokens");
+    const updatedIsLoggedIn = Boolean(updatedToken);
+    setIsLoggedIn(updatedIsLoggedIn);
+  }, [window.location.pathname]);
+
+  useEffect(() => {
+    const handlePopstate = () => {
+      const currentPath = window.location.pathname;
+      const isLoginPage = currentPath === "/login-p";
+
+      if (isLoggedIn && isLoginPage) {
+        logoutUser();
+        window.location.reload();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, [isLoggedIn, logoutUser]);
 
   const navbarRef = useRef(null);
-  const location = useLocation();
+
+  useEffect(() => {
+    const handlePopstate = () => {
+      const currentPath = window.location.pathname;
+      const isLoginPage = currentPath === "/login-p";
+      const updatedToken = localStorage.getItem("authTokens");
+      const updatedIsLoggedIn = Boolean(updatedToken);
+
+      if (isLoggedIn && isLoginPage && !updatedIsLoggedIn) {
+        logoutUser();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, [isLoggedIn, logoutUser]);
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -27,7 +90,10 @@ export default function NavBar() {
     <nav ref={navbarRef} className="navBar">
       {isLoggedIn ? (
         <>
-          <Link to="/home-p" style={{ textDecoration: "none" }}>
+          <Link
+            to={user_type === "therapist" ? "/therapist-dashboard" : "/home-p"}
+            style={{ textDecoration: "none" }}
+          >
             <div className="navImgName">
               <img
                 src="../Images/logo/BunnaLogo.png"
@@ -42,12 +108,14 @@ export default function NavBar() {
 
           <div className="navButton">
             <div className="navButtonFlex">
-              <Link to="/notification" style={{ textDecoration: "none" }}>
-                <div className="notification">
-                  <img src="../Images/landingpage/notification.png" alt="" />
-                  <h5>Notification</h5>
-                </div>
-              </Link>
+              {user_type !== "therapist" && (
+                <Link to="/notification-p" style={{ textDecoration: "none" }}>
+                  <div className="notification">
+                    <img src="../Images/landingpage/notification.png" alt="" />
+                    <h5>Notification</h5>
+                  </div>
+                </Link>
+              )}
 
               <Link to="/community-space" style={{ textDecoration: "none" }}>
                 <div className="community-space">
@@ -59,13 +127,16 @@ export default function NavBar() {
                 </div>
               </Link>
 
-              <Link to="/profile" style={{ textDecoration: "none" }}>
+              <Link to="/profile-p" style={{ textDecoration: "none" }}>
                 <div className="profile-button">
                   <img src="../Images/landingpage/man.png" alt="" />
                   <h5>Profile</h5>
                 </div>
               </Link>
-              <h3 className="logoutButton" onClick={logoutUser}>
+              <h3
+                className="logoutButton"
+                onClick={() => logoutUser(user_type)}
+              >
                 Logout
               </h3>
             </div>

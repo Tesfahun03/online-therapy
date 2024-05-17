@@ -20,6 +20,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['last_name'] = user.profile.last_name
         token['username'] = user.username
         token['email'] = user.email
+        token['user_type'] = user.profile.user_type
         
         # ...
         return token
@@ -111,7 +112,7 @@ class TherapistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Therapist
-        fields =['profile', 'user_type', 'specialization', 'experience', 'licenses', 'religion']
+        fields =['profile', 'user_type', 'specialization', 'experience', 'licenses', 'religion', 'is_verified', 'paymentRate', 'totalBalance', 'withdrawableBalance']
 
     def create(self, validated_data):
         user_data = validated_data.pop('profile')

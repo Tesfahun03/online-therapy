@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import jwt_decode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import {useHistory} from "react-router-dom";
 import '../styles/AuthContext.css';
 const swal =require('sweetalert2');
@@ -18,7 +18,7 @@ export const AuthProvider=({children})=>{
 
     const [user, setUser] = useState(()=> 
         localStorage.getItem("authTokens")
-            ? jwt_decode(localStorage.getItem("authTokens"))
+            ? jwtDecode(localStorage.getItem("authTokens"))
             : null
     );
 
@@ -28,7 +28,7 @@ export const AuthProvider=({children})=>{
 
     const loginUser = async (email, password, userType) =>{
 
-        const response = await fetch("http://127.0.0.1:8000/core/token/",{
+        const response = await fetch("http://127.0.0.1:8000/api/token/",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -45,26 +45,75 @@ export const AuthProvider=({children})=>{
         if(response.status === 200){
             console.log("Logged In");
             setAuthTokens(data)
-            setUser(jwt_decode(data.access))
-            console.log(jwt_decode(data.access))
+            const decodedToken = jwtDecode(data.access);
+            setUser(decodedToken)
+            console.log(decodedToken.user_id)
             localStorage.setItem("authTokens", JSON.stringify(data))
 
             if (userType === "therapist") {
-                history.push("/therapist-landing-page");
+                try {
+                    const response = await fetch(`http://127.0.0.1:8000/api/therapists/${decodedToken.user_id}`);
+                    if (!response.ok) {
+                      throw new Error("Network response was not ok");
+                    }
+                    history.push("/therapist-dashboard");
+                    swal.fire({
+                        title: "Login Successful",
+                        icon: "success",
+                        toast: true,
+                        timer: 2000,
+                        position: 'top',
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        showCancelButton: true,
+                    })
+                    
+                  } catch (error) {
+                    console.error("There was a problem fetching the data", error);
+                    localStorage.removeItem("authTokens")
+                    console.log("token cleared")
+                  }
               } else if (userType === "patient") {
-                history.push("/home-p");
+                try {
+                    const response = await fetch(`http://127.0.0.1:8000/api/patients/${decodedToken.user_id}`);
+                    if (!response.ok) {
+                      throw new Error("Network response was not ok");
+                    }
+                    history.push("/home-p");
+                    swal.fire({
+                        title: "Login Successful",
+                        icon: "success",
+                        toast: true,
+                        timer: 2000,
+                        position: 'top',
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        showCancelButton: true,
+                    })
+                    
+                  } catch (error) {
+                    console.error("There was a problem fetching the data", error);
+                    localStorage.removeItem("authTokens")
+                    console.log("token cleared")
+                    swal.fire({
+                        title: "Email or password doesn't exist",
+                        icon: "error",
+                        toast: true,
+                        timer: 2000,
+                        position: 'top',
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        showCancelButton: true,
+                      }).then(() => {
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 10); // Adjust the delay time as needed
+                      });
+
+                  }
+               
               }
               
-            swal.fire({
-                title: "Login Successful",
-                icon: "success",
-                toast: true,
-                timer: 2000,
-                position: 'top',
-                timerProgressBar: true,
-                showConfirmButton: false,
-                showCancelButton: true,
-            })
 
         } else {    
             console.log(response.status);
@@ -90,7 +139,7 @@ export const AuthProvider=({children})=>{
 
      const registerPatient = async (patientData) => {
         const {profile, user, occupation} = patientData
-        const response = await fetch("http://127.0.0.1:8000/core/register-patient/", {
+        const response = await fetch("http://127.0.0.1:8000/api/register-patient/", {
             method: "POST",
             headers: {
                 "Content-Type":"application/json"
@@ -160,7 +209,7 @@ export const AuthProvider=({children})=>{
         formDataToSend.append('religion', religion);
 
 
-        const response = await fetch("http://127.0.0.1:8000/core/register-therapist/", {
+        const response = await fetch("http://127.0.0.1:8000/api/register-therapist/", {
             method: "POST",
             body: formDataToSend
         })
@@ -198,11 +247,17 @@ export const AuthProvider=({children})=>{
         }
     }
 
-    const logoutUser = () => {
+    const logoutUser = async(user_type) => {
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem("authTokens")
-        history.push("/login-p")
+        if (user_type === "patient"){
+            history.push("/login-p")
+        }
+        else if(user_type === "therapist"){
+            history.push("/login-d")
+        }
+        
         swal.fire({
             title: "You have been logged out...",
             icon: "success",
@@ -230,7 +285,7 @@ export const AuthProvider=({children})=>{
 
     useEffect(()=>{
         if(authTokens){
-            setUser(jwt_decode(authTokens.access))
+            setUser(jwtDecode(authTokens.access))
         }
         setLoading(false)
     },[authTokens, loading])

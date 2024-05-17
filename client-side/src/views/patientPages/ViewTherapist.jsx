@@ -14,7 +14,7 @@ export default function ViewTherapist(){
   //Get Therapist data and set the use state
   const therapistData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/core/therapists/${id}/`);
+      const response = await fetch(`http://127.0.0.1:8000/api/therapists/${id}/`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

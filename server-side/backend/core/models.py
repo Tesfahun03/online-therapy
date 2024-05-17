@@ -81,6 +81,9 @@ class Therapist(models.Model):
     experience = models.IntegerField()
     licenses = models.FileField(upload_to="therapist_licences")
     religion = models.CharField(max_length = 10, choices = RELIGON)
+    paymentRate = models.FloatField(default = 0)
+    totalBalance = models.FloatField(default = 0)
+    withdrawableBalance = models.FloatField(default = 0)
     is_verified = models.BooleanField(default=False) #A field to be updated after a therapist is verified by an Admin
 
 

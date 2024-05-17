@@ -1,84 +1,10 @@
-.topbar{
-    margin: 0;
-    padding: 0;
-    background-color: #324;
-    width: 100%;
-    height: 120px;
+.therapist-home {
+  padding-top: 7vw;
 }
-.topbarWrapper{
-    display: flex;
-    width: 100%;
-    padding: 30px;
-    color: rgba(255, 255, 255, .5);
-}
-.topbarLeft{
-    flex: 1.5;
-    display: flex;
-    align-items: center;
-    width: 200px;
-    justify-content: center;
-}
-.logoImg{
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: rgb(39, 199, 111);
-
-}
-.topbarHome{
-    margin-left: 20px;
-    cursor: pointer;
-
-}
-.topbarCenter{
-    flex: 3.5;
-    display: flex;
-    margin-left: 40px;
-}
-.searchInput{
-    width: 400px;
-    height: 30px;
-    background-color: aquamarine;
-    margin-left: 15px;
-    border: solid 1px #232323;
-    border-radius: 10px;
-}
-.topbarRight{
-    flex: 5.5;
-    display: flex;   
-}
-.communitySpace{
-    margin-left: 10px;
-    margin-right: 10px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-.communitySpace:hover{
-    color: red;
-}
-.notification{
-    margin-left: 10%;
-    cursor: pointer;
-}
-.notification:hover{
-    color: red;
-}
-.profileName{
-    margin-left: 100px;
-    cursor: pointer;
-}
-.profileName:hover{
-    color: red;
-}
-.language{
-    margin-left: 30%;    
-}
-.preferlanguage{
-    background-color: #232323;
-    color: white;
-}
-.therapistContainer{
-    background-color: #782d42;
+.dashboard-card {
+  transition: transform 0.3s ease;
 }
 
+.dashboard-card:hover {
+  transform: scale(1.05);
+}
