@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=100)
+    username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(unique=True)
 
     USERNAME_FIELD = 'email'
@@ -14,16 +14,7 @@ class User(AbstractUser):
         profile = Profile.objects.get(user=self)
 
 class Profile(models.Model):
-    USER_TYPE_ADMIN = 'admin'
-    USER_TYPE_THERAPIST = 'therapist'
-    USER_TYPE_PATIENT = 'patient'
-
-    USER_TYPE_CHOICES = [
-        (USER_TYPE_ADMIN, 'Admin'),
-        (USER_TYPE_THERAPIST, 'Therapist'),
-        (USER_TYPE_PATIENT, 'Patient'),
-    ]
-
+    
     PREFERED_LANGUAGE = [
         ('AMHARIC', 'Amharic'),
         ('OROMIFA', 'Oromifa'),
@@ -48,7 +39,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length=100, null= True)
     image = models.ImageField(upload_to="user_images", default="user_images/default.jpg")
 
-    user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
+    user_type = models.CharField(max_length=10, blank=True)
     prefered_language = models.CharField(max_length = 10, choices = PREFERED_LANGUAGE, default =  'English')
     age = models.IntegerField()
     gender = models.CharField(max_length = 6, choices = GENDER)
@@ -56,7 +47,8 @@ class Profile(models.Model):
     region = models.CharField(max_length =255)
     city = models.CharField(max_length = 255)
     phone = models.CharField(max_length = 20)
-
+    publicKey = models.TextField(blank=True)
+    
 class Patient(models.Model):
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
     EMPLOYMENT_STATUSES = [
@@ -74,13 +66,14 @@ class Therapist(models.Model):
     RELIGON = [
         ('ORTHODOX', 'Orthodox'),
         ('CHATHOLIC', 'Catholic'),
-        ('PROTESTANT', 'Protestant'),
+        ('PROTESTANT', ' Protestant'),
         ('MUSLIM', 'Muslim'),
     ]
     specialization = models.CharField(max_length=100)
     experience = models.IntegerField()
     licenses = models.FileField(upload_to="therapist_licences")
     religion = models.CharField(max_length = 10, choices = RELIGON)
+    rating = models.FloatField(default = 0.0)
     paymentRate = models.FloatField(default = 0)
     totalBalance = models.FloatField(default = 0)
     withdrawableBalance = models.FloatField(default = 0)

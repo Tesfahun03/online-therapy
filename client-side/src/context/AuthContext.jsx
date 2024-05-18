@@ -28,7 +28,7 @@ export const AuthProvider=({children})=>{
 
     const loginUser = async (email, password, userType) =>{
 
-        const response = await fetch("http://127.0.0.1:8000/api/token/",{
+        const response = await fetch("http://127.0.0.1:8000/core/token/",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -52,7 +52,7 @@ export const AuthProvider=({children})=>{
 
             if (userType === "therapist") {
                 try {
-                    const response = await fetch(`http://127.0.0.1:8000/api/therapists/${decodedToken.user_id}`);
+                    const response = await fetch(`http://127.0.0.1:8000/core/therapists/${decodedToken.user_id}`);
                     if (!response.ok) {
                       throw new Error("Network response was not ok");
                     }
@@ -75,7 +75,7 @@ export const AuthProvider=({children})=>{
                   }
               } else if (userType === "patient") {
                 try {
-                    const response = await fetch(`http://127.0.0.1:8000/api/patients/${decodedToken.user_id}`);
+                    const response = await fetch(`http://127.0.0.1:8000/core/patients/${decodedToken.user_id}`);
                     if (!response.ok) {
                       throw new Error("Network response was not ok");
                     }
@@ -139,7 +139,7 @@ export const AuthProvider=({children})=>{
 
      const registerPatient = async (patientData) => {
         const {profile, user, occupation} = patientData
-        const response = await fetch("http://127.0.0.1:8000/api/register-patient/", {
+        const response = await fetch("http://127.0.0.1:8000/core/register-patient/", {
             method: "POST",
             headers: {
                 "Content-Type":"application/json"
@@ -209,7 +209,7 @@ export const AuthProvider=({children})=>{
         formDataToSend.append('religion', religion);
 
 
-        const response = await fetch("http://127.0.0.1:8000/api/register-therapist/", {
+        const response = await fetch("http://127.0.0.1:8000/core/register-therapist/", {
             method: "POST",
             body: formDataToSend
         })
@@ -256,6 +256,9 @@ export const AuthProvider=({children})=>{
         }
         else if(user_type === "therapist"){
             history.push("/login-d")
+        }
+        else{
+            history.push("/login-p")
         }
         
         swal.fire({

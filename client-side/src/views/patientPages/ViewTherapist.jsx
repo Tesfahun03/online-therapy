@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import {useParams, useHistory} from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import "../../styles/ViewTherapist.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faVideo } from "@fortawesome/free-solid-svg-icons";
+import useAxios from '../../utils/useAxios';
+const swal =require('sweetalert2');
+
+
+
 
 
 export default function ViewTherapist(){
   const { id } = useParams();
   const history = useHistory();
+  const axios = useAxios()
 
-  const [selectedTherapist, setSelectedTherapist] = useState(null);
+  const [selectedTherapist, setSelectedTherapist] = useState();
+
+  const token = localStorage.getItem("authTokens");
+  const decoded = jwtDecode(token);
+  const user_id = decoded.user_id;
 
   //Get Therapist data and set the use state
   const therapistData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/therapists/${id}/`);
+      const response = await fetch(`http://127.0.0.1:8000/core/therapists/${id}/`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -30,11 +39,37 @@ export default function ViewTherapist(){
      therapistData();
    }, []);
 
-   const handleMessageDirect=(therpaistId)=>{
-    history.push(`/message/${id}`)
-   }
+   const therapist_id = 8
 
-   console.log(selectedTherapist);
+   const MakePayment = async () => {
+
+    console.log(therapist_id, user_id)
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/payment/initialize-chapa-transaction/", {user_id, therapist_id});
+  
+      if (response.data.status === "success") {
+        const checkoutUrl = response.data.data.checkout_url;
+        window.location.href = checkoutUrl; // Redirect to checkout
+      } else {
+        const data = await response.json();
+            console.log(response.status);
+            console.log("there was a server issue");
+            swal.fire({
+                title: "An Error Occured " + data.error,
+                icon: "error",
+                toast: true,
+                timer: 6000,
+                position: 'top-right',
+                timerProgressBar: true,
+                showConfirmButton: false,
+                showCancelButton: true,
+            })
+      }
+    } catch (error) {
+      console.error("Error sending payment request:", error);
+      // You can display a generic error message to the user here (e.g., using swal)
+    }
+  }
 
   return (
     <div className="view-therapist">
@@ -47,7 +82,7 @@ export default function ViewTherapist(){
             <img
               key={selectedTherapist.profile.user.id}
               src={selectedTherapist.profile.image}
-              className="licenses img-fluid ms-2"
+              className="licenses img-fluid ms-4"
             />
             <h5
               key={selectedTherapist.profile.user.id}
@@ -64,10 +99,7 @@ export default function ViewTherapist(){
               {selectedTherapist.specialization}
             </h5>
             <div className="col col-auto text-center">
-              <button className="btn btn-success me-3 mb-3" onClick={()=>handleMessageDirect(id)}>
-                <FontAwesomeIcon icon={faMessage} />
-              </button>
-              <button className='btn btn-success ms-3 mb-3'><FontAwesomeIcon icon={faVideo}/></button>
+              <button className='btn btn-success mb-2' onClick={MakePayment}>Pay for appointment</button>
             </div>
           </div>
 

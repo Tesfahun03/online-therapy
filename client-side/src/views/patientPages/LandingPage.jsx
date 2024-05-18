@@ -26,7 +26,7 @@ export default function LandingPage() {
   //Get Therapists data and set the use state
   const therapistsData = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/therapists");
+      const response = await fetch("http://127.0.0.1:8000/core/therapists");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

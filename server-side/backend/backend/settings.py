@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv
+
 from pathlib import Path
 from datetime import timedelta
 
@@ -21,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0y!^+na%q_*o02kfuz=_f@pp9-h^i+(zdd_t&2xewnzt_p_nww'
+load_dotenv()
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -47,6 +51,8 @@ INSTALLED_APPS = [
     
     #custom apps
     'core',
+    'communication',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -178,3 +184,12 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+WHEREBY_API = os.getenv('Whereby_API_KEY')
+CHAPA_SECRET = os.getenv('CHAPA_SECRET')
+
+CHAPA_API_URL = "https://api.chapa.co/v1/transaction/initialize"
+VERIFICATION_URL = 'http://127.0.0.1:8000/payment/verify-payment/'
+
+CHAPA_WEBHOOK_URL = 'https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60'

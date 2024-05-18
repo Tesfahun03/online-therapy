@@ -10,14 +10,14 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register-therapist/', views.TherapistRegisterView.as_view(), name='therapist_register'),
     path('register-patient/', views.PatientRegisterView.as_view(), name='patient_register'),
+    path('therapists/', views.TherapistDetailViews.as_view(), name='therapist_detail'),
     path('therapists/<int:user_id>/', views.TherapistDetailView.as_view(), name='therapist_detail'),
+    path('patients/', views.PatientDetailViews.as_view(), name='patient_detail'),
     path('patients/<int:user_id>/', views.PatientDetailView.as_view(), name='patient_detail'),
     path('', views.getRoutes),
 
     # Get profile
     path("profile/<int:pk>/", views.ProfileDetail.as_view()),
     path("search/<username>/", views.SearchUser.as_view()),
-    path('therapists/', views.TherapistDetailViews.as_view(), name='therapist_detail'),
-    path('patients/', views.PatientDetailViews.as_view(), name='patient_detail'),
 
 ]

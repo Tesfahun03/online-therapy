@@ -58,7 +58,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     user = RegisterSerializer()
     class Meta:
         model = Profile
-        fields = ['user', 'user_id', 'first_name', 'last_name', 'image', 'bio', 'prefered_language', "age", 'gender', 'martial_status', 'phone', 'city', 'region' ]
+        fields = ['user', 'user_id', 'user_type', 'first_name', 'last_name', \
+                    'image', 'bio', 'prefered_language', "age", 'gender', 'martial_status', \
+                        'phone', 'city', 'region' ]
     
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -73,11 +75,10 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class PatientSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
-    user_type = serializers.CharField(default="patient", read_only=True)
     
     class Meta:
         model = Patient
-        fields =['profile', 'user_type', 'occupation', 'has_paid']
+        fields =['profile', 'occupation', 'has_paid']
 
     def create(self, validated_data):
         user_data = validated_data.pop('profile')
@@ -107,12 +108,12 @@ class PatientSerializer(serializers.ModelSerializer):
 
 
 class TherapistSerializer(serializers.ModelSerializer):
-    user_type = serializers.CharField(default="therapist", read_only=True)
     profile = ProfileSerializer(required=True)
 
     class Meta:
         model = Therapist
-        fields =['profile', 'user_type', 'specialization', 'experience', 'licenses', 'religion', 'is_verified', 'paymentRate', 'totalBalance', 'withdrawableBalance']
+        fields =['profile', 'specialization', 'experience', 'licenses', 'religion', \
+                    'rating', 'paymentRate', 'totalBalance', 'withdrawableBalance']
 
     def create(self, validated_data):
         user_data = validated_data.pop('profile')

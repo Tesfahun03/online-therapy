@@ -5,7 +5,8 @@ from django.db.models import Q
 
 from core.models import User, Profile, Patient, Therapist
 
-from core.serializer import MyTokenObtainPairSerializer, RegisterSerializer, ProfileSerializer, UserSerializer, PatientSerializer, TherapistSerializer
+from core.serializer import MyTokenObtainPairSerializer, RegisterSerializer, ProfileSerializer, \
+                                UserSerializer, PatientSerializer, TherapistSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -64,9 +65,16 @@ class TherapistDetailView(generics.RetrieveUpdateDestroyAPIView):
 
         self.perform_update(serializer)
         return Response(serializer.data)
-        
+
+# List of all patients and therapists
+class TherapistDetailViews(generics.ListAPIView):
+    queryset = Therapist.objects.all()
+    serializer_class = TherapistSerializer    
+class PatientDetailViews(generics.ListAPIView):
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer        
     
-        
+#################################################        
 
 class PatientDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Patient.objects.all()
@@ -125,6 +133,14 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     queryset = Profile.objects.all()
     permission_classes = [IsAuthenticated]  
 
+    def get_object(self):
+        user_id = self.kwargs.get('pk')
+
+        try:
+            profile = Profile.objects.get(user_id=user_id)
+            return profile
+        except Profile.DoesNotExist:
+            raise Http404
 
 class SearchUser(generics.ListAPIView):
     serializer_class = ProfileSerializer
@@ -134,7 +150,7 @@ class SearchUser(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         username = self.kwargs['username']
         logged_in_user = self.request.user
-        users = Profile.objects.filter(Q(user__username__icontains=username) | Q(full_name__icontains=username) | Q(user__email__icontains=username) & 
+        users = Profile.objects.filter(Q(user__username__icontains=username) | Q(first_name__icontains=username) | Q(user__email__icontains=username) & 
                                        ~Q(user=logged_in_user))
 
         if not users.exists():
@@ -146,12 +162,5 @@ class SearchUser(generics.ListAPIView):
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data)
 
-class TherapistDetailViews(generics.ListAPIView):
-    queryset = Therapist.objects.all()
-    serializer_class = TherapistSerializer  
-      
-class PatientDetailViews(generics.ListAPIView):
-    queryset = Patient.objects.all()
-    serializer_class = PatientSerializer    
 
 

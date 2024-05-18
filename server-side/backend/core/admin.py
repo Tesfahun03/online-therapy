@@ -27,7 +27,7 @@ class PatientAdmin(admin.ModelAdmin):
     get_first_name.short_description = 'First Name'
     get_last_name.short_description = 'Last Name'
     get_gender.short_description = 'Gender'
-    get_ageshort_description = 'Age'
+    get_age.short_description = 'Age'
 
 class TherapistAdmin(admin.ModelAdmin):
     list_display = ['get_first_name', 'get_last_name', 'get_gender', 'get_age']
@@ -47,7 +47,7 @@ class TherapistAdmin(admin.ModelAdmin):
     get_first_name.short_description = 'First Name'
     get_last_name.short_description = 'Last Name'
     get_gender.short_description = 'Gender'
-    get_ageshort_description = 'Age'
+    get_age.short_description = 'Age'
 
 
 
