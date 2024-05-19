@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import {useParams, useHistory} from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
+import React, { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import "../../styles/ViewTherapist.css";
-import useAxios from '../../utils/useAxios';
-const swal =require('sweetalert2');
+import useAxios from "../../utils/useAxios";
+import { Button, Modal } from "react-bootstrap";
+const swal = require("sweetalert2");
 
-
-
-
-
-export default function ViewTherapist(){
+export default function ViewTherapist() {
   const { id } = useParams();
+  const axios = useAxios();
   const history = useHistory();
-  const axios = useAxios()
 
   const [selectedTherapist, setSelectedTherapist] = useState();
+  const [loggedUser, setLoggedUser] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  
+
+  // const [showModal, setShowModal] = useState(false);
+  // const handleClose = () => setShowModal(false);
+  // const handleShow = () => setShowModal(true);
 
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
@@ -23,52 +27,79 @@ export default function ViewTherapist(){
   //Get Therapist data and set the use state
   const therapistData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/core/therapists/${id}/`);
+      const response = await fetch(
+        `http://127.0.0.1:8000/core/therapists/${id}/`
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
       setSelectedTherapist(data);
-      
     } catch (error) {
       console.error("There was a problem fetching the data", error);
     }
   };
 
-   useEffect(() => {
-     therapistData();
-   }, []);
-
-   const therapist_id = 8
-
-   const MakePayment = async () => {
-
-    console.log(therapist_id, user_id)
+  const loggedUserData = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/payment/initialize-chapa-transaction/", {user_id, therapist_id});
-  
+      const response = await fetch(
+        `http://127.0.0.1:8000/core/patients/${user_id}/`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setLoggedUser(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("There was a problem fetching the data", error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    therapistData();
+    loggedUserData();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const handlePayment = async (user_id, therapist_id) => {
+    console.log(user_id, therapist_id);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/payment/initialize-chapa-transaction/",
+        { user_id, therapist_id }
+      );
+
       if (response.data.status === "success") {
         const checkoutUrl = response.data.data.checkout_url;
         window.location.href = checkoutUrl; // Redirect to checkout
       } else {
         const data = await response.json();
-            console.log(response.status);
-            console.log("there was a server issue");
-            swal.fire({
-                title: "An Error Occured " + data.error,
-                icon: "error",
-                toast: true,
-                timer: 6000,
-                position: 'top-right',
-                timerProgressBar: true,
-                showConfirmButton: false,
-                showCancelButton: true,
-            })
+        console.log(response.status);
+        console.log("there was a server issue");
+        swal.fire({
+          title: "An Error Occured " + data.error,
+          icon: "error",
+          toast: true,
+          timer: 6000,
+          position: "top-right",
+          timerProgressBar: true,
+          showConfirmButton: false,
+          showCancelButton: true,
+        });
       }
     } catch (error) {
       console.error("Error sending payment request:", error);
       // You can display a generic error message to the user here (e.g., using swal)
     }
+  };
+
+  const handleBookAppointment=(therapistid)=>{
+    history.push(`/book-appointment/${therapistid}`);
   }
 
   return (
@@ -99,7 +130,20 @@ export default function ViewTherapist(){
               {selectedTherapist.specialization}
             </h5>
             <div className="col col-auto text-center">
-              <button className='btn btn-success mb-2' onClick={MakePayment}>Pay for appointment</button>
+              {loggedUser.has_paid ? (
+                <button className="btn btn-primary" onClick={()=>handleBookAppointment(id)}>
+                  Book Appointment
+                </button>
+              ) : (
+                <button
+                  className="btn btn-success mb-2"
+                  onClick={() =>
+                    handlePayment(user_id, selectedTherapist.profile.user.id)
+                  }
+                >
+                  Pay for appointment
+                </button>
+              )}
             </div>
           </div>
 

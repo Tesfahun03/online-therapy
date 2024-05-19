@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useHistory } from "react-router-dom";
 import SideBar from "../../component/SideBar";
-import { Button, ButtonToolbar, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 export default function Appointments() {
   const baseURL = "http://127.0.0.1:8000/api";

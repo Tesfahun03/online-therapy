@@ -131,9 +131,9 @@ class ChapaPaymentVerifier(View):
                     patientContent = patientContent
                 )
                 
-            return HttpResponseRedirect('http://192.168.161.1:3000/')
+            return HttpResponseRedirect(f'http://localhost:3000/viewtherapist/{therapist_id}')
         except Exception as e:
-            return HttpResponseRedirect('http://192.168.161.1:3000/')
+            return HttpResponseRedirect('http://localhost:3000/')
         
 
 class TherapistTransaction(viewsets.ModelViewSet):

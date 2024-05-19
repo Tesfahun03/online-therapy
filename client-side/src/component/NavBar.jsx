@@ -101,7 +101,7 @@ export default function NavBar() {
                 className="bunnaLogo"
               />
               <h3 className="bunnaName">
-                <a>BunnaMind</a>
+                BunnaMind
               </h3>
             </div>
           </Link>
@@ -152,7 +152,7 @@ export default function NavBar() {
                 className="bunnaLogo"
               />
               <h3 className="bunnaName">
-                <a>BunnaMind</a>
+                BunnaMind
               </h3>
             </div>
           </Link>

@@ -19,6 +19,7 @@ import Appointments from "./views/therapistPages/Appointments";
 import NotificationTherapist from "./views/therapistPages/NotificationTherapist";
 import Reports from "./views/therapistPages/Reports";
 import Settings from "./views/therapistPages/Settings";
+import BookAppointment from "./views/patientPages/BookAppointment";
 
 function App() {
   return (
@@ -55,9 +56,22 @@ function App() {
                 path="/viewtherapist/:id"
                 exact
               />
+              <PrivateRoute
+                component={BookAppointment}
+                path="/book-appointment/:id"
+                exact
+              />
               <Route component={Dashboard} path="/therapist-dashboard" exact />
-              <Route component={Appointments} path="/therapist-appointments" exact />
-              <Route component={NotificationTherapist} path="/therapist-notification" exact />
+              <Route
+                component={Appointments}
+                path="/therapist-appointments"
+                exact
+              />
+              <Route
+                component={NotificationTherapist}
+                path="/therapist-notification"
+                exact
+              />
               <Route component={Reports} path="/therapist-reports" exact />
               <Route component={Settings} path="/therapist-settings" exact />
               <PrivateRoute component={Message} path="/message/:id" exact />
