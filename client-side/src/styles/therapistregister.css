@@ -5,7 +5,7 @@
     justify-content: center;
     text-align: center;
 }
-.container{
+.registerTherapist .container{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,10 +13,16 @@
     padding-top: 7.5vw;
     padding-bottom: 23px;
 }
-.container .welcome-title h3{
+.registerTherapist .container .welcome-title{
+    background-color: #fffdfd;
+}
+.registerTherapist .container .welcome-title h3{
+    font-size: 3vw;
+    color: #502828;
+}
+.registerTherapist .container .welcome-title h4{
     font-size: 2.5vw;
     color: #502828;
-    margin-bottom: 0.8vw;
 }
 .reg-thera-form{
     display: flex;
@@ -27,9 +33,14 @@
 }
 .reg-thera-form .reg-thera-card-header{
     width: 50vw;
-    padding: 2vw;
+    padding: 3vw;
+    padding-left: 6vw;
+    padding-right: 6vw;    
     box-shadow: 0.1vw 0.1vw 1vw 0.1vw rgb(204, 198, 198);
     margin-bottom: 1vw;
+} 
+.reg-thera-form .reg-thera-card-header h3{
+    font-size: 2.5vw;
 }
 .reg-thera-form form{
     padding: 3vw 1vw 3vw 1vw;
@@ -39,9 +50,22 @@
 .reg-thera-form form input{
     margin-bottom: 2vw;
     width: 100%;
-    height: 2.7vw;
+    height: 4vw;
 }
-
+.form-outline .formSelect {
+    width: 100%;
+    padding-left: 1.5vw;
+    font-size: 1.5vw;
+    height: 4vw;
+    color: rgb(53, 48, 48);
+    background-clip: padding-box;
+    border-width: 0.1vw;
+    border-style: solid;
+    border-color: #ced4da;
+    border-radius: 0.57vw;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    line-height: 1.5vw;  
+}
 .reg-thera-form form select{
     margin-bottom: 2.5vw;
     width: 100%;
@@ -60,19 +84,146 @@
     margin-right: 1vw;
 }
 
-label{
-    margin-right: 38vw;
+.reg-thera-form form select label{
+    padding-left: -4vw;
     width: fit-content;
 }
 .reg-thera-form form button {
-    height: 2.5vw;
+    height: 4vw;
     border-radius: 1.3vw;
     border: none;
     background-color: #665b5b;
-    font-size: 1.3vw;
+    font-size: 1.5vw;
     color: white;
     font-weight: 500;
     text-align: center;
     width: 100%;
     margin-bottom: 0.5vw;
+}
+/* Media Queries for Responsive Design */
+@media (min-width: 768px) and (max-width: 1200px) {
+    .reg-thera-form,
+    .reg-thera-form .reg-thera-card-header,
+    .reg-thera-form form {
+        padding: 4vw;
+        width: 70vw;
+    }
+    .reg-thera-card-header{
+        padding: 2vw;
+    }
+    .form-control{
+        font-size: 1.5vw;
+        height: 4.5vw;
+        align-items: center;
+        justify-content: center;
+        padding-top: 2vw;
+        padding-bottom: 2vw;
+    }
+    .form-outline .formSelect {
+        width: 100%;
+        padding-left: 1.5vw;
+        font-size: 1.5vw;
+        height: 4.5vw;
+        color: rgb(53, 48, 48);
+        background-clip: padding-box;
+        border-width: 0.1vw;
+        border-style: solid;
+        border-color: #ced4da;
+        border-radius: 0.57vw;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        line-height: 1.5vw;  
+    }
+    .form-control[type=file]{
+        padding-bottom: 3vw;
+        font-size: 2vw;
+    }
+
+    label {
+        margin-right: 0;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+    .reg-thera-form,
+    .reg-thera-form .reg-thera-card-header,
+    .reg-thera-form form {
+        padding: 4vw;
+        width: 80vw;
+    }
+    .reg-thera-card-header{
+        padding: 2vw;
+    }
+    .form-outline{
+        display: flex;
+        flex-direction: column;        
+    }
+    .form-control{
+        font-size: 2vw;
+        padding-top: 3vw;
+        padding-bottom: 3vw;
+    }
+    .form-outline .formSelect {
+        width: 100%;
+        padding-left: 1.5vw;
+        font-size: 2vw;
+        height: 6vw;
+        color: rgb(53, 48, 48);
+        background-clip: padding-box;
+        border-width: 0.1vw;
+        border-style: solid;
+        border-color: #ced4da;
+        border-radius: 0.57vw;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        line-height: 1.5vw;  
+    }
+    .form-control[type=file]{
+        padding-bottom: 3vw;
+        font-size: 2vw;
+    }
+
+    label {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .reg-thera-form,
+    .reg-thera-form .reg-thera-card-header,
+    .reg-thera-form form {
+        width: 85vw;
+    }
+    .reg-thera-card-header{
+        padding: 2vw;
+    }
+    .form-outline{
+        display: flex;
+        flex-direction: column;        
+    }
+    .form-control{
+        font-size: 2.5vw;
+        padding-top: 3.5vw;
+        padding-bottom: 3.5vw;
+    }
+    .form-outline .formSelect {
+        width: 100%;
+        padding-left: 1.5vw;
+        font-size: 2vw;
+        height: 8vw;
+        color: rgb(53, 48, 48);
+        background-clip: padding-box;
+        border-width: 0.1vw;
+        border-style: solid;
+        border-color: #ced4da;
+        border-radius: 0.57vw;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        line-height: 1.5vw;  
+    }
+    .form-control[type=file]{
+        padding-bottom: 3.5vw;
+        font-size: 2vw;
+    }
+
+    label {
+        margin-right: 0;
+    }
 }

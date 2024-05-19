@@ -1,8 +1,27 @@
-import React, {useContext, useState } from 'react';
+import React, {useContext, useState, useEffect } from 'react';
 import "../../styles/RegisterPatient.css";
+import { useTranslation } from "react-i18next";
 import AuthContext from '../../context/AuthContext';
 
 export default function RegisterPatient(){
+    const [t, i18n] = useTranslation("global");
+    const [selectedLanguage, setSelectedLanguage] = useState("english"); // State to store selected language
+
+    useEffect(() => {
+        // Check if a language is saved in local storage
+        const savedLanguage = localStorage.getItem("preferredLanguage");
+        if (savedLanguage) {
+            i18n.changeLanguage(savedLanguage);
+            setSelectedLanguage(savedLanguage); // Set selected language from local storage
+        }
+    }, []);
+
+    const handleChangeLanguage = (e) => {
+        const language = e.target.value;
+        i18n.changeLanguage(language);
+        setSelectedLanguage(language); // Update selected language in state
+        localStorage.setItem("preferredLanguage", language); // Save selected language in local storage
+    };
     const [registerData, setRegisterData] = useState({
         firstName:"",
         lastName:"",
@@ -78,13 +97,26 @@ export default function RegisterPatient(){
     }
     return(
         <div className='register'>
+            <div className="languageForTranslate">
+                <select
+                    className="preferedLanguage"
+                    onChange={handleChangeLanguage}
+                    value={selectedLanguage} // Set value to the selected language
+                >
+                    <option value="english">English</option>
+                    <option value="amharic">Amharic</option>
+                    <option value="oromo">Oromo</option>
+                    <option value="sumalic">Sumalic</option>
+                    <option value="tigrigna">Tigrigna</option>
+                </select>
+            </div>
             <div className="register-welcome-info">
-                <h2 className='welcome'>Welcome to BunnaMind</h2>
-                <p className="register-info">Please fill out the form below for a quick background briefing. It will help us match you with the most suitable online provider.</p>
+                <h2 className='welcome'>{t("register.welcomeTitle")}</h2>
+                <p className="register-info">{t("register.patientRegisterInfo")}</p>
             </div>
             <div className="register-card">
                 <div className="register-card-header">
-                    <h4 className="register-card-title">Account Information</h4>
+                    <h4 className="register-card-title">{t("register.patientRegisterHeader")}</h4>
                 </div>
                 <div className="register-form">
                     <form onSubmit={handleRegisterSubmit}>
@@ -92,7 +124,7 @@ export default function RegisterPatient(){
                                 <input 
                                     type="text"
                                     id='first-name'
-                                    placeholder='First name'
+                                    placeholder={t("register.registerFirstName")}
                                     name='firstName'
                                     onChange={handleRegisterData}
                                     className='form-control'
@@ -100,7 +132,7 @@ export default function RegisterPatient(){
                                 <input 
                                     type="text"
                                     id='last-name'
-                                    placeholder='Last name'
+                                    placeholder={t("register.registerLastName")}
                                     name='lastName'
                                     onChange={handleRegisterData}
                                     className='form-control'
@@ -111,7 +143,7 @@ export default function RegisterPatient(){
                                 <input 
                                     type="email"
                                     id='email-address'
-                                    placeholder='Email address'
+                                    placeholder={t("register.registerEmailAddress")}
                                     name='emailAddress'
                                     onChange={handleRegisterData}
                                     className='form-control'
@@ -119,7 +151,7 @@ export default function RegisterPatient(){
                                 <input 
                                     type="tel" 
                                     id="phone"
-                                    placeholder='Phone number'
+                                    placeholder={t("register.registerPhoneNumber")}
                                     name='phoneNumber'
                                     className='form-control'
                                     onChange={handleRegisterData}
@@ -131,7 +163,7 @@ export default function RegisterPatient(){
                             <input 
                                 type="text"
                                 id='user-name'
-                                placeholder='Username'
+                                placeholder={t("register.registerUserName")}
                                 name='username'
                                 onChange={handleRegisterData}
                                 className='form-control'
@@ -141,7 +173,7 @@ export default function RegisterPatient(){
                                 <input 
                                     type="password"
                                     id='password'
-                                    placeholder='Password'
+                                    placeholder={t("register.registerPassword")}
                                     name='password'
                                     onChange={handleRegisterData}
                                     className='form-control'
@@ -149,7 +181,7 @@ export default function RegisterPatient(){
                                 <input 
                                     type="password"
                                     id='confirm-password'
-                                    placeholder='Confirm password'
+                                    placeholder={t("register.registerConfirmPassword")}
                                     name='confirmPassword'
                                     onChange={handleRegisterData}
                                     className='form-control'
@@ -159,19 +191,19 @@ export default function RegisterPatient(){
                             <div className="form-outline d-flex">
                                 <select
                                     name='gender'
-                                    className='form-select'
+                                    className='formSelect'
                                     id='gender'
                                     value={registerData.gender}
                                     onChange={handleRegisterData}
                                 >
-                                    <option value="">Choose Your Gender</option>
-                                    <option value="MALE">Male</option>
-                                    <option value="FEMALE">Female</option>
+                                    <option className='' value="">{t("register.registerGender")}</option>
+                                    <option value="MALE">{t("register.registerGenderMale")}</option>
+                                    <option value="FEMALE">{t("register.registerGenderFemale")}</option>
                                 </select>
                                 <input 
                                     type="number"
                                     id='age'
-                                    placeholder='Age'
+                                    placeholder={t("register.registerAge")}
                                     name='age'
                                     min={21}
                                     max={105}
@@ -187,24 +219,24 @@ export default function RegisterPatient(){
                         <div className="form-outline d-flex">
                             <select
                                 name='martialStatus'
-                                className='form-select'
+                                className='formSelect'
                                 id='martial-status'
                                 value={registerData.martialStatus}
                                 onChange={handleRegisterData}
                             >
-                                <option value="">Martial status</option>
-                                <option value="SINGLE">Single</option>
-                                <option value="MARRIED">Married</option>
-                                <option value="DIVORCED">Divorced</option>
+                                <option value="">{t("register.registerMartialStatus")}</option>
+                                <option value="SINGLE">{t("register.registerMartialStatus1")}</option>
+                                <option value="MARRIED">{t("register.registerMartialStatus2")}</option>
+                                <option value="DIVORCED">{t("register.registerMartialStatus3")}</option>
                             </select>
                             <select
                                 name='languagePreference'
-                                className='form-select'
+                                className='formSelect'
                                 id='language-preference'
                                 value={registerData.languagePreference}
                                 onChange={handleRegisterData}
                             >
-                                <option value="">Language preference</option>
+                                <option value="">{t("register.registerLanguagePreference")}</option>
                                 <option value="AMHARIC">Amharic</option>
                                 <option value="OROMIFA">Oromifa</option>
                                 <option value="SOMALLI">Somalli</option>
@@ -218,7 +250,7 @@ export default function RegisterPatient(){
                                 type='text'
                                 id="city"
                                 name='city'
-                                placeholder='City'
+                                placeholder={t("register.registerCity")}
                                 value={registerData.city}
                                 onChange={handleRegisterData}
                                 className='form-control'
@@ -227,27 +259,29 @@ export default function RegisterPatient(){
                             <input
                                 type='text'
                                 name='region'
-                                placeholder='Region'
+                                placeholder={t("register.registerRegion")}
                                 value={registerData.region}
                                 onChange={handleRegisterData}
                                 className='form-control'
                             />
                         </div>
-                        <select
+                        <div className='form-outline d-flex'>
+                            <select
                                 name='occupation'
-                                className='form-select'
+                                className='formSelect'
                                 id='occupation'
                                 value={registerData.occupation}
                                 onChange={handleRegisterData}
                             >
-                                <option value="">Occupation</option>
+                                <option value="">{t("register.registerOccupation")}</option>
                                 <option value="STUDENT">Student</option>
                                 <option value="EMPLOYED">Employed</option>
                                 <option value="SELFEMPLOYED">Self-Employed</option>
                                 <option value="UNEMPLOYED">Unemployed</option>
                             </select>
+                        </div>
                         
-                        <button>Register</button>
+                        <button>{t("register.registerBtn")}</button>
                     </form>
                 </div>
             </div>

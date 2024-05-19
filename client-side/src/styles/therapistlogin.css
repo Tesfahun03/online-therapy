@@ -7,19 +7,19 @@
 }
 .languageForTranslate {
     position: fixed;
-    background-color: rgb(161, 155, 143);
     top: 7vw; 
     right: 0.5vw; 
-    width: 9vw;
+    width: 10vw;
 }
 
 .preferedLanguage{
     width: 100%;
     padding: 0.5vw 1vw; 
     font-size: 1.5vw; 
-    line-height: 1.5;
+    line-height: 2.5;
+    height: 4vw;
     color: black;
-    background-color: #f3eeee;
+    background-color: #fffdfd;
     background-clip: padding-box;
     border: 0.1vw solid #ced4da; 
     border-radius: 0.25vw; 
@@ -32,12 +32,16 @@
         top: 7vw; 
         background-color: white;
         width: 12vw;
-        height: 3vw;
+        height: 6vw;
         right: 1vw; 
     }
 
     .preferedLanguage {
         font-size: 2vw; 
+        width: 12vw;
+        height: 5vw;
+        padding-top: 1vw;
+        padding-bottom: 1vw;
         border: 0.15vw solid #ced4da; 
         border-radius: 0.3vw; 
     }
@@ -48,6 +52,7 @@
 
 .loginTherapist .container {
     margin-left: -2vw;
+    padding-top: 4vw;
     width: 90vw;
     height: 50vw;   
 }
