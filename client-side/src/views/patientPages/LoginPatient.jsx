@@ -37,12 +37,6 @@ export default function LoginPatient(){
         console.log(password)
     }
 
-<<<<<<< Updated upstream
-    return (
-      <div className="login">
-        <div className="loginImage">
-          <img src="../Images/login/LoginImage.png" alt="" />
-=======
     return(
         <div className='login'>
             <div className="languageForTranslate">
@@ -83,21 +77,6 @@ export default function LoginPatient(){
                 </div>
                 
             </div>
->>>>>>> Stashed changes
         </div>
-        <div className="loginForm">
-          <div className="loginFormLogo">
-            <img src="../Images/login/LoginLogo.png" alt="" />
-            <h2>Login into your account</h2>
-          </div>
-          <div className="loginCard">
-            <form onSubmit={handleLoginSubmit}>
-              <input type="email" placeholder="Email Address" name="email"  className='form-control'/>
-              <input type="password" placeholder="Password" name="password" className='form-control'/>
-              <button className="loginButton">Login</button>
-            </form>
-          </div>
-        </div>
-      </div>
     );
 }
