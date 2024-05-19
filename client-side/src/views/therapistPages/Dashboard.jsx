@@ -146,7 +146,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="col col-auto col-lg-6 col-md-6 col-sm-6 ms-1 mt-3">
+          <div className="col col-auto col-lg-5 col-md-5 col-sm-6 ms-1 mt-3">
             <canvas ref={chartRef} />
           </div>
         </div>
