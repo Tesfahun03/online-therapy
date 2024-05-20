@@ -89,7 +89,7 @@ class SendMessages(generics.CreateAPIView):
 class TherapistAvailabilityViewSet(viewsets.ModelViewSet):
     queryset = TherapistAvailability.objects.all()
     serializer_class = TherapistAvailabilitySerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         therapist_id = self.kwargs.get('therapist_id')
@@ -139,7 +139,7 @@ class TherapistAvailabilityViewSet(viewsets.ModelViewSet):
 class TherapistAppointments(viewsets.ModelViewSet):
     queryset = Appointments.objects.all()
     serializer_class = AppointmentsSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         therapist_id = self.kwargs.get('therapist_id')

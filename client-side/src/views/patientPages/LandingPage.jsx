@@ -5,10 +5,12 @@ import "../../styles/LandingPage.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch, } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 export default function LandingPage() {
   const baseURL = "http://127.0.0.1:8000/api";
 
+  const axios = useAxios();
   const [searchTherapist, setSearchTherapist] = useState({ search: "" });
   const [therapists, setTherapists] = useState(null);
 
@@ -26,11 +28,11 @@ export default function LandingPage() {
   //Get Therapists data and set the use state
   const therapistsData = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/core/therapists");
-      if (!response.ok) {
+      const response = await axios.get("http://127.0.0.1:8000/core/therapists");
+      if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
+      const data = await response.data;
       setTherapists(data);
     } catch (error) {
       console.error("There was a problem fetching the data", error);

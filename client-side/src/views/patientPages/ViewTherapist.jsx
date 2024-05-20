@@ -26,13 +26,13 @@ export default function ViewTherapist() {
 
   const paymentChecker = async () => {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         `http://127.0.0.1:8000/payment/therapist/${id}/credited/`
       );
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
+      const data = await response.data;
       setRelation(data);
       setIsLoading(false);
     } catch (error) {
@@ -44,13 +44,13 @@ export default function ViewTherapist() {
   //Get Therapist data and set the use state
   const therapistData = async () => {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         `http://127.0.0.1:8000/core/therapists/${id}/`
       );
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
+      const data = await response.data;
       setSelectedTherapist(data);
     } catch (error) {
       console.error("There was a problem fetching the data", error);

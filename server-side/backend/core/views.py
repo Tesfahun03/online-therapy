@@ -33,6 +33,7 @@ class TherapistRegisterView(generics.CreateAPIView):
 class TherapistDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Therapist.objects.all()
     serializer_class = TherapistSerializer
+    permission_classes = [IsAuthenticated]
     
     def get_object(self):
         user_id = self.kwargs.get('user_id')
@@ -69,16 +70,20 @@ class TherapistDetailView(generics.RetrieveUpdateDestroyAPIView):
 # List of all patients and therapists
 class TherapistDetailViews(generics.ListAPIView):
     queryset = Therapist.objects.all()
-    serializer_class = TherapistSerializer    
+    serializer_class = TherapistSerializer
+    permission_classes = [IsAuthenticated]
+        
 class PatientDetailViews(generics.ListAPIView):
     queryset = Patient.objects.all()
-    serializer_class = PatientSerializer        
+    serializer_class = PatientSerializer     
+    permission_classes = [IsAuthenticated]   
     
 #################################################        
 
 class PatientDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
+    permission_classes = [IsAuthenticated]
     
     def get_object(self):
         user_id = self.kwargs.get('user_id')
