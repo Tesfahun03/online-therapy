@@ -12,8 +12,8 @@ export default function ViewTherapist() {
   const history = useHistory();
 
   const [selectedTherapist, setSelectedTherapist] = useState();
-  const [loggedUser, setLoggedUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [relationChecker, setRelation] = useState();
   
 
   // const [showModal, setShowModal] = useState(false);
@@ -23,6 +23,23 @@ export default function ViewTherapist() {
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
   const user_id = decoded.user_id;
+
+  const paymentChecker = async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/payment/therapist/${id}/credited/`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setRelation(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("There was a problem fetching the data", error);
+      setIsLoading(false);
+    }
+  };
 
   //Get Therapist data and set the use state
   const therapistData = async () => {
@@ -40,26 +57,9 @@ export default function ViewTherapist() {
     }
   };
 
-  const loggedUserData = async () => {
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/core/patients/${user_id}/`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setLoggedUser(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("There was a problem fetching the data", error);
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     therapistData();
-    loggedUserData();
+    paymentChecker();
   }, []);
 
   if (isLoading) {
@@ -102,9 +102,13 @@ export default function ViewTherapist() {
     history.push(`/book-appointment/${therapistid}`);
   }
 
+  const hasPaid = relationChecker.some(
+    (relation) => relation.patient === user_id && relation.status === "success"
+  );
+
   return (
     <div className="view-therapist">
-      {selectedTherapist && (
+      {selectedTherapist ? (
         <div className="row row-auto p-0 m-0">
           <div
             className="therapist-pro-pic-info col col-auto col-lg-3 col-md-5 col-sm-4 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 mt-5 ms-4 me-4"
@@ -130,7 +134,7 @@ export default function ViewTherapist() {
               {selectedTherapist.specialization}
             </h5>
             <div className="col col-auto text-center">
-              {loggedUser.has_paid ? (
+              {hasPaid ? (
                 <button className="btn btn-primary" onClick={()=>handleBookAppointment(id)}>
                   Book Appointment
                 </button>
@@ -199,7 +203,8 @@ export default function ViewTherapist() {
             </div>
           </div>
         </div>
-      )}
+      ) :
+      (<h1>FORBIDDEN</h1>)}
     </div>
   );
 }

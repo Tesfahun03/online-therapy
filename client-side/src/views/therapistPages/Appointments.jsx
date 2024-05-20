@@ -13,7 +13,10 @@ export default function Appointments() {
 
   const [buttonVariant, setButtonVariant] = useState();
   const [showModal, setShowModal] = useState(false);
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {
+    setShowModal(false);
+    window.location.reload();
+  }
   const handleShow = () => setShowModal(true);
 
   const user_id = decoded.user_id;
@@ -124,10 +127,10 @@ export default function Appointments() {
     <div className="therapist-home row d-flex flex-row  m-0">
       <SideBar />
       <div className="col">
-        {showAvalability !== null  && (
+        {showAvalability !== null  && showAvalability !== undefined && (
           <div className="row mt-2">
             <h2>List of avalability</h2>
-            {showAvalability &&
+            {showAvalability.length > 0 ? (
               showAvalability.map((avalabilitys) => (
                 <div
                   key={avalabilitys.id}
@@ -139,7 +142,10 @@ export default function Appointments() {
                   <button className="btn btn-success">Edit</button>
                   <button className="btn btn-danger">Delete</button>
                 </div>
-              ))}
+              ))
+              ) : 
+              (<p>No available date is found.</p>)
+            }
           </div>
         )}
 

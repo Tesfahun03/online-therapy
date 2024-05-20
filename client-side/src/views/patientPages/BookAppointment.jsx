@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import "../../styles/BookAppointment.css";
 import moment from "moment";
@@ -17,6 +17,7 @@ export default function BookAppointment() {
 
   const [availableDates, setAvailableDates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [relationChecker, setRelation] = useState();
 
   const [registerAppointment, setRegisterAppointment] = useState({
     patient: user_id,
@@ -32,6 +33,23 @@ export default function BookAppointment() {
       };
     });
   }
+
+  const paymentChecker = async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/payment/therapist/${id}/credited/`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setRelation(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("There was a problem fetching the data", error);
+      setIsLoading(false);
+    }
+  };
 
   const handleRegisterAppointmentSubmit = async (e) => {
     e.preventDefault();
@@ -119,17 +137,23 @@ export default function BookAppointment() {
 
   useEffect(() => {
     availabilityData();
+    paymentChecker();
   }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
+  const hasPaid = relationChecker.some(
+    (relation) => relation.patient === user_id && relation.status === "success"
+  );
+
   console.log(availableDates);
   console.log(registerAppointment);
 
   return (
     <div className="book-appointment container">
+      {hasPaid ? (
       <div className="row mt-5">
         <div className="col-lg-6 offset-lg-3">
           <h5>Book Appointment</h5>
@@ -177,6 +201,8 @@ export default function BookAppointment() {
           </form>
         </div>
       </div>
+      ) :
+      (<Redirect to={`/viewtherapist/${id}`} />)}
     </div>
   );
 }
