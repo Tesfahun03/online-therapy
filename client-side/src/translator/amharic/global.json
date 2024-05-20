@@ -76,5 +76,33 @@
         "homeContactUsEmail": "ኢሜል",
         "homeContactUsMessage": "መልእክት",
         "homeSendButton": "ላክ" 
-    }  
+    },
+    "profile": {
+          "accountSetting": "የመለያ ቅንብር",
+          "changePassword": "የይለፍ ቃል ይቀይሩ",
+          "additionalInformation": "ተጨማሪ መረጃ",
+          "notification": "ማሳወቂያ",
+          "firstName": "የመጀመሪያ ስም",
+          "lastName": "የአባት ስም",
+          "phoneNumber": "ስልክ ቁጥር",
+          "emailAddress": "ኢሜል አድራሻ",
+          "gender": "ጾታ",
+          "male": "ወንድ",
+          "female": "ሴት",
+          "age": "ዕድሜ",
+          "city": "ከተማ",
+          "region": "ክልል",
+          "maritalStatus": "የጋብቻ ሁኔታ",
+          "single": "ነጠላ",
+          "married": "ያገባ",
+          "divorced": "የተፋረደ",
+          "languagePreference": "ቋንቋ ምርጫ",
+          "occupation": "ሥራ",
+          "update": "አዘምን",
+          "currentPassword": "የአሁኑ የይለፍ ቃል",
+          "newPassword": "አዲስ የይለፍ ቃል",
+          "confirmPassword": "የይለፍ ቃል አረጋግጥ",
+          "updatePassword": "የይለፍ ቃል አዘምን"
+        }
+      
 }

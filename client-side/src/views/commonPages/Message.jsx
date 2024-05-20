@@ -19,7 +19,7 @@ export default function Message(){
         <div className="message-first-col col col-auto shadow col-4 min-vh-100">
           <form action="" className="d-flex p-2 bg-light">
             <input
-              type="text"
+              type="text" 
               className="form-control rounded-0 bg-light"
               placeholder="Search..."
             />

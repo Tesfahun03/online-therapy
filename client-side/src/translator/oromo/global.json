@@ -52,7 +52,7 @@
         "homeFaqQuestion2": "Teraappiistiin BunnaMind gahumsa qabaa?",
         "homeFaqQuestion3": "Yoo na barbaachise teraappiistii jijjiiruu nan danda'aa?",
         "homeFaqQuestion4": "Yaaliin onlaayinii nama hundaaf ni mijataa?",
-        "homeFaqAnswer1": "session, fi deemuuf qophoofteetta",
+        "homeFaqAnswer1": "Galmaa'aatii unka keenya jalqabaa guutaa. Sana booda deebii kee irratti hundaa’uun teraappiistota walsimsiisan hundarra gaarii ta’an siif ramadna. Yookaan achi keessaa filachuu dandeessa ykn harkaan daawwachuu, yeroowwan jiran ilaaluu, bakka buufachuu, bitachuu dandeessa. Session fi ati deemuuf qophii ta'uu kee",
         "homeFaqAnswer2": "Eeyyee, teraappiistonni Bunnamind hundi ogeessota gahumsa olaanaa fi hayyama qaban. Fayyaa sammuu adda addaa irratti muuxannoo bal'aa qabu",
         "homeFaqAnswer3": "Eeyyee. Yoo barbaachisummaan teraappiistota jijjiiruu sitti dhaga'ame, karaa waltajjii keenyaa jijjiirama gaafachuu dandeessa, akkasumas teraappiistii filannoo keetii filachuu dandeessa",
         "homeFaqAnswer4": "Yaaliin onlaayinii namoota dhuunfaa baay'eedhaaf mijataadha. Therapists keenya yeroo marii jalqabaa fedhii keessan madaaluun tarkaanfii hundarra gaarii ta'e ni gorsu.",
@@ -76,5 +76,33 @@
         "homeContactUsEmail": "Email",
         "homeContactUsMessage": "Ergaa",
         "homeSendButton": "Ergi" 
-    } 
+    },
+    "profile": {
+        "accountSetting": "Qajeelcha Herregaa",
+        "changePassword": "Jecha Iccitii Jijjiiri",
+        "additionalInformation": "Odeeffannoo Dabalataa",
+        "notification": "Beeksisa",
+        "firstName": "Maqaa Jalqabaa",
+        "lastName": "Maqaa Dhumaa",
+        "phoneNumber": "Lakkoofsa Bilbilaa",
+        "emailAddress": "Lakkoofsa Bilbilaa",
+        "gender": "Saala",
+        "male": "Dhiira",
+        "female": "Dubartii",
+        "age": "Umurii",
+        "city": "Magaalaa",
+        "region": "Naannoo",
+        "maritalStatus": "Naannoo",
+        "single": "Qeenxee",
+        "married": "Gaa'ela godhate",
+        "divorced": "Hiikaan",
+        "languagePreference": "Filannoo Afaanii",
+        "occupation": "Hojii",
+        "update": "Foyya'iinsa",
+        "currentPassword": "Jecha Iccitii Ammaa",
+        "newPassword": "Jecha Iccitii Haaraa",
+        "confirmPassword": "Jecha Iccitii Mirkaneessi",
+        "updatePassword": "Jecha Iccitii Fooyyessi"
+    }
+
 }

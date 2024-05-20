@@ -76,5 +76,33 @@
         "homeContactUsEmail": "Email",
         "homeContactUsMessage": "Message",
         "homeSendButton": "Send"
-    }  
+    },
+    "profile": {
+        "accountSetting": "Account Setting",
+        "changePassword": "Change Password",
+        "additionalInformation": "Additional Information",
+        "notification": "Notification",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "phoneNumber": "Phone Number",
+        "emailAddress": "Email Address",
+        "gender": "Gender",
+        "male": "Male",
+        "female": "Female",
+        "age": "Age",
+        "city": "City",
+        "region": "Region",
+        "maritalStatus": "Marital Status",
+        "single": "Single",
+        "married": "Married",
+        "divorced": "Divorced",
+        "languagePreference": "Language Preference",
+        "occupation": "Occupation",
+        "update": "Update",
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+        "updatePassword": "Update Password"
+    }
+      
 }

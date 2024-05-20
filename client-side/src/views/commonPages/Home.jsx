@@ -77,32 +77,37 @@ export default function Home(){
             </div>
             <div className="Faq" id='Faq'>
                 <h1>{t('home.homeFaqTitle')}</h1>
-                {Faq.map((faqs)=>(
-                    < div key={faqs.id} >
-                    {faqs.id %2 === 0 ?
-                    <div className='faq-even'>
-                        <div className="faq-number">{faqs.id}</div>
-                        <div className="faq-q-and-a">
-                            <div className="faq-question">{faqs.question}</div>
-                            <div className="faq-answer">{faqs.answer}</div>
-                        </div>
-                        
-                    </div>:
-                    <div className='faq-odd'>
-                        <div className="faq-number">{faqs.id}</div>
-                        <div className="faq-q-and-a">
-                            <div className="faq-question">{faqs.question}</div>
-                            <div className="faq-answer">{faqs.answer}</div>
-                        </div>
+                <div className='faq-even'>
+                    <div className="faq-number">1</div>
+                    <div className="faq-q-and-a">
+                        <div className="faq-question">{t('home.homeFaqQuestion1')}</div>
+                        <div className="faq-answer">{t('home.homeFaqAnswer1')}</div>
                     </div>
-                    
-                    }
-                        
-                        
+                </div>
+
+                <div className='faq-odd'>
+                    <div className="faq-number">2</div>
+                    <div className="faq-q-and-a">
+                        <div className="faq-question">{t('home.homeFaqQuestion2')}</div>
+                        <div className="faq-answer">{t('home.homeFaqAnswer2')}</div>
                     </div>
-                    
-                       
-                ))}
+                </div>
+
+                <div className='faq-even'>
+                    <div className="faq-number">3</div>
+                    <div className="faq-q-and-a">
+                        <div className="faq-question">{t('home.homeFaqQuestion3')}</div>
+                        <div className="faq-answer">{t('home.homeFaqAnswer3')}</div>
+                    </div>
+                </div>
+
+                <div className='faq-odd'>
+                    <div className="faq-number">4</div>
+                    <div className="faq-q-and-a">
+                        <div className="faq-question">{t('home.homeFaqQuestion4')}</div>
+                        <div className="faq-answer">{t('home.homeFaqAnswer4')}</div>
+                    </div>
+                </div>
             </div>
 
             <div className="AboutUs" id='AboutUs'>
@@ -112,28 +117,35 @@ export default function Home(){
                         <h3>{t('home.homeAboutUsTitle2')}</h3>
                     </div>
                     <div className="About-why">
-                    <h2>{t('home.homeAboutWhy')}</h2>
-                        {Why.map((whys)=>(
-                            <div key={whys.id}>
-                                {whys.id % 2 === 0 ?
-                                <div className='why-even'>
-                                    <img src="../Images/home/Tickbox.png" alt="" className='tickbox'/>
-                                    <div className='why-reason-desc'>
-                                        <h4 className='reason'>{whys.reason}</h4>
-                                        <h4 className='description'>{whys.description}</h4>
-                                    </div>
-                                </div> 
-                                :
-                                <div className='why-odd'>
-                                    <img src="../Images/home/Tickbox.png" alt="" className='tickbox' />
-                                    <div className='why-reason-desc'>
-                                        <h4 className='reason'>{whys.reason}</h4>
-                                        <h4 className='description'>{whys.description}</h4>
-                                    </div>
-                                </div>
-                                } 
+                        <h2>{t('home.homeAboutWhy')}</h2>
+                        <div className='why-even'>
+                            <img src="../Images/home/Tickbox.png" alt="" className='tickbox' />
+                            <div className='why-reason-desc'>
+                                <h4 className='reason'>{t('home.homeAboutUsReason1')}</h4>
+                                <h4 className='description'>{t('home.homeAboutUsDescription1')}</h4>
                             </div>
-                        ))}
+                        </div>
+                        <div className='why-odd'>
+                            <img src="../Images/home/Tickbox.png" alt="" className='tickbox' />
+                            <div className='why-reason-desc'>
+                                <h4 className='reason'>{t('home.homeAboutUsReason2')}</h4>
+                                <h4 className='description'>{t('home.homeAboutUsDescription2')}</h4>
+                            </div>
+                        </div>
+                        <div className='why-even'>
+                            <img src="../Images/home/Tickbox.png" alt="" className='tickbox' />
+                            <div className='why-reason-desc'>
+                                <h4 className='reason'>{t('home.homeAboutUsReason3')}</h4>
+                                <h4 className='description'>{t('home.homeAboutUsDescription3')}</h4>
+                            </div>
+                        </div>
+                        <div className='why-odd'>
+                            <img src="../Images/home/Tickbox.png" alt="" className='tickbox' />
+                            <div className='why-reason-desc'>
+                                <h4 className='reason'>{t('home.homeAboutUsReason4')}</h4>
+                                <h4 className='description'>{t('home.homeAboutUsDescription4')}</h4>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

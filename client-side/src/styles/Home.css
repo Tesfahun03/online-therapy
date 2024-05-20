@@ -4,7 +4,6 @@
     justify-content: space-around;
     margin-top: 2vw;
     padding-top: 7vw;
-    text-align: center;
 }
 .Home-img{
     display: flex;
@@ -57,7 +56,6 @@
     font-size: 2.8vw;
     top: 4.6vw;
     margin-bottom: 9vw;
-    text-align: center;
 }
 .Faq .faq-even{
     display: flex;
@@ -262,6 +260,7 @@
     }
 
     .Home-Intro-Title h3 {
+        text-align: center;
         font-size: 5vw;
         margin-top: 3vw;
     }
@@ -273,6 +272,7 @@
     .Home-Intro-Title button {
         width: 50vw;
         height: 8vw;
+        margin-left: 19vw;
         font-size: 3vw;
         margin-top: 2vw;
     }
@@ -283,6 +283,7 @@
     .Faq h1 {
         font-size: 6vw;
         top: 10vw;
+        text-align: center;
         margin-bottom: 20vw;
     }
 
@@ -322,6 +323,7 @@
         font-size: 6vw; 
         width: auto; 
         margin-left: 0; 
+        text-align: center;
         margin-bottom: 2vw; 
     }
 
@@ -329,7 +331,7 @@
         width: 100%; 
         font-size: 3vw; 
         margin-left: 0; 
-        text-align: center; 
+        padding-left: 3vw;
         margin-bottom: 3vw; 
     }
 
