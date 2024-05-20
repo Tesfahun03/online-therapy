@@ -26,7 +26,7 @@ export const AuthProvider=({children})=>{
 
     const history = useHistory();
 
-    const loginUser = async (email, password, userType) =>{
+    const loginUser = async (email, password) =>{
 
         const response = await fetch("http://127.0.0.1:8000/core/token/",{
             method:"POST",
@@ -50,12 +50,7 @@ export const AuthProvider=({children})=>{
             console.log(decodedToken.user_id)
             localStorage.setItem("authTokens", JSON.stringify(data))
 
-            if (userType === "therapist") {
-                try {
-                    const response = await fetch(`http://127.0.0.1:8000/core/therapists/${decodedToken.user_id}`);
-                    if (!response.ok) {
-                      throw new Error("Network response was not ok");
-                    }
+            if (decodedToken.user_type === "therapist") {
                     history.push("/therapist-dashboard");
                     swal.fire({
                         title: "Login Successful",
@@ -68,17 +63,8 @@ export const AuthProvider=({children})=>{
                         showCancelButton: true,
                     })
                     
-                  } catch (error) {
-                    console.error("There was a problem fetching the data", error);
-                    localStorage.removeItem("authTokens")
-                    console.log("token cleared")
-                  }
-              } else if (userType === "patient") {
-                try {
-                    const response = await fetch(`http://127.0.0.1:8000/core/patients/${decodedToken.user_id}`);
-                    if (!response.ok) {
-                      throw new Error("Network response was not ok");
-                    }
+                  } 
+               else if (decodedToken.user_type === "patient") {
                     history.push("/home-p");
                     swal.fire({
                         title: "Login Successful",
@@ -91,10 +77,8 @@ export const AuthProvider=({children})=>{
                         showCancelButton: true,
                     })
                     
-                  } catch (error) {
-                    console.error("There was a problem fetching the data", error);
+                  } else {
                     localStorage.removeItem("authTokens")
-                    console.log("token cleared")
                     swal.fire({
                         title: "Email or password doesn't exist",
                         icon: "error",
@@ -110,10 +94,7 @@ export const AuthProvider=({children})=>{
                         }, 10); // Adjust the delay time as needed
                       });
 
-                  }
-               
-              }
-              
+                    }  
 
         } else {    
             console.log(response.status);

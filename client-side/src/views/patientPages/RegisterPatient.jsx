@@ -66,6 +66,7 @@ export default function RegisterPatient(){
         const phone = registerData.phoneNumber
         const city = registerData.city
         const region = registerData.region
+        const user_type = "patient"
         const occupation = registerData.occupation
         const has_paid = registerData.has_paid
 
@@ -86,6 +87,7 @@ export default function RegisterPatient(){
                     phone,
                     city,
                     region,
+                    user_type,
                 },
                 occupation,
                 has_paid
