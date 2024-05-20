@@ -26,7 +26,7 @@ export const AuthProvider=({children})=>{
 
     const history = useHistory();
 
-    const loginUser = async (email, password) =>{
+    const loginUser = async (email, password, userType) =>{
 
         const response = await fetch("http://127.0.0.1:8000/core/token/",{
             method:"POST",
@@ -50,7 +50,7 @@ export const AuthProvider=({children})=>{
             console.log(decodedToken.user_id)
             localStorage.setItem("authTokens", JSON.stringify(data))
 
-            if (decodedToken.user_type === "therapist") {
+            if (userType === "therapist" && decodedToken.user_type === "therapist") {        
                     history.push("/therapist-dashboard");
                     swal.fire({
                         title: "Login Successful",
@@ -62,9 +62,7 @@ export const AuthProvider=({children})=>{
                         showConfirmButton: false,
                         showCancelButton: true,
                     })
-                    
-                  } 
-               else if (decodedToken.user_type === "patient") {
+              } else if (userType === "patient" && decodedToken.user_type === "patient") {
                     history.push("/home-p");
                     swal.fire({
                         title: "Login Successful",
@@ -76,9 +74,11 @@ export const AuthProvider=({children})=>{
                         showConfirmButton: false,
                         showCancelButton: true,
                     })
-                    
-                  } else {
+                } 
+                   else  {
+                    console.error("There was a problem fetching the data");
                     localStorage.removeItem("authTokens")
+                    console.log("token cleared")
                     swal.fire({
                         title: "Email or password doesn't exist",
                         icon: "error",
@@ -88,19 +88,18 @@ export const AuthProvider=({children})=>{
                         timerProgressBar: true,
                         showConfirmButton: false,
                         showCancelButton: true,
-                      }).then(() => {
-                        setTimeout(() => {
-                          window.location.reload();
-                        }, 10); // Adjust the delay time as needed
-                      });
+                      })
 
-                    }  
+                  }
+               
+              
+              
 
         } else {    
             console.log(response.status);
             console.log("there was a server issue");
             swal.fire({
-                title: "Username or password does not exists",
+                title: "Username or password does not exist",
                 icon: "error",
                 toast: true,
                 timer: 4000,

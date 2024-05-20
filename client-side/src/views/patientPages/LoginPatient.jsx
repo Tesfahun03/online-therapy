@@ -29,8 +29,9 @@ export default function LoginPatient(){
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
+        const userType = "patient"
 
-        email.length > 0 && loginUser(email, password)
+        email.length > 0 && loginUser(email, password, userType)
 
         console.log(email)
         console.log(password)
