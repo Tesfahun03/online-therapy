@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../../styles/Profile.css";
 import jwtDecode from "jwt-decode";
 
-export default function Profile() {
+export default function ProfilePatient() {
 
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);

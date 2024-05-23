@@ -89,7 +89,7 @@ class SendMessages(generics.CreateAPIView):
 class TherapistAvailabilityViewSet(viewsets.ModelViewSet):
     queryset = TherapistAvailability.objects.all()
     serializer_class = TherapistAvailabilitySerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         therapist_id = self.kwargs.get('therapist_id')
@@ -352,7 +352,7 @@ def delete_notification(sender, instance, **kwargs):
 class TherapistNotification(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         therapist_id = self.kwargs.get('therapist_id')
@@ -377,7 +377,7 @@ class TherapistNotification(viewsets.ModelViewSet):
 class PatientNotification(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         patient_id = self.kwargs.get('patient_id')

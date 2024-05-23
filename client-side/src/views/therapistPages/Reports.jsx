@@ -4,7 +4,9 @@ import SideBar from "../../component/SideBar";
 export default function Reports() {
   return (
     <div className="therapist-home row d-flex flex-row  m-0">
-      <SideBar />
+      <div className="col col-lg-2 col-md-2 col-sm-4 m-0 p-0">
+        <SideBar />
+      </div>
       <div className="col">
         <h5>This is Reports section</h5>
       </div>

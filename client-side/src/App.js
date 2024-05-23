@@ -9,8 +9,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginTherapist from "./views/therapistPages/LoginTherapist";
 import RegisterTherapist from "./views/therapistPages/RegisterTherapist";
 import CommunitySpace from "./views/commonPages/CommunitySpace";
-import Profile from "./views/patientPages/PatientProfile";
-import Notification from "./views/patientPages/PatientNotification";
+import ProfilePatient from "./views/patientPages/ProfilePatient";
+import NotificationPatient from "./views/patientPages/NotificationPatient";
 import ViewTherapist from "./views/patientPages/ViewTherapist";
 import Message from "./views/commonPages/Message";
 import Dashboard from "./views/therapistPages/Dashboard";
@@ -20,8 +20,11 @@ import NotificationTherapist from "./views/therapistPages/NotificationTherapist"
 import Reports from "./views/therapistPages/Reports";
 import Settings from "./views/therapistPages/Settings";
 import BookAppointment from "./views/patientPages/BookAppointment";
+import VideoChat from "./views/therapistPages/VideoChatTherapist";
+import VideoChatPatient from "./views/patientPages/VideoChatPatient";
 
 function App() {
+
   return (
     <div className="App">
       <Router>
@@ -29,25 +32,20 @@ function App() {
           <NavBar />
           <div className="content">
             <Switch>
-              <PrivateRoute
-                component={Notification}
-                path="/notification"
-                exact
-              />
               <Route component={Home} path="/" exact />
               <Route component={LoginPatient} path="/login-p" exact />
               <Route component={RegisterPatient} path="/register-p" exact />
               <PrivateRoute component={LandingPage} path="/home-p" exact />
-              <Route component={LoginTherapist} path="/login-d" exact />
-              <Route component={RegisterTherapist} path="/register-d" exact />
+              <Route component={LoginTherapist} path="/login-t" exact />
+              <Route component={RegisterTherapist} path="/register-t" exact />
               <PrivateRoute
                 component={CommunitySpace}
                 path="/community-space"
                 exact
               />
-              <PrivateRoute component={Profile} path="/profile-p" exact />
+              <PrivateRoute component={ProfilePatient} path="/profile-p" exact />
               <PrivateRoute
-                component={Notification}
+                component={NotificationPatient}
                 path="/notification-p"
                 exact
               />
@@ -58,23 +56,25 @@ function App() {
               />
               <PrivateRoute
                 component={BookAppointment}
-                path="/book-appointment/:id"
+                path="/bookappointment/:id"
                 exact
               />
-              <Route component={Dashboard} path="/therapist-dashboard" exact />
+              <Route component={Dashboard} path="/dashboard-t" exact />
               <Route
                 component={Appointments}
-                path="/therapist-appointments"
+                path="/appointments-t"
                 exact
               />
               <Route
                 component={NotificationTherapist}
-                path="/therapist-notification"
+                path="/notification-t"
                 exact
               />
-              <Route component={Reports} path="/therapist-reports" exact />
-              <Route component={Settings} path="/therapist-settings" exact />
+              <Route component={Reports} path="/reports-t" exact />
+              <Route component={Settings} path="/settings-t" exact />
               <PrivateRoute component={Message} path="/message/:id" exact />
+              <PrivateRoute component={VideoChat} path="/videochat-t/:id" exact/>
+              <PrivateRoute component={VideoChatPatient} path="/videochat-p/:id" exact/>
             </Switch>
           </div>
           <Footer />

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import "../../styles/BookAppointment.css";
 import moment from "moment";
-// import useAxios from "../../utils/useAxios";
+import useAxios from "../../utils/useAxios";
 // import { Button, Modal } from "react-bootstrap";
 const swal = require("sweetalert2");
 
 export default function BookAppointment() {
+  const axios = useAxios()
   const { id } = useParams();
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
@@ -17,6 +18,7 @@ export default function BookAppointment() {
 
   const [availableDates, setAvailableDates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [relationChecker, setRelation] = useState();
 
   const [registerAppointment, setRegisterAppointment] = useState({
     patient: user_id,
@@ -33,6 +35,23 @@ export default function BookAppointment() {
     });
   }
 
+  const paymentChecker = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/payment/therapist/${id}/credited/`
+      );
+      if (response.status !== 200) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.data;
+      setRelation(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("There was a problem fetching the data", error);
+      setIsLoading(false);
+    }
+  };
+
   const handleRegisterAppointmentSubmit = async (e) => {
     e.preventDefault();
     const { patient, date_available } = registerAppointment;
@@ -45,22 +64,15 @@ export default function BookAppointment() {
     document.body.appendChild(overlay);
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         "http://127.0.0.1:8000/session/book-appointment/",
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            patient,
-            date_available,
-          }),
-        }
-      );
-      const data = await response.json();
+          patient,
+          date_available,
+        })      
+      const data = await response.data;
 
-      if (response.ok) {
+      if (response.status == 201) {
         swal.fire({
           title: "Booked Successfully",
           icon: "success",
@@ -102,13 +114,13 @@ export default function BookAppointment() {
 
   const availabilityData = async () => {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         `http://127.0.0.1:8000/session/therapist/${id}/availability`
       );
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
+      const data = await response.data;
       setAvailableDates(data);
       setIsLoading(false);
     } catch (error) {
@@ -119,17 +131,27 @@ export default function BookAppointment() {
 
   useEffect(() => {
     availabilityData();
+    paymentChecker();
   }, []);
+
+  const hasPaid =
+    relationChecker?.some(
+      (relation) =>
+        relation.patient === user_id && relation.status === "success"
+    ) ?? null;
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  
 
   console.log(availableDates);
   console.log(registerAppointment);
 
   return (
     <div className="book-appointment container">
+      {hasPaid ? (
       <div className="row mt-5">
         <div className="col-lg-6 offset-lg-3">
           <h5>Book Appointment</h5>
@@ -157,17 +179,18 @@ export default function BookAppointment() {
                 id="date_available"
                 value={registerAppointment.date_available}
                 onChange={handleRegisterAppointment}
+                style={{ opacity: 0.9 }}
               >
-                <option value="">Date Available</option>
-                {availableDates.map((availableDate) => (
-                  <option value={availableDate.id} key={availableDate.id}>
+                <option style={{ opacity: 0.5 }} value="">Date Available (International Time Zone)</option>
+                {availableDates.map((availableDate, index) => (
+                  <option value={availableDate.id} key={`${availableDate.id}-${index}`}>
                     {moment(availableDate.date).format("D MMMM YYYY")} From{" "}
                     {moment(availableDate.start_time, "HH:mm:ss").format(
-                      "h:mm A"
+                      "hh:mm A"
                     )}{" "}
                     Upto{" "}
                     {moment(availableDate.end_time, "HH:mm:ss").format(
-                      "h:mm A"
+                      "hh:mm A"
                     )}
                   </option>
                 ))}
@@ -177,6 +200,8 @@ export default function BookAppointment() {
           </form>
         </div>
       </div>
+      ) :
+      (<Redirect to={`/viewtherapist/${id}`} />)}
     </div>
   );
 }
