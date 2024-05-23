@@ -139,7 +139,7 @@ class ChapaPaymentVerifier(View):
 class TherapistTransaction(viewsets.ModelViewSet):
     queryset = ChapaTransaction.objects.all()
     serializer_class = ChapaTransactionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def get_queryset(self):
         therapist_id = self.kwargs.get('therapist_id')

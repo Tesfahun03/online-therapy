@@ -4,7 +4,6 @@ import jwtDecode from "jwt-decode";
 import "../../styles/BookAppointment.css";
 import moment from "moment";
 import useAxios from "../../utils/useAxios";
-// import useAxios from "../../utils/useAxios";
 // import { Button, Modal } from "react-bootstrap";
 const swal = require("sweetalert2");
 
@@ -135,13 +134,17 @@ export default function BookAppointment() {
     paymentChecker();
   }, []);
 
+  const hasPaid =
+    relationChecker?.some(
+      (relation) =>
+        relation.patient === user_id && relation.status === "success"
+    ) ?? null;
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  const hasPaid = relationChecker.some(
-    (relation) => relation.patient === user_id && relation.status === "success"
-  );
+  
 
   console.log(availableDates);
   console.log(registerAppointment);

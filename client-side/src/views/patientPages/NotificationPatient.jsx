@@ -1,10 +1,10 @@
-import React, {useState, useEffect}from "react";
-import SideBar from "../../component/SideBar";
+import React, { useState, useEffect } from "react";
+import "../../styles/Notification.css";
 import useAxios from "../../utils/useAxios";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
 
-export default function NotificationTherapist() {
+export default function NotificationPatient() {
   const axios = useAxios();
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
@@ -14,7 +14,9 @@ export default function NotificationTherapist() {
 
   const notificationsData = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000//session/therapist/${user_id}/notification/`);
+      const response = await axios.get(
+        `http://127.0.0.1:8000//session/patient/${user_id}/notification/`
+      );
       if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }
@@ -29,24 +31,21 @@ export default function NotificationTherapist() {
     notificationsData();
   }, []);
 
-  console.log(notifications)
-  
+  console.log(notifications);
   return (
-    <div className="therapist-home row d-flex flex-row  m-0">
-      <div className="col col-lg-2 col-md-2 col-sm-3 m-0 p-0">
-        <SideBar />
-      </div>
+    <div className="notification-page">
       <div className="col">
-        {notifications.map((notification)=>(
-          <div className="card m-4" key={notification.id}>
+        {notifications.map((notification) => (
+          <div className="card mb-4 ms-5 me-5" key={notification.id}>
             <div className="card-header">
               <div className="card-title fw-bold">{notification.title}</div>
-              <div className="card-title fw-light">at {moment(notification.sent_at).format('DD MMM YYYY h:mm A')}</div>
+              <div className="card-title fw-light">
+                at {moment(notification.sent_at).format("DD MMM YYYY h:mm A")}
+              </div>
             </div>
             <div className="card-body">
-              <p className="card-text">{notification.therapistContent}</p>
+              <p className="card-text">{notification.patientContent}</p>
             </div>
-
           </div>
         ))}
       </div>

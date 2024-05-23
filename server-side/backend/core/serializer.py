@@ -60,7 +60,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ['user', 'user_id', 'user_type', 'first_name', 'last_name', \
                     'image', 'bio', 'prefered_language', "age", 'gender', 'martial_status', \
-                        'phone', 'city', 'region' ]
+                        'phone', 'city', 'region','publicKey' ]
     
     def create(self, validated_data):
         user_data = validated_data.pop('user')

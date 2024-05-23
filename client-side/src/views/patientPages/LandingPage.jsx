@@ -8,7 +8,7 @@ import {faSearch, } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 export default function LandingPage() {
-  const baseURL = "http://127.0.0.1:8000/api";
+  const baseURL = "http://127.0.0.1:8000/core";
 
   const axios = useAxios();
   const [searchTherapist, setSearchTherapist] = useState({ search: "" });
@@ -63,7 +63,7 @@ export default function LandingPage() {
   return (
     <div className="landingPage">
       <h2 className="hi text-center fw-bold fs-1 mt-3 mb-3">
-        Hi, {user_type} {first_name}!
+        Hi, {first_name}!
       </h2>
       <div className="search d-flex justify-content-around">
         <form className="d-flex w-50">

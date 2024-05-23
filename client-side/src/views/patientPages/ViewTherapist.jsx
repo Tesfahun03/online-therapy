@@ -7,14 +7,13 @@ import { Button, Modal } from "react-bootstrap";
 const swal = require("sweetalert2");
 
 export default function ViewTherapist() {
-  const { id } = useParams();
+  const {id} = useParams();
   const axios = useAxios();
   const history = useHistory();
 
   const [selectedTherapist, setSelectedTherapist] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [relationChecker, setRelation] = useState();
-  
 
   // const [showModal, setShowModal] = useState(false);
   // const handleClose = () => setShowModal(false);
@@ -98,13 +97,32 @@ export default function ViewTherapist() {
     }
   };
 
-  const handleBookAppointment=(therapistid)=>{
-    history.push(`/book-appointment/${therapistid}`);
-  }
+  const handleBookAppointment = (therapistid) => {
+    history.push(`/bookappointment/${therapistid}`);
+  };
 
-  const hasPaid = relationChecker.some(
-    (relation) => relation.patient === user_id && relation.status === "success"
-  );
+  const hasPaid =
+    relationChecker?.some(
+      (relation) =>
+        relation.patient === user_id && relation.status === "success"
+    ) ?? null;
+
+  console.log(hasPaid)
+
+  const thirtyDaysCheck = relationChecker.some((relation) => {
+    if (relation.patient === user_id && relation.status === "success") {
+      const relationDate = new Date(relation.created_at);
+      const today = new Date();
+      const differenceInTime = today.getTime() - relationDate.getTime();
+      const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+      return differenceInDays <= 30;
+    }
+    return false;
+  });
+
+  const handleMessage = (therapistid) => {
+    history.push(`/message/${therapistid}`);
+  };
 
   return (
     <div className="view-therapist">
@@ -115,42 +133,61 @@ export default function ViewTherapist() {
             key={selectedTherapist.profile.user.id}
           >
             <img
-              key={selectedTherapist.profile.user.id}
               src={selectedTherapist.profile.image}
               className="licenses img-fluid ms-4"
+              key={`img-${selectedTherapist.profile.user.id}`}
             />
             <h5
-              key={selectedTherapist.profile.user.id}
               className="ms-2 fs-4 mb-2 mt-2 text-center"
+              key={`name-${selectedTherapist.profile.user.id}`}
             >
               {selectedTherapist.profile.first_name}{" "}
               {selectedTherapist.profile.last_name}
             </h5>
             <h5
-              key={selectedTherapist.profile.user.id}
               className="ms-2 text-center"
               style={{ color: "gray", marginTop: "-10" }}
+              key={`specialization-${selectedTherapist.profile.user.id}`}
             >
               {selectedTherapist.specialization}
             </h5>
-            <div className="col col-auto text-center">
-              {hasPaid ? (
-                <button className="btn btn-primary" onClick={()=>handleBookAppointment(id)}>
-                  Book Appointment
-                </button>
-              ) : (
-                <button
-                  className="btn btn-success mb-2"
-                  onClick={() =>
-                    handlePayment(user_id, selectedTherapist.profile.user.id)
-                  }
-                >
-                  Pay for appointment
-                </button>
-              )}
-            </div>
+            <div
+            className="col col-auto text-center"
+            key={`buttons-${selectedTherapist.profile.user.id}`}
+          >
+            {thirtyDaysCheck ? (
+              <button
+                className="btn btn-primary"
+                onClick={() => handleBookAppointment(id)}
+                key={`book-appointment-${selectedTherapist.profile.user.id}`}
+              >
+                Book Appointment
+              </button>
+            ) : (
+              <button
+                className="btn btn-success mb-2"
+                onClick={() =>
+                  handlePayment(user_id, selectedTherapist.profile.user.id)
+                }
+                key={`pay-appointment-${selectedTherapist.profile.user.id}`}
+              >
+                Pay for appointment
+              </button>
+            )}
+            {hasPaid ? (
+              <button
+                className="btn btn-primary"
+                onClick={() => handleMessage(id)}
+                key={`message-${selectedTherapist.profile.user.id}`}
+              >
+                Message
+              </button>
+            ) : (
+              ""
+            )}
           </div>
-
+          </div>
+      
           <div className="therapist-detail-info col col-auto col-lg-8 col-md-6 col-sm-6 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 mt-5">
             <div className="row">
               <div className="col mt-3 ms-3">
@@ -203,8 +240,9 @@ export default function ViewTherapist() {
             </div>
           </div>
         </div>
-      ) :
-      (<h1>FORBIDDEN</h1>)}
+      ) : (
+        <h1>FORBIDDEN</h1>
+      )}
     </div>
   );
 }

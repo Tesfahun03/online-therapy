@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import "../styles/NavBar.css";
 import AuthContext from "../context/AuthContext";
 import jwtDecode from "jwt-decode";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell, faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function NavBar() {
   const { user, logoutUser } = useContext(AuthContext);
@@ -91,7 +93,7 @@ export default function NavBar() {
       {isLoggedIn ? (
         <>
           <Link
-            to={user_type === "therapist" ? "/therapist-dashboard" : "/home-p"}
+            to={user_type === "therapist" ? "/dashboard-t" : "/home-p"}
             style={{ textDecoration: "none" }}
           >
             <div className="navImgName">
@@ -111,7 +113,7 @@ export default function NavBar() {
               {user_type !== "therapist" && (
                 <Link to="/notification-p" style={{ textDecoration: "none" }}>
                   <div className="notification">
-                    <img src="../Images/landingpage/notification.png" alt="" />
+                  <FontAwesomeIcon icon={faBell} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
                     <h5>Notification</h5>
                   </div>
                 </Link>
@@ -119,17 +121,14 @@ export default function NavBar() {
 
               <Link to="/community-space" style={{ textDecoration: "none" }}>
                 <div className="community-space">
-                  <img
-                    src="../Images/landingpage/search.png"
-                    alt="Community Space"
-                  />
+                  <FontAwesomeIcon icon={faGlobe} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
                   <h5>Community Space</h5>
                 </div>
               </Link>
 
               <Link to="/profile-p" style={{ textDecoration: "none" }}>
                 <div className="profile-button">
-                  <img src="../Images/landingpage/man.png" alt="" />
+                <FontAwesomeIcon icon={faUser} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
                   <h5>Profile</h5>
                 </div>
               </Link>
@@ -159,7 +158,7 @@ export default function NavBar() {
           <div className="navLink">
             {location.pathname === "/" && (
               <div className="navLinkFlex">
-                <Link to="/register-d" style={{ textDecoration: "none" }}>
+                <Link to="/register-t" style={{ textDecoration: "none" }}>
                   <h3>For Therapist</h3>
                 </Link>
                 <h3 onClick={() => scrollToSection("Faq")}>FAQ</h3>

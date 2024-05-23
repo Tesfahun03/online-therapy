@@ -15,6 +15,7 @@ import {
   faPeopleCarry,
   faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
+// import "../styles/SideBar.css"
 
 export default function SideBar() {
   const [activeButton, setActiveButton] = useState("Dashboard");
@@ -32,13 +33,13 @@ export default function SideBar() {
   };
 
   return (
-    <div className="therapist-sidebar col col-auto col-lg-2 col-md-2 col-sm-3 min-vh-100 shadow">
-      <Link to="/therapist-dashboard" style={style}>
+    <div className="therapist-sidebar col col-auto col-lg-2 col-md-2 col-sm-3 min-vh-100 shadow position-fixed">
+      <Link to="/dashboard-t" style={style}>
         <div
           className="row mt-4 p-1 ms-1 me-1 rounded"
           style={{
             background:
-              location.pathname === "/therapist-dashboard" ? `${color}` : "",
+              location.pathname === "/dashboard-t" ? `${color}` : "",
             cursor: "pointer",
           }}
         >
@@ -48,13 +49,13 @@ export default function SideBar() {
         </div>
       </Link>
 
-      <Link to="/therapist-appointments" style={style}>
+      <Link to="/appointments-t" style={style}>
         <div
           className="row mt-4 p-1 ms-1 me-1 rounded"
           style={{
             textDecoration: "none",
             background:
-              location.pathname === "/therapist-appointments" ? `${color}` : "",
+              location.pathname === "/appointments-t" ? `${color}` : "",
             cursor: "pointer",
           }}
         >
@@ -81,13 +82,13 @@ export default function SideBar() {
         </h6>
       </div> */}
 
-      <Link to="/therapist-notification" style={style}>
+      <Link to="/notification-t" style={style}>
         <div
           className="row mt-4 p-1 ms-1 me-1 rounded"
           style={{
             textDecoration: "none",
             background:
-              location.pathname === "/therapist-notification" ? `${color}` : "",
+              location.pathname === "/notification-t" ? `${color}` : "",
             cursor: "pointer",
           }}
         >
@@ -100,13 +101,13 @@ export default function SideBar() {
         </div>
       </Link>
 
-      <Link to="/therapist-reports" style={style}>
+      <Link to="/reports-t" style={style}>
         <div
           className="row mt-4 p-1 ms-1 me-1 rounded"
           style={{
             textDecoration: "none",
             background:
-              location.pathname === "/therapist-reports" ? `${color}` : "",
+              location.pathname === "/reports-t" ? `${color}` : "",
             cursor: "pointer",
           }}
         >
@@ -116,12 +117,12 @@ export default function SideBar() {
         </div>
       </Link>
 
-      <Link to="/therapist-settings" style={style}>
+      <Link to="/settings-t" style={style}>
         <div
           className="row mt-4 p-1 ms-1 me-1 rounded"
           style={{
             textDecoration: "none",
-            background: location.pathname === "/therapist-settings" ? `${color}` : "",
+            background: location.pathname === "/settings-t" ? `${color}` : "",
             cursor: "pointer",
           }}
         >
