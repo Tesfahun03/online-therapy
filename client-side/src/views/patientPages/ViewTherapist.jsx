@@ -2,12 +2,35 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import "../../styles/ViewTherapist.css";
+import { useTranslation } from "react-i18next";
 import useAxios from "../../utils/useAxios";
 import { Button, Modal } from "react-bootstrap";
 const swal = require("sweetalert2");
 
 export default function ViewTherapist() {
+<<<<<<< Updated upstream
   const {id} = useParams();
+=======
+  const [t, i18n] = useTranslation("global");
+    const [selectedLanguage, setSelectedLanguage] = useState("english"); 
+
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem("preferredLanguage");
+        if (savedLanguage) {
+            i18n.changeLanguage(savedLanguage);
+            setSelectedLanguage(savedLanguage); 
+        }
+    }, [i18n]);
+
+    const handleChangeLanguage = (e) => {
+        const language = e.target.value;
+        i18n.changeLanguage(language);
+        setSelectedLanguage(language); 
+        localStorage.setItem("preferredLanguage", language); 
+  };
+
+  const { id } = useParams();
+>>>>>>> Stashed changes
   const axios = useAxios();
   const history = useHistory();
 
@@ -126,7 +149,24 @@ export default function ViewTherapist() {
 
   return (
     <div className="view-therapist">
+<<<<<<< Updated upstream
       {selectedTherapist ? (
+=======
+      <div className="languageForTranslate">
+          <select
+              className="preferedLanguage"
+              onChange={handleChangeLanguage}
+              value={selectedLanguage} // Set value to the selected language
+          >
+              <option value="english">English</option>
+              <option value="amharic">Amharic</option>
+              <option value="oromo">Oromo</option>
+              <option value="sumalic">Sumalic</option>
+              <option value="tigrigna">Tigrigna</option>
+          </select>
+      </div>
+      {selectedTherapist && (
+>>>>>>> Stashed changes
         <div className="row row-auto p-0 m-0">
           <div
             className="therapist-pro-pic-info col col-auto col-lg-3 col-md-5 col-sm-4 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 mt-5 ms-4 me-4"
@@ -151,6 +191,7 @@ export default function ViewTherapist() {
             >
               {selectedTherapist.specialization}
             </h5>
+<<<<<<< Updated upstream
             <div
             className="col col-auto text-center"
             key={`buttons-${selectedTherapist.profile.user.id}`}
@@ -185,6 +226,24 @@ export default function ViewTherapist() {
             ) : (
               ""
             )}
+=======
+            <div className="col col-auto text-center">
+              {loggedUser.has_paid ? (
+                <button className="btn btn-primary" onClick={()=>handleBookAppointment(id)}>
+                  {t("viewTherapist.bookAppointment")}
+                </button>
+              ) : (
+                <button
+                  className="btn btn-success mb-2"
+                  onClick={() =>
+                    handlePayment(user_id, selectedTherapist.profile.user.id)
+                  }
+                >
+                  {t("viewTherapist.payforAppointment  ")}
+                </button>
+              )}
+            </div>
+>>>>>>> Stashed changes
           </div>
           </div>
       
@@ -192,23 +251,23 @@ export default function ViewTherapist() {
             <div className="row">
               <div className="col mt-3 ms-3">
                 <div className="row">
-                  <h5>Email Address</h5>
+                  <h5>{t("viewTherapist.emailAddress")}</h5>
                   <h6 className="fw-light">
                     {selectedTherapist.profile.user.email}
                   </h6>
                 </div>
                 <div className="row">
-                  <h5>Phone Number</h5>
+                  <h5>{t("viewTherapist.phoneNumber")}</h5>
                   <h6 className="fw-light">
                     {selectedTherapist.profile.phone}
                   </h6>
                 </div>
                 <div className="row">
-                  <h5>City</h5>
+                  <h5>{t("viewTherapist.therapistCity")}</h5>
                   <h6 className="fw-light">{selectedTherapist.profile.city}</h6>
                 </div>
                 <div className="row">
-                  <h5>Region</h5>
+                  <h5>{t("viewTherapist.therapistregion")}</h5>
                   <h6 className="fw-light">
                     {selectedTherapist.profile.region}
                   </h6>
@@ -217,23 +276,23 @@ export default function ViewTherapist() {
 
               <div className="col mt-3 ms-3">
                 <div className="row">
-                  <h5>Bio</h5>
+                  <h5>{t("viewTherapist.therapistBio")}</h5>
                   <h6 className="fw-light">{selectedTherapist.profile.bio}</h6>
                 </div>
                 <div className="row">
-                  <h5>Gender</h5>
+                  <h5>{t("viewTherapist.therapistGender")}</h5>
                   <h6 className="fw-light">
                     {selectedTherapist.profile.gender}
                   </h6>
                 </div>
                 <div className="row">
-                  <h5>Prefered Language</h5>
+                  <h5>{t("viewTherapist.preferedLanguage")}</h5>
                   <h6 className="fw-light">
                     {selectedTherapist.profile.prefered_language}
                   </h6>
                 </div>
                 <div className="row">
-                  <h5>Religion</h5>
+                  <h5>{t("viewTherapist.therapistReligion")}</h5>
                   <h6 className="fw-light">{selectedTherapist.religion}</h6>
                 </div>
               </div>

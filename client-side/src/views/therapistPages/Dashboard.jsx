@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Chart,
   LinearScale,
@@ -19,6 +20,23 @@ import SideBar from "../../component/SideBar";
 import "../../styles/therapisthome.css";
 
 export default function Dashboard() {
+  const [t, i18n] = useTranslation("global");
+  const [selectedLanguage, setSelectedLanguage] = useState("english"); 
+
+  useEffect(() => {
+      const savedLanguage = localStorage.getItem("preferredLanguage");
+      if (savedLanguage) {
+          i18n.changeLanguage(savedLanguage);
+          setSelectedLanguage(savedLanguage); 
+      }
+  }, [i18n]);
+
+  const handleChangeLanguage = (e) => {
+      const language = e.target.value;
+      i18n.changeLanguage(language);
+      setSelectedLanguage(language); 
+      localStorage.setItem("preferredLanguage", language); 
+  };
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -84,9 +102,26 @@ export default function Dashboard() {
   }, []);
   return (
     <div className="therapist-home row d-flex flex-row  m-0">
+<<<<<<< Updated upstream
       <div className="col col-lg-2 col-md-2 col-sm-3 m-0 p-0">
         <SideBar />
       </div>
+=======
+      <div className="languageForTranslate">
+        <select
+            className="preferedLanguage"
+            onChange={handleChangeLanguage}
+            value={selectedLanguage} 
+        >
+            <option value="english">English</option>
+            <option value="amharic">Amharic</option>
+            <option value="oromo">Oromo</option>
+            <option value="sumalic">Sumalic</option>
+            <option value="tigrigna">Tigrigna</option>
+        </select>
+      </div>
+      <SideBar />
+>>>>>>> Stashed changes
       <div className="dashboard col">
         <div className="main-info row">
           <div className="col col-auto col-2.5 me-5">
@@ -95,7 +130,7 @@ export default function Dashboard() {
                 <FontAwesomeIcon icon={faUserGroup} />
               </div>
               <div className="col col-auto text-start mt-2">
-                <h5 className="fs-6">Total Counceling</h5>
+                <h5 className="fs-6">{t("dashboard.totalCounceling")}</h5>
                 <h5>29K</h5>
               </div>
             </div>
@@ -104,7 +139,7 @@ export default function Dashboard() {
                 <FontAwesomeIcon icon={faTimeline} />
               </div>
               <div className="col col-auto text-start mt-2">
-                <h5 className="fs-6">New Appointments</h5>
+                <h5 className="fs-6">{t("dashboard.newAppointments")}</h5>
                 <h5>10</h5>
               </div>
             </div>
@@ -113,7 +148,7 @@ export default function Dashboard() {
                 <FontAwesomeIcon icon={faEye} />
               </div>
               <div className="col col-auto text-start mt-2">
-                <h5 className="fs-6">Total Visitor</h5>
+                <h5 className="fs-6">{t("dashboard.totalVisitor")}</h5>
                 <h5>10</h5>
               </div>
             </div>
@@ -124,7 +159,7 @@ export default function Dashboard() {
                 <FontAwesomeIcon icon={faCalendarCheck} color="green" />
               </div>
               <div className="col col-auto text-start mt-2">
-                <h5 className="fs-6">Overall booking</h5>
+                <h5 className="fs-6">{t("dashboard.overallBooking")}</h5>
                 <h5>1K</h5>
               </div>
             </div>
@@ -133,7 +168,7 @@ export default function Dashboard() {
                 <FontAwesomeIcon icon={faCalendarMinus} color="brown" />
               </div>
               <div className="col col-auto text-start mt-2">
-                <h5 className="fs-6">Cancelled Appointments</h5>
+                <h5 className="fs-6">{t("dashboard.cancelledAppointments")}</h5>
                 <h5>10</h5>
               </div>
             </div>
@@ -142,7 +177,7 @@ export default function Dashboard() {
                 <FontAwesomeIcon icon={faCalendarPlus} color="purple" />
               </div>
               <div className="col col-auto text-start mt-2">
-                <h5 className="fs-6">Appointments Today</h5>
+                <h5 className="fs-6">{t("dashboard.appointmentsToday")}</h5>
                 <h5>3</h5>
               </div>
             </div>

@@ -52,6 +52,7 @@
 
 }
 .Faq h1{
+    margin-left: 8vw;
     position: relative;
     font-size: 2.8vw;
     top: 4.6vw;
@@ -97,8 +98,8 @@
 }
 .AboutUs .AboutUs-title h2{
     font-size: 3vw;
-    width: 15vw;
-    margin-left: 20vw;
+    width: 25vw;
+    margin-left: 15vw;
 }
 .AboutUs .AboutUs-title h3{
     text-align: left;

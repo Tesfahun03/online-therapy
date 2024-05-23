@@ -103,6 +103,51 @@
           "newPassword": "አዲስ የይለፍ ቃል",
           "confirmPassword": "የይለፍ ቃል አረጋግጥ",
           "updatePassword": "የይለፍ ቃል አዘምን"
-        }
+    },
+    "dashboard":{
+        "totalCounceling": "ጠቅላላ ማጠቃለያ",
+        "newAppointments": "አዲስ ቀጠሮዎች",
+        "totalVisitor": "ጠቅላላ ጎብኚ",
+        "overallBooking": "አጠቃላይ ቦታ ማስያዝ",
+        "cancelledAppointments": "የተሰረዙ ቀጠሮዎች",
+        "appointmentsToday": "ዛሬ ቀጠሮዎች"
+    },
+    "appointments":{
+        "listofAvailablity": "የተገኝነት ዝርዝር",
+        "edit": "አርትዕ",
+        "delete": "ሰርዝ",
+        "setNewAvalability": "አዲስ ተገኝነትን አዘጋጅ",
+        "saveAvalability": "ተገኝነትን አስቀምጥ",
+        "bookAppointment": "የመጽሐፍ ቀጠሮ",
+        "dateAvailable": "የሚገኝበት ቀን",
+        "dateForAppointment": "የቀጠሮ ቀን ይምረጡ",
+        "bookedBy": "የተያዘው"
+    },
+    "landingPage":{
+        "hiPatientName":"hi",
+        "feelingToday": "How You feel Today?",
+        "happy": "Happy",
+        "normal": "Normal",
+        "sad": "Sad",
+        "ourTherapist": "Our Therapist"
+    },
+    "notification":{
+
+    },
+    "communitySpace":{
+
+    },
+    "viewTherapist":{
+        "bookAppointment":"የመጽሐፍ ቀጠሮ",
+        "payforAppointment": "ለቀጠሮ ይክፈሉ",
+        "emailAddress":"ኢሜል አድራሻ",
+        "phoneNumber": "ስልክ ቁጥር",
+        "therapistCity":"ከተማ",
+        "therapistregion":"ክልል",
+        "therapistBio": "ባዮ",
+        "therapistGender":"ጾታ",
+        "preferedLanguage": "የተመረጠ ቋንቋ",
+        "therapistReligion": "ሃይማኖት"
+    }
       
 }

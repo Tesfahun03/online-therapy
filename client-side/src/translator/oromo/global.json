@@ -103,6 +103,51 @@
         "newPassword": "Jecha Iccitii Haaraa",
         "confirmPassword": "Jecha Iccitii Mirkaneessi",
         "updatePassword": "Jecha Iccitii Fooyyessi"
+    },
+    "dashboard":{
+        "totalCounceling": "Gorsa Waliigalaa", 
+        "newAppointments": "Beellama Haaraa", 
+        "totalVisitor": "Daawwataa Waliigalaa",
+        "overallBooking": "Buukii waliigalaa", 
+        "cancelledAppointments": "Beellama Haqame", 
+        "appointmentsToday": "Beellama Har'a"
+    },
+    "appointments":{
+        "listofAvailablity": "Tarree argama",
+        "edit": "Gulaali",
+        "delete": "Haqi",
+        "setNewAvalability": "Argamuu haaraa saagi", 
+        "saveAvalability": "Argamuu Qusadhu",
+        "bookAppointment": "Beellama Kitaaba", 
+        "dateAvailable": "Guyyaa Argamu",
+        "dateForAppointment": "Guyyaa beellama filadhu",
+        "bookedBy": "Kan galmeesse"
+    },
+    "landingPage":{
+        "hiPatientName":"hi",
+        "feelingToday": "How You feel Today?",
+        "happy": "Happy",
+        "normal": "Normal",
+        "sad": "Sad",
+        "ourTherapist": "Our Therapist"
+    },
+    "notification":{
+
+    },
+    "communitySpace":{
+
+    },
+    "viewTherapist":{
+        "bookAppointment":"Beellama Kitaaba", 
+        "payforAppointment": "Beellamaaf kaffaltii",
+        "emailAddress":"Teessoo Imeelii",
+        "phoneNumber": "Lakkoofsa Bilbilaa", 
+        "therapistCity":"Magaalaa",
+        "therapistregion":"Naannoo", 
+        "therapistBio": "Baayoo", 
+        "therapistGender":"Sala", 
+        "preferedLanguage": "Afaan Filatamaa", 
+        "therapistReligion": "Amantii"
     }
 
 }

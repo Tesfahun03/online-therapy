@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
+<<<<<<< Updated upstream
 import { useParams, Redirect } from "react-router-dom";
+=======
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+>>>>>>> Stashed changes
 import jwtDecode from "jwt-decode";
 import "../../styles/BookAppointment.css";
 import moment from "moment";
@@ -8,7 +13,27 @@ import useAxios from "../../utils/useAxios";
 const swal = require("sweetalert2");
 
 export default function BookAppointment() {
+<<<<<<< Updated upstream
   const axios = useAxios()
+=======
+  const [t, i18n] = useTranslation("global");
+    const [selectedLanguage, setSelectedLanguage] = useState("english"); 
+
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem("preferredLanguage");
+        if (savedLanguage) {
+            i18n.changeLanguage(savedLanguage);
+            setSelectedLanguage(savedLanguage); 
+        }
+    }, [i18n]);
+
+    const handleChangeLanguage = (e) => {
+        const language = e.target.value;
+        i18n.changeLanguage(language);
+        setSelectedLanguage(language); 
+        localStorage.setItem("preferredLanguage", language); 
+    };
+>>>>>>> Stashed changes
   const { id } = useParams();
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
@@ -151,16 +176,32 @@ export default function BookAppointment() {
 
   return (
     <div className="book-appointment container">
+<<<<<<< Updated upstream
       {hasPaid ? (
+=======
+      <div className="languageForTranslate">
+          <select
+              className="preferedLanguage"
+              onChange={handleChangeLanguage}
+              value={selectedLanguage} // Set value to the selected language
+          >
+              <option value="english">English</option>
+              <option value="amharic">Amharic</option>
+              <option value="oromo">Oromo</option>
+              <option value="sumalic">Sumalic</option>
+              <option value="tigrigna">Tigrigna</option>
+          </select>
+      </div>
+>>>>>>> Stashed changes
       <div className="row mt-5">
         <div className="col-lg-6 offset-lg-3">
-          <h5>Book Appointment</h5>
+          <h5>{t("appointments.bookAppointment")}</h5>
           <form
             onSubmit={handleRegisterAppointmentSubmit}
             className="d-flex flex-column justify-content-center"
           >
             <div className="row mb-4">
-              <label htmlFor="booked_by">Booked By</label>
+              <label htmlFor="booked_by">{t("appointments.bookedBy")}</label>
               <input
                 type="text"
                 className="form-control"
@@ -171,7 +212,7 @@ export default function BookAppointment() {
             </div>
             <div className="row mb-4">
               <label htmlFor="date_available">
-                Select date for appointment
+              {t("appointments.dateForAppointment")}
               </label>
               <select
                 name="date_available"
@@ -181,9 +222,15 @@ export default function BookAppointment() {
                 onChange={handleRegisterAppointment}
                 style={{ opacity: 0.9 }}
               >
+<<<<<<< Updated upstream
                 <option style={{ opacity: 0.5 }} value="">Date Available (International Time Zone)</option>
                 {availableDates.map((availableDate, index) => (
                   <option value={availableDate.id} key={`${availableDate.id}-${index}`}>
+=======
+                <option value="">{t("appointments.dateAvailable")}</option>
+                {availableDates.map((availableDate) => (
+                  <option value={availableDate.id} key={availableDate.id}>
+>>>>>>> Stashed changes
                     {moment(availableDate.date).format("D MMMM YYYY")} From{" "}
                     {moment(availableDate.start_time, "HH:mm:ss").format(
                       "hh:mm A"
@@ -196,7 +243,7 @@ export default function BookAppointment() {
                 ))}
               </select>
             </div>
-            <button className="btn btn-success">Book Appointment</button>
+            <button className="btn btn-success">{t("appointments.bookAppointment")}</button>
           </form>
         </div>
       </div>

@@ -1,8 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import "../../styles/Profile.css";
+import { useTranslation } from "react-i18next";
 import jwtDecode from "jwt-decode";
 
+<<<<<<< Updated upstream:client-side/src/views/patientPages/ProfilePatient.jsx
 export default function ProfilePatient() {
+=======
+export default function Profile() {
+  const [t, i18n] = useTranslation("global");
+    const [selectedLanguage, setSelectedLanguage] = useState("english"); 
+
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem("preferredLanguage");
+        if (savedLanguage) {
+            i18n.changeLanguage(savedLanguage);
+            setSelectedLanguage(savedLanguage); 
+        }
+    }, [i18n]);
+
+    const handleChangeLanguage = (e) => {
+        const language = e.target.value;
+        i18n.changeLanguage(language);
+        setSelectedLanguage(language); 
+        localStorage.setItem("preferredLanguage", language); 
+    };
+>>>>>>> Stashed changes:client-side/src/views/patientPages/PatientProfile.jsx
 
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
@@ -18,6 +40,19 @@ export default function ProfilePatient() {
 
   return (
     <div className="profile-page">
+      <div className="languageForTranslate">
+          <select
+              className="preferedLanguage"
+              onChange={handleChangeLanguage}
+              value={selectedLanguage} // Set value to the selected language
+          >
+              <option value="english">English</option>
+              <option value="amharic">Amharic</option>
+              <option value="oromo">Oromo</option>
+              <option value="sumalic">Sumalic</option>
+              <option value="tigrigna">Tigrigna</option>
+          </select>
+      </div>
       <div className="row row-auto p-0 m-4 d-flex justify-content-between profile-contianer">
         <div className="col col-auto col-lg-3 col-md-3 col-sm-4 mb-3 mt-2 me-5 ms-5 profile-pic-container">
           <div className="card profile-pic-info">
@@ -44,7 +79,7 @@ export default function ProfilePatient() {
                 }}
                 onClick={() => handleButtonId("AccountSetting")}
               >
-                Account Setting
+                {t("profile.accountSetting")}
               </h6>
               <>
                 <h6
@@ -55,7 +90,7 @@ export default function ProfilePatient() {
                   }}
                   onClick={() => handleButtonId("ChangePassword")}
                 >
-                  Change Password
+                  {t("profile.changePassword")}
                 </h6>
               </>
               <h6
@@ -66,7 +101,7 @@ export default function ProfilePatient() {
                 }}
                 onClick={() => handleButtonId("AdditionalInformation")}
               >
-                Additional Infromation
+                {t("profile.additionalInformation")}
               </h6>
               <h6
                 style={{
@@ -76,7 +111,7 @@ export default function ProfilePatient() {
                 }}
                 onClick={() => handleButtonId("Notification")}
               >
-                Notification
+                {t("profile.notification")}
               </h6>
             </div>
             <div className="card-body profile-data-body">
@@ -89,12 +124,12 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1"
                       >
-                        First Name
+                        {t("profile.firstName")}
                       </label>
                       <input
                         type="text"
                         className="form-control w-100 profile-input"
-                        placeholder="First name"
+                        placeholder={t("profile.firstName")}
                         id="firstName"
                         style={{ width: "auto" }}
                       />
@@ -105,12 +140,12 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1"
                       >
-                        Last name
+                        {t("profile.lastName")}
                       </label>
                       <input
                         type="text"
                         className="form-control w-100 profile-input"
-                        placeholder="Last name"
+                        placeholder={t("profile.lastName")}
                         id="lastName"
                       />
                     </div>
@@ -122,12 +157,12 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1"
                       >
-                        Phone number
+                        {t("profile.phoneNumber")}
                       </label>
                       <input
                         type="tel"
                         className="form-control w-100 profile-input"
-                        placeholder="Phone number"
+                        placeholder={t("profile.phoneNumber")}
                         id="phoneNumber"
                         style={{ width: "auto" }}
                       />
@@ -138,12 +173,12 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1"
                       >
-                        Email Address
+                        {t("profile.emailAddress")}
                       </label>
                       <input
                         type="email"
                         className="form-control w-100 profile-input"
-                        placeholder="Email address"
+                        placeholder={t("profile.emailAddress")}
                         id="email"
                       />
                     </div>
@@ -155,15 +190,15 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1"
                       >
-                        Gender
+                        {t("profile.gender")}
                       </label>
                       <select
                         name="gender"
                         className="form-control w-100 profile-input"
                         id="gender"
                       >
-                        <option value="MALE">Male</option>
-                        <option value="FEMALE">Female</option>
+                        <option value="MALE">{t("profile.male")}</option>
+                        <option value="FEMALE">{t("profile.female")}</option>
                       </select>
                     </div>
                     <div className="col col-auto col-lg-6 mb-3 profile-input-column">
@@ -172,12 +207,12 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1"
                       >
-                        Age
+                        {t("profile.age")}
                       </label>
                       <input
                         type="number"
                         id="age"
-                        placeholder="Age"
+                        placeholder={t("profile.age")}
                         name="age"
                         min={21}
                         max={105}
@@ -193,12 +228,12 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1"
                       >
-                        City
+                        {t("profile.city")}
                       </label>
                       <input
                         type="text"
                         className="form-control w-100 profile-input"
-                        placeholder="City"
+                        placeholder={t("profile.city")}
                         id="city"
                       />
                     </div>
@@ -208,12 +243,12 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1"
                       >
-                        Region
+                        {t("profile.region")}
                       </label>
                       <input
                         type="text"
                         className="form-control w-100 profile-input"
-                        placeholder="Region"
+                        placeholder={t("profile.region")}
                         id="region"
                       />
                     </div>
@@ -225,16 +260,16 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1 profile-input"
                       >
-                        Martial Status
+                        {t("profile.maritalStatus")}
                       </label>
                       <select
                         name="martialStatus"
                         className="form-select w-100 profile-input"
                         id="martial-status"
                       >
-                        <option value="SINGLE">Single</option>
-                        <option value="MARRIED">Married</option>
-                        <option value="DIVORCED">Divorced</option>
+                        <option value="SINGLE">{t("profile.single")}</option>
+                        <option value="MARRIED">{t("profile.married")}</option>
+                        <option value="DIVORCED">{t("profile.divorced")}</option>
                       </select>
                     </div>
                     <div className="col col-auto col-lg-6 mb-3 profile-input-column">
@@ -243,7 +278,7 @@ export default function ProfilePatient() {
                         style={{ width: "max-content" }}
                         className="form-label m-0 p-0 ms-2 mb-1"
                       >
-                        Language preference
+                        {t("profile.languagePreference")}
                       </label>
                       <select
                         name="languagePreference"
@@ -263,14 +298,14 @@ export default function ProfilePatient() {
                     style={{ width: "max-content" }}
                     className="form-label m-0 p-0 ms-2 mb-1 "
                   >
-                    Occupation
+                    {t("profile.occupation")}
                   </label>
                   <select
                     name="occupation"
                     className="form-select w-100 mb-4 profile-input"
                     id="occupation"
                   >
-                    <option value="">Occupation</option>
+                    <option value="">{t("profile.occupation")}</option>
                     <option value="STUDENT">Student</option>
                     <option value="EMPLOYED">Employed</option>
                     <option value="SELFEMPLOYED">Self-Employed</option>
@@ -281,7 +316,7 @@ export default function ProfilePatient() {
                     className="btn btn-primary ms-2 profile-button"
                     style={{ width: "25%" }}
                   >
-                    Update
+                    {t("profile.update")}
                   </button>
                 </form>
               )}
@@ -293,12 +328,12 @@ export default function ProfilePatient() {
                       style={{ width: "max-content" }}
                       className="form-label m-0 p-0 ms-2 mb-1"
                     >
-                      Current Password
+                      {t("profile.currentPassword")}
                     </label>
                     <input
                       type="text"
                       className="form-control w-100 profile-input mb-3"
-                      placeholder="Current password"
+                      placeholder={t("profile.currentPassword")}
                       id="current-password"
                     />
                     <label
@@ -306,12 +341,12 @@ export default function ProfilePatient() {
                       style={{ width: "max-content" }}
                       className="form-label m-0 p-0 ms-2 mb-1"
                     >
-                      New password
+                      {t("profile.newPassword")}
                     </label>
                     <input
                       type="text"
                       className="form-control w-100 profile-input mb-3"
-                      placeholder="New password"
+                      placeholder={t("profile.newPassword")}
                       id="new-password"
                     />
                     <label
@@ -319,21 +354,21 @@ export default function ProfilePatient() {
                       style={{ width: "max-content" }}
                       className="form-label m-0 p-0 ms-2 mb-1"
                     >
-                      Confirm Password
+                      {t("profile.confirmPassword")}
                     </label>
                     <input
                       type="text"
                       className="form-control w-100 profile-input mb-4"
-                      placeholder="Confirm password"
+                      placeholder={t("profile.confirmPassword")}
                       id="confirm-password"
                     />
 
-                    <button className="btn btn-primary ms-1">Update Password</button>
+                    <button className="btn btn-primary ms-1">{t("profile.updatePassword")}</button>
                   </form>
                 </div>
               )}
               {activeButton === "AdditionalInformation" && (
-                <div>This is AdditionalInformation section</div>
+                <div>This is Additional Information section</div>
               )}
               {activeButton === "Notification" && (
                 <div>This is Notification section</div>

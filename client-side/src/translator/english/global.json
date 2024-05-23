@@ -103,6 +103,53 @@
         "newPassword": "New Password",
         "confirmPassword": "Confirm Password",
         "updatePassword": "Update Password"
+    },
+    "dashboard":{
+        "totalCounceling": "Total Counceling",
+        "newAppointments": "New Appointments",
+        "totalVisitor": "Total Visitor",
+        "overallBooking": "Overall booking",
+        "cancelledAppointments": "Cancelled Appointments",
+        "appointmentsToday": "Appointments Today"
+    },
+    "appointments":{
+        "listofAvailablity": "List of availability",
+        "edit": "Edit",
+        "delete": "Delete",
+        "setNewAvalability": "Set new Avalability",
+        "saveAvalability": "Save Avalability",
+        "bookAppointment": "Book Appointment",
+        "dateAvailable": "Date Available",
+        "dateForAppointment": "Select date for appointment",
+        "bookedBy": "Booked By"
+
+    },
+    
+    "landingPage":{
+        "hiPatientName":"hi",
+        "feelingToday": "How You feel Today?",
+        "happy": "Happy",
+        "normal": "Normal",
+        "sad": "Sad",
+        "ourTherapist": "Our Therapist"
+    },
+    "notification":{
+
+    },
+    "communitySpace":{
+
+    },
+    "viewTherapist":{
+        "bookAppointment":"Book Appointment",
+        "payforAppointment": "Pay for appointment",
+        "emailAddress":"Email Address",
+        "phoneNumber": "Phone Number",
+        "therapistCity":"City",
+        "therapistregion":"Region",
+        "therapistBio": "Bio",
+        "therapistGender":"Gender",
+        "preferedLanguage": "Prefered Language",
+        "therapistReligion": "Religion"
     }
       
 }
