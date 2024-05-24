@@ -8,9 +8,6 @@ import { Button, Modal } from "react-bootstrap";
 const swal = require("sweetalert2");
 
 export default function ViewTherapist() {
-<<<<<<< Updated upstream
-  const {id} = useParams();
-=======
   const [t, i18n] = useTranslation("global");
     const [selectedLanguage, setSelectedLanguage] = useState("english"); 
 
@@ -30,7 +27,6 @@ export default function ViewTherapist() {
   };
 
   const { id } = useParams();
->>>>>>> Stashed changes
   const axios = useAxios();
   const history = useHistory();
 
@@ -149,9 +145,6 @@ export default function ViewTherapist() {
 
   return (
     <div className="view-therapist">
-<<<<<<< Updated upstream
-      {selectedTherapist ? (
-=======
       <div className="languageForTranslate">
           <select
               className="preferedLanguage"
@@ -165,8 +158,7 @@ export default function ViewTherapist() {
               <option value="tigrigna">Tigrigna</option>
           </select>
       </div>
-      {selectedTherapist && (
->>>>>>> Stashed changes
+      {selectedTherapist ? (
         <div className="row row-auto p-0 m-0">
           <div
             className="therapist-pro-pic-info col col-auto col-lg-3 col-md-5 col-sm-4 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 mt-5 ms-4 me-4"
@@ -191,7 +183,6 @@ export default function ViewTherapist() {
             >
               {selectedTherapist.specialization}
             </h5>
-<<<<<<< Updated upstream
             <div
             className="col col-auto text-center"
             key={`buttons-${selectedTherapist.profile.user.id}`}
@@ -226,24 +217,6 @@ export default function ViewTherapist() {
             ) : (
               ""
             )}
-=======
-            <div className="col col-auto text-center">
-              {loggedUser.has_paid ? (
-                <button className="btn btn-primary" onClick={()=>handleBookAppointment(id)}>
-                  {t("viewTherapist.bookAppointment")}
-                </button>
-              ) : (
-                <button
-                  className="btn btn-success mb-2"
-                  onClick={() =>
-                    handlePayment(user_id, selectedTherapist.profile.user.id)
-                  }
-                >
-                  {t("viewTherapist.payforAppointment  ")}
-                </button>
-              )}
-            </div>
->>>>>>> Stashed changes
           </div>
           </div>
       

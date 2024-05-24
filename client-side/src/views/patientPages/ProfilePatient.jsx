@@ -3,10 +3,7 @@ import "../../styles/Profile.css";
 import { useTranslation } from "react-i18next";
 import jwtDecode from "jwt-decode";
 
-<<<<<<< Updated upstream:client-side/src/views/patientPages/ProfilePatient.jsx
 export default function ProfilePatient() {
-=======
-export default function Profile() {
   const [t, i18n] = useTranslation("global");
     const [selectedLanguage, setSelectedLanguage] = useState("english"); 
 
@@ -24,7 +21,6 @@ export default function Profile() {
         setSelectedLanguage(language); 
         localStorage.setItem("preferredLanguage", language); 
     };
->>>>>>> Stashed changes:client-side/src/views/patientPages/PatientProfile.jsx
 
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);

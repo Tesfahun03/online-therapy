@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< Updated upstream
 import { useParams, Redirect } from "react-router-dom";
-=======
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
->>>>>>> Stashed changes
 import jwtDecode from "jwt-decode";
 import "../../styles/BookAppointment.css";
 import moment from "moment";
@@ -13,9 +9,7 @@ import useAxios from "../../utils/useAxios";
 const swal = require("sweetalert2");
 
 export default function BookAppointment() {
-<<<<<<< Updated upstream
   const axios = useAxios()
-=======
   const [t, i18n] = useTranslation("global");
     const [selectedLanguage, setSelectedLanguage] = useState("english"); 
 
@@ -33,7 +27,6 @@ export default function BookAppointment() {
         setSelectedLanguage(language); 
         localStorage.setItem("preferredLanguage", language); 
     };
->>>>>>> Stashed changes
   const { id } = useParams();
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
@@ -176,9 +169,6 @@ export default function BookAppointment() {
 
   return (
     <div className="book-appointment container">
-<<<<<<< Updated upstream
-      {hasPaid ? (
-=======
       <div className="languageForTranslate">
           <select
               className="preferedLanguage"
@@ -192,7 +182,7 @@ export default function BookAppointment() {
               <option value="tigrigna">Tigrigna</option>
           </select>
       </div>
->>>>>>> Stashed changes
+      {hasPaid ? (
       <div className="row mt-5">
         <div className="col-lg-6 offset-lg-3">
           <h5>{t("appointments.bookAppointment")}</h5>
@@ -222,15 +212,9 @@ export default function BookAppointment() {
                 onChange={handleRegisterAppointment}
                 style={{ opacity: 0.9 }}
               >
-<<<<<<< Updated upstream
-                <option style={{ opacity: 0.5 }} value="">Date Available (International Time Zone)</option>
+                <option style={{ opacity: 0.5 }} value="">{t("appointments.dateAvailable")}</option>
                 {availableDates.map((availableDate, index) => (
                   <option value={availableDate.id} key={`${availableDate.id}-${index}`}>
-=======
-                <option value="">{t("appointments.dateAvailable")}</option>
-                {availableDates.map((availableDate) => (
-                  <option value={availableDate.id} key={availableDate.id}>
->>>>>>> Stashed changes
                     {moment(availableDate.date).format("D MMMM YYYY")} From{" "}
                     {moment(availableDate.start_time, "HH:mm:ss").format(
                       "hh:mm A"

@@ -7,13 +7,10 @@ import useAxios from "../../utils/useAxios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button, Modal } from "react-bootstrap";
-<<<<<<< Updated upstream
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faVideo } from "@fortawesome/free-solid-svg-icons";
 
-=======
 import { useTranslation } from "react-i18next";
->>>>>>> Stashed changes
 export default function Appointments() {
   const [t, i18n] = useTranslation("global");
     const [selectedLanguage, setSelectedLanguage] = useState("english"); 
@@ -181,7 +178,6 @@ export default function Appointments() {
 
   return (
     <div className="therapist-home row d-flex flex-row  m-0">
-<<<<<<< Updated upstream
       <div className="col col-lg-2 col-md-2 col-sm-3 m-0 p-0">
         <SideBar />
       </div>
@@ -191,33 +187,10 @@ export default function Appointments() {
             <h2>List of avalability (International Time Zone)</h2>
             {showAvalability.length > 0 ? (
               showAvalability.map((avalabilitys, index) => (
-=======
-      <div className="languageForTranslate">
-          <select
-              className="preferedLanguage"
-              onChange={handleChangeLanguage}
-              value={selectedLanguage} // Set value to the selected language
-          >
-              <option value="english">English</option>
-              <option value="amharic">Amharic</option>
-              <option value="oromo">Oromo</option>
-              <option value="sumalic">Sumalic</option>
-              <option value="tigrigna">Tigrigna</option>
-          </select>
-      </div>
-      <SideBar />
-      <div className="col">
-        {showAvalability !== null  && (
-          <div className="row mt-2">
-            <h2>{t("appointments.listofAvailablity")}</h2>
-            {showAvalability &&
-              showAvalability.map((avalabilitys) => (
->>>>>>> Stashed changes
                 <div
                   key={`${avalabilitys.id}-${index}`}
                   className="d-flex justify-content-between mb-2"
                 >
-<<<<<<< Updated upstream
                   <p>{moment(avalabilitys.date).format("D MMMM YYYY")}</p>
                   <p>
                     {moment(avalabilitys.start_time, "HH:mm:ss").format(
@@ -239,13 +212,6 @@ export default function Appointments() {
                   >
                     Delete
                   </button>
-=======
-                  <p>{avalabilitys.date}</p>
-                  <p>{avalabilitys.start_time}</p>
-                  <p>{avalabilitys.end_time}</p>
-                  <button className="btn btn-success">{t("appointments.edit")}</button>
-                  <button className="btn btn-danger">{t("appointments.edit")}</button>
->>>>>>> Stashed changes
                 </div>
               ))
             ) : (
@@ -255,7 +221,6 @@ export default function Appointments() {
         )}
 
         <div className="row">
-<<<<<<< Updated upstream
           <h2>Set New Availability</h2>
           <form onSubmit={handleAppointmentSubmit}>
             <div
@@ -300,37 +265,6 @@ export default function Appointments() {
                 Save Availability
               </button>
             </div>
-=======
-          <h2>{t("appointments.setNewAvalability")}</h2>
-          <form onSubmit={handleAppointmentSubmit}>
-            <input
-              type="date"
-              id="date"
-              placeholder="Date"
-              name="date"
-              className="form-control mb-2"
-              onChange={handleAppointmentSet}
-            />
-            <input
-              type="time"
-              id="start_time"
-              placeholder="Start time"
-              name="start_time"
-              className="form-control mb-2"
-              onChange={handleAppointmentSet}
-            />
-            <input
-              type="time"
-              id="end_time"
-              placeholder="End time"
-              name="end_time"
-              className="form-control mb-2"
-              onChange={handleAppointmentSet}
-            />
-            <button className="btn btn-success" onClick={handleShow}>
-              {t("appointments.saveAvalability")}
-            </button>
->>>>>>> Stashed changes
           </form>
         </div>
         <div className="row">

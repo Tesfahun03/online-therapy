@@ -102,11 +102,6 @@ export default function Dashboard() {
   }, []);
   return (
     <div className="therapist-home row d-flex flex-row  m-0">
-<<<<<<< Updated upstream
-      <div className="col col-lg-2 col-md-2 col-sm-3 m-0 p-0">
-        <SideBar />
-      </div>
-=======
       <div className="languageForTranslate">
         <select
             className="preferedLanguage"
@@ -120,8 +115,9 @@ export default function Dashboard() {
             <option value="tigrigna">Tigrigna</option>
         </select>
       </div>
-      <SideBar />
->>>>>>> Stashed changes
+      <div className="col col-lg-2 col-md-2 col-sm-3 m-0 p-0">
+        <SideBar />
+      </div>
       <div className="dashboard col">
         <div className="main-info row">
           <div className="col col-auto col-2.5 me-5">
