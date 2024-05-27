@@ -30,7 +30,12 @@ class ChatMessage(models.Model):
     def reciever_profile(self):
         reciever_profile = Profile.objects.get(user=self.reciever)
         return reciever_profile
- 
+
+class Counter(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    messageCount = models.IntegerField(default=0)
+    notificationCount = models.IntegerField(default=0)
+     
 # Availability dates of therapists
 class TherapistAvailability(models.Model):
     therapist = models.ForeignKey(User, on_delete=models.CASCADE)

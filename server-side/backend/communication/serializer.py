@@ -2,7 +2,7 @@ from rest_framework import serializers
 from core.serializer import ProfileSerializer
 from core.models import Therapist, User, Profile, Patient
 from communication.models import ChatMessage, TherapistAvailability, Appointments, \
-                                    RoomInsights, Notification, Review
+                                    RoomInsights, Notification, Review, Counter
 
 #Chat APP
 class MessageSerializer(serializers.ModelSerializer):
@@ -21,6 +21,11 @@ class MessageSerializer(serializers.ModelSerializer):
             self.Meta.depth = 0
         else:
             self.Meta.depth = 2
+            
+class CounterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Counter
+        fields = '__all__'
             
 #Booking Appointment
 class TherapistAvailabilitySerializer(serializers.ModelSerializer):

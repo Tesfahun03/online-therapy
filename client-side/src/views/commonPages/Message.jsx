@@ -10,7 +10,6 @@ export default function Message() {
   const baseURL = "http://127.0.0.1:8000/session";
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState([]);
-  const [user, setUser] = useState([]);
   const [profile, setProfile] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [relationChecker, setRelation] = useState();
@@ -163,7 +162,6 @@ export default function Message() {
           )
           .then((res) => {
             setProfile(res.data);
-            setUser(res.data.user);
           });
       } catch (error) {
         console.log(error);
@@ -475,7 +473,7 @@ export default function Message() {
           </div>
         </main>
       ) : (
-        <h5>FORBIDDEN</h5>
+        <Redirect to={`/viewtherapist/${id}`} />
       )}
     </div>
   );

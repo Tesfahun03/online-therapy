@@ -16,12 +16,12 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 
-from communication.models import ChatMessage, TherapistAvailability, \
+from communication.models import ChatMessage, Counter, TherapistAvailability, \
                                     Appointments, RoomInsights, Notification, Review
 
 from communication.serializer import MessageSerializer, TherapistAvailabilitySerializer, \
                                         AppointmentsSerializer, RoomInsightsSerializer, \
-                                        NotificationSerializer, ReviewSerializer
+                                        NotificationSerializer, ReviewSerializer, CounterSerializer
 
 from core.models import User, Profile, Patient, Therapist
 from core.serializer import UserSerializer, ProfileSerializer, PatientSerializer, TherapistSerializer
@@ -83,6 +83,41 @@ class GetMessages(generics.ListAPIView):
 class SendMessages(generics.CreateAPIView):
     serializer_class = MessageSerializer
 
+
+class GetAllMessages(generics.ListAPIView):
+    serializer_class = MessageSerializer
+    
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        
+        messages =  ChatMessage.objects.filter(Q(reciever__id=user_id))
+                
+        return messages
+    
+class CounterView(generics.RetrieveUpdateAPIView):
+    serializer_class = CounterSerializer
+
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        try:
+            count = Counter.objects.get(user_id=user_id)
+        except Counter.DoesNotExist:
+            # If no MessageCount object exists for the user, create one with count=0
+            count = Counter.objects.create(user_id=user_id, messageCount=0, notificationCount=0)
+        return count
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 ##############################################################################
 
 #Booking Appointment        

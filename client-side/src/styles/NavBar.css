@@ -86,7 +86,17 @@
 
 .profile-button, .notification, .community-space, .message-box{
     margin-right: 1.5vw;
+    position: relative;
 }
-
-
+.badge {
+    position: absolute;
+    top: -5px;
+    right: 15px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 1px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
   

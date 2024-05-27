@@ -1,6 +1,6 @@
 from django.contrib import admin
 from communication.models import ChatMessage, TherapistAvailability, Appointments, \
-                                    RoomInsights, Notification, Review
+                                    RoomInsights, Notification, Review, Counter
 
 # Register your models here.
 class ChatMessageAdmin(admin.ModelAdmin):
@@ -48,5 +48,6 @@ admin.site.register( ChatMessage,ChatMessageAdmin)
 admin.site.register(TherapistAvailability, TherapistAvailabilityAdmin)
 admin.site.register(Appointments, AppointmentsAdmin)
 admin.site.register(RoomInsights)
+admin.site.register(Counter)
 admin.site.register(Notification, NotificationAdmin)
 admin.site.register(Review, ReviewAdmin)

@@ -15,6 +15,10 @@ export default function NavBar() {
   const token = localStorage.getItem("authTokens");
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(token));
   const [relationIds, setRelationId] = useState(null);
+  const [newNotificationCount, setNewNotificationCount] = useState(0);
+  const [newMessageCount, setNewMessageCount] = useState(0);
+  const [currentMessageCount, setCurrentMessageCount] = useState(0); // Define currentMessageCount state
+  const [currentNotificationCount, setCurrentNotificationCount] = useState(0); // Define currentMessageCount state
   const location = useLocation();
   const decodedToken = token ? jwtDecode(token) : null;
 
@@ -117,6 +121,70 @@ export default function NavBar() {
     });
   };
 
+  const fetchMessageCount = async () => {
+    try {
+      const counterResponse = await axios.get(`http://127.0.0.1:8000/session/counter/${user_id}/`);
+      const messageCount = counterResponse.data.messageCount;
+      const messageResponse = await axios.get(`http://127.0.0.1:8000/session/all-my-messages/${user_id}/`);
+      const messages = messageResponse.data;
+      const currentMessageCount = messages.length;
+      setCurrentMessageCount(currentMessageCount);
+      if (currentMessageCount > messageCount) {
+        setNewMessageCount(currentMessageCount - messageCount);
+      } else {
+        setNewMessageCount(0);
+      }
+
+      const notificationCount = counterResponse.data.notificationCount;
+      const endpoint = user_type === "patient" ? "patient" : "therapist";
+      const notificationResponse = await axios.get(`http://127.0.0.1:8000/session/${endpoint}/${user_id}/notification/`);
+      const notifications = notificationResponse.data;
+      const currentNotificationCount = notifications.length;
+      setCurrentNotificationCount(currentNotificationCount);
+      if (currentNotificationCount > notificationCount) {
+        setNewNotificationCount(currentNotificationCount - notificationCount);
+      } else {
+        setNewNotificationCount(0);
+      }
+  
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+
+  useEffect(() => {
+    let interval;
+    if (isLoggedIn) {
+      fetchMessageCount();
+      interval = setInterval(fetchMessageCount, 1000); // Fetch message count every 1 second
+    }
+
+    return () => clearInterval(interval);
+  }, [isLoggedIn, user_id, user_type]);
+
+  const handleNotificationClick = async () => {
+    try {
+      await axios.put(`http://127.0.0.1:8000/session/message-count/${user_id}/`, {
+        notificationCount: currentNotificationCount,
+        user: user_id
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleMessageClick = async () => {
+    try {
+      await axios.put(`http://127.0.0.1:8000/session/message-count/${user_id}/`, {
+        messageCount: currentMessageCount,
+        user: user_id
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <nav ref={navbarRef} className="navBar">
       {isLoggedIn ? (
@@ -139,18 +207,29 @@ export default function NavBar() {
 
           <div className="navButton">
             <div className="navButtonFlex">
-              {user_type !== "therapist" && (
-                <Link to="/notification-p" style={{ textDecoration: "none" }}>
+              {user_type === "patient" && (
+                <Link to="/notification-p" style={{ textDecoration: "none" }} onClick={handleNotificationClick}>
                   <div className="notification">
-                  <FontAwesomeIcon icon={faBell} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
+                    <FontAwesomeIcon icon={faBell} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
+                    {newNotificationCount > 0 && <span className="badge">{newNotificationCount}</span>}
+                    <h5>Notification</h5>
+                  </div>
+                </Link>
+              )}
+              {user_type === "therapist" && (
+                <Link to="/notification-t" style={{ textDecoration: "none" }} onClick={handleNotificationClick}>
+                  <div className="notification">
+                    <FontAwesomeIcon icon={faBell} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
+                    {newNotificationCount > 0 && <span className="badge">{newNotificationCount}</span>}
                     <h5>Notification</h5>
                   </div>
                 </Link>
               )}
               {relationIds && relationIds.length > 0 ? (
-              <Link to="/message-box" style={{ textDecoration: "none" }}>
+              <Link to="/message-box" style={{ textDecoration: "none" }} onClick={handleMessageClick}>
                 <div className="message-box">
                 <FontAwesomeIcon icon={faEnvelope} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
+                {newMessageCount > 0 && <span className="badge">{newMessageCount}</span>}
                   <h5>Message</h5>
                 </div>
               </Link>
