@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import useAxios from '../../utils/useAxios'
 import {decryptMessage}from '../../utils/cryptoUtils';
 import jwtDecode from 'jwt-decode'
-import { Link, useHistory } from 'react-router-dom/'
+import { Link } from 'react-router-dom/'
 import moment from 'moment';
 
 function Message() {
@@ -12,7 +12,6 @@ function Message() {
   const baseURL = 'http://127.0.0.1:8000/session'
   // Create New State
   const [messages, setMessages] = useState([])
-  let [newSearch, setnewSearch] = useState({search: "",});
   const [relationIds, setRelationId] = useState(null);
   const [relationUsers, setRelationUsers] = useState([]); // State to store user information
   
@@ -26,7 +25,6 @@ function Message() {
   const user_id = decoded.user_id
   const user_type = decoded.user_type;
 
-  const history = useHistory()
   console.log(user_id)
   useEffect(() => {
     const fetchRelationId = async () => {
@@ -80,28 +78,6 @@ function Message() {
     }
   }, [])
  
-  const handleSearchChange = (event) => {
-    setnewSearch({
-      ...newSearch,
-      [event.target.name]: event.target.value,
-    });
-
-  };
-
-  const SearchUser = () => {
-    axios.get('http://127.0.0.1:8000/core/search/' + newSearch.username + '/')
-        .then((res) => {
-            if (res.status === 404) {
-                console.log(res.data.detail);
-                alert("User does not exist");
-            } else {
-                history.push('/search/'+newSearch.username+'/');
-            }
-        })
-        .catch((error) => {
-            alert("User Does Not Exist")
-        });
-};
   return (
     <div>
       <main className="content" style={{ marginTop: "150px" }}>
