@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Redirect } from "react-router-dom";
+import React, { Redirect, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import "../../styles/BookAppointment.css";
 import moment from "moment";
@@ -9,7 +9,6 @@ import useAxios from "../../utils/useAxios";
 const swal = require("sweetalert2");
 
 export default function BookAppointment() {
-  const axios = useAxios()
   const [t, i18n] = useTranslation("global");
     const [selectedLanguage, setSelectedLanguage] = useState("english"); 
 
@@ -20,6 +19,7 @@ export default function BookAppointment() {
             setSelectedLanguage(savedLanguage); 
         }
     }, [i18n]);
+    const axios = useAxios()
 
     const handleChangeLanguage = (e) => {
         const language = e.target.value;
@@ -182,7 +182,7 @@ export default function BookAppointment() {
               <option value="tigrigna">Tigrigna</option>
           </select>
       </div>
-      {hasPaid ? (
+      { hasPaid ? (
       <div className="row mt-5">
         <div className="col-lg-6 offset-lg-3">
           <h5>{t("appointments.bookAppointment")}</h5>
@@ -212,9 +212,9 @@ export default function BookAppointment() {
                 onChange={handleRegisterAppointment}
                 style={{ opacity: 0.9 }}
               >
-                <option style={{ opacity: 0.5 }} value="">{t("appointments.dateAvailable")}</option>
-                {availableDates.map((availableDate, index) => (
-                  <option value={availableDate.id} key={`${availableDate.id}-${index}`}>
+                <option value="">{t("appointments.dateAvailable")}</option>
+                {availableDates.map((availableDate) => (
+                  <option value={availableDate.id} key={availableDate.id}>
                     {moment(availableDate.date).format("D MMMM YYYY")} From{" "}
                     {moment(availableDate.start_time, "HH:mm:ss").format(
                       "hh:mm A"

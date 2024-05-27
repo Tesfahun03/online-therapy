@@ -17,6 +17,9 @@ export default function Message() {
   let [newMessage, setnewMessage] = useState({ message: "" });
   const chatContainerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [relationIds, setRelationId] = useState(null);
+  const [relationUsers, setRelationUsers] = useState([]); // State to store user information
+  
 
   const axios = useAxios();
   const { id } = useParams();
@@ -40,6 +43,40 @@ export default function Message() {
       chatContainerRef.current.scrollTop = scrollPosition;
     }
   }, [scrollPosition]);
+  useEffect(() => {
+    const fetchRelationId = async () => {
+      try {
+        const endpoint = user_type === "patient" ? "patient" : "therapist";
+        const transactionType = user_type === "patient" ? "debited" : "credited";
+        
+        const response = await axios.get(`http://127.0.0.1:8000/payment/${endpoint}/${user_id}/${transactionType}`);
+        
+        // Assuming the response contains an array of relations
+        const relationData = response.data;
+        // Extract the correct ID based on user type
+        const fetchedIds = user_type === "patient"
+        ? relationData.map(data => data.therapist)
+        : relationData.map(data => data.patient);
+        
+        setRelationId(fetchedIds);
+
+        // Fetch user information for each fetched ID based on user type
+        const userResponses = await Promise.all(
+            fetchedIds.map(id => 
+            axios.get(`http://127.0.0.1:8000/core/${user_type === "patient" ? "therapists" : "patients"}/${id}`)
+            )
+        );
+
+        // Store user information
+        const usersData = userResponses.map(response => response.data);
+        setRelationUsers(usersData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchRelationId();
+  }, [user_id, user_type]);
 
   const paymentChecker = async () => {
     try {
@@ -211,8 +248,7 @@ export default function Message() {
             >
               <div className="row">
                 <div className="col-12 col-lg-3 col-xl-3 border-end min-vh-100">
-                  {messages ? (
-                    messages.map((message) => (
+                    {messages.map((message) => (
                       <Link
                         to={
                           "/message/" +
@@ -271,15 +307,32 @@ export default function Message() {
                           </div>
                         </small>
                       </Link>
-                    ))
-                  ) : (
-                    <div>
-                      {" "}
-                      <h5 className="mb-4 ms-3 mt-3">
-                        Start conversation to Message lists
-                      </h5>
-                    </div>
-                  )}
+                    ))}
+                   {relationIds && relationIds.map(id => {
+                const user = relationUsers.find(user => user.profile.user_id === id);
+                if (user && !messages.some(message => message.sender.id === id || message.reciever.id === id)) {
+                    return (
+                        <Link 
+                            to={"/message/" + user.profile.user_id + "/"}
+                            href="#"
+                            className="list-group-item list-group-item-action border-0"
+                            key={user.profile.user_id}
+                        >
+                            <div className="d-flex align-items-start">
+                                <img src={user.profile.image} className="rounded-circle mr-1" alt="1" width={40} height={40}/>
+                                <div className="flex-grow-1 ml-3">
+                                    {user.profile.first_name} {user.profile.last_name}    
+                                    <div className="small">
+                                        <small>@{user.profile.user.username}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            </Link>
+                        );
+                    } else {
+                        return null;
+                    }
+                })}
                 </div>
                 <div
                   className="col-12 col-lg-9 col-xl-9 min-vh-100"

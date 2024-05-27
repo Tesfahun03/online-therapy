@@ -2,19 +2,24 @@ import React, { useRef, useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/NavBar.css";
 import AuthContext from "../context/AuthContext";
+import useAxios from "../utils/useAxios";
 import jwtDecode from "jwt-decode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faBell, faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
+import { use } from "i18next";
 
 export default function NavBar() {
   const { user, logoutUser } = useContext(AuthContext);
+  const axios = useAxios();
 
   const token = localStorage.getItem("authTokens");
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(token));
+  const [relationIds, setRelationId] = useState(null);
   const location = useLocation();
   const decodedToken = token ? jwtDecode(token) : null;
 
   const user_type = decodedToken && decodedToken.user_type;
+  const user_id = decodedToken && decodedToken.user_id;
 
   useEffect(() => {
     const handleTokenChange = () => {
@@ -31,6 +36,30 @@ export default function NavBar() {
       window.removeEventListener("storage", handleTokenChange);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchRelationId = async () => {
+      try {
+        const endpoint = user_type === "patient" ? "patient" : "therapist";
+        const transactionType = user_type === "patient" ? "debited" : "credited";
+        
+        const response = await axios.get(`http://127.0.0.1:8000/payment/${endpoint}/${user_id}/${transactionType}`);
+        
+        // Assuming the response contains an array of relations
+        const relationData = response.data;
+        // Extract the correct ID based on user type
+        const fetchedIds = user_type === "patient"
+        ? relationData.map(data => data.therapist)
+        : relationData.map(data => data.patient);
+        
+        setRelationId(fetchedIds);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchRelationId();
+  }, [user_id, user_type]);
 
   useEffect(() => {
     const updatedToken = localStorage.getItem("authTokens");
@@ -118,11 +147,18 @@ export default function NavBar() {
                   </div>
                 </Link>
               )}
-
+              {relationIds && relationIds.length > 0 ? (
+              <Link to="/message-box" style={{ textDecoration: "none" }}>
+                <div className="message-box">
+                <FontAwesomeIcon icon={faEnvelope} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
+                  <h5>Message</h5>
+                </div>
+              </Link>
+              ) : ("")}
               <Link to="/community-space" style={{ textDecoration: "none" }}>
                 <div className="community-space">
                   <FontAwesomeIcon icon={faGlobe} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
-                  <h5>Community Space</h5>
+                  <h5>Community</h5>
                 </div>
               </Link>
 

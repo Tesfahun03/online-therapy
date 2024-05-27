@@ -13,6 +13,7 @@ import ProfilePatient from "./views/patientPages/ProfilePatient";
 import NotificationPatient from "./views/patientPages/NotificationPatient";
 import ViewTherapist from "./views/patientPages/ViewTherapist";
 import Message from "./views/commonPages/Message";
+import MessageBox from "./views/commonPages/MessageBox";
 import Dashboard from "./views/therapistPages/Dashboard";
 import Footer from "./component/Footer";
 import Appointments from "./views/therapistPages/Appointments";
@@ -72,6 +73,7 @@ function App() {
               />
               <Route component={Reports} path="/reports-t" exact />
               <Route component={Settings} path="/settings-t" exact />
+              <PrivateRoute component={MessageBox} path="/message-box/" exact />
               <PrivateRoute component={Message} path="/message/:id" exact />
               <PrivateRoute component={VideoChat} path="/videochat-t/:id" exact/>
               <PrivateRoute component={VideoChatPatient} path="/videochat-p/:id" exact/>
