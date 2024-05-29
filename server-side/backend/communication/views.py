@@ -16,12 +16,13 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 
-from communication.models import ChatMessage, Counter, TherapistAvailability, \
-                                    Appointments, RoomInsights, Notification, Review
+from communication.models import ChatMessage, Counter, TherapistAvailability, Appointments, \
+                                    RoomInsights, Notification, Review, Assessment, StatusRecord
 
 from communication.serializer import MessageSerializer, TherapistAvailabilitySerializer, \
                                         AppointmentsSerializer, RoomInsightsSerializer, \
-                                        NotificationSerializer, ReviewSerializer, CounterSerializer
+                                        NotificationSerializer, ReviewSerializer, CounterSerializer, \
+                                            AssessmentSerializer, StatusRecordSerializer
 
 from core.models import User, Profile, Patient, Therapist
 from core.serializer import UserSerializer, ProfileSerializer, PatientSerializer, TherapistSerializer
@@ -467,3 +468,47 @@ def update_average_rating(sender, instance, **kwargs):
     average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
     therapist.rating = average_rating
     therapist.save()
+    
+class AssessmentViewSet(viewsets.ModelViewSet):
+    serializer_class = AssessmentSerializer
+    permission_classes =[AllowAny]
+
+    def get_queryset(self):
+        user_id = self.kwargs.get('patient_id')
+        if user_id:
+            
+            queryset = Assessment.objects.filter(patient=user_id)
+
+            return queryset
+    
+    def get_object(self):
+        assessment_id = self.kwargs.get('pk')
+        
+        try:
+            assessment = Assessment.objects.get(pk=assessment_id)
+        except Assessment.DoesNotExist:
+            raise Http404("Assessment not found")
+        
+        return assessment
+    
+class StatusRecordViewSet(viewsets.ModelViewSet):
+    serializer_class = StatusRecordSerializer
+    permission_classes =[AllowAny]
+
+    def get_queryset(self):
+        user_id = self.kwargs.get('patient_id')
+        if user_id:
+            
+            queryset = StatusRecord.objects.filter(patient=user_id)
+
+            return queryset
+    
+    def get_object(self):
+        record_id = self.kwargs.get('pk')
+        
+        try:
+            record = StatusRecord.objects.get(pk=record_id)
+        except StatusRecord.DoesNotExist:
+            raise Http404("Record not found")
+        
+        return record

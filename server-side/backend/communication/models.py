@@ -108,3 +108,17 @@ class Review(models.Model):
     
     def __str__(self):
         return f"{self.therapist.profile.user.email}"
+    
+class Assessment(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    phq9_score = models.IntegerField(null=True)
+    gad7_score = models.IntegerField(null=True)
+    note = models.TextField()
+    therapist_name = models.CharField(max_length = 255)
+    
+class StatusRecord(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    note = models.TextField()
+    therapist_name = models.CharField(max_length = 255)

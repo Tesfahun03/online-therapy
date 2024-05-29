@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from core.serializer import ProfileSerializer
 from core.models import Therapist, User, Profile, Patient
-from communication.models import ChatMessage, TherapistAvailability, Appointments, \
-                                    RoomInsights, Notification, Review, Counter
+from communication.models import ChatMessage, TherapistAvailability, Appointments, RoomInsights, \
+                                    Notification, Review, Counter, Assessment, StatusRecord
 
 #Chat APP
 class MessageSerializer(serializers.ModelSerializer):
@@ -148,3 +148,13 @@ class ReviewSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
          therapist_id = self.context['therapist_id']
          return Review.objects.create(therapist_id = therapist_id, **validated_data )
+     
+class AssessmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Assessment
+        fields = '__all__'
+        
+class StatusRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StatusRecord
+        fields = '__all__'
