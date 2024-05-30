@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Faq from '../../utils/json-files/Faq';
-import Why from '../../utils/json-files/Why';
 import { useTranslation } from "react-i18next";
 import "../../styles/Home.css"
 import { Link } from 'react-router-dom';

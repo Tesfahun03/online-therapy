@@ -15,13 +15,14 @@
 }
 .registerTherapist .container .welcome-title{
     background-color: #fffdfd;
+    font-size: 1.5vw;
 }
 .registerTherapist .container .welcome-title h3{
     font-size: 3vw;
     color: #502828;
 }
 .registerTherapist .container .welcome-title h4{
-    font-size: 2.5vw;
+    font-size: 2vw;
     color: #502828;
 }
 .reg-thera-form{
@@ -54,10 +55,9 @@
 }
 .form-outline .formSelect {
     width: 100%;
-    padding-left: 1.5vw;
-    font-size: 1.5vw;
+    padding-left: 0.5vw;
+    font-size: 1.1vw;
     height: 4vw;
-    color: rgb(53, 48, 48);
     background-clip: padding-box;
     border-width: 0.1vw;
     border-style: solid;

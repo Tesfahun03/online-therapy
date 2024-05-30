@@ -78,7 +78,6 @@ export const AuthProvider = ({ children }) => {
 
         // Save encrypted private key to local storage
         savePrivateKeyToLocalStorage(privateKey);
-        
       } else if (
         userType === "patient" &&
         decodedToken.user_type === "patient"
@@ -100,11 +99,16 @@ export const AuthProvider = ({ children }) => {
 
         // Save encrypted private key to local storage
         savePrivateKeyToLocalStorage(privateKey);
-
       } else {
         console.error("There was a problem fetching the data");
         localStorage.removeItem("authTokens");
         console.log("token cleared");
+        // Create the overlay element and add the 'overlay' class
+        const overlay = document.createElement("div");
+        overlay.classList.add("overlay");
+
+        // Append the overlay element to the body
+        document.body.appendChild(overlay);
         swal.fire({
           title: "Email or password doesn't exist",
           icon: "error",
@@ -114,25 +118,36 @@ export const AuthProvider = ({ children }) => {
           timerProgressBar: true,
           showConfirmButton: false,
           showCancelButton: true,
+          didClose: () => {
+            // Remove the overlay element and reset the faded background effect
+            overlay.remove();
+            window.location.reload();
+          },
         });
       }
     } else {
       console.log(response.status);
       console.log("there was a server issue");
+      // Create the overlay element and add the 'overlay' class
+      const overlay = document.createElement("div");
+      overlay.classList.add("overlay");
+
+      // Append the overlay element to the body
+      document.body.appendChild(overlay);
       swal.fire({
-        title: "Username or password does not exist",
+        title: "Email or password does not exist",
         icon: "error",
         toast: true,
         timer: 4000,
-        position: "center-right",
+        position: "top",
         timerProgressBar: true,
         showConfirmButton: false,
         showCancelButton: true,
-        customClass: {
-          popup: "custom-popup",
-          container: "custom-container",
+        didClose: () => {
+          // Remove the overlay element and reset the faded background effect
+          overlay.remove();
+          window.location.reload();
         },
-        backdrop: "rgba(0,0,0,0.4)",
       });
     }
   };

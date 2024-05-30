@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import "../../styles/RegisterPatient.css";
 import { useTranslation } from "react-i18next";
 import AuthContext from "../../context/AuthContext";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import CryptoJS from 'crypto-js';
 
 export default function RegisterPatient() {
@@ -136,6 +137,7 @@ export default function RegisterPatient() {
           <h4 className="register-card-title">
             {t("register.patientRegisterHeader")}
           </h4>
+          <h6 className="fw-light mt-3">Client Registration Page</h6>
         </div>
         <div className="register-form">
           <form onSubmit={handleRegisterSubmit}>
@@ -308,8 +310,44 @@ export default function RegisterPatient() {
                 <option value="UNEMPLOYED">Unemployed</option>
               </select>
             </div>
-
             <button>{t("register.registerBtn")}</button>
+            <Link
+              to="#"
+              style={{
+                textDecoration: "none",
+                color: "brown",
+                fontWeight: "500",
+              }}
+            >
+              <p className="p-0 mt-1 mb-1">
+                {t("register.registerForgetPassword")}
+              </p>
+            </Link>
+            <p className="mb-1">
+              {t("register.registerHaveAccount")}{" "}
+              <Link
+                to="/login-p"
+                style={{
+                  textDecoration: "none",
+                  color: "brown",
+                  fontWeight: "500",
+                }}
+              >
+                Sign in
+              </Link>
+            </p>
+            <p className="m-0 p-0">
+              <Link
+                to="/register-t"
+                style={{
+                  textDecoration: "none",
+                  color: "brown",
+                  fontWeight: "500",
+                }}
+              >
+                Register as a therapist
+              </Link>
+            </p>
           </form>
         </div>
       </div>
