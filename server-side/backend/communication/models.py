@@ -122,3 +122,7 @@ class StatusRecord(models.Model):
     date = models.DateField(auto_now_add=True)
     note = models.TextField()
     therapist_name = models.CharField(max_length = 255)
+    
+    
+""" API KEY = 479440fe4689ef3cb103ab265fae2eef
+Secret Key = 11b123df199adc0d0bbd4ab13a5d5080 """
