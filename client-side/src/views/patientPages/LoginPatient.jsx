@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import AuthContext from "../../context/AuthContext";
 import "../../styles/LoginPatient.css";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function LoginPatient() {
   const [t, i18n] = useTranslation("global");
@@ -23,8 +24,6 @@ export default function LoginPatient() {
     localStorage.setItem("preferredLanguage", language); // Save selected language in local storage
   };
   const { loginUser } = useContext(AuthContext);
-
-
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -59,7 +58,8 @@ export default function LoginPatient() {
       <div className="loginForm">
         <div className="loginFormLogo">
           <img src="../Images/login/LoginLogo.png" alt="" />
-          <h2>{t("login.patientLoginTitle")}</h2>
+          <h2 className="mb-2">{t("login.patientLoginTitle")}</h2>
+          <h5 className="fw-light mb-3 p-0">Client Login Page</h5>
         </div>
         <div className="loginCard">
           <form onSubmit={handleLoginSubmit}>
@@ -78,6 +78,36 @@ export default function LoginPatient() {
             <button className="loginButton">
               {t("login.therapistLoginbtn")}
             </button>
+
+            <Link to="#" style={{ textDecoration: "none" }}>
+              <p
+                className="mb-1 mt-1 p-0"
+                style={{ color: "brown", fontWeight: "500" }}
+              >
+                {t("register.registerForgetPassword")}
+              </p>
+            </Link>
+            <p className="p-0 m-0">
+              Don't have an account?{" "}
+              <Link
+                to="/register-p"
+                style={{
+                  textDecoration: "none",
+                  color: "brown",
+                  fontWeight: "500",
+                }}
+              >
+                Sign up
+              </Link>
+            </p>
+            <Link to="/login-t" style={{ textDecoration: "none" }}>
+              <p
+                className="mb-3 mt-2"
+                style={{ color: "brown", fontWeight: "500" }}
+              >
+                Sign in as a therapist
+              </p>
+            </Link>
           </form>
         </div>
       </div>

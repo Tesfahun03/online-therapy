@@ -165,7 +165,7 @@ export default function NavBar() {
 
   const handleNotificationClick = async () => {
     try {
-      await axios.put(`http://127.0.0.1:8000/session/message-count/${user_id}/`, {
+      await axios.put(`http://127.0.0.1:8000/session/counter/${user_id}/`, {
         notificationCount: currentNotificationCount,
         user: user_id
       });
@@ -176,7 +176,7 @@ export default function NavBar() {
 
   const handleMessageClick = async () => {
     try {
-      await axios.put(`http://127.0.0.1:8000/session/message-count/${user_id}/`, {
+      await axios.put(`http://127.0.0.1:8000/session/counter/${user_id}/`, {
         messageCount: currentMessageCount,
         user: user_id
       });
@@ -199,9 +199,7 @@ export default function NavBar() {
                 alt=""
                 className="bunnaLogo"
               />
-              <h3 className="bunnaName">
-                BunnaMind
-              </h3>
+              <h3 className="bunnaName">BunnaMind</h3>
             </div>
           </Link>
 
@@ -211,7 +209,7 @@ export default function NavBar() {
                 <Link to="/notification-p" style={{ textDecoration: "none" }} onClick={handleNotificationClick}>
                   <div className="notification">
                     <FontAwesomeIcon icon={faBell} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
-                    {newNotificationCount > 0 && <span className="badge">{newNotificationCount}</span>}
+                    {newNotificationCount > 0 && <span className="badge_notification">{newNotificationCount}</span>}
                     <h5>Notification</h5>
                   </div>
                 </Link>
@@ -219,8 +217,12 @@ export default function NavBar() {
               {user_type === "therapist" && (
                 <Link to="/notification-t" style={{ textDecoration: "none" }} onClick={handleNotificationClick}>
                   <div className="notification">
-                    <FontAwesomeIcon icon={faBell} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
-                    {newNotificationCount > 0 && <span className="badge">{newNotificationCount}</span>}
+                      <FontAwesomeIcon
+                      icon={faBell}
+                      color="beige"
+                      style={{ width: "2.5vw", height: "2.5vw" }}
+                    />
+                    {newNotificationCount > 0 && <span className="badge_notification">{newNotificationCount}</span>}
                     <h5>Notification</h5>
                   </div>
                 </Link>
@@ -229,21 +231,29 @@ export default function NavBar() {
               <Link to="/message-box" style={{ textDecoration: "none" }} onClick={handleMessageClick}>
                 <div className="message-box">
                 <FontAwesomeIcon icon={faEnvelope} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
-                {newMessageCount > 0 && <span className="badge">{newMessageCount}</span>}
+                {newMessageCount > 0 && <span className="badge_message">{newMessageCount}</span>}
                   <h5>Message</h5>
                 </div>
               </Link>
               ) : ("")}
               <Link to="/community-space" style={{ textDecoration: "none" }}>
                 <div className="community-space">
-                  <FontAwesomeIcon icon={faGlobe} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
-                  <h5>Community</h5>
+                  <FontAwesomeIcon
+                    icon={faGlobe}
+                    color="beige"
+                    style={{ width: "2.5vw", height: "2.5vw" }}
+                  />
+                  <h5>Community Space</h5>
                 </div>
               </Link>
 
               <Link to="/profile-p" style={{ textDecoration: "none" }}>
                 <div className="profile-button">
-                <FontAwesomeIcon icon={faUser} color="beige" style={{ width: '2.5vw', height: '2.5vw' }}/>
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    color="beige"
+                    style={{ width: "2.5vw", height: "2.5vw" }}
+                  />
                   <h5>Profile</h5>
                 </div>
               </Link>
@@ -265,9 +275,7 @@ export default function NavBar() {
                 alt=""
                 className="bunnaLogo"
               />
-              <h3 className="bunnaName">
-                BunnaMind
-              </h3>
+              <h3 className="bunnaName">BunnaMind</h3>
             </div>
           </Link>
           <div className="navLink">
@@ -290,11 +298,24 @@ export default function NavBar() {
                   <h3 className="registerButton">Register</h3>
                 </Link>
               </div>
+            ) : location.pathname === "/login-t" ? (
+              <div className="navButtonFlex">
+                <Link to="/register-t" style={{ textDecoration: "none" }}>
+                  <h3 className="registerButton">Register</h3>
+                </Link>
+              </div>
             ) : (
               <div className="navButtonFlex">
-                <Link to="/login-p" style={{ textDecoration: "none" }}>
-                  <h3 className="loginButton">Login</h3>{" "}
-                </Link>
+                {location.pathname === "/register-t" ? (
+                  <Link to="/login-t" style={{ textDecoration: "none" }}>
+                    <h3 className="loginButton">Login</h3>{" "}
+                  </Link>
+                ) : (
+                  <Link to="/login-p" style={{ textDecoration: "none" }}>
+                    <h3 className="loginButton">Login</h3>{" "}
+                  </Link>
+                )}
+
                 {location.pathname === "/" && (
                   <Link to="/register-p" style={{ textDecoration: "none" }}>
                     {" "}

@@ -13,6 +13,11 @@
     width: 30vw;
     height: 35vw;
 }
+.Home-Intro-Title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .Home-img .ellipsetalk{
     margin-left: 3vw;
 }
@@ -39,6 +44,10 @@
     font-size: 1.5vw;
     color: white;
     margin-top: 1vw;
+}
+.languageForTranslate{
+    width: 10px;
+    height: 1px !important;
 }
 /*Frequently Asked Question*/
 .Faq{

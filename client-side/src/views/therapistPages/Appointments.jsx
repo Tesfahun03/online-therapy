@@ -13,22 +13,22 @@ import { faMessage, faVideo } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 export default function Appointments() {
   const [t, i18n] = useTranslation("global");
-    const [selectedLanguage, setSelectedLanguage] = useState("english"); 
+  const [selectedLanguage, setSelectedLanguage] = useState("english");
 
-    useEffect(() => {
-        const savedLanguage = localStorage.getItem("preferredLanguage");
-        if (savedLanguage) {
-            i18n.changeLanguage(savedLanguage);
-            setSelectedLanguage(savedLanguage); 
-        }
-    }, [i18n]);
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage);
+    }
+  }, [i18n]);
 
-    const handleChangeLanguage = (e) => {
-        const language = e.target.value;
-        i18n.changeLanguage(language);
-        setSelectedLanguage(language); 
-        localStorage.setItem("preferredLanguage", language); 
-    };
+  const handleChangeLanguage = (e) => {
+    const language = e.target.value;
+    i18n.changeLanguage(language);
+    setSelectedLanguage(language);
+    localStorage.setItem("preferredLanguage", language);
+  };
   const baseURL = "http://127.0.0.1:8000/api";
   const axios = useAxios();
   //Getting the token and decode using jwtDecode
@@ -39,7 +39,7 @@ export default function Appointments() {
   const [buttonVariant, setButtonVariant] = useState();
   const [showModal, setShowModal] = useState(false);
   const [modalBody, setModalBody] = useState("");
-  const [modalTitle, setModalTitle] = useState("")
+  const [modalTitle, setModalTitle] = useState("");
   const handleClose = () => {
     setShowModal(false);
     window.location.reload();
@@ -160,12 +160,12 @@ export default function Appointments() {
 
     if (response.status == 204) {
       // Show success message in the modal body
-      setModalTitle("Avalability")
-      setModalBody("Avalability successfully deleted!")
+      setModalTitle("Avalability");
+      setModalBody("Avalability successfully deleted!");
     } else {
       // Show error message in the modal body
-      setModalTitle("Avalability")
-      setModalBody("Failed to delete avalability. Please try again.")
+      setModalTitle("Avalability");
+      setModalBody("Failed to delete avalability. Please try again.");
     }
   };
 
@@ -272,20 +272,20 @@ export default function Appointments() {
           {appointments !== null && appointments !== undefined && (
             <>
               {appointments.length > 0 ? (
-                <>
+                <div className="col col-12 border">
+                  <div className="row d-flex align-items-center border">
+                    <div className="col col-3 border text-center">Client Name</div>
+                    <div className="col col-6 border text-center">Date and Time</div>
+                    <div className="col col-3 text-center">Type</div>
+                  </div>
                   {appointments.map((appointment) => (
-                    <div className="d-flex align-items-center">
-                      <div className="name me-5">
-                        <div className="col text-center">Name</div>
-                        <div className="row ms-0">
+                    <div className="row d-flex align-items-center border">
+                        <div className="col col-3 border text-center">
                           {appointment.patient_first_name +
                             " " +
                             appointment.patient_last_name}
                         </div>
-                      </div>
-                      <div className="date_time me-5">
-                        <div className="col text-center">Date & Time</div>
-                        <div className="row ms-0">
+                        <div className="col col-6 border text-center">
                           {moment(appointment.date).format("D MMMM YYYY")} ,{" "}
                           {moment(appointment.start_time, "HH:mm:ss").format(
                             "hh:mm A"
@@ -295,13 +295,10 @@ export default function Appointments() {
                             "hh:mm A"
                           )}
                         </div>
-                      </div>
-                      <div className="message_video">
-                        <div className="col text-center">Type</div>
-                        <div className="row ms-0">
-                          <div className="d-flex">
+                        <div className="col col-3 border">
+                          <div className="d-flex justify-content-around px-3 py-2">
                             <button
-                              className="btn btn-success me-2"
+                              className="btn btn-success "
                               onClick={() =>
                                 handleMessage(appointment.patientID)
                               }
@@ -316,10 +313,9 @@ export default function Appointments() {
                             </button>
                           </div>
                         </div>
-                      </div>
                     </div>
                   ))}
-                </>
+                </div>
               ) : (
                 <p>No available date is found.</p>
               )}

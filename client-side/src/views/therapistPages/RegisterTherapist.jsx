@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../../styles/therapistregister.css";
 import { useTranslation } from "react-i18next";
 import AuthContext from "../../context/AuthContext";
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 
 export default function RegisterTherapist() {
   const [t, i18n] = useTranslation("global");
@@ -98,8 +98,8 @@ export default function RegisterTherapist() {
     const religion = registerTherapistData.religion;
 
     // Generate keys
-    const {publicKey} = generateKeys();
-    console.log('Public Key:', publicKey);
+    const { publicKey } = generateKeys();
+    console.log("Public Key:", publicKey);
 
     const therapistData = {
       profile: {
@@ -121,7 +121,7 @@ export default function RegisterTherapist() {
         phone,
         city,
         region,
-        publicKey
+        publicKey,
       },
       specialization,
       experience,
@@ -154,7 +154,8 @@ export default function RegisterTherapist() {
         </div>
         <div className="reg-thera-form">
           <div className="reg-thera-card-header">
-            <h3>{t("register.therapistRegisterHeader")}</h3>
+            <h4>{t("register.therapistRegisterHeader")}</h4>
+            <h6 className="fw-light mt-2 mb-0">Therapist Registration Page</h6>
           </div>
           <form
             onSubmit={handleRegisterTherapistSubmit}
@@ -343,8 +344,8 @@ export default function RegisterTherapist() {
               </select>
             </div>
 
-            <div className="form-outline">
-              <label htmlFor="fileInput" className="text-left">
+            <div className="form-outline text-start d-block align-items-start">
+              <label htmlFor="fileInput">
                 {t("register.registerLabelLiscence")}
               </label>
               <input
@@ -356,13 +357,41 @@ export default function RegisterTherapist() {
               />
             </div>
             <button>{t("register.registerBtn")}</button>
-            <Link to="" style={{ textDecoration: "none" }}>
-              <p>{t("register.registerForgetPassword")}</p>
+            <Link
+              to=""
+              style={{
+                textDecoration: "none",
+                color: "brown",
+                fontWeight: "500",
+              }}
+            >
+              <p className="p-0 mt-1 mb-1">
+                {t("register.registerForgetPassword")}
+              </p>
             </Link>
-            <p>
+            <p className="mb-1">
               {t("register.registerHaveAccount")}{" "}
-              <Link to="/login-t" style={{ textDecoration: "none" }}>
+              <Link
+                to="/login-t"
+                style={{
+                  textDecoration: "none",
+                  color: "brown",
+                  fontWeight: "500",
+                }}
+              >
                 Sign in
+              </Link>
+            </p>
+            <p className="m-0 p-0">
+              <Link
+                to="/register-p"
+                style={{
+                  textDecoration: "none",
+                  color: "brown",
+                  fontWeight: "500",
+                }}
+              >
+                Register as a client
               </Link>
             </p>
           </form>

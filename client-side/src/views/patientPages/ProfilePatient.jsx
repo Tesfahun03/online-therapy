@@ -1,26 +1,26 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/Profile.css";
 import { useTranslation } from "react-i18next";
 import jwtDecode from "jwt-decode";
 
 export default function ProfilePatient() {
   const [t, i18n] = useTranslation("global");
-    const [selectedLanguage, setSelectedLanguage] = useState("english"); 
+  const [selectedLanguage, setSelectedLanguage] = useState("english");
 
-    useEffect(() => {
-        const savedLanguage = localStorage.getItem("preferredLanguage");
-        if (savedLanguage) {
-            i18n.changeLanguage(savedLanguage);
-            setSelectedLanguage(savedLanguage); 
-        }
-    }, [i18n]);
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage);
+    }
+  }, [i18n]);
 
-    const handleChangeLanguage = (e) => {
-        const language = e.target.value;
-        i18n.changeLanguage(language);
-        setSelectedLanguage(language); 
-        localStorage.setItem("preferredLanguage", language); 
-    };
+  const handleChangeLanguage = (e) => {
+    const language = e.target.value;
+    i18n.changeLanguage(language);
+    setSelectedLanguage(language);
+    localStorage.setItem("preferredLanguage", language);
+  };
 
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
@@ -31,23 +31,22 @@ export default function ProfilePatient() {
     if (buttonId != activeButton) {
       setActiveButton(buttonId);
     }
-  };
-
+  }
 
   return (
     <div className="profile-page">
       <div className="languageForTranslate">
-          <select
-              className="preferedLanguage"
-              onChange={handleChangeLanguage}
-              value={selectedLanguage} // Set value to the selected language
-          >
-              <option value="english">English</option>
-              <option value="amharic">Amharic</option>
-              <option value="oromo">Oromo</option>
-              <option value="sumalic">Sumalic</option>
-              <option value="tigrigna">Tigrigna</option>
-          </select>
+        <select
+          className="preferedLanguage"
+          onChange={handleChangeLanguage}
+          value={selectedLanguage} // Set value to the selected language
+        >
+          <option value="english">English</option>
+          <option value="amharic">Amharic</option>
+          <option value="oromo">Oromo</option>
+          <option value="sumalic">Sumalic</option>
+          <option value="tigrigna">Tigrigna</option>
+        </select>
       </div>
       <div className="row row-auto p-0 m-4 d-flex justify-content-between profile-contianer">
         <div className="col col-auto col-lg-3 col-md-3 col-sm-4 mb-3 mt-2 me-5 ms-5 profile-pic-container">
@@ -265,7 +264,9 @@ export default function ProfilePatient() {
                       >
                         <option value="SINGLE">{t("profile.single")}</option>
                         <option value="MARRIED">{t("profile.married")}</option>
-                        <option value="DIVORCED">{t("profile.divorced")}</option>
+                        <option value="DIVORCED">
+                          {t("profile.divorced")}
+                        </option>
                       </select>
                     </div>
                     <div className="col col-auto col-lg-6 mb-3 profile-input-column">
@@ -359,7 +360,9 @@ export default function ProfilePatient() {
                       id="confirm-password"
                     />
 
-                    <button className="btn btn-primary ms-1">{t("profile.updatePassword")}</button>
+                    <button className="btn btn-primary ms-1">
+                      {t("profile.updatePassword")}
+                    </button>
                   </form>
                 </div>
               )}

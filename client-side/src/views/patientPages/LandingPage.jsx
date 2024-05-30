@@ -3,8 +3,8 @@ import useAxios from "../../utils/useAxios";
 import jwtDecode from "jwt-decode";
 import "../../styles/LandingPage.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSearch, } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 export default function LandingPage() {
@@ -23,7 +23,7 @@ export default function LandingPage() {
   const first_name = decoded.first_name;
   const user_type = decoded.user_type;
 
-  console.log(decoded)
+  console.log(decoded);
 
   //Get Therapists data and set the use state
   const therapistsData = async () => {
@@ -43,9 +43,9 @@ export default function LandingPage() {
     therapistsData();
   }, []);
 
-  const handleTherapistSelect=(therapistid)=>{
+  const handleTherapistSelect = (therapistid) => {
     history.push(`/viewtherapist/${therapistid}`);
-  }
+  };
 
   function handelSearch(event) {
     const { name, value } = event.target;
@@ -109,17 +109,16 @@ export default function LandingPage() {
                 onClick={() => handleTherapistSelect(therapist.profile.user.id)}
               >
                 <img
-                  key={therapist.profile.user.id}
                   src={therapist.profile.image}
                   className="licenses img-fluid ms-2"
+                  alt={`${therapist.profile.first_name} ${therapist.profile.last_name}`}
                 />
-                <h5 key={therapist.profile.user.id} className="ms-2 fs-4 mb-2 mt-2">
+                <h5 className="ms-2 fs-4 mb-2 mt-2">
                   {therapist.profile.first_name} {therapist.profile.last_name}
                 </h5>
                 <h5
-                  key={therapist.profile.user.id}
                   className="ms-2"
-                  style={{ color: "gray", marginTop: "-10" }}
+                  style={{ color: "gray", marginTop: "-10px" }}
                 >
                   {therapist.specialization}
                 </h5>
