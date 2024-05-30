@@ -1,74 +1,441 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../../styles/CommunitySpace.css";
+import useAxios from "../../utils/useAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCommenting,
+  faPlusSquare,
+  faThumbsUp,
+} from "@fortawesome/free-solid-svg-icons";
+import { Button, Modal } from "react-bootstrap";
+import jwtDecode from "jwt-decode";
+import moment from "moment";
+const swal = require("sweetalert2");
 
 export default function CommunitySpace() {
+  const baseURL = "http://127.0.0.1:8000/community";
+  const token = localStorage.getItem("authTokens");
+  const decoded = jwtDecode(token);
+  const user_id = decoded.user_id;
+  const axios = useAxios();
+  const [posts, setPosts] = useState([]);
+  const [likes, setLikes] = useState({});
+  const [comments, setComments] = useState([]);
+  const [showPostModal, setShowPostModal] = useState(false);
+  const [commentSectionOpen, setCommentSectionOpen] = useState({});
+
+  const [buttonVariant, setButtonVariant] = useState();
+  const handleShow = () => setShowPostModal(true);
+  const handleClose = () => {
+    setShowPostModal(false);
+    window.location.reload();
+  };
+
+  const [createComment, setCreateComment] = useState({
+    commenter: user_id,
+    content: "",
+  });
+
+  console.log(createComment)
+
+  function handleCreateComment(event) {
+    const { name, value } = event.target;
+    setCreateComment((prevCreatePost) => ({
+      ...prevCreatePost,
+      [name]: value,
+    }));
+  }
+
+  const handleCreateCommentSubmit = async (e, postId) => {
+    e.preventDefault();
+    const {commenter, content} = createComment;
+    const commentInput = document.getElementById("comment");
+
+    const formCreateComment = new FormData();
+
+    formCreateComment.append("post", postId);
+    formCreateComment.append("commenter", commenter);
+    formCreateComment.append("content", content);
+
+    try {
+      const response = await axios.post(
+        `${baseURL}/comment/${postId}/`,
+        formCreateComment
+      );
+      const data = await response.data;
+      commentInput.value = ""
+    }catch (error) {
+      console.error(error);
+    }
+  };
+
+  const [createPost, setCreatePost] = useState({
+    author: user_id,
+    title: "",
+    content: "",
+    postImage: null,
+  });
+
+  function handleCreatePost(event) {
+    const { name, value, type, files } = event.target;
+
+    if (type === "file") {
+      setCreatePost((prevCreatePost) => ({
+        ...prevCreatePost,
+        [name]: files[0],
+      }));
+    } else {
+      setCreatePost((prevCreatePost) => ({
+        ...prevCreatePost,
+        [name]: value,
+      }));
+    }
+  }
+
+  const handleCreatePostSubmit = async (e) => {
+    e.preventDefault();
+    const { author, title, content, postImage } = createPost;
+
+    const formCreatePost = new FormData();
+
+    formCreatePost.append("author", author);
+    formCreatePost.append("title", title);
+    formCreatePost.append("content", content);
+    formCreatePost.append("postImage", postImage);
+
+    try {
+      const response = await axios.post(
+        `${baseURL}/post/${user_id}/`,
+        formCreatePost
+      );
+      const data = await response.data;
+
+      if (response.status == 201) {
+        swal.fire({
+          title: "Post Published Successfully",
+          icon: "success",
+          toast: true,
+          timer: 3000,
+          position: "top",
+          timerProgressBar: true,
+          showConfirmButton: false,
+          showCancelButton: true,
+          didClose: () => {
+            window.location.reload();
+          },
+        });
+      } else {
+        swal.fire({
+          title:
+            "There is an error while trying to post the content" +
+            response.status,
+          icon: "error",
+          toast: true,
+          timer: 3000,
+          position: "top",
+          timerProgressBar: true,
+          showConfirmButton: false,
+          showCancelButton: true,
+          didClose: () => {
+            window.location.reload();
+          },
+        });
+      }
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePostLike = async (postId) => {
+    const liker = decoded.user_id;
+
+    try {
+      // Check if there's an existing like
+      const response = await axios.get(`${baseURL}/like/${postId}/`);
+      const existingLike = response.data.find((like) => like.liker === liker);
+
+      if (existingLike) {
+        // Delete the existing like
+        await axios.delete(`${baseURL}/like/${postId}/${liker}/`);
+        setLikes((prevLikes) => ({ ...prevLikes, [postId]: false }));
+      } else {
+        // Create a new like
+        await axios.post(`${baseURL}/like/${postId}/`, {
+          post: postId,
+          liker: liker,
+        });
+        setLikes((prevLikes) => ({ ...prevLikes, [postId]: true }));
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error(
+          "There was a problem handling the like",
+          error.response.data
+        );
+        // Display an error message to the user or handle the error in some other way
+      } else {
+        console.error("There was a problem with the request", error);
+        // Display an error message to the user or handle the error in some other way
+      }
+    }
+  };
+
+  const fetchLikes = useCallback(async () => {
+    try {
+      const likesObj = {};
+      for (const post of posts) {
+        const response = await axios.get(`${baseURL}/like/${post.id}/`);
+        const existingLike = response.data.find(
+          (like) => like.liker === decoded.user_id
+        );
+        likesObj[post.id] = !!existingLike;
+      }
+      setLikes(likesObj);
+    } catch (error) {
+      console.error("Error fetching likes:", error);
+    }
+  }, [posts, decoded.user_id]);
+
+  useEffect(() => {
+    fetchLikes();
+  }, [fetchLikes]);
+
+  const postData = async () => {
+    try {
+      const response = await axios.get(baseURL + "/posts");
+      if (response.status !== 200) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.data;
+      setPosts(data);
+    } catch (error) {
+      console.error("There was a problem fetching the data", error);
+    }
+  };
+
+  useEffect(() => {
+    postData();
+  }, [JSON.stringify(likes)]);
+
+  const toggleCommentSection = (postId) => {
+    setCommentSectionOpen((prevState) => ({
+      ...prevState,
+      [postId]: !prevState[postId],
+    }));
+  };
+
+  const fetchComments = useCallback(async () => {
+    try {
+      const commentsObj = {};
+      for (const post of posts) {
+        const response = await axios.get(`${baseURL}/comment/${post.id}/`);
+        commentsObj[post.id] = response.data;
+      }
+      setComments(commentsObj);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  }, [posts]);
+
+  useEffect(() => {
+    if (commentSectionOpen) {
+      fetchComments();
+    }
+  }, [commentSectionOpen, fetchComments, handleCreateCommentSubmit]);
+
   return (
     <div className="CommunitySpace">
-      <div className="row m-0 p-0">
-        <div className="col col-auto col-md-3 col-sm-2.5 col-lg-2 min-vh-50 shadow">
-          <h5>Column 1</h5>
-        </div>
+      <div className="row m-0 p-0 me-5">
+        <div className="col col-auto col-md-3 col-sm-2.5 col-lg-2 min-vh-50 shadow"></div>
         <div className="col">
-          <form className="d-flex align-items-center mt-5">
-            <input
-              className="form-control ms-5 rounded-0"
-              placeholder="Start post"
+          <button
+            className="btn border rounded d-flex align-items-center justify-content-between w-100 ms-4 mt-3 px-2"
+            onClick={handleShow}
+          >
+            <p className="text-center">Start Post</p>
+            <FontAwesomeIcon
+              icon={faPlusSquare}
+              className="fs-3"
+              color="gray"
             />
-            <button className="btn btn-secondary rounded-0">
-              <FontAwesomeIcon icon={faPlusSquare}/>
-            </button>
-          </form>
-          <div className="card mt-4 ms-5 m-0 p-0 mb-5 shadow">
-            <div className="card-header bg-white m-0 p-1">
-              <div className="row d-flex align-items-center justify-content-between m-0 p-0">
-                <div className="col col-auto d-flex align-items-center mb-2">
-                  <img src="" alt="profile pic" />
-                  <div className="col col-auto d-block align-items-left ms-3">
-                    <h6 className="fw-bold ms-1 d-flex justify-content-between">
-                      Yeabsra Habtu<span className="ms-1 fw-light">1hr</span>
-                    </h6>
-                    <h6 className="fw-light ms-0">
-                      Posted in community space
-                    </h6>
+          </button>
+          {posts &&
+            posts.map((post) => (
+              <div className="card mt-4 ms-5 m-0 p-0 mb-5 shadow" key={post.id}>
+                <div className="card-header bg-white m-0 p-1">
+                  <div className="row d-flex align-items-center justify-content-between m-0 p-0">
+                    <div className="col col-auto d-flex align-items-center mb-2">
+                      <img
+                        src={post.image}
+                        alt="profile pic"
+                        className="img-fluid rounded"
+                        width={40}
+                      />
+                      <h6 className="fw-bold ms-3 d-flex justify-content-between">
+                        {post.first_name + " " + post.last_name}
+                        <span className="ms-1 fw-light ms-2">
+                          {moment
+                            .utc(post.created_at)
+                            .local()
+                            .startOf("seconds")
+                            .fromNow()}
+                        </span>
+                      </h6>
+                    </div>
                   </div>
                 </div>
-                <div className="col col-auto">This is the column</div>
-              </div>
-            </div>
-            <div className="card-body d-flex flex-column">
-              <p className="card-text d-block w-1" style={{textAlign:"left"}}>
-                This is the text inside the card
-              </p>
-              <img
-                src="../Images/home/Bean.png"
-                alt=""
-                className="border"
-                
-              />
-              <div className="d-flex align-items-center mt-2">
-                <img
-                  src=""
-                  alt="Profile pictuer of some of the person like this post"
-                />
-                <span className="d-block ms-4">Liked by Yeabsra Habtu</span>
-              </div>
-            </div>
-            <div className="card-footer">
-              <div className="d-flex align-items-center justify-content-between m-0 p-0">
-                <div className="col col-auto p-0">
-                  <span>Like</span>
-                  <span className="ms-2">Comment</span>
+                <div className="card-body d-flex flex-column">
+                  <h3>{post.title}</h3>
+                  <p
+                    className="card-text d-block w-1"
+                    style={{ textAlign: "left" }}
+                  >
+                    {post.content}
+                  </p>
+                  {post.postImage && (
+                    <img
+                      src={post.postImage}
+                      alt="postImage"
+                      className="img-fluid rounded border shadow"
+                    />
+                  )}
                 </div>
-                <div className="col col-auto">
-                  <h6 className="fw-light">0 Comment</h6>
+                <div className="card-footer">
+                  <div className="d-flex align-items-center">
+                    <div
+                      className="d-flex align-items-center"
+                      onClick={() => handlePostLike(post.id)}
+                    >
+                      ({post.likeCount})
+                      <FontAwesomeIcon
+                        icon={faThumbsUp}
+                        color={likes[post.id] ? "#643a3a" : "gray"}
+                        className="fs-2 ms-1 me-1"
+                      />
+                      {likes[post.id] ? "Liked" : "Like"}
+                    </div>
+
+                    <div
+                      className="d-flex"
+                      onClick={() => toggleCommentSection(post.id)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faCommenting}
+                        color={commentSectionOpen[post.id] ? "#643a3a" : "gray"}
+                        className="fs-2 ms-3 me-1"
+                      />
+                      Comment
+                    </div>
+                  </div>
+                  {commentSectionOpen[post.id] && (
+                    <div className="mt-3">
+                      {comments[post.id] &&
+                        comments[post.id].map((comment) => (
+                          <div key={comment.id} className="mb-2">
+                            <div className="col col-auto d-flex align-items-center mb-2">
+                              <img
+                                src={comment.image}
+                                alt="profile pic"
+                                className="img-fluid rounded"
+                                width={50}
+                                height={40}
+                              />
+                              <div className="d-flex flex-column justify-content-around">
+                                <h6 className="fw-bold ms-3 d-flex mt-2">
+                                  {comment.first_name + " " + comment.last_name}
+                                  <span className="ms-1 fw-light ms-2">
+                                    {moment
+                                      .utc(comment.created_at)
+                                      .local()
+                                      .startOf("seconds")
+                                      .fromNow()}
+                                  </span>
+                                </h6>
+                                <p className="ms-3">{comment.content}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      <form onSubmit={(e) => handleCreateCommentSubmit(e, post.id)}>
+                        <input
+                          type="text"
+                          className="form-control mb-3 pb-4"
+                          placeholder="Write your thought ... "
+                          name="content"
+                          id="comment"
+                          onChange={handleCreateComment}
+                        />
+                        <button className="btn btn-primary ms-1">
+                          Comment
+                        </button>
+                      </form>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          </div>
+            ))}
         </div>
       </div>
+
+      <>
+        <Modal show={showPostModal} onHide={handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title centered>Create Post</Modal.Title>
+          </Modal.Header>
+          <form onSubmit={handleCreatePostSubmit}>
+            <Modal.Body>
+              <label htmlFor="post-title" className="fw-bold">
+                Title
+              </label>
+              <input
+                type="text"
+                className="form-control mb-3"
+                placeholder="Title"
+                name="title"
+                id="post-title"
+                onChange={handleCreatePost}
+              />
+              <label htmlFor="post-content" className="fw-bold">
+                Content
+              </label>
+              <textarea
+                placeholder="Write Something ... "
+                name="content"
+                className="form-control mb-3 pb-5"
+                id="post-content"
+                onChange={handleCreatePost}
+              ></textarea>
+              <label htmlFor="post-image" className="fw-bold">
+                Image (optional)
+              </label>
+              <input
+                type="file"
+                id="post-image"
+                className="form-control mb-3"
+                name="postImage"
+                onChange={handleCreatePost}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <button
+                className="btn border text-center text-white"
+                style={{ background: "#683a3a" }}
+              >
+                Publish
+              </button>
+            </Modal.Footer>
+          </form>
+        </Modal>
+        {showPostModal && (
+          <div
+            className="modal-backdrop fade show"
+            style={{ zIndex: "1050" }}
+            onClick={handleClose}
+          ></div>
+        )}
+      </>
     </div>
   );
 }

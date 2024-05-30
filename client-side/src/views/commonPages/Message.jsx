@@ -18,7 +18,6 @@ export default function Message() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [relationIds, setRelationId] = useState(null);
   const [relationUsers, setRelationUsers] = useState([]); // State to store user information
-  
 
   const axios = useAxios();
   const { id } = useParams();
@@ -46,41 +45,51 @@ export default function Message() {
     const fetchRelationId = async () => {
       try {
         const endpoint = user_type === "patient" ? "patient" : "therapist";
-        const transactionType = user_type === "patient" ? "debited" : "credited";
-        
-        const response = await axios.get(`http://127.0.0.1:8000/payment/${endpoint}/${user_id}/${transactionType}`);
-        
+        const transactionType =
+          user_type === "patient" ? "debited" : "credited";
+
+        const response = await axios.get(
+          `http://127.0.0.1:8000/payment/${endpoint}/${user_id}/${transactionType}`
+        );
+
         // Assuming the response contains an array of relations
         const relationData = response.data;
         // Extract the correct ID based on user type
-        const fetchedIds = user_type === "patient"
-        ? relationData.map(data => data.therapist)
-        : relationData.map(data => data.patient);
-        
+        const fetchedIds =
+          user_type === "patient"
+            ? relationData.map((data) => data.therapist)
+            : relationData.map((data) => data.patient);
+
         setRelationId(fetchedIds);
 
         // Fetch user information for each fetched ID based on user type
         const userResponses = await Promise.all(
-            fetchedIds.map(id => 
-            axios.get(`http://127.0.0.1:8000/core/${user_type === "patient" ? "therapists" : "patients"}/${id}`)
+          fetchedIds.map((id) =>
+            axios.get(
+              `http://127.0.0.1:8000/core/${
+                user_type === "patient" ? "therapists" : "patients"
+              }/${id}`
             )
+          )
         );
 
         // Store user information
-        const usersData = userResponses.map(response => response.data);
+        const usersData = userResponses.map((response) => response.data);
         setRelationUsers(usersData);
       } catch (error) {
         console.log(error);
       }
     };
-  
+
     fetchRelationId();
   }, [user_id, user_type]);
 
   const paymentChecker = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/payment/therapist/${user_type === "therapist" ? user_id:id}/credited/`
+        `http://127.0.0.1:8000/payment/therapist/${
+          user_type === "therapist" ? user_id : id
+        }/credited/`
       );
       if (response.status !== 200) {
         throw new Error("Network response was not ok");
@@ -225,59 +234,66 @@ export default function Message() {
   let users_id;
   if (user_type === "patient") {
     users_id = user_id;
-  } else{
+  } else {
     users_id = profile.profile.user.id;
   }
 
   const hasPaid =
     relationChecker?.some(
-      (relation) => relation.patient === users_id && relation.status === "success"
+      (relation) =>
+        relation.patient === users_id && relation.status === "success"
     ) ?? null;
-  
 
   return (
     <div>
       {hasPaid ? (
         <main className="message shadow">
-          <div className="container p-0 ms-3 mt-3 ">
+          <div className="container p-0 ms-3 mt-2 ">
             <div
               className="card m-0 p-0"
               style={{ position: "fixed", left: 0, right: 0 }}
             >
               <div className="row">
-                <div className="col-12 col-lg-3 col-xl-3 border-end min-vh-100">
-                    {messages.map((message) => (
-                      <Link
-                        to={
-                          "/message/" +
-                          (message.sender.id === user_id
-                            ? message.reciever.id
-                            : message.sender.id) +
-                          "/"
-                        }
-                        className="list-group-item list-group-item-action mb-4 ms-3 mt-3 d-flex justify-content-between"
-                      >
-                        <div className="d-flex align-items-start">
-                          {message.sender.id !== user_id && (
-                            <img
-                              src={message.sender_profile.image}
-                              className="rounded-circle me-1"
-                              alt="1"
-                              width={40}
-                              height={40}
-                            />
-                          )}
-                          {message.sender.id === user_id && (
-                            <img
-                              src={message.reciever_profile.image}
-                              className="rounded-circle me-1"
-                              alt="2"
-                              width={40}
-                              height={40}
-                            />
-                          )}
-                          <div className="flex-grow-1 ms-3">
-                            <p className="fw-bold m-0 p-0">
+                <div
+                  className="col-12 col-lg-3 col-xl-3 border-end min-vh-100"
+                  style={{ background: "#7B6565" }}
+                >
+                  {messages.map((message) => (
+                    <Link
+                      to={
+                        "/message/" +
+                        (message.sender.id === user_id
+                          ? message.reciever.id
+                          : message.sender.id) +
+                        "/"
+                      }
+                      className="list-group-item list-group-item-action mb-4 ms-3 mt-3 d-flex justify-content-between"
+                    >
+                      <div className="d-flex align-items-start w-100">
+                        {message.sender.id !== user_id && (
+                          <img
+                            src={message.sender_profile.image}
+                            className="rounded-circle me-1"
+                            alt="1"
+                            width={40}
+                            height={40}
+                          />
+                        )}
+                        {message.sender.id === user_id && (
+                          <img
+                            src={message.reciever_profile.image}
+                            className="rounded-circle me-1"
+                            alt="2"
+                            width={40}
+                            height={40}
+                          />
+                        )}
+                        <div className="flex-grow-1 ms-3 d-flex flex-column">
+                          <div className="d-flex align-items-center justify-content-between">
+                            <p
+                              className="fw-bold m-0 p-0"
+                              style={{ color: "white" }}
+                            >
                               {message.sender.id === user_id &&
                                 (message.reciever_profile.first_name !== null
                                   ? message.reciever_profile.first_name +
@@ -290,55 +306,93 @@ export default function Message() {
                                   " " +
                                   message.sender_profile.last_name}
                             </p>
-                            <div className="small">
-                              <small>{message.message}</small>
+                            <small>
+                              <div className="badge bg-success text-white me-3">
+                                {moment
+                                  .utc(message.date)
+                                  .local()
+                                  .startOf("seconds")
+                                  .fromNow()}
+                              </div>
+                            </small>
+                          </div>
+                          <div
+                            className="d-flex align-items-center"
+                            style={{
+                              color: "white",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <div
+                              className="small fw-light fs-6"
+                              style={{
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              <small>
+                                {message.message.length > 35
+                                  ? `${message.message.slice(0, 35)}...`
+                                  : message.message}
+                              </small>
                             </div>
                           </div>
                         </div>
-                        <small>
-                          <div className="badge bg-success text-white me-3">
-                            {moment
-                              .utc(message.date)
-                              .local()
-                              .startOf("seconds")
-                              .fromNow()}
-                          </div>
-                        </small>
-                      </Link>
-                    ))}
-                   {relationIds && relationIds.map(id => {
-                const user = relationUsers.find(user => user.profile.user_id === id);
-                if (user && !messages.some(message => message.sender.id === id || message.reciever.id === id)) {
-                    return (
-                        <Link 
+                      </div>
+                    </Link>
+                  ))}
+                  {relationIds &&
+                    relationIds.map((id) => {
+                      const user = relationUsers.find(
+                        (user) => user.profile.user_id === id
+                      );
+                      if (
+                        user &&
+                        !messages.some(
+                          (message) =>
+                            message.sender.id === id ||
+                            message.reciever.id === id
+                        )
+                      ) {
+                        return (
+                          <Link
                             to={"/message/" + user.profile.user_id + "/"}
-                            href="#"
                             className="list-group-item list-group-item-action border-0"
                             key={user.profile.user_id}
-                        >
+                          >
                             <div className="d-flex align-items-start">
-                                <img src={user.profile.image} className="rounded-circle mr-1" alt="1" width={40} height={40}/>
-                                <div className="flex-grow-1 ml-3">
-                                    {user.profile.first_name} {user.profile.last_name}    
-                                    <div className="small">
-                                        <small>@{user.profile.user.username}</small>
-                                    </div>
+                              <img
+                                src={user.profile.image}
+                                className="rounded-circle mr-1"
+                                alt="1"
+                                width={40}
+                                height={40}
+                              />
+                              <div className="flex-grow-1 ml-3">
+                                {user.profile.first_name}{" "}
+                                {user.profile.last_name}
+                                <div className="small">
+                                  <small>@{user.profile.user.username}</small>
                                 </div>
+                              </div>
                             </div>
-                            </Link>
+                          </Link>
                         );
-                    } else {
+                      } else {
                         return null;
-                    }
-                })}
+                      }
+                    })}
                 </div>
                 <div
-                  className="col-12 col-lg-9 col-xl-9 min-vh-100"
+                  className="col-12 col-lg-9 col-xl-9 min-vh-100 pe-0"
                   style={{ position: "fixed", left: "24%" }}
                 >
                   <div
                     className="border-bottom d-lg-block py-3 ps-3"
-                    style={{ background: "beige" }}
+                    style={{ background: "#7B6565" }}
                   >
                     <div className="d-flex align-items-center py-1">
                       <div className="position-relative">
@@ -350,14 +404,14 @@ export default function Message() {
                           height={40}
                         />
                       </div>
-                      <div className="flex-grow-1 ps-3">
+                      <div className="flex-grow-1 ps-3 text-white">
                         <strong>
                           {profile?.profile.first_name +
                             " " +
                             profile?.profile.last_name}
                         </strong>
                         <div className="text-muted small">
-                          <em>@{profile.profile.user.username}</em>
+                          <em className=" text-white">@{profile.profile.user.username}</em>
                         </div>
                       </div>
                     </div>
@@ -395,7 +449,7 @@ export default function Message() {
                                 </div>
                                 <div
                                   className=" rounded ps-2 pe-4 pt-2 pb-0 me-3 ms-3"
-                                  style={{ background: "#8C8C8C " }}
+                                  style={{ background: "#7B6565" }}
                                 >
                                   <p style={{ color: "#FFFFF0" }}>
                                     {message.message}

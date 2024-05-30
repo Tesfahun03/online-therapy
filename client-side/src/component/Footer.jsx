@@ -6,7 +6,8 @@ export default function Footer() {
   const videoMatchTherapist = useRouteMatch("/videochat-t/:id");
   const videoMatchPatient = useRouteMatch("/videochat-p/:id");
   const messageMatch = useRouteMatch("/message/:id");
-  const match = videoMatchPatient|| videoMatchTherapist || messageMatch;
+  const messageBox = useRouteMatch("/message-box")
+  const match = videoMatchPatient|| videoMatchTherapist || messageMatch || messageBox;
   return (
     <>
       {!match && (

@@ -180,15 +180,53 @@ export const AuthProvider = ({ children }) => {
         showConfirmButton: false,
         showCancelButton: true,
       });
+    } else if (response.status === 400) {
+      const data = await response.json();
+      if (data.profile && data.profile.user) {
+        if (data.profile.user.username) {
+          swal.fire({
+            title: "Username already exists. Please try another one.",
+            icon: "error",
+            toast: true,
+            timer: 6000,
+            position: "top-right",
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+          });
+        } else if (data.profile.user.email) {
+          swal.fire({
+            title: "A user with this email already exists.",
+            icon: "error",
+            toast: true,
+            timer: 6000,
+            position: "top-right",
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+          });
+        } else {
+          swal.fire({
+            title: "An Error Occurred: " + response.status,
+            icon: "error",
+            toast: true,
+            timer: 6000,
+            position: "top-right",
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+          });
+        }
+      }
     } else {
       console.log(response.status);
       console.log("there was a server issue");
       swal.fire({
-        title: "An Error Occured " + response.status,
+        title: "An Error Occurred: " + response.status,
         icon: "error",
         toast: true,
-        timer: 4000,
-        position: "top",
+        timer: 6000,
+        position: "top-right",
         timerProgressBar: true,
         showConfirmButton: false,
         showCancelButton: true,
@@ -248,15 +286,53 @@ export const AuthProvider = ({ children }) => {
         showConfirmButton: false,
         showCancelButton: true,
       });
+    } else if (response.status === 400) {
+      const data = await response.json();
+      if (data.profile && data.profile.user) {
+        if (data.profile.user.username) {
+          swal.fire({
+            title: "Username already exists. Please try another one.",
+            icon: "error",
+            toast: true,
+            timer: 6000,
+            position: "top-right",
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+          });
+        } else if (data.profile.user.email) {
+          swal.fire({
+            title: "A user with this email already exists.",
+            icon: "error",
+            toast: true,
+            timer: 6000,
+            position: "top-right",
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+          });
+        } else {
+          swal.fire({
+            title: "An Error Occurred: " + response.status,
+            icon: "error",
+            toast: true,
+            timer: 6000,
+            position: "top-right",
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+          });
+        }
+      }
     } else {
       console.log(response.status);
       console.log("there was a server issue");
       swal.fire({
-        title: "An Error Occured " + response.status,
+        title: "An Error Occurred: " + response.status,
         icon: "error",
         toast: true,
-        timer: 4000,
-        position: "top",
+        timer: 6000,
+        position: "top-right",
         timerProgressBar: true,
         showConfirmButton: false,
         showCancelButton: true,
