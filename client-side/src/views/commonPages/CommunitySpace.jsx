@@ -6,6 +6,7 @@ import {
   faCommenting,
   faPlusSquare,
   faThumbsUp,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button, Modal } from "react-bootstrap";
 import jwtDecode from "jwt-decode";
@@ -20,15 +21,40 @@ export default function CommunitySpace() {
   const axios = useAxios();
   const [posts, setPosts] = useState([]);
   const [likes, setLikes] = useState({});
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState({});
   const [showPostModal, setShowPostModal] = useState(false);
+  const [showDeletePostModal, setShowDeletePostModal] = useState(false);
+  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
+  const [commentToDelete, setCommentToDelete] = useState(null);
+  const [postCommentToDelete, setPostCommentToDelete] = useState(null);
   const [commentSectionOpen, setCommentSectionOpen] = useState({});
 
-  const [buttonVariant, setButtonVariant] = useState();
   const handleShow = () => setShowPostModal(true);
-  const handleClose = () => {
+
+  const handleShowDeletePostModal = (postId) => {
+    setPostToDelete(postId);
+    setShowDeletePostModal(true);
+  };
+
+  const handleShowDeleteCommentModal = (postId,commentId) => {
+    setCommentToDelete(commentId);
+    setPostCommentToDelete(postId)
+    setShowDeleteCommentModal(true);
+  };
+
+
+  const handleModalClose = () => {
     setShowPostModal(false);
     window.location.reload();
+  };
+
+  const handleDeletePostModalClose = () => {
+    setShowDeletePostModal(false);
+  };
+
+  const handleDeleteCommentModalClose = () => {
+    setShowDeleteCommentModal(false);
   };
 
   const [createComment, setCreateComment] = useState({
@@ -36,7 +62,7 @@ export default function CommunitySpace() {
     content: "",
   });
 
-  console.log(createComment)
+  console.log(createComment);
 
   function handleCreateComment(event) {
     const { name, value } = event.target;
@@ -48,7 +74,7 @@ export default function CommunitySpace() {
 
   const handleCreateCommentSubmit = async (e, postId) => {
     e.preventDefault();
-    const {commenter, content} = createComment;
+    const { commenter, content } = createComment;
     const commentInput = document.getElementById("comment");
 
     const formCreateComment = new FormData();
@@ -63,8 +89,17 @@ export default function CommunitySpace() {
         formCreateComment
       );
       const data = await response.data;
-      commentInput.value = ""
-    }catch (error) {
+      commentInput.value = "";
+      // Ensure the comments for this post exist, then add the new comment
+      setComments((prevComments) => {
+        return {
+          ...prevComments,
+          [postId]: prevComments[postId]
+            ? [...prevComments[postId], data]
+            : [data],
+        };
+      });
+    } catch (error) {
       console.error(error);
     }
   };
@@ -240,10 +275,24 @@ export default function CommunitySpace() {
   }, [posts]);
 
   useEffect(() => {
-    if (commentSectionOpen) {
-      fetchComments();
+    fetchComments();
+  }, [commentSectionOpen, JSON.stringify(comments)]);
+
+  const handleDeletePost = async (postId) => {
+    const response = await axios.delete(`${baseURL}/posts/${postId}/`);
+    if (response.status === 204) {
+      setShowDeletePostModal(false);
+      window.location.reload();
     }
-  }, [commentSectionOpen, fetchComments, handleCreateCommentSubmit]);
+  };
+
+  const handleDeleteComment = async (postId,commentId) => {
+    const response = await axios.delete(`${baseURL}/comment/${postId}/${commentId}`);
+    if (response.status === 204) {
+      setShowDeletePostModal(false);
+      window.location.reload();
+    }
+  };
 
   return (
     <div className="CommunitySpace">
@@ -265,24 +314,37 @@ export default function CommunitySpace() {
             posts.map((post) => (
               <div className="card mt-4 ms-5 m-0 p-0 mb-5 shadow" key={post.id}>
                 <div className="card-header bg-white m-0 p-1">
-                  <div className="row d-flex align-items-center justify-content-between m-0 p-0">
-                    <div className="col col-auto d-flex align-items-center mb-2">
-                      <img
-                        src={post.image}
-                        alt="profile pic"
-                        className="img-fluid rounded"
-                        width={40}
-                      />
-                      <h6 className="fw-bold ms-3 d-flex justify-content-between">
-                        {post.first_name + " " + post.last_name}
-                        <span className="ms-1 fw-light ms-2">
-                          {moment
-                            .utc(post.created_at)
-                            .local()
-                            .startOf("seconds")
-                            .fromNow()}
-                        </span>
-                      </h6>
+                  <div className="row d-flex align-items-center m-0 p-0">
+                    <div className="col d-flex align-items-center justify-content-between mb-2">
+                      <div className="d-flex align-items-center">
+                        <img
+                          src={post.image}
+                          alt="profile pic"
+                          className="img-fluid rounded"
+                          width={40}
+                        />
+                        <h6 className="fw-bold ms-3 d-flex justify-content-between">
+                          {post.first_name + " " + post.last_name}
+                          <span className="ms-1 fw-light ms-2">
+                            {moment
+                              .utc(post.created_at)
+                              .local()
+                              .startOf("seconds")
+                              .fromNow()}
+                          </span>
+                        </h6>
+                      </div>
+                      <div className="">
+                        {post.author_id === user_id && (
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            onClick={() => handleShowDeletePostModal(post.id)}
+                            className="trash fs-2"
+                            color="gray"
+                            style={{ cursor: "pointer" }}
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -334,31 +396,50 @@ export default function CommunitySpace() {
                       {comments[post.id] &&
                         comments[post.id].map((comment) => (
                           <div key={comment.id} className="mb-2">
-                            <div className="col col-auto d-flex align-items-center mb-2">
-                              <img
-                                src={comment.image}
-                                alt="profile pic"
-                                className="img-fluid rounded"
-                                width={50}
-                                height={40}
-                              />
-                              <div className="d-flex flex-column justify-content-around">
-                                <h6 className="fw-bold ms-3 d-flex mt-2">
-                                  {comment.first_name + " " + comment.last_name}
-                                  <span className="ms-1 fw-light ms-2">
-                                    {moment
-                                      .utc(comment.created_at)
-                                      .local()
-                                      .startOf("seconds")
-                                      .fromNow()}
-                                  </span>
-                                </h6>
-                                <p className="ms-3">{comment.content}</p>
+                            <div className="col d-flex align-items-center justify-content-between mb-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  src={comment.image}
+                                  alt="profile pic"
+                                  className="img-fluid rounded"
+                                  width={50}
+                                  height={40}
+                                />
+                                <div className="d-flex flex-column justify-content-around">
+                                  <h6 className="fw-bold ms-3 d-flex mt-2">
+                                    {comment.first_name +
+                                      " " +
+                                      comment.last_name}
+                                    <span className="ms-1 fw-light ms-2">
+                                      {moment
+                                        .utc(comment.created_at)
+                                        .local()
+                                        .startOf("seconds")
+                                        .fromNow()}
+                                    </span>
+                                  </h6>
+                                  <p className="ms-3">{comment.content}</p>
+                                </div>
+                              </div>
+                              <div>
+                                {comment.first_name === decoded.first_name && (
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                    onClick={() =>
+                                      handleShowDeleteCommentModal(post.id ,comment.id)
+                                    }
+                                    className="trash fs-4"
+                                    color="gray"
+                                    style={{ cursor: "pointer" }}
+                                  />
+                                )}
                               </div>
                             </div>
                           </div>
                         ))}
-                      <form onSubmit={(e) => handleCreateCommentSubmit(e, post.id)}>
+                      <form
+                        onSubmit={(e) => handleCreateCommentSubmit(e, post.id)}
+                      >
                         <input
                           type="text"
                           className="form-control mb-3 pb-4"
@@ -380,7 +461,7 @@ export default function CommunitySpace() {
       </div>
 
       <>
-        <Modal show={showPostModal} onHide={handleClose} centered>
+        <Modal show={showPostModal} onHide={handleModalClose} centered>
           <Modal.Header closeButton>
             <Modal.Title centered>Create Post</Modal.Title>
           </Modal.Header>
@@ -432,10 +513,93 @@ export default function CommunitySpace() {
           <div
             className="modal-backdrop fade show"
             style={{ zIndex: "1050" }}
-            onClick={handleClose}
+            onClick={handleModalClose}
           ></div>
         )}
       </>
+
+      <>
+        <Modal
+          show={showDeletePostModal}
+          onHide={handleDeletePostModalClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <h5>Are you sure you want to delete this post?</h5>
+            </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <h6>
+              This post will be removed permanetly and will not be recovered
+            </h6>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              className="btn btn-secondary"
+              onClick={handleDeletePostModalClose}
+            >
+              Cancle
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => handleDeletePost(postToDelete)}
+            >
+              confirm
+            </button>
+          </Modal.Footer>
+        </Modal>
+        {showDeletePostModal && (
+          <div
+            className="modal-backdrop fade show"
+            style={{ zIndex: "1050" }}
+            onClick={handleDeletePostModalClose}
+          ></div>
+        )}
+      </>
+
+      <>
+        <Modal
+          show={showDeleteCommentModal}
+          onHide={handleDeleteCommentModalClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <h5>Are you sure you want to delete this comment?</h5>
+            </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <h6>
+              This Comment will be removed permanetly!
+            </h6>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              className="btn btn-secondary"
+              onClick={handleDeleteCommentModalClose}
+            >
+              Cancle
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => handleDeleteComment(postCommentToDelete, commentToDelete)}
+            >
+              confirm
+            </button>
+          </Modal.Footer>
+        </Modal>
+        {showDeletePostModal && (
+          <div
+            className="modal-backdrop fade show"
+            style={{ zIndex: "1050" }}
+            onClick={handleDeleteCommentModalClose}
+          ></div>
+        )}
+      </>
+
     </div>
   );
 }
