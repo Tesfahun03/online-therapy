@@ -79,7 +79,7 @@ export default function LoginPatient() {
               {t("login.therapistLoginbtn")}
             </button>
 
-            <Link to="#" style={{ textDecoration: "none" }}>
+            <Link to="/forgot-password" style={{ textDecoration: "none" }}>
               <p
                 className="mb-1 mt-1 p-0"
                 style={{ color: "brown", fontWeight: "500" }}

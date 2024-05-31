@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.http import JsonResponse, HttpResponseRedirect
 from django.db.models import OuterRef, Subquery
 from django.db.models import Q
 
@@ -16,20 +16,178 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.contrib.auth import get_user_model
+from mailjet_rest import Client
+from .tokens import email_verification_token
+
+from django.conf import settings
+
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+User = get_user_model()
+
+class SendVerificationEmail:
+    @staticmethod
+    def send(user):
+        token = email_verification_token.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        verification_link = f"http://localhost:3000/verify-email/{uid}/{token}/"
+
+        html_content = f"""
+        <p>Hi {user.username},</p>
+        <p>Please click on the link below to verify your email address:</p>
+        <p><a href="{verification_link}">Verify Email</a></p>
+        <p>Thank you!</p>
+        """
+
+        mailjet = Client(auth=(settings.MAILJET_API_KEY, settings.MAILJET_API_SECRET), version='v3.1')
+        data = {
+            'Messages': [
+                {
+                    "From": {
+                        "Email": "lenchofikru93@gmail.com",
+                        "Name": "Bunna Mind"
+                    },
+                    "To": [
+                        {
+                            "Email": user.email,
+                            "Name": user.username
+                        }
+                    ],
+                    "Subject": "Email Verification",
+                    "TextPart": "Please verify your email address.",
+                    "HTMLPart": html_content,
+                }
+            ]
+        }
+
+        result = mailjet.send.create(data=data)
+        if result.status_code != 200:
+            raise Exception(f"Failed to send verification email: {result.json()}")
+
 
 class PatientRegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = PatientSerializer
+    
+    def perform_create(self, serializer):
+        user = serializer.save().profile.user
+        SendVerificationEmail.send(user)
 
 class TherapistRegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = TherapistSerializer
     
+    def perform_create(self, serializer):
+        user = serializer.save().profile.user
+        SendVerificationEmail.send(user)
+        
+class VerifyEmailView(generics.GenericAPIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, uidb64, token):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and email_verification_token.check_token(user, token):
+            user.is_verified = True
+            user.is_active = True  # Optionally activate the user
+            user.save()
+
+            if hasattr(user.profile, 'user_type'):
+                if user.profile.user_type == 'patient':
+                    redirect_url = "http://localhost:3000/login-p"
+                elif user.profile.user_type == 'therapist':
+                    redirect_url = "http://localhost:3000/login-t"
+                else:
+                    redirect_url = f"http://localhost:3000/"
+
+           
+                return Response({'redirect_url': redirect_url}, status=status.HTTP_200_OK)
+
+        return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+    
+class ForgotPasswordView(generics.GenericAPIView):
+    def post(self, request):
+        email = request.data.get('email')
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'error': 'User with this email does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Generate password reset token
+        token = email_verification_token.make_token(user)
+        
+        # Send password reset email
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        reset_password_link = f"http://localhost:3000/reset-password/{uid}/{token}/"
+        
+        html_content = f"""
+        <p>Hi customer,</p>
+        <p>Please click on the link below to reset your password:</p>
+        <p><a href="{reset_password_link}">Reset Password</a></p>
+        <p>Thank you!</p>
+        """
+        
+        mailjet = Client(auth=(settings.MAILJET_API_KEY, settings.MAILJET_API_SECRET), version='v3.1')
+        data = {
+            'Messages': [
+                {
+                    'From': {
+                        'Email': 'lenchofikru93@gmail.com',
+                        'Name': 'Bunna Mind'
+                    },
+                    'To': [
+                        {
+                            'Email': email,
+                            'Name': user.username
+                        }
+                    ],
+                    'Subject': 'Password Reset',
+                    'TextPart': f'Click the link to reset your password',
+                    'HTMLPart': html_content,
+                }
+            ]
+        }
+        
+        result = mailjet.send.create(data=data)
+        
+        if result.status_code == 200:
+            return Response({'message': 'Password reset link has been sent to your email.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Failed to send email.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class ResetPasswordView(generics.GenericAPIView):
+    def post(self, request, uidb64, token):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            new_password = request.data.get('new_password')
+            confirm_new_password = request.data.get('confirm_new_password')
+
+            if new_password != confirm_new_password:
+                return Response({'error': 'New passwords do not match.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            user.set_password(new_password)
+            user.save()
+            return Response({'message': 'Password reset successfully.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid token.'}, status=status.HTTP_400_BAD_REQUEST)
+
 class TherapistDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Therapist.objects.all()
     serializer_class = TherapistSerializer
@@ -166,6 +324,3 @@ class SearchUser(generics.ListAPIView):
 
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data)
-
-
-

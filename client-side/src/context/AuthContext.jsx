@@ -61,56 +61,74 @@ export const AuthProvider = ({ children }) => {
       console.log(decodedToken.user_id);
       localStorage.setItem("authTokens", JSON.stringify(data));
 
-      if (userType === "therapist" && decodedToken.user_type === "therapist") {
-        history.push("/dashboard-t");
-        swal.fire({
-          title: "Login Successful",
-          icon: "success",
-          toast: true,
-          timer: 2000,
-          position: "top",
-          timerProgressBar: true,
-          showConfirmButton: false,
-          showCancelButton: true,
-        });
-        const { privateKey } = generateKeys();
-        console.log("Private Key:", privateKey);
-
-        // Save encrypted private key to local storage
-        savePrivateKeyToLocalStorage(privateKey);
-      } else if (
-        userType === "patient" &&
-        decodedToken.user_type === "patient"
-      ) {
-        history.push("/home-p");
-        swal.fire({
-          title: "Login Successful",
-          icon: "success",
-          toast: true,
-          timer: 2000,
-          position: "top",
-          timerProgressBar: true,
-          showConfirmButton: false,
-          showCancelButton: true,
-        });
-
-        const { privateKey } = generateKeys();
-        console.log("Private Key:", privateKey);
-
-        // Save encrypted private key to local storage
-        savePrivateKeyToLocalStorage(privateKey);
+      if (decodedToken.is_verified){
+        if (userType === "therapist" && decodedToken.user_type === "therapist") {
+          history.push("/dashboard-t");
+          swal.fire({
+            title: "Login Successful",
+            icon: "success",
+            toast: true,
+            timer: 2000,
+            position: "top",
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+          });
+          const { privateKey } = generateKeys();
+          console.log("Private Key:", privateKey);
+  
+          // Save encrypted private key to local storage
+          savePrivateKeyToLocalStorage(privateKey);
+        } else if (
+          userType === "patient" &&
+          decodedToken.user_type === "patient"
+        ) {
+          history.push("/home-p");
+          swal.fire({
+            title: "Login Successful",
+            icon: "success",
+            toast: true,
+            timer: 2000,
+            position: "top",
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+          });
+  
+          const { privateKey } = generateKeys();
+          console.log("Private Key:", privateKey);
+  
+          // Save encrypted private key to local storage
+          savePrivateKeyToLocalStorage(privateKey);
+        } else {
+          console.error("There was a problem fetching the data");
+          localStorage.removeItem("authTokens");
+          console.log("token cleared");
+          // Create the overlay element and add the 'overlay' class
+          const overlay = document.createElement("div");
+          overlay.classList.add("overlay");
+  
+          // Append the overlay element to the body
+          document.body.appendChild(overlay);
+          swal.fire({
+            title: "Email or password doesn't exist",
+            icon: "error",
+            toast: true,
+            timer: 2000,
+            position: "top",
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+            didClose: () => {
+              // Remove the overlay element and reset the faded background effect
+              overlay.remove();
+              window.location.reload();
+            },
+          });
+        }
       } else {
-        console.error("There was a problem fetching the data");
-        localStorage.removeItem("authTokens");
-        console.log("token cleared");
-        // Create the overlay element and add the 'overlay' class
-        const overlay = document.createElement("div");
-        overlay.classList.add("overlay");
-
-        // Append the overlay element to the body
-        document.body.appendChild(overlay);
         swal.fire({
-          title: "Email or password doesn't exist",
+          title: "Sorry your email is not verified",
           icon: "error",
           toast: true,
           timer: 2000,
@@ -118,13 +136,10 @@ export const AuthProvider = ({ children }) => {
           timerProgressBar: true,
           showConfirmButton: false,
           showCancelButton: true,
-          didClose: () => {
-            // Remove the overlay element and reset the faded background effect
-            overlay.remove();
-            window.location.reload();
-          },
         });
       }
+
+      
     } else {
       console.log(response.status);
       console.log("there was a server issue");
@@ -169,9 +184,9 @@ export const AuthProvider = ({ children }) => {
     console.log(data);
 
     if (response.status === 201) {
-      history.push("/login-p");
+      
       swal.fire({
-        title: "Registration Successful, Login Now",
+        title: "Please verify your email. A verifying link is sent to your email address",
         icon: "success",
         toast: true,
         timer: 2000,
@@ -181,7 +196,6 @@ export const AuthProvider = ({ children }) => {
         showCancelButton: true,
       });
     } else if (response.status === 400) {
-      const data = await response.json();
       if (data.profile && data.profile.user) {
         if (data.profile.user.username) {
           swal.fire({
@@ -275,9 +289,9 @@ export const AuthProvider = ({ children }) => {
     console.log(data);
 
     if (response.status === 201) {
-      history.push("/login-t");
+      
       swal.fire({
-        title: "Registration Successful, Login Now",
+        title: "Please verify your email. A verifying link is sent to your email address",
         icon: "success",
         toast: true,
         timer: 2000,
@@ -287,7 +301,6 @@ export const AuthProvider = ({ children }) => {
         showCancelButton: true,
       });
     } else if (response.status === 400) {
-      const data = await response.json();
       if (data.profile && data.profile.user) {
         if (data.profile.user.username) {
           swal.fire({

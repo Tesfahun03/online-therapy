@@ -8,7 +8,7 @@ from rest_framework.validators import UniqueValidator
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password')
+        fields = ('id', 'username', 'email', 'password', 'is_verified')
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -21,6 +21,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         token['email'] = user.email
         token['user_type'] = user.profile.user_type
+        token['is_verified'] = user.is_verified
         
         # ...
         return token
@@ -78,7 +79,7 @@ class PatientSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Patient
-        fields =['profile', 'occupation', 'has_paid']
+        fields =['profile', 'occupation', 'has_paid', 'prediction_result']
 
     def create(self, validated_data):
         user_data = validated_data.pop('profile')

@@ -22,6 +22,28 @@ export default function LandingPage() {
   //Get user data
   const first_name = decoded.first_name;
   const user_type = decoded.user_type;
+  const user_id = decoded.user_id
+
+  useEffect(() => {
+    const patientData = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/core/patients/${user_id}`);
+        if (response.status !== 200) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.data;
+        if (data.prediction_result === "null") {
+          window.location.href = 'http://localhost:3000/questionnaire';
+        }
+      } catch (error) {
+        console.error("There was a problem fetching the data", error);
+      }
+    };
+
+    patientData(); // Call the function inside useEffect
+
+  }, []);
+  
 
   console.log(decoded);
 

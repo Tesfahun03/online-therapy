@@ -194,3 +194,6 @@ CHAPA_API_URL = "https://api.chapa.co/v1/transaction/initialize"
 VERIFICATION_URL = 'http://127.0.0.1:8000/payment/verify-payment/'
 
 CHAPA_WEBHOOK_URL = 'https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60'
+
+MAILJET_API_KEY = os.getenv('MAILJET_API_KEY')
+MAILJET_API_SECRET = os.getenv('MAILJET_API_SECRET')

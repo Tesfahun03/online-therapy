@@ -23,6 +23,11 @@ import Settings from "./views/therapistPages/Settings";
 import BookAppointment from "./views/patientPages/BookAppointment";
 import VideoChat from "./views/therapistPages/VideoChatTherapist";
 import VideoChatPatient from "./views/patientPages/VideoChatPatient";
+import VerifyEmail from "./views/commonPages/VerifyEmail";
+import PredictionQuestionnaire from "./views/patientPages/PredictionQuestionnaire";
+import ForgotPassword from "./views/commonPages/ForgotPassword";
+import ResetPassword from "./views/commonPages/ResetPassword";
+
 
 function App() {
 
@@ -39,6 +44,10 @@ function App() {
               <PrivateRoute component={LandingPage} path="/home-p" exact />
               <Route component={LoginTherapist} path="/login-t" exact />
               <Route component={RegisterTherapist} path="/register-t" exact />
+              <PrivateRoute component={PredictionQuestionnaire} path="/questionnaire" exact />
+              <Route component={VerifyEmail} path="/verify-email/:uid/:token"  exact/>
+              <Route component={ForgotPassword} path="/forgot-password"  exact/>
+              <Route component={ResetPassword} path="/reset-password/:uidb64/:token"  exact/>
               <PrivateRoute
                 component={CommunitySpace}
                 path="/community-space"

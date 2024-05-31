@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(unique=True)
+    is_verified = models.BooleanField(default=False)  # New field
+    
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -59,6 +61,7 @@ class Patient(models.Model):
     ]
     occupation = models.CharField(max_length = 13, choices = EMPLOYMENT_STATUSES)
     has_paid = models.BooleanField(default=False)
+    prediction_result = models.CharField(max_length=100, default = "null")
     
     
 class Therapist(models.Model):
