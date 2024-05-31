@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from communication.views import TherapistAppointments, PatientAppointments, TherapistAvailabilityViewSet, \
-                                    TherapistNotification, PatientNotification, AssessmentViewSet, StatusRecordViewSet
+                                    TherapistNotification, PatientNotification, StatusRecordViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -15,8 +15,6 @@ router.register(r'therapist/(?P<therapist_id>\d+)/notification', \
                     TherapistNotification, basename='therapist-notification')
 router.register(r'patient/(?P<patient_id>\d+)/notification', \
                     PatientNotification, basename='[patient]-availability')
-router.register(r'patient/(?P<patient_id>\d+)/assessment', \
-                    AssessmentViewSet, basename='assessment')
 router.register(r'patient/(?P<patient_id>\d+)/record', \
                     StatusRecordViewSet, basename='statusRecord')
 

@@ -108,14 +108,7 @@ class Review(models.Model):
     
     def __str__(self):
         return f"{self.therapist.profile.user.email}"
-    
-class Assessment(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
-    phq9_score = models.IntegerField(null=True)
-    gad7_score = models.IntegerField(null=True)
-    note = models.TextField()
-    therapist_name = models.CharField(max_length = 255)
+
     
 class StatusRecord(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -124,5 +117,3 @@ class StatusRecord(models.Model):
     therapist_name = models.CharField(max_length = 255)
     
     
-""" API KEY = 479440fe4689ef3cb103ab265fae2eef
-Secret Key = 11b123df199adc0d0bbd4ab13a5d5080 """

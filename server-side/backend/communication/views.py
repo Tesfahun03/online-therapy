@@ -17,12 +17,12 @@ from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 
 from communication.models import ChatMessage, Counter, TherapistAvailability, Appointments, \
-                                    RoomInsights, Notification, Review, Assessment, StatusRecord
+                                    RoomInsights, Notification, Review, StatusRecord
 
 from communication.serializer import MessageSerializer, TherapistAvailabilitySerializer, \
                                         AppointmentsSerializer, RoomInsightsSerializer, \
                                         NotificationSerializer, ReviewSerializer, CounterSerializer, \
-                                            AssessmentSerializer, StatusRecordSerializer
+                                        StatusRecordSerializer
 
 from core.models import User, Profile, Patient, Therapist
 from core.serializer import UserSerializer, ProfileSerializer, PatientSerializer, TherapistSerializer
@@ -469,27 +469,6 @@ def update_average_rating(sender, instance, **kwargs):
     therapist.rating = average_rating
     therapist.save()
     
-class AssessmentViewSet(viewsets.ModelViewSet):
-    serializer_class = AssessmentSerializer
-    permission_classes =[AllowAny]
-
-    def get_queryset(self):
-        user_id = self.kwargs.get('patient_id')
-        if user_id:
-            
-            queryset = Assessment.objects.filter(patient=user_id)
-
-            return queryset
-    
-    def get_object(self):
-        assessment_id = self.kwargs.get('pk')
-        
-        try:
-            assessment = Assessment.objects.get(pk=assessment_id)
-        except Assessment.DoesNotExist:
-            raise Http404("Assessment not found")
-        
-        return assessment
     
 class StatusRecordViewSet(viewsets.ModelViewSet):
     serializer_class = StatusRecordSerializer
