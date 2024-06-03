@@ -12,6 +12,7 @@ urlpatterns = [
     path('payment/', include("payment.urls")),
     path('community/', include("community.urls")),
     path('recommendation/', include("recommendation.urls")),
+    path('prediction/', include("prediction.urls")),
 ]
 
 

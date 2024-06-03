@@ -241,7 +241,7 @@ class PatientDetailViews(generics.ListAPIView):
 class PatientDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def get_object(self):
         user_id = self.kwargs.get('user_id')

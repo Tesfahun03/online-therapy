@@ -12,7 +12,7 @@ export default function Footer() {
     <>
       {!match && (
         <div
-          className="footer d-flex justify-content-between align-items-center text-white fw-bold p-3 bottom-0"
+          className="footer d-flex justify-content-between align-items-center text-white fw-bold px-3 py-1 bottom-0"
           style={{ position: "bottom" }}
         >
           <h6>@ BunnaMind 2024</h6>
