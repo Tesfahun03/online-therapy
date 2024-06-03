@@ -18,7 +18,7 @@ export default function PredictionQuestionnaire() {
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
   const user_id = decoded.user_id;
-  const [successMessage, setSuccessMessage] = useState("Completed");
+  const [successMessage, setSuccessMessage] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
 
   const questions = [
