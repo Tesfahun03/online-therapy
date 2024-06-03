@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../styles/CommunitySpace.css";
 import useAxios from "../../utils/useAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +20,7 @@ export default function CommunitySpace() {
   const decoded = jwtDecode(token);
   const user_id = decoded.user_id;
   const axios = useAxios();
+  const history = useHistory();
   const [posts, setPosts] = useState([]);
   const [likes, setLikes] = useState({});
   const [comments, setComments] = useState({});
@@ -316,7 +318,7 @@ export default function CommunitySpace() {
                 <div className="card-header bg-white m-0 p-1">
                   <div className="row d-flex align-items-center m-0 p-0">
                     <div className="col d-flex align-items-center justify-content-between mb-2">
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center" onClick={()=>history.push(`/community-space/${post.author_id}`)}>
                         <img
                           src={post.image}
                           alt="profile pic"
@@ -324,7 +326,7 @@ export default function CommunitySpace() {
                           width={40}
                         />
                         <h6 className="fw-bold ms-3 d-flex justify-content-between">
-                          {post.first_name + " " + post.last_name}
+                          {post.first_name + " " + post.last_name + " " + `${post.author_id === user_id ? "(You)":""}`}
                           <span className="ms-1 fw-light ms-2">
                             {moment
                               .utc(post.created_at)

@@ -12,7 +12,7 @@ export default function LandingPage() {
 
   const axios = useAxios();
   const [searchTherapist, setSearchTherapist] = useState({ search: "" });
-  const [therapists, setTherapists] = useState(null);
+  const [therapists, setTherapists] = useState([]);
 
   //Getting the token and decode using jwtDecode
   const token = localStorage.getItem("authTokens");
@@ -22,7 +22,7 @@ export default function LandingPage() {
   //Get user data
   const first_name = decoded.first_name;
   const user_type = decoded.user_type;
-  const user_id = decoded.user_id
+  const user_id = decoded.user_id;
 
   useEffect(() => {
     const patientData = async () => {
@@ -43,7 +43,6 @@ export default function LandingPage() {
     patientData(); // Call the function inside useEffect
 
   }, []);
-  
 
   console.log(decoded);
 
@@ -80,7 +79,9 @@ export default function LandingPage() {
     });
   }
 
-  console.log(therapists);
+  const filteredTherapists = therapists.filter(
+    (therapist) => therapist.paymentRate > 0
+  );
 
   return (
     <div className="landingPage">
@@ -123,8 +124,8 @@ export default function LandingPage() {
       <div className="ourTherapist ms-5 me-5 mt-3">
         <h2 className="text-center mt-5 fs-1">Our Therapist</h2>
         <div className="therapistList row row-auto">
-          {therapists &&
-            therapists.map((therapist) => (
+          {filteredTherapists.length > 0 ? (
+            filteredTherapists.map((therapist) => (
               <div
                 className="col col-auto card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 me-5 mb-3 mt-4"
                 key={therapist.profile.user.id}
@@ -145,7 +146,12 @@ export default function LandingPage() {
                   {therapist.specialization}
                 </h5>
               </div>
-            ))}
+            ))
+          ) : (
+            <div className="alert alert-info text-center mt-1">
+              Sorry, no therapists available for now.
+            </div>
+          )}
         </div>
       </div>
     </div>

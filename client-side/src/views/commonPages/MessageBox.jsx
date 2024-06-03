@@ -172,7 +172,6 @@ function Message() {
                               whiteSpace: "nowrap",
                               overflow: "hidden",
                               textOverflow: "ellipsis",
-                              
                             }}
                           >
                             <small>
@@ -201,22 +200,24 @@ function Message() {
                       return (
                         <Link
                           to={"/message/" + user.profile.user_id + "/"}
-                          href="#"
-                          className="list-group-item list-group-item-action border-0"
+                          className="list-group-item list-group-item-action mb-4 ms-3 mt-3 d-flex justify-content-between"
                           key={user.profile.user_id}
                         >
-                          <div className="d-flex align-items-start">
+                          <div className="d-flex align-items-center">
                             <img
                               src={user.profile.image}
-                              className="rounded-circle mr-1"
+                              className="rounded-circle me-3"
                               alt="1"
                               width={40}
                               height={40}
                             />
-                            <div className="flex-grow-1 ml-3">
+                            <div
+                              className="fw-bold m-0 p-0"
+                              style={{ color: "white" }}
+                            >
                               {user.profile.first_name} {user.profile.last_name}
-                              <div className="small">
-                                <small>@{user.profile.user.username}</small>
+                              <div className="small ">
+                                <small>No message yet</small>
                               </div>
                             </div>
                           </div>

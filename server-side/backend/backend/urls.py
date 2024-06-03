@@ -10,7 +10,8 @@ urlpatterns = [
     path('core/', include("core.urls")),
     path('session/', include("communication.urls")),
     path('payment/', include("payment.urls")),
-    path('community/', include("community.urls"))
+    path('community/', include("community.urls")),
+    path('recommendation/', include("recommendation.urls")),
 ]
 
 

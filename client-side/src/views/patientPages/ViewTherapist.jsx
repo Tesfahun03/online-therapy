@@ -5,25 +5,27 @@ import "../../styles/ViewTherapist.css";
 import { useTranslation } from "react-i18next";
 import useAxios from "../../utils/useAxios";
 import { Button, Modal } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMessage } from "@fortawesome/free-solid-svg-icons";
 const swal = require("sweetalert2");
 
 export default function ViewTherapist() {
   const [t, i18n] = useTranslation("global");
-    const [selectedLanguage, setSelectedLanguage] = useState("english"); 
+  const [selectedLanguage, setSelectedLanguage] = useState("english");
 
-    useEffect(() => {
-        const savedLanguage = localStorage.getItem("preferredLanguage");
-        if (savedLanguage) {
-            i18n.changeLanguage(savedLanguage);
-            setSelectedLanguage(savedLanguage); 
-        }
-    }, [i18n]);
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage);
+    }
+  }, [i18n]);
 
-    const handleChangeLanguage = (e) => {
-        const language = e.target.value;
-        i18n.changeLanguage(language);
-        setSelectedLanguage(language); 
-        localStorage.setItem("preferredLanguage", language); 
+  const handleChangeLanguage = (e) => {
+    const language = e.target.value;
+    i18n.changeLanguage(language);
+    setSelectedLanguage(language);
+    localStorage.setItem("preferredLanguage", language);
   };
 
   const { id } = useParams();
@@ -126,7 +128,7 @@ export default function ViewTherapist() {
         relation.patient === user_id && relation.status === "success"
     ) ?? null;
 
-  console.log(hasPaid)
+  console.log(hasPaid);
 
   const thirtyDaysCheck = relationChecker.some((relation) => {
     if (relation.patient === user_id && relation.status === "success") {
@@ -146,17 +148,17 @@ export default function ViewTherapist() {
   return (
     <div className="view-therapist">
       <div className="languageForTranslate">
-          <select
-              className="preferedLanguage"
-              onChange={handleChangeLanguage}
-              value={selectedLanguage} // Set value to the selected language
-          >
-              <option value="english">English</option>
-              <option value="amharic">Amharic</option>
-              <option value="oromo">Oromo</option>
-              <option value="sumalic">Sumalic</option>
-              <option value="tigrigna">Tigrigna</option>
-          </select>
+        <select
+          className="preferedLanguage"
+          onChange={handleChangeLanguage}
+          value={selectedLanguage} // Set value to the selected language
+        >
+          <option value="english">English</option>
+          <option value="amharic">Amharic</option>
+          <option value="oromo">Oromo</option>
+          <option value="sumalic">Sumalic</option>
+          <option value="tigrigna">Tigrigna</option>
+        </select>
       </div>
       {selectedTherapist ? (
         <div className="row row-auto p-0 m-0">
@@ -184,42 +186,45 @@ export default function ViewTherapist() {
               {selectedTherapist.specialization}
             </h5>
             <div
-            className="col col-auto text-center"
-            key={`buttons-${selectedTherapist.profile.user.id}`}
-          >
-            {thirtyDaysCheck ? (
-              <button
-                className="btn btn-primary"
-                onClick={() => handleBookAppointment(id)}
-                key={`book-appointment-${selectedTherapist.profile.user.id}`}
-              >
-                Book Appointment
-              </button>
-            ) : (
-              <button
-                className="btn btn-success mb-2"
-                onClick={() =>
-                  handlePayment(user_id, selectedTherapist.profile.user.id)
-                }
-                key={`pay-appointment-${selectedTherapist.profile.user.id}`}
-              >
-                Pay for appointment
-              </button>
-            )}
-            {hasPaid ? (
-              <button
-                className="btn btn-primary"
-                onClick={() => handleMessage(id)}
-                key={`message-${selectedTherapist.profile.user.id}`}
-              >
-                Message
-              </button>
-            ) : (
-              ""
-            )}
+              className="col d-flex flex-column align-items-center"
+              key={`buttons-${selectedTherapist.profile.user.id}`}
+            >
+              {thirtyDaysCheck ? (
+                <button
+                  className="btn btn-success mb-1"
+                  onClick={() => handleBookAppointment(id)}
+                  key={`book-appointment-${selectedTherapist.profile.user.id}`}
+                >
+                  Book Appointment
+                </button>
+              ) : (
+                <>
+                  <h6>{selectedTherapist.paymentRate} ETH Birr / Month</h6>
+                  <button
+                    className="btn btn-success"
+                    onClick={() =>
+                      handlePayment(user_id, selectedTherapist.profile.user.id)
+                    }
+                    key={`pay-appointment-${selectedTherapist.profile.user.id}`}
+                  >
+                    Pay for appointment
+                  </button>
+                </>
+              )}
+              {hasPaid ? (
+                <FontAwesomeIcon
+                className="faMessageIcon fs-2 mb-2"
+                color="gray"
+                  icon={faMessage}
+                  onClick={() => handleMessage(id)}
+                  key={`message-${selectedTherapist.profile.user.id}`}
+                />
+              ) : (
+                ""
+              )}
+            </div>
           </div>
-          </div>
-      
+
           <div className="therapist-detail-info col col-auto col-lg-8 col-md-6 col-sm-6 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 mt-5">
             <div className="row">
               <div className="col mt-3 ms-3">
