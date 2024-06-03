@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Link,
-  Route,
-  Switch,
+  matchPath,
   useLocation,
 } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,14 +31,17 @@ export default function SideBar() {
     color: "black",
   };
 
+  const isActive =
+    matchPath(location.pathname, { path: "/records-t", exact: true }) ||
+    matchPath(location.pathname, { path: "/records-t/:id", exact: true });
+
   return (
     <div className="therapist-sidebar col col-auto col-lg-2 col-md-2 col-sm-3 min-vh-100 shadow position-fixed">
       <Link to="/dashboard-t" style={style}>
         <div
           className="row mt-4 p-1 ms-1 me-1 rounded"
           style={{
-            background:
-              location.pathname === "/dashboard-t" ? `${color}` : "",
+            background: location.pathname === "/dashboard-t" ? `${color}` : "",
             cursor: "pointer",
           }}
         >
@@ -101,18 +103,17 @@ export default function SideBar() {
         </div>
       </Link>
 
-      <Link to="/reports-t" style={style}>
+      <Link to="/records-t" style={style}>
         <div
           className="row mt-4 p-1 ms-1 me-1 rounded"
           style={{
             textDecoration: "none",
-            background:
-              location.pathname === "/reports-t" ? `${color}` : "",
+            background: isActive ? color : "",
             cursor: "pointer",
           }}
         >
           <h6 className="fw-light" onClick={() => handleButtonId("Reports")}>
-            <FontAwesomeIcon icon={faNoteSticky} /> Reports
+            <FontAwesomeIcon icon={faNoteSticky} /> Records
           </h6>
         </div>
       </Link>

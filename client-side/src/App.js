@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginTherapist from "./views/therapistPages/LoginTherapist";
 import RegisterTherapist from "./views/therapistPages/RegisterTherapist";
 import CommunitySpace from "./views/commonPages/CommunitySpace";
+import CommunityDetail from "./views/commonPages/CommunityDetail";
 import ProfilePatient from "./views/patientPages/ProfilePatient";
 import NotificationPatient from "./views/patientPages/NotificationPatient";
 import ViewTherapist from "./views/patientPages/ViewTherapist";
@@ -18,7 +19,8 @@ import Dashboard from "./views/therapistPages/Dashboard";
 import Footer from "./component/Footer";
 import Appointments from "./views/therapistPages/Appointments";
 import NotificationTherapist from "./views/therapistPages/NotificationTherapist";
-import Reports from "./views/therapistPages/Reports";
+import Records from "./views/therapistPages/Records";
+import RecordsDetail from "./views/therapistPages/RecordsDetail";
 import Settings from "./views/therapistPages/Settings";
 import BookAppointment from "./views/patientPages/BookAppointment";
 import VideoChat from "./views/therapistPages/VideoChatTherapist";
@@ -53,6 +55,11 @@ function App() {
                 path="/community-space"
                 exact
               />
+              <PrivateRoute
+                component={CommunityDetail}
+                path="/community-space/:id"
+                exact
+              />
               <PrivateRoute component={ProfilePatient} path="/profile-p" exact />
               <PrivateRoute
                 component={NotificationPatient}
@@ -80,7 +87,8 @@ function App() {
                 path="/notification-t"
                 exact
               />
-              <Route component={Reports} path="/reports-t" exact />
+              <Route component={Records} path="/records-t" exact />
+              <Route component={RecordsDetail} path="/records-t/:id" exact />
               <Route component={Settings} path="/settings-t" exact />
               <PrivateRoute component={MessageBox} path="/message-box/" exact />
               <PrivateRoute component={Message} path="/message/:id" exact />

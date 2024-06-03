@@ -1,3 +1,34 @@
 .therapist-sidebar{
     position: fixed;
 }
+.therapist-sidebar {
+    width: 250px;
+    transition: all 0.3s ease;
+  }
+  
+  .therapist-sidebar .row {
+    margin: 0;
+  }
+  
+  .therapist-sidebar .row.active {
+    background-color: burlywood !important;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    transition: all 0.3s ease;
+  }
+  
+  .d-block {
+    display: block !important;
+  }
+  
+  .d-none {
+    display: none !important;
+  }

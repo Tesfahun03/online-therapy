@@ -29,24 +29,30 @@ export default function Appointments() {
     setSelectedLanguage(language);
     localStorage.setItem("preferredLanguage", language);
   };
-  const baseURL = "http://127.0.0.1:8000/api";
+
   const axios = useAxios();
+  const history = useHistory();
   //Getting the token and decode using jwtDecode
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
-  const history = useHistory();
+  const user_id = decoded.user_id;
 
   const [buttonVariant, setButtonVariant] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [showPaymentRateModal, setShowPaymentRateModal] = useState(false);
   const [modalBody, setModalBody] = useState("");
   const [modalTitle, setModalTitle] = useState("");
+
+  const handleShow = () => setShowModal(true);
   const handleClose = () => {
     setShowModal(false);
     window.location.reload();
   };
-  const handleShow = () => setShowModal(true);
 
-  const user_id = decoded.user_id;
+  const handleShowPaymentRate = () => setShowPaymentRateModal(true);
+  const handlePaymentRateClose = () => {
+    setShowPaymentRateModal(false);
+  };
 
   const [startDate, setStartDate] = useState(null);
   const [startTime, setStartTime] = useState(null);
@@ -54,6 +60,27 @@ export default function Appointments() {
 
   const [showAvalability, setShowAvalability] = useState();
   const [appointments, setAppointments] = useState([]);
+
+  const [therapists, setTherapists] = useState([]);
+
+  const therapistsData = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/core/therapists/${user_id}`
+      );
+      if (response.status !== 200) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.data;
+      setTherapists(data);
+    } catch (error) {
+      console.error("There was a problem fetching the data", error);
+    }
+  };
+
+  useEffect(() => {
+    therapistsData();
+  }, []);
 
   const showTherapistAvalability = async () => {
     try {
@@ -183,8 +210,8 @@ export default function Appointments() {
       </div>
       <div className="col ms-3 me-5">
         {showAvalability !== null && showAvalability !== undefined && (
-          <div className="row mt-2">
-            <h2>List of avalability (International Time Zone)</h2>
+          <div className="row mt-4 shadow py-3">
+            <h4>List of avalability (International Time Zone)</h4>
             {showAvalability.length > 0 ? (
               showAvalability.map((avalabilitys, index) => (
                 <div
@@ -220,72 +247,76 @@ export default function Appointments() {
           </div>
         )}
 
-        <div className="row">
-          <h2>Set New Availability</h2>
-          <form onSubmit={handleAppointmentSubmit}>
-            <div
-              className="row"
-              style={{ marginLeft: "10px", marginRight: "10px" }}
+        <div className="row mt-4 shadow py-3">
+          <h4>Set New Availability</h4>
+          <div
+            className="row"
+            style={{ marginLeft: "0px", marginRight: "10px" }}
+          >
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="MMMM d, yyyy"
+              placeholderText="Select a date"
+              className="form-control mb-2"
+              style={{ marginRight: "10px" }}
+            />
+            <DatePicker
+              selected={startTime}
+              onChange={(time) => setStartTime(time)}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="Start Time"
+              dateFormat="h:mm aa"
+              placeholderText="Select start time"
+              className="form-control mb-2"
+            />
+            <DatePicker
+              selected={endTime}
+              onChange={(time) => setEndTime(time)}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="End Time"
+              dateFormat="h:mm aa"
+              placeholderText="Select end time"
+              className="form-control mb-2"
+            />
+            <button
+              type="submit"
+              className="btn btn-success"
+              onClick={
+                therapists.paymentRate === 0
+                  ? handleShowPaymentRate
+                  : handleAppointmentSubmit
+              }
             >
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                dateFormat="MMMM d, yyyy"
-                placeholderText="Select a date"
-                className="form-control mb-2"
-                style={{ marginRight: "10px" }}
-              />
-              <DatePicker
-                selected={startTime}
-                onChange={(time) => setStartTime(time)}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={15}
-                timeCaption="Start Time"
-                dateFormat="h:mm aa"
-                placeholderText="Select start time"
-                className="form-control mb-2"
-              />
-              <DatePicker
-                selected={endTime}
-                onChange={(time) => setEndTime(time)}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={15}
-                timeCaption="End Time"
-                dateFormat="h:mm aa"
-                placeholderText="Select end time"
-                className="form-control mb-2"
-              />
-              <button
-                type="submit"
-                className="btn btn-success"
-                // onClick={handleShow}
-              >
-                Save Availability
-              </button>
-            </div>
-          </form>
+              Save Availability
+            </button>
+          </div>
         </div>
-        <div className="row">
-          <h2>Schedule List</h2>
+        <div className="row mt-4 shadow py-3 px-2 mb-4">
+          <h4>Schedule List</h4>
           {appointments !== null && appointments !== undefined && (
             <>
               {appointments.length > 0 ? (
-                <div className="col col-12 border">
-                  <div className="row d-flex align-items-center border">
-                    <div className="col col-3 border text-center">Client Name</div>
-                    <div className="col col-6 border text-center">Date and Time</div>
-                    <div className="col col-3 text-center">Type</div>
-                  </div>
-                  {appointments.map((appointment) => (
-                    <div className="row d-flex align-items-center border">
-                        <div className="col col-3 border text-center">
-                          {appointment.patient_first_name +
-                            " " +
-                            appointment.patient_last_name}
-                        </div>
-                        <div className="col col-6 border text-center">
+                <table className="table  table-striped table-bordered mt-2">
+                  <thead>
+                    <tr>
+                      <th className="text-center">Client Name</th>
+                      <th className="text-center">Date and Time</th>
+                      <th className="text-center">Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {appointments.map((appointment) => (
+                      <tr key={appointment.id}>
+                        <td className="text-center">
+                          {appointment.patient_first_name}{" "}
+                          {appointment.patient_last_name}
+                        </td>
+                        <td className="text-center">
                           {moment(appointment.date).format("D MMMM YYYY")} ,{" "}
                           {moment(appointment.start_time, "HH:mm:ss").format(
                             "hh:mm A"
@@ -294,11 +325,11 @@ export default function Appointments() {
                           {moment(appointment.end_time, "HH:mm:ss").format(
                             "hh:mm A"
                           )}
-                        </div>
-                        <div className="col col-3 border">
-                          <div className="d-flex justify-content-around px-3 py-2">
+                        </td>
+                        <td className="text-center">
+                          <div className="d-flex justify-content-around">
                             <button
-                              className="btn btn-success "
+                              className="btn btn-success"
                               onClick={() =>
                                 handleMessage(appointment.patientID)
                               }
@@ -312,10 +343,11 @@ export default function Appointments() {
                               <FontAwesomeIcon icon={faVideo} />
                             </button>
                           </div>
-                        </div>
-                    </div>
-                  ))}
-                </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               ) : (
                 <p>No available date is found.</p>
               )}
@@ -343,6 +375,42 @@ export default function Appointments() {
             className="modal-backdrop fade show"
             style={{ zIndex: "1050" }}
             onClick={handleClose}
+          ></div>
+        )}
+      </>
+
+      <>
+        <Modal
+          show={showPaymentRateModal}
+          onHide={handlePaymentRateClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title centered>Payment rate not set!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              Please set your payment rate per month (ETB/month) in the setting
+              inorder to post avalability for the patients!
+            </p>
+          </Modal.Body>
+          <Modal.Footer className="d-flex">
+            <Button variant="secondary" onClick={handlePaymentRateClose}>
+              Cancle
+            </Button>
+            <Button
+              variant="success"
+              onClick={() => history.push("/settings-t")}
+            >
+              Go to setting
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {showPaymentRateModal && (
+          <div
+            className="modal-backdrop fade show"
+            style={{ zIndex: "1050" }}
+            onClick={handlePaymentRateClose}
           ></div>
         )}
       </>

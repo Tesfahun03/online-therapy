@@ -36,6 +36,7 @@ export default function BookAppointment() {
   const [availableDates, setAvailableDates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [relationChecker, setRelation] = useState();
+  
 
   const [registerAppointment, setRegisterAppointment] = useState({
     patient: user_id,

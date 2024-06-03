@@ -1,4 +1,8 @@
 .view-therapist {
-    padding-top: 7vw;
-    /* text-align: center; */
+  padding-top: 7vw;
+  /* text-align: center; */
+}
+.faMessageIcon:hover {
+  color: #653a3a;
+  cursor: pointer;
 }

@@ -111,7 +111,7 @@ class Review(models.Model):
 
     
 class StatusRecord(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name= "patientRecord")
     date = models.DateField(auto_now_add=True)
     note = models.TextField()
     therapist_name = models.CharField(max_length = 255)

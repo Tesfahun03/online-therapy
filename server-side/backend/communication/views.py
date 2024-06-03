@@ -476,8 +476,7 @@ class StatusRecordViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user_id = self.kwargs.get('patient_id')
-        if user_id:
-            
+        if user_id: 
             queryset = StatusRecord.objects.filter(patient=user_id)
 
             return queryset
