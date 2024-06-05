@@ -92,12 +92,9 @@ export default function Settings() {
 
 
   return (
-    <div className="therapist-home row d-flex flex-row  m-0">
-      <div className="col col-lg-2 col-md-2 col-sm-4 m-0 p-0">
-        <SideBar />
-      </div>
-      <div className="col">
-        <h5>Settings</h5>
+    <div className="therapist-home d-flex flex-column m-0">
+      <div className="main-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4 min-vh-100">
+        <h5 className="mt-4">Settings</h5>
         <div className="row">
           <h6>Payment Rate</h6>
           {therapists.paymentRate === 0 && (

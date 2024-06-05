@@ -146,7 +146,7 @@ export default function ViewTherapist() {
   };
 
   return (
-    <div className="view-therapist">
+    <div className="view-therapist min-vh-100">
       <div className="languageForTranslate">
         <select
           className="preferedLanguage"

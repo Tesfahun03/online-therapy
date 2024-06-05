@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/Questionnaries.css";
 import jwtDecode from "jwt-decode";
 import useAxios from "../../utils/useAxios";
-import ProgressBar from "../../component/ProgressBar.jsx";
+import ProgressBar from "../../component/progressBar.jsx";
 import Confetti from "react-confetti";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -223,12 +223,12 @@ export default function PredictionQuestionnaire() {
   };
 
   return (
-    <div className="questionnaries mt-5 d-flex justify-content-center align-items-center">
+    <div className="questionnaries d-flex justify-content-center align-items-center min-vh-100">
       <div className="container">
         {showConfetti && <Confetti />}
         {successMessage ? (
           <div className="row justify-content-center">
-            <div className="col-lg-6 col-md-8 col-sm-9 col-12 card shadow p-4 my-4 mx-3 rounded bg-light border">
+            <div className="col-lg-6 col-md-8 col-sm-9 col-12 card shadow p-4 mx-3 rounded bg-light border">
               <FontAwesomeIcon icon={faCircleCheck} size="4x" color="green" />
               <div className="card-body text-center">
                 <h2 className="card-title">{successMessage}</h2>

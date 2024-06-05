@@ -18,6 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SideBar from "../../component/SideBar";
 import "../../styles/therapisthome.css";
+import ParentComponent from "../../component/ParentBar";
 
 export default function Dashboard() {
   const [t, i18n] = useTranslation("global");
@@ -116,7 +117,7 @@ export default function Dashboard() {
         </select>
       </div>
       <div className="col col-lg-2 col-md-2 col-sm-3 m-0 p-0">
-        <SideBar />
+        <ParentComponent/>
       </div>
       <div className="dashboard col">
         <div className="main-info row">
@@ -184,7 +185,6 @@ export default function Dashboard() {
           </div>
         </div>
         <hr />
-
         <div className="additional-info row"></div>
       </div>
     </div>
