@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect
 from django.db.models import OuterRef, Subquery
 from django.db.models import Q
@@ -6,7 +6,7 @@ from django.db.models import Q
 from core.models import User, Profile, Patient, Therapist
 
 from core.serializer import MyTokenObtainPairSerializer, RegisterSerializer, ProfileSerializer, \
-                                UserSerializer, PatientSerializer, TherapistSerializer
+                                UserSerializer, PatientSerializer, TherapistSerializer, ChangePasswordSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -14,6 +14,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 
 from django.contrib.auth.tokens import default_token_generator
@@ -188,6 +189,24 @@ class ResetPasswordView(generics.GenericAPIView):
         else:
             return Response({'error': 'Invalid token.'}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ChangePasswordView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, user_id, *args, **kwargs):
+        serializer = ChangePasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = get_object_or_404(User, id=user_id)
+
+        if not user.check_password(serializer.validated_data['old_password']):
+            return Response({"old_password": ["Old password is not correct."]}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(serializer.validated_data['new_password'])
+        user.save()
+
+        return Response({"detail": "Password changed successfully."}, status=status.HTTP_200_OK)
+    
 class TherapistDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Therapist.objects.all()
     serializer_class = TherapistSerializer
