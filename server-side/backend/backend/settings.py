@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'communication',
     'payment',
     'community',
-    'recommendation'
+    'recommendation',
+    'prediction'
 ]
 
 MIDDLEWARE = [
