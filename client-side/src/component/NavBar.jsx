@@ -10,7 +10,7 @@ import {
   faBell,
   faGlobe,
   faUser,
-  faBars
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { use } from "i18next";
 import { Button } from "react-bootstrap";
@@ -204,22 +204,24 @@ export default function NavBar({ toggleOffcanvas }) {
     <nav ref={navbarRef} className="navBar">
       {isLoggedIn ? (
         <>
-          <div
-            className="text-end"
-            style={{ position: "relative", zIndex: 2000 }}
-          >
-            <Button
-              className="toogle-button mt-2 me-2"
-              type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasExample"
-              aria-controls="offcanvasExample"
-              onClick={toggleOffcanvas}
-              style={{ position: "relative", zIndex: 3000 }} // Updated zIndex here
+          {user_type === "therapist" && (
+            <div
+              className="text-end"
+              style={{ position: "relative", zIndex: 2000 }}
             >
-              <FontAwesomeIcon icon={faBars} />
-            </Button>
-          </div>
+              <Button
+                className="toogle-button mt-2 me-2"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasExample"
+                aria-controls="offcanvasExample"
+                onClick={toggleOffcanvas}
+                style={{ position: "relative", zIndex: 3000 }} // Updated zIndex here
+              >
+                <FontAwesomeIcon icon={faBars} />
+              </Button>
+            </div>
+          )}
           <Link
             to={user_type === "therapist" ? "/dashboard-t" : "/home-p"}
             style={{ textDecoration: "none" }}

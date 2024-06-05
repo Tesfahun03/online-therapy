@@ -110,15 +110,13 @@ export default function ProfilePatient() {
   };
 
   const handleImageUpload = async () => {
-    if (!selectedImage) return;
+    if (!selectedImage) {
+      alert("Please select an image to upload.");
+      return;
+    }
 
     const formData = new FormData();
-    formData.append("profile.image", selectedImage);
-
-    // Log formData for debugging
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
+    formData.append('profile.image', selectedImage);
 
     try {
       const response = await axios.patch(
@@ -131,7 +129,7 @@ export default function ProfilePatient() {
         }
       );
 
-      console.log(response.data.profile.image);
+      console.log(response.data);
 
       if (response.status === 200) {
         alert("Profile picture updated successfully!");
@@ -225,12 +223,13 @@ export default function ProfilePatient() {
           </div>
           <div className="col w-100 p-0 mt-2 shadow profile-data-info">
             <div className="card profile-data-card">
-              <div className="card-header d-flex justify-content-between p-2 m-2 text-center profile-data-header">
+              <div className="card-header d-flex align-items-center p-2 m-2 text-center profile-data-header">
                 <h6
                   style={{
                     color: `${
                       activeButton === "AccountSetting" ? "black" : "gray"
                     }`,
+                    marginRight:"10%"
                   }}
                   onClick={() => handleButtonId("AccountSetting")}
                 >
@@ -248,28 +247,6 @@ export default function ProfilePatient() {
                     {t("profile.changePassword")}
                   </h6>
                 </>
-                <h6
-                  style={{
-                    color: `${
-                      activeButton === "AdditionalInformation"
-                        ? "black"
-                        : "gray"
-                    }`,
-                  }}
-                  onClick={() => handleButtonId("AdditionalInformation")}
-                >
-                  {t("profile.additionalInformation")}
-                </h6>
-                <h6
-                  style={{
-                    color: `${
-                      activeButton === "Notification" ? "black" : "gray"
-                    }`,
-                  }}
-                  onClick={() => handleButtonId("Notification")}
-                >
-                  {t("profile.notification")}
-                </h6>
               </div>
               <div className="card-body profile-data-body">
                 {activeButton === "AccountSetting" && (
@@ -556,12 +533,6 @@ export default function ProfilePatient() {
                       </button>
                     </form>
                   </div>
-                )}
-                {activeButton === "AdditionalInformation" && (
-                  <div>This is Additional Information section</div>
-                )}
-                {activeButton === "Notification" && (
-                  <div>This is Notification section</div>
                 )}
               </div>
             </div>

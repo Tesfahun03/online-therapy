@@ -35,8 +35,7 @@ export default function SideBar( { isOffcanvasOpen } ) {
 
   const [show, setShow] = React.useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(!isOffcanvasOpen);
 
   const isActive =
     matchPath(location.pathname, { path: "/records-t", exact: true }) ||
@@ -138,115 +137,7 @@ export default function SideBar( { isOffcanvasOpen } ) {
             </div>
           </Link>
         </div>
-      <>
-        <Offcanvas
-          show={isOffcanvasOpen}
-          onHide={handleClose}
-          placement="start"
-          id="offcanvasExample"
-          style={{ width: "250px" }}
-        >
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title id="offcanvasExampleLabel">
-              Offcanvas
-            </Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            <Link to="/dashboard-t" style={style}>
-              <div
-                className="row mt-4 p-1 ms-1 me-1 rounded"
-                style={{
-                  background:
-                    location.pathname === "/dashboard-t" ? `${color}` : "",
-                  cursor: "pointer",
-                }}
-              >
-                <h6
-                  className="fw-light"
-                  onClick={() => handleButtonId("Dashboard")}
-                >
-                  <FontAwesomeIcon icon={faDashboard} /> Dashboard
-                </h6>
-              </div>
-            </Link>
 
-            <Link to="/appointments-t" style={style}>
-              <div
-                className="row mt-4 p-1 ms-1 me-1 rounded"
-                style={{
-                  textDecoration: "none",
-                  background:
-                    location.pathname === "/appointments-t" ? `${color}` : "",
-                  cursor: "pointer",
-                }}
-              >
-                <h6
-                  className="fw-light"
-                  onClick={() => handleButtonId("Appointments")}
-                >
-                  <FontAwesomeIcon icon={faCalendar} /> Appointments
-                </h6>
-              </div>
-            </Link>
-
-            <Link to="/notification-t" style={style}>
-              <div
-                className="row mt-4 p-1 ms-1 me-1 rounded"
-                style={{
-                  textDecoration: "none",
-                  background:
-                    location.pathname === "/notification-t" ? `${color}` : "",
-                  cursor: "pointer",
-                }}
-              >
-                <h6
-                  className="fw-light"
-                  onClick={() => handleButtonId("Notification")}
-                >
-                  <FontAwesomeIcon icon={faBell} /> Notification
-                </h6>
-              </div>
-            </Link>
-
-            <Link to="/records-t" style={style}>
-              <div
-                className="row mt-4 p-1 ms-1 me-1 rounded"
-                style={{
-                  textDecoration: "none",
-                  background: isActive ? color : "",
-                  cursor: "pointer",
-                }}
-              >
-                <h6
-                  className="fw-light"
-                  onClick={() => handleButtonId("Reports")}
-                >
-                  <FontAwesomeIcon icon={faNoteSticky} /> Records
-                </h6>
-              </div>
-            </Link>
-
-            <Link to="/settings-t" style={style}>
-              <div
-                className="row mt-4 p-1 ms-1 me-1 rounded"
-                style={{
-                  textDecoration: "none",
-                  background:
-                    location.pathname === "/settings-t" ? `${color}` : "",
-                  cursor: "pointer",
-                }}
-              >
-                <h6
-                  className="fw-light"
-                  onClick={() => handleButtonId("Settings")}
-                >
-                  <FontAwesomeIcon icon={faToolbox} /> Settings
-                </h6>
-              </div>
-            </Link>
-          </Offcanvas.Body>
-        </Offcanvas>
-      </>
     </div>
   );
 }
