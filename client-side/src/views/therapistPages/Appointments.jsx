@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useHistory } from "react-router-dom";
-import SideBar from "../../component/SideBar";
+import ParentComponent from "../../component/ParentBar";
 import moment from "moment";
 import useAxios from "../../utils/useAxios";
 import DatePicker from "react-datepicker";
@@ -205,9 +205,10 @@ export default function Appointments() {
 
   return (
     <div className="therapist-home d-flex flex-column m-0">
+      <ParentComponent/>
       <div className="appointment-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4">
         {showAvalability !== null && showAvalability !== undefined && (
-          <div className="row mt-5 shadow py-3">
+          <div className="row shadow py-3">
             <h4>List of avalability (International Time Zone)</h4>
             {showAvalability.length > 0 ? (
               showAvalability.map((avalabilitys, index) => (

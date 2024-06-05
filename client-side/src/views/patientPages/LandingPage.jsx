@@ -5,7 +5,7 @@ import "../../styles/LandingPage.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
+import { Card, Button } from "react-bootstrap";
 
 export default function LandingPage() {
   const baseURL = "http://127.0.0.1:8000/core";
@@ -13,6 +13,7 @@ export default function LandingPage() {
   const axios = useAxios();
   const [searchTherapist, setSearchTherapist] = useState({ search: "" });
   const [therapists, setTherapists] = useState([]);
+  const [recommendedTherapists, setRecommendedTherapists] = useState(null);
 
   //Getting the token and decode using jwtDecode
   const token = localStorage.getItem("authTokens");
@@ -27,13 +28,15 @@ export default function LandingPage() {
   useEffect(() => {
     const patientData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/core/patients/${user_id}`);
+        const response = await axios.get(
+          `http://127.0.0.1:8000/core/patients/${user_id}`
+        );
         if (response.status !== 200) {
           throw new Error("Network response was not ok");
         }
         const data = await response.data;
         if (data.prediction_result === "null") {
-          window.location.href = 'http://localhost:3000/questionnaire';
+          window.location.href = "http://localhost:3000/questionnaire";
         }
       } catch (error) {
         console.error("There was a problem fetching the data", error);
@@ -41,7 +44,6 @@ export default function LandingPage() {
     };
 
     patientData(); // Call the function inside useEffect
-
   }, []);
 
   console.log(decoded);
@@ -79,9 +81,31 @@ export default function LandingPage() {
     });
   }
 
+  useEffect(() => {
+    const fetchRecommendedTherapist = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/recommendation/recommend/${user_id}`
+        );
+        if (response.status === 200) {
+          setRecommendedTherapists(response.data);
+        } else {
+          throw new Error("Failed to fetch recommended therapist");
+        }
+      } catch (error) {
+        console.error("Error fetching recommended therapist:", error);
+      }
+    };
+
+    fetchRecommendedTherapist();
+  }, [user_id]);
+
   const filteredTherapists = therapists.filter(
     (therapist) => therapist.paymentRate > 0
   );
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   return (
     <div className="landingPage">
@@ -103,7 +127,49 @@ export default function LandingPage() {
         </form>
       </div>
 
-      <div className="feeling text-center">
+      <div className="recommendedTherapists mt-4">
+        <h2 className="text-center">Recommended Therapists</h2>
+        <div className="row m-0 p-0 d-flex align-items-center">
+          {recommendedTherapists &&
+            recommendedTherapists.map((therapist) => (
+              <div className="col-md-3 mb-4 mt-4" key={therapist.id}>
+                <Card className="h-100 py-2 px-3 shadow border-0">
+                  <div className="d-flex align-items-center justify-content-between">
+                    <Card.Img
+                      variant="top"
+                      src={therapist.profile.image}
+                      alt={`${therapist.profile.first_name} ${therapist.profile.last_name}`}
+                      className="therapistImage"
+                    />
+                    <div>
+                      <Card.Title className="therapistName">
+                        {capitalizeFirstLetter(therapist.profile.first_name)}{" "}
+                        {capitalizeFirstLetter(therapist.profile.last_name)}
+                      </Card.Title>
+                      <Card.Text className="therapistDetails">
+                        Counceling Therapist{therapist.specialization} <br />
+                        with {therapist.experience}{" "}
+                        years experience
+                      </Card.Text>
+                    </div>
+                  </div>
+                  <Card.Body className="">
+                    <Button
+                      variant="primary"
+                      onClick={() =>
+                        handleTherapistSelect(therapist.profile.user.id)
+                      }
+                    >
+                      View Profile
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* <div className="feeling text-center">
         <h2 className="mb-3 mt-5">How You feel Today?</h2>
         <div className="how-you-feel row row-auto d-flex m-0 p-0">
           <div className="emoji col col-4 col-auto">
@@ -119,7 +185,7 @@ export default function LandingPage() {
             <h4>Sad</h4>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="ourTherapist ms-5 me-5 mt-3">
         <h2 className="text-center mt-5 fs-1">Our Therapist</h2>
@@ -127,7 +193,7 @@ export default function LandingPage() {
           {filteredTherapists.length > 0 ? (
             filteredTherapists.map((therapist) => (
               <div
-                className="col col-auto card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 me-5 mb-3 mt-4"
+                className="col col-auto border-0 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 me-5 mb-3 mt-4"
                 key={therapist.profile.user.id}
                 onClick={() => handleTherapistSelect(therapist.profile.user.id)}
               >

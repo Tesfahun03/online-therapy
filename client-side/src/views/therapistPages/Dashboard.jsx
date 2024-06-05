@@ -16,7 +16,6 @@ import {
   faTimeline,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import SideBar from "../../component/SideBar";
 import "../../styles/therapisthome.css";
 import ParentComponent from "../../component/ParentBar";
 

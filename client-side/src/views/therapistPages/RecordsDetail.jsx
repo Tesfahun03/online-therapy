@@ -3,7 +3,7 @@ import {
   useHistory,
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
-import SideBar from "../../component/SideBar";
+import ParentComponent from "../../component/ParentBar";
 import jwtDecode from "jwt-decode";
 import useAxios from "../../utils/useAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -120,6 +120,7 @@ export default function RecordsDetail() {
 
   return (
     <div className="therapist-home d-flex flex-column m-0">
+      <ParentComponent/>
       <div className="main-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4 min-vh-100" >
         {patient && (
           <div>
