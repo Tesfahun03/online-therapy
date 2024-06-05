@@ -118,7 +118,6 @@ export default function Message() {
         }));
 
         setMessages(decryptedMessages);
-        console.log(decryptedMessages);
       });
     } catch (error) {
       console.log(error);
@@ -179,7 +178,6 @@ export default function Message() {
     fetchProfile();
   }, [id]);
 
-  console.log(profile);
   // capture changes made by the user in those fields and update the component's state accordingly.
   const handleChange = (event) => {
     setnewMessage({
@@ -253,9 +251,9 @@ export default function Message() {
               className="card m-0 p-0"
               style={{ position: "fixed", left: 0, right: 0 }}
             >
-              <div className="row">
+              <div className="row d-flex">
                 <div
-                  className="col-12 col-lg-3 col-xl-3 border-end min-vh-100"
+                  className="col-12 col-lg-3 col-xl-3 border-end min-vh-100 d-none d-lg-block"
                   style={{ background: "#7B6565" }}
                 >
                   {messages.map((message) => (
@@ -308,11 +306,10 @@ export default function Message() {
                             </p>
                             <small>
                               <div className="badge bg-success text-white me-3">
-                                {moment
+                              {moment
                                   .utc(message.date)
                                   .local()
-                                  .startOf("seconds")
-                                  .fromNow()}
+                                  .format("h:mm A")}
                               </div>
                             </small>
                           </div>
@@ -391,7 +388,7 @@ export default function Message() {
                 </div>
                 <div
                   className="col-12 col-lg-9 col-xl-9 min-vh-100 pe-0"
-                  style={{ position: "fixed", left: "24%" }}
+                  style={{ position: "relative"}}
                 >
                   <div
                     className="border-bottom d-lg-block py-3 ps-3"
@@ -432,12 +429,11 @@ export default function Message() {
                               <div
                                 className="chat-message-left pb-4"
                                 key={index}
-                                style={{ maxWidth: "50%" }}
                               >
                                 <div>
                                   <img
                                     src={message.sender_profile.image}
-                                    className="rounded-circle mr-1"
+                                    className="rounded-circle mr-2"
                                     alt="Chris Wood"
                                     style={{ objectFit: "cover" }}
                                     width={40}
@@ -445,11 +441,10 @@ export default function Message() {
                                   />
                                   <br />
                                   <div className="text-muted small text-nowrap mt-2">
-                                    {moment
-                                      .utc(message.date)
-                                      .local()
-                                      .startOf("seconds")
-                                      .fromNow()}
+                                  {moment
+                                  .utc(message.date)
+                                  .local()
+                                  .format("h:mm A")}
                                   </div>
                                 </div>
                                 <div
@@ -464,14 +459,13 @@ export default function Message() {
                             )}
                             {message.sender.id === user_id && (
                               <div
-                                className="chat-message-right pb-4 me-3"
+                                className="chat-message-right pb-4 me-3 d-flex align-items-center"
                                 key={index}
-                                style={{ maxWidth: "50%" }}
                               >
                                 <div>
                                   <img
                                     src={message.sender_profile.image}
-                                    className="rounded-circle mr-1"
+                                    className="rounded-circle mr-2"
                                     alt="{message.reciever_profile.full_name}"
                                     style={{ objectFit: "cover" }}
                                     width={40}
@@ -479,11 +473,10 @@ export default function Message() {
                                   />
                                   <br />
                                   <div className="text-muted small text-nowrap mt-2">
-                                    {moment
-                                      .utc(message.date)
-                                      .local()
-                                      .startOf("seconds")
-                                      .fromNow()}
+                                  {moment
+                                  .utc(message.date)
+                                  .local()
+                                  .format("h:mm A")}
                                   </div>
                                 </div>
                                 <div
@@ -505,8 +498,7 @@ export default function Message() {
                     style={{
                       position: "fixed",
                       bottom: 0,
-                      left: "25%",
-                      width: "75%",
+                      width: "100%",
                     }}
                   >
                     <div className="input-group" style={{}}>

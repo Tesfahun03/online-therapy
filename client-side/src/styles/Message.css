@@ -25,11 +25,13 @@
   
   .chat-message-left {
     margin-right: auto;
+    max-width: 50%;
   }
   
   .chat-message-right {
     flex-direction: row-reverse;
     margin-left: auto;
+    max-width: 50%;
   }
     
   .flex-grow-0 {
@@ -37,13 +39,24 @@
   }
 
   
-  @media (max-width: 991.98px) {
+  @media (max-width: 990.98px) {
     .message {
       padding-top: 5vw;
     }
   
     .chat-messages {
       max-height: 60vh;
+    }
+
+    .chat-message-left {
+      margin-right: auto;
+      max-width: 70%; /* Receiver message width */
+    }
+    
+    .chat-message-right {
+      flex-direction: row-reverse;
+      margin-left: auto;
+      max-width: 70%; /* Sender message width */
     }
   
     .col-lg-3,
