@@ -149,11 +149,10 @@ function Message() {
                           </p>
                           <small>
                             <div className="badge bg-success text-white me-3">
-                              {moment
-                                .utc(message.date)
-                                .local()
-                                .startOf("seconds")
-                                .fromNow()}
+                            {moment
+                                  .utc(message.date)
+                                  .local()
+                                  .format("h:mm A")}
                             </div>
                           </small>
                         </div>

@@ -93,11 +93,12 @@ export default function ProfilePatient() {
     delete updatedPatient.profile.image; // Remove the image field
 
     try {
-      await axios.patch(
+      const test=await axios.patch(
         `http://127.0.0.1:8000/core/patients/${user_id}/`,
         updatedPatient
       );
       alert("Profile updated successfully!");
+      console.log(test)
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -113,7 +114,7 @@ export default function ProfilePatient() {
     if (!selectedImage) return;
 
     const formData = new FormData();
-    formData.append("profile.image", selectedImage);
+    formData.append("image", selectedImage);
 
     // Log formData for debugging
     for (let [key, value] of formData.entries()) {
@@ -121,8 +122,9 @@ export default function ProfilePatient() {
     }
 
     try {
-      const response = await axios.patch(
-        `http://127.0.0.1:8000/core/patients/${user_id}/`,
+      console.log(formData)
+      const response = await axios.put(
+        `http://127.0.0.1:8000/core/profile-update/${user_id}/`,
         formData,
         {
           headers: {
@@ -131,11 +133,11 @@ export default function ProfilePatient() {
         }
       );
 
-      console.log(response.data.profile.image);
+      console.log(response.data.image);
 
       if (response.status === 200) {
         alert("Profile picture updated successfully!");
-        setPreviewImage(response.data.profile.image);
+        setPreviewImage(response.data.image);
         setSelectedImage(null);
       }
     } catch (error) {

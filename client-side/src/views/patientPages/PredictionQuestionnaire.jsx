@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/Questionnaries.css";
 import jwtDecode from "jwt-decode";
 import useAxios from "../../utils/useAxios";
-import ProgressBar from "../../component/progressBar.jsx";
+import ProgressBar from "../../component/ProgressBar.jsx";
 import Confetti from "react-confetti";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

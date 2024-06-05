@@ -253,7 +253,7 @@ export default function Message() {
             >
               <div className="row d-flex">
                 <div
-                  className="col-12 col-lg-3 col-xl-3 border-end min-vh-100 d-none d-lg-block"
+                  className="side-bar col-12 col-lg-3 col-xl-3 border-end min-vh-100 "
                   style={{ background: "#7B6565" }}
                 >
                   {messages.map((message) => (
@@ -427,65 +427,46 @@ export default function Message() {
                           <>
                             {message.sender.id !== user_id && (
                               <div
-                                className="chat-message-left pb-4"
+                                className="chat-message-left pb-4 d-flex"
                                 key={index}
                               >
-                                <div>
-                                  <img
-                                    src={message.sender_profile.image}
-                                    className="rounded-circle mr-2"
-                                    alt="Chris Wood"
-                                    style={{ objectFit: "cover" }}
-                                    width={40}
-                                    height={40}
-                                  />
-                                  <br />
-                                  <div className="text-muted small text-nowrap mt-2">
+                                  
+                                <div
+                                  className=" message-container rounded"
+                                  style={{ background: "#7B6565" }}
+                                >
+                                  <p className="ps-2 pe-2 pt-2 pb-0"
+                                    style={{ color: "#FFFFF0" }}>
+                                    {message.message}
+                                  </p>
+                                  <div className="time-container text-muted small text-nowrap mt-0 ms-5">
                                   {moment
                                   .utc(message.date)
                                   .local()
                                   .format("h:mm A")}
                                   </div>
-                                </div>
-                                <div
-                                  className=" rounded ps-2 pe-4 pt-2 pb-0 me-3 ms-3"
-                                  style={{ background: "#7B6565" }}
-                                >
-                                  <p style={{ color: "#FFFFF0" }}>
-                                    {message.message}
-                                  </p>
                                 </div>
                               </div>
                             )}
                             {message.sender.id === user_id && (
                               <div
-                                className="chat-message-right pb-4 me-3 d-flex align-items-center"
+                                className="chat-message-right pb-4 me-3 d-flex" 
                                 key={index}
                               >
-                                <div>
-                                  <img
-                                    src={message.sender_profile.image}
-                                    className="rounded-circle mr-2"
-                                    alt="{message.reciever_profile.full_name}"
-                                    style={{ objectFit: "cover" }}
-                                    width={40}
-                                    height={40}
-                                  />
-                                  <br />
-                                  <div className="text-muted small text-nowrap mt-2">
+                                <div
+                                  className="message-container rounded"
+                                  style={{ background: "#B6836E"}}
+                                >
+                                  <p className="ps-3 pe-3 pb-0 py-2"
+                                      style={{ color: "#FFFFF0 " }}>
+                                    {message.message}
+                                  </p>
+                                  <div className="time-container text-muted small text-nowrap mt-0">
                                   {moment
                                   .utc(message.date)
                                   .local()
                                   .format("h:mm A")}
                                   </div>
-                                </div>
-                                <div
-                                  className="rounded ps-2 pe-4 pb-0 py-2 me-3"
-                                  style={{ background: "#B6836E" }}
-                                >
-                                  <p style={{ color: "#FFFFF0 " }}>
-                                    {message.message}
-                                  </p>
                                 </div>
                               </div>
                             )}

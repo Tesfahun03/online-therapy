@@ -6,12 +6,13 @@ from django.db.models import Q
 from core.models import User, Profile, Patient, Therapist
 
 from core.serializer import MyTokenObtainPairSerializer, RegisterSerializer, ProfileSerializer, \
-                                UserSerializer, PatientSerializer, TherapistSerializer, ChangePasswordSerializer
+                                UserSerializer, PatientSerializer, TherapistSerializer, \
+                                    ProfileUpdateSerializer, ChangePasswordSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework.views import APIView
@@ -244,6 +245,30 @@ class TherapistDetailView(generics.RetrieveUpdateDestroyAPIView):
         self.perform_update(serializer)
         return Response(serializer.data)
 
+## Updating a user image using PUT request
+class ProfileUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileUpdateSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        user_id = self.kwargs.get('user_id')
+        try:
+            profile = Profile.objects.get(user_id=user_id)
+            return profile
+        except Profile.DoesNotExist:
+            raise Http404
+
+    def update(self, request, *args, **kwargs):
+        profile = self.get_object()
+        serializer = self.get_serializer(profile, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+    
 # List of all patients and therapists
 class TherapistDetailViews(generics.ListAPIView):
     queryset = Therapist.objects.all()

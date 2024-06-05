@@ -74,7 +74,12 @@ class ProfileSerializer(serializers.ModelSerializer):
         profile = Profile.objects.create(user=user, **validated_data)
         return profile
     
-
+## For updating a user image
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['user_id','image']
+        
 class PatientSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
     
