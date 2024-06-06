@@ -26,6 +26,7 @@ urlpatterns = router.urls + [
     path("all-my-messages/<user_id>/", views.GetAllMessages.as_view()),
     path('counter/<int:user_id>/', views.CounterView.as_view(), name='get_message_count'),
     path("send-messages/", views.SendMessages.as_view()),
+    path("read-messages/<int:user_id>", views.ReadMessage.as_view()),
     
     # Appointment related functionality
     path('book-appointment/', views.AppointmentsViewSet.as_view(), name='appointments'),

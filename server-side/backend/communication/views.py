@@ -94,6 +94,16 @@ class GetAllMessages(generics.ListAPIView):
         messages =  ChatMessage.objects.filter(Q(reciever__id=user_id))
                 
         return messages
+
+class ReadMessage(generics.RetrieveUpdateAPIView):
+    serializer_class = MessageSerializer 
+    
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        
+        messages =  ChatMessage.objects.get(id=user_id)
+                
+        return messages 
     
 class CounterView(generics.RetrieveUpdateAPIView):
     serializer_class = CounterSerializer

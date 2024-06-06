@@ -18,6 +18,8 @@ export default function Message() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [relationIds, setRelationId] = useState(null);
   const [relationUsers, setRelationUsers] = useState([]); // State to store user information
+  const [unreadCount, setUnreadCount] = useState({});
+  const [myMessages, setMyMessages] = useState([])
 
   const axios = useAxios();
   const { id } = useParams();
@@ -221,6 +223,65 @@ export default function Message() {
     }
   };
 
+  const fetchUnreadCounts = async () => {
+    try {
+      const res = await axios.get(`http://127.0.0.1:8000/session/all-my-messages/${user_id}/`);
+      const messages = res.data;
+      setMyMessages(messages)
+      const counts = messages.reduce((acc, message) => {
+        if (!message.is_read) {
+          const senderId = message.sender.id;
+          if (!acc[senderId]) {
+            acc[senderId] = 0;
+          }
+          acc[senderId] += 1;
+        }
+        return acc;
+      }, {});
+      setUnreadCount(counts);
+      console.log(counts[14])
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUnreadCounts(); // Fetch initial counts
+
+    const interval = setInterval(fetchUnreadCounts, 5000); // Fetch counts every 5 seconds
+
+    return () => clearInterval(interval); // Clear interval on unmount
+  }, [user_id, axios]);
+
+  const handleMarkSenderMessagesAsRead = async (senderId) => {
+    try {
+      const messagesToUpdate = myMessages.filter(message => 
+        message.sender.id === senderId && 
+        message.reciever.id === user_id && 
+        !message.is_read
+      );
+  
+      const promises = messagesToUpdate.map(message => 
+        axios.patch(`${baseURL}/read-messages/${message.id}`, { is_read: true })
+      );
+      
+      Promise.all(promises);
+      console.log(Promise)
+  
+      // Assuming success, update the UI
+      setMessages(prevMessages =>
+        prevMessages.map(message => {
+          if (messagesToUpdate.some(msg => msg.id === message.id)) {
+            return { ...message, is_read: true };
+          }
+          return message;
+        })
+      );
+    } catch (error) {
+      console.log("Error marking sender messages as read:", error);
+    }
+  };
+
   if (!profile || !profile.profile) {
     return null; // Return null if profile is undefined or doesn't have the necessary properties
   }
@@ -265,6 +326,8 @@ export default function Message() {
                           : message.sender.id) +
                         "/"
                       }
+                      key={message.sender.id}
+                      onClick={() => handleMarkSenderMessagesAsRead(message.sender.id)}
                       className="list-group-item list-group-item-action mb-4 ms-3 mt-3 d-flex justify-content-between"
                     >
                       <div className="d-flex align-items-start w-100">
@@ -305,16 +368,15 @@ export default function Message() {
                                   message.sender_profile.last_name}
                             </p>
                             <small>
-                              <div className="badge bg-success text-white me-3">
-                              {moment
-                                  .utc(message.date)
-                                  .local()
-                                  .format("h:mm A")}
+                            {unreadCount[message.sender.id] > 0 && (
+                              <div className="badge bg-danger text-white me-4">
+                                {unreadCount[message.sender.id]}
                               </div>
+                            )}
                             </small>
                           </div>
                           <div
-                            className="d-flex align-items-center"
+                            className="d-flex align-items-center align-items-center justify-content-between d-flex"
                             style={{
                               color: "white",
                               whiteSpace: "nowrap",
@@ -323,7 +385,7 @@ export default function Message() {
                             }}
                           >
                             <div
-                              className="small fw-light fs-6"
+                              className="small fw-light fs-7"
                               style={{
                                 whiteSpace: "nowrap",
                                 overflow: "hidden",
@@ -336,6 +398,14 @@ export default function Message() {
                                   : message.message}
                               </small>
                             </div>
+                            <small>
+                            <div className="badge bg-success text-white me-2">
+                            {moment
+                                  .utc(message.date)
+                                  .local()
+                                  .format("h:mm A")}
+                            </div>
+                          </small>
                           </div>
                         </div>
                       </div>
