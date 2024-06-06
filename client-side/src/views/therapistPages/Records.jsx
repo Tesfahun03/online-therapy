@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import SideBar from "../../component/SideBar";
+import ParentComponent from "../../component/ParentBar";
 import jwtDecode from "jwt-decode";
 import useAxios from "../../utils/useAxios";
 
@@ -68,11 +68,9 @@ export default function Records() {
   console.log(relatedPatients);
 
   return (
-    <div className="therapist-home row d-flex flex-row  m-0">
-      <div className="col col-lg-2 col-md-2 col-sm-4 m-0 p-0">
-        <SideBar />
-      </div>
-      <div className="col">
+    <div className="therapist-home d-flex flex-column m-0">
+      <ParentComponent/>
+      <div className="main-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4 min-vh-100" style={{width:"75%"}}>
         <h2>Related Patients with Successful Payments</h2>
         <table className="table table-striped table-bordered table-hover shadow">
           <thead className="table-success">

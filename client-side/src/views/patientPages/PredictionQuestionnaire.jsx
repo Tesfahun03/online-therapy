@@ -260,7 +260,7 @@ export default function PredictionQuestionnaire() {
         {showConfetti && <Confetti />}
         {successMessage ? (
           <div className="row justify-content-center">
-            <div className="col-lg-6 col-md-8 col-sm-9 col-12 card shadow p-4 my-4 mx-3 rounded bg-light border">
+            <div className="col-lg-6 col-md-8 col-sm-9 col-12 card shadow p-4 mx-3 rounded bg-light border">
               <FontAwesomeIcon icon={faCircleCheck} size="4x" color="green" />
               <div className="card-body text-center">
                 <h2 className="card-title">{successMessage}</h2>

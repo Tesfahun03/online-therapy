@@ -1,5 +1,5 @@
 import React, {useState, useEffect}from "react";
-import SideBar from "../../component/SideBar";
+import ParentComponent from "../../component/ParentBar";
 import useAxios from "../../utils/useAxios";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
@@ -32,13 +32,11 @@ export default function NotificationTherapist() {
   console.log(notifications)
   
   return (
-    <div className="therapist-home row d-flex flex-row  m-0">
-      <div className="col col-lg-2 col-md-2 col-sm-3 m-0 p-0">
-        <SideBar />
-      </div>
-      <div className="col">
+    <div className="therapist-home d-flex flex-column m-0">
+      <ParentComponent/>
+      <div className="main-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4 min-vh-100">
         {notifications.map((notification)=>(
-          <div className="card m-4" key={notification.id}>
+          <div className="card my-4" key={notification.id}>
             <div className="card-header">
               <div className="card-title fw-bold">{notification.title}</div>
               <div className="card-title fw-light">at {moment(notification.sent_at).format('DD MMM YYYY h:mm A')}</div>

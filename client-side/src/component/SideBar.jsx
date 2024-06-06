@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faBars,
   faBell,
   faCalendar,
   faDashboard,
@@ -15,9 +16,10 @@ import {
   faPeopleCarry,
   faToolbox,
 } from "@fortawesome/free-solid-svg-icons";
-// import "../styles/SideBar.css"
+import "../styles/SideBar.css";
+import { Offcanvas, Button, Dropdown, DropdownButton } from "react-bootstrap";
 
-export default function SideBar() {
+export default function SideBar( { isOffcanvasOpen } ) {
   const [activeButton, setActiveButton] = useState("Dashboard");
   const location = useLocation();
   const [t, i18n] = useTranslation("global");
@@ -48,58 +50,53 @@ export default function SideBar() {
     color: "black",
   };
 
+  const [show, setShow] = React.useState(false);
+
+  const handleClose = () => setShow(!isOffcanvasOpen);
+
   const isActive =
     matchPath(location.pathname, { path: "/records-t", exact: true }) ||
     matchPath(location.pathname, { path: "/records-t/:id", exact: true });
 
   return (
-    <div className="therapist-sidebar col col-auto col-lg-2 col-md-2 col-sm-3 min-vh-100 shadow position-fixed">
-      <Link to="/dashboard-t" style={style}>
-        <div
-          className="row mt-4 p-1 ms-1 me-1 rounded"
-          style={{
-            background: location.pathname === "/dashboard-t" ? `${color}` : "",
-            cursor: "pointer",
-          }}
-        >
-          <h6 className="fw-light" onClick={() => handleButtonId("Dashboard")}>
-            <FontAwesomeIcon icon={faDashboard} /> {t("sidebar.sidebarDasboard")}
-          </h6>
-        </div>
-      </Link>
+    <div className="therapist-sidebar col col-lg-2 col-md-2 col-sm-2 min-vh-100 shadow">
+        <div className="side-container w-100">
+          <Link to="/dashboard-t" style={style}>
+            <div
+              className="row mt-2 p-1 ms-1 me-1 rounded"
+              style={{
+                background:
+                  location.pathname === "/dashboard-t" ? `${color}` : "",
+                cursor: "pointer",
+              }}
+            >
+              <h6
+                className="fw-light"
+                onClick={() => handleButtonId("Dashboard")}
+              >
+                <FontAwesomeIcon icon={faDashboard} /> {t("sidebar.sidebarDasboard")}
+              </h6>
+            </div>
+          </Link>
 
-      <Link to="/appointments-t" style={style}>
-        <div
-          className="row mt-4 p-1 ms-1 me-1 rounded"
-          style={{
-            textDecoration: "none",
-            background:
-              location.pathname === "/appointments-t" ? `${color}` : "",
-            cursor: "pointer",
-          }}
-        >
-          <h6
-            className="fw-light"
-            onClick={() => handleButtonId("Appointments")}
-          >
-            <FontAwesomeIcon icon={faCalendar} /> {t("sidebar.sidebarAppointment")}
-          </h6>
-        </div>
-      </Link>
-
-      {/* <div
-        className="row mt-4 p-1 ms-1 me-1 rounded"
-        style={{
-          textDecoration: "none",
-          background:
-            location.pathname === "/therapist-patients" ? `${color}` : "",
-          cursor: "pointer",
-        }}
-      >
-        <h6 className="fw-light" onClick={() => handleButtonId("Patients")}>
-          <FontAwesomeIcon icon={faPeopleCarry} /> Patients
-        </h6>
-      </div> */}
+          <Link to="/appointments-t" style={style}>
+            <div
+              className="row mt-4 p-1 ms-1 me-1 rounded"
+              style={{
+                textDecoration: "none",
+                background:
+                  location.pathname === "/appointments-t" ? `${color}` : "",
+                cursor: "pointer",
+              }}
+            >
+              <h6
+                className="fw-light"
+                onClick={() => handleButtonId("Appointments")}
+              >
+                <FontAwesomeIcon icon={faCalendar} /> {t("sidebar.sidebarAppointment")}
+              </h6>
+            </div>
+          </Link>
 
       <Link to="/notification-t" style={style}>
         <div
@@ -115,7 +112,7 @@ export default function SideBar() {
             className="fw-light"
             onClick={() => handleButtonId("Notification")}
           >
-            <FontAwesomeIcon icon={faBell} /> {t("sidebar.sidebarNotification")}
+            <FontAwesomeIcon icon={faBell} /> Notification
           </h6>
         </div>
       </Link>
@@ -130,7 +127,7 @@ export default function SideBar() {
           }}
         >
           <h6 className="fw-light" onClick={() => handleButtonId("Reports")}>
-            <FontAwesomeIcon icon={faNoteSticky} /> {t("sidebar.sidebarRecords")}
+            <FontAwesomeIcon icon={faNoteSticky} /> Records
           </h6>
         </div>
       </Link>
@@ -145,7 +142,7 @@ export default function SideBar() {
           }}
         >
           <h6 className="fw-light" onClick={() => handleButtonId("Settings")}>
-            <FontAwesomeIcon icon={faToolbox} /> {t("sidebar.sidebarSetting")}
+            <FontAwesomeIcon icon={faToolbox} /> Settings
           </h6>
         </div>
       </Link>

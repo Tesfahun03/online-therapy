@@ -38,7 +38,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=1000)
     last_name = models.CharField(max_length=1000)
-    bio = models.CharField(max_length=100, null= True)
+    bio = models.CharField(max_length=1000, null= True)
     image = models.ImageField(upload_to="user_images", default="user_images/default.jpg")
 
     user_type = models.CharField(max_length=10, blank=True)

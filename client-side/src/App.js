@@ -29,6 +29,7 @@ import VerifyEmail from "./views/commonPages/VerifyEmail";
 import PredictionQuestionnaire from "./views/patientPages/PredictionQuestionnaire";
 import ForgotPassword from "./views/commonPages/ForgotPassword";
 import ResetPassword from "./views/commonPages/ResetPassword";
+import ParentComponent from "./component/ParentBar";
 
 
 function App() {

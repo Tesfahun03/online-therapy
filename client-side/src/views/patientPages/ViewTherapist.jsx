@@ -146,7 +146,7 @@ export default function ViewTherapist() {
   };
 
   return (
-    <div className="view-therapist">
+    <div className="view-therapist min-vh-100">
       <div className="languageForTranslate">
         <select
           className="preferedLanguage"
@@ -213,8 +213,8 @@ export default function ViewTherapist() {
               )}
               {hasPaid ? (
                 <FontAwesomeIcon
-                className="faMessageIcon fs-2 mb-2"
-                color="gray"
+                  className="faMessageIcon fs-2 mb-2"
+                  color="gray"
                   icon={faMessage}
                   onClick={() => handleMessage(id)}
                   key={`message-${selectedTherapist.profile.user.id}`}
@@ -225,55 +225,61 @@ export default function ViewTherapist() {
             </div>
           </div>
 
-          <div className="therapist-detail-info col col-auto col-lg-8 col-md-6 col-sm-6 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 mt-5">
-            <div className="row">
+          <div className="therapist-detail-info col col-auto col-lg-8 col-md-6 col-sm-6 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap border-0 pe-3 mt-5">
+            <div className="row shadow rounded mt-3">
               <div className="col mt-3 ms-3">
                 <div className="row">
-                  <h5>{t("viewTherapist.emailAddress")}</h5>
-                  <h6 className="fw-light">
+                  <p>
+                    <strong>{t("viewTherapist.emailAddress")}: </strong>{" "}
                     {selectedTherapist.profile.user.email}
-                  </h6>
+                  </p>
                 </div>
                 <div className="row">
-                  <h5>{t("viewTherapist.phoneNumber")}</h5>
-                  <h6 className="fw-light">
+                  <p>
+                    <strong>{t("viewTherapist.phoneNumber")}: </strong>{" "}
                     {selectedTherapist.profile.phone}
-                  </h6>
+                  </p>
                 </div>
                 <div className="row">
-                  <h5>{t("viewTherapist.therapistCity")}</h5>
-                  <h6 className="fw-light">{selectedTherapist.profile.city}</h6>
-                </div>
-                <div className="row">
-                  <h5>{t("viewTherapist.therapistregion")}</h5>
-                  <h6 className="fw-light">
-                    {selectedTherapist.profile.region}
-                  </h6>
+                  <p>
+                    <strong>{t("viewTherapist.therapistCity")}: </strong>{" "}
+                    {selectedTherapist.profile.city}
+                  </p>
                 </div>
               </div>
 
               <div className="col mt-3 ms-3">
                 <div className="row">
-                  <h5>{t("viewTherapist.therapistBio")}</h5>
-                  <h6 className="fw-light">{selectedTherapist.profile.bio}</h6>
+                  <p>
+                    <strong>{t("viewTherapist.therapistregion")}: </strong>{" "}
+                    {selectedTherapist.profile.region}
+                  </p>
                 </div>
                 <div className="row">
-                  <h5>{t("viewTherapist.therapistGender")}</h5>
-                  <h6 className="fw-light">
+                  <p>
+                    <strong>{t("viewTherapist.therapistGender")}: </strong>{" "}
                     {selectedTherapist.profile.gender}
-                  </h6>
+                  </p>
                 </div>
                 <div className="row">
-                  <h5>{t("viewTherapist.preferedLanguage")}</h5>
-                  <h6 className="fw-light">
+                  <p>
+                    <strong>{t("viewTherapist.preferedLanguage")}: </strong>{" "}
                     {selectedTherapist.profile.prefered_language}
-                  </h6>
-                </div>
-                <div className="row">
-                  <h5>{t("viewTherapist.therapistReligion")}</h5>
-                  <h6 className="fw-light">{selectedTherapist.religion}</h6>
+                  </p>
                 </div>
               </div>
+              <div className=" col mt-3 ms-3">
+                <div className="row">
+                  <p>
+                    <strong>{t("viewTherapist.therapistReligion")}: </strong>{" "}
+                    {selectedTherapist.religion}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="row shadow mt-4 ">
+              <h4 className="mt-3 ms-3">{t("viewTherapist.therapistBio")} </h4>
+              <p className="mt-3 ms-3"> {selectedTherapist.profile.bio}</p>
             </div>
           </div>
         </div>

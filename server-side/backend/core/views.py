@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect
 from django.db.models import OuterRef, Subquery
 from django.db.models import Q
@@ -6,14 +6,16 @@ from django.db.models import Q
 from core.models import User, Profile, Patient, Therapist
 
 from core.serializer import MyTokenObtainPairSerializer, RegisterSerializer, ProfileSerializer, \
-                                UserSerializer, PatientSerializer, TherapistSerializer
+                                UserSerializer, PatientSerializer, TherapistSerializer, \
+                                    ProfileUpdateSerializer, ChangePasswordSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 
 from django.contrib.auth.tokens import default_token_generator
@@ -188,6 +190,24 @@ class ResetPasswordView(generics.GenericAPIView):
         else:
             return Response({'error': 'Invalid token.'}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ChangePasswordView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, user_id, *args, **kwargs):
+        serializer = ChangePasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = get_object_or_404(User, id=user_id)
+
+        if not user.check_password(serializer.validated_data['old_password']):
+            return Response({"old_password": ["Old password is not correct."]}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(serializer.validated_data['new_password'])
+        user.save()
+
+        return Response({"detail": "Password changed successfully."}, status=status.HTTP_200_OK)
+    
 class TherapistDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Therapist.objects.all()
     serializer_class = TherapistSerializer
@@ -225,6 +245,30 @@ class TherapistDetailView(generics.RetrieveUpdateDestroyAPIView):
         self.perform_update(serializer)
         return Response(serializer.data)
 
+## Updating a user image using PUT request
+class ProfileUpdate(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileUpdateSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        user_id = self.kwargs.get('user_id')
+        try:
+            profile = Profile.objects.get(user_id=user_id)
+            return profile
+        except Profile.DoesNotExist:
+            raise Http404
+
+    def update(self, request, *args, **kwargs):
+        profile = self.get_object()
+        serializer = self.get_serializer(profile, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+    
 # List of all patients and therapists
 class TherapistDetailViews(generics.ListAPIView):
     queryset = Therapist.objects.all()

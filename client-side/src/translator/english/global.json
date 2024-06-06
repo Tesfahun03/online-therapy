@@ -146,7 +146,7 @@
         "phoneNumber": "Phone Number",
         "therapistCity":"City",
         "therapistregion":"Region",
-        "therapistBio": "Bio",
+        "therapistBio": "About me",
         "therapistGender":"Gender",
         "preferedLanguage": "Prefered Language",
         "therapistReligion": "Religion"

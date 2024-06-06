@@ -25,25 +25,52 @@
   
   .chat-message-left {
     margin-right: auto;
+    max-width: 50%;
   }
   
   .chat-message-right {
     flex-direction: row-reverse;
     margin-left: auto;
+    max-width: 50%;
   }
     
   .flex-grow-0 {
     flex-grow: 0 !important;
   }
 
+  .message-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
   
-  @media (max-width: 991.98px) {
+  .time-container {
+    align-self: flex-end;
+    margin-right: 5px; /* Ensure no extra margin is applied */
+  }
+  
+  .input-group{
+    width: 74%;
+  }
+  
+  @media (max-width: 990.98px) {
     .message {
       padding-top: 5vw;
     }
   
     .chat-messages {
-      max-height: 60vh;
+      max-height: 75vh;
+    }
+
+    .chat-message-left {
+      margin-right: auto;
+      max-width: 80%; /* Receiver message width */
+    }
+    
+    .chat-message-right {
+      flex-direction: row-reverse;
+      margin-left: auto;
+      max-width: 80%; /* Sender message width */
     }
   
     .col-lg-3,
@@ -58,4 +85,19 @@
     .col-xl-9 {
       padding-top: 1rem;
     }
+    .input-group{
+      width: 100%;
+    }
+    .form-control{
+      font-size: 20px;
+    }
+    .side-bar{
+      display: none;
+    }
   }
+
+  /* @media (max-width: 412.98px) {
+    .chat-messages {
+      max-height: 80vh;
+    }
+  } */
