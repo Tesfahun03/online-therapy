@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../styles/CommunitySpace.css";
+import { useTranslation } from "react-i18next";
 import useAxios from "../../utils/useAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -37,6 +38,24 @@ export default function CommunitySpace() {
   const handleShowDeletePostModal = (postId) => {
     setPostToDelete(postId);
     setShowDeletePostModal(true);
+  };
+  const [t, i18n] = useTranslation("global");
+  const [selectedLanguage, setSelectedLanguage] = useState("english"); // State to store selected language
+
+  useEffect(() => {
+    // Check if a language is saved in local storage
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage); // Set selected language from local storage
+    }
+  }, []);
+
+  const handleChangeLanguage = (e) => {
+    const language = e.target.value;
+    i18n.changeLanguage(language);
+    setSelectedLanguage(language); // Update selected language in state
+    localStorage.setItem("preferredLanguage", language); // Save selected language in local storage
   };
 
   const handleShowDeleteCommentModal = (postId,commentId) => {
@@ -298,6 +317,19 @@ export default function CommunitySpace() {
 
   return (
     <div className="CommunitySpace">
+      <div className="languageForTranslate">
+        <select
+          className="preferedLanguage"
+          onChange={handleChangeLanguage}
+          value={selectedLanguage} // Set value to the selected language
+        >
+          <option value="english">English</option>
+          <option value="amharic">Amharic</option>
+          <option value="oromo">Oromo</option>
+          <option value="sumalic">Sumalic</option>
+          <option value="tigrigna">Tigrigna</option>
+        </select>
+      </div>
       <div className="row m-0 p-0 me-5">
         <div className="col col-auto col-md-3 col-sm-2.5 col-lg-2 min-vh-50 shadow"></div>
         <div className="col">
@@ -305,7 +337,7 @@ export default function CommunitySpace() {
             className="btn border rounded d-flex align-items-center justify-content-between w-100 ms-4 mt-3 px-2"
             onClick={handleShow}
           >
-            <p className="text-center">Start Post</p>
+            <p className="text-center">{t("communitySpace.communitySpaceStart")}</p>
             <FontAwesomeIcon
               icon={faPlusSquare}
               className="fs-3"
@@ -378,7 +410,7 @@ export default function CommunitySpace() {
                         color={likes[post.id] ? "#643a3a" : "gray"}
                         className="fs-2 ms-1 me-1"
                       />
-                      {likes[post.id] ? "Liked" : "Like"}
+                      {likes[post.id] ? t("communitySpace.communitySpaceLiked") : t("communitySpace.communitySpaceLike")}
                     </div>
 
                     <div
@@ -390,7 +422,7 @@ export default function CommunitySpace() {
                         color={commentSectionOpen[post.id] ? "#643a3a" : "gray"}
                         className="fs-2 ms-3 me-1"
                       />
-                      Comment
+                      {t("communitySpace.communitySpaceComment")}
                     </div>
                   </div>
                   {commentSectionOpen[post.id] && (
@@ -445,13 +477,13 @@ export default function CommunitySpace() {
                         <input
                           type="text"
                           className="form-control mb-3 pb-4"
-                          placeholder="Write your thought ... "
+                          placeholder={t("communitySpace.communitySpaceWrite1")}
                           name="content"
                           id="comment"
                           onChange={handleCreateComment}
                         />
                         <button className="btn btn-primary ms-1">
-                          Comment
+                        {t("communitySpace.communitySpaceComment")}
                         </button>
                       </form>
                     </div>
@@ -470,28 +502,28 @@ export default function CommunitySpace() {
           <form onSubmit={handleCreatePostSubmit}>
             <Modal.Body>
               <label htmlFor="post-title" className="fw-bold">
-                Title
+              {t("communitySpace.communitySpaceTitle")}
               </label>
               <input
                 type="text"
                 className="form-control mb-3"
-                placeholder="Title"
+                placeholder={t("communitySpace.communitySpaceTitle")}
                 name="title"
                 id="post-title"
                 onChange={handleCreatePost}
               />
               <label htmlFor="post-content" className="fw-bold">
-                Content
+              {t("communitySpace.communitySpaceContent")}
               </label>
               <textarea
-                placeholder="Write Something ... "
+                placeholder={t("communitySpace.communitySpaceWrite2")}
                 name="content"
                 className="form-control mb-3 pb-5"
                 id="post-content"
                 onChange={handleCreatePost}
               ></textarea>
               <label htmlFor="post-image" className="fw-bold">
-                Image (optional)
+              {t("communitySpace.communitySpaceImage")}
               </label>
               <input
                 type="file"
@@ -506,7 +538,7 @@ export default function CommunitySpace() {
                 className="btn border text-center text-white"
                 style={{ background: "#683a3a" }}
               >
-                Publish
+                {t("communitySpace.communitySpacePublish")}
               </button>
             </Modal.Footer>
           </form>
@@ -528,13 +560,13 @@ export default function CommunitySpace() {
         >
           <Modal.Header closeButton>
             <Modal.Title>
-              <h5>Are you sure you want to delete this post?</h5>
+              <h5>{t("communitySpace.communitySpaceAskDelete1")}</h5>
             </Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
             <h6>
-              This post will be removed permanetly and will not be recovered
+            {t("communitySpace.communitySpaceDeleted1")}
             </h6>
           </Modal.Body>
           <Modal.Footer>
@@ -542,13 +574,13 @@ export default function CommunitySpace() {
               className="btn btn-secondary"
               onClick={handleDeletePostModalClose}
             >
-              Cancle
+              {t("communitySpace.communitySpaceCancel")}
             </button>
             <button
               className="btn btn-danger"
               onClick={() => handleDeletePost(postToDelete)}
             >
-              confirm
+              {t("communitySpace.communitySpaceConfirm")}
             </button>
           </Modal.Footer>
         </Modal>
@@ -569,13 +601,13 @@ export default function CommunitySpace() {
         >
           <Modal.Header closeButton>
             <Modal.Title>
-              <h5>Are you sure you want to delete this comment?</h5>
+              <h5>{t("communitySpace.communitySpaceAskDelete2")}</h5>
             </Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
             <h6>
-              This Comment will be removed permanetly!
+            {t("communitySpace.communitySpaceDeleted2")}
             </h6>
           </Modal.Body>
           <Modal.Footer>
@@ -583,13 +615,13 @@ export default function CommunitySpace() {
               className="btn btn-secondary"
               onClick={handleDeleteCommentModalClose}
             >
-              Cancle
+              {t("communitySpace.communitySpaceCancel")}
             </button>
             <button
               className="btn btn-danger"
               onClick={() => handleDeleteComment(postCommentToDelete, commentToDelete)}
             >
-              confirm
+              {t("communitySpace.communitySpaceConfirm")}
             </button>
           </Modal.Footer>
         </Modal>

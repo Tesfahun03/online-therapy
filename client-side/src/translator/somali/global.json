@@ -134,7 +134,22 @@
 
     },
     "communitySpace":{
-
+        "communitySpaceStart": "Boostada Bilow",
+        "communitySpaceLiked": "Liked",
+        "communitySpaceLike": "Like",
+        "communitySpaceWrite1": "Qor fikirkaaga...",
+        "communitySpaceWrite2": "Qor wax...",
+        "communitySpaceTitle": "Title",
+        "communitySpacePublish": "Daabac",
+        "communitySpaceContent": "Content",
+        "communitySpaceImage": "Sawirka (ikhtiyaarka)",
+        "communitySpaceAskDelete1": "Ma hubtaa inaad rabto inaad tirtirto qoraalkan?",
+        "communitySpaceAskDelete2": "Ma hubtaa inaad rabto inaad tirtirto faalladan?",
+        "communitySpaceDeleted1": "Boostada waa laga saarayaa si joogto ah lamana soo celin doono",
+        "communitySpaceDeleted2": "Faaladan si joogto ah ayaa looga saari doonaa!",
+        "communitySpaceCancel": "Cancel",
+        "communitySpaceConfirm": "Xaqiiji",
+        "communitySpaceComment": "Faallo"
     },
     "viewTherapist":{
         "bookAppointment":" Ballanta Buugga",
@@ -147,6 +162,64 @@
         "therapistGender":" Jinsi",
         "preferedLanguage": "Luqadda la door biday",
         "therapistReligion": "Diinta"
+    },
+    "questionnaire":{
+        "questionnaireName": "Xog-waraysi",
+        "questionnaireQuestion1": "Immisa jeer ayaad dareemeysaa dareemo?",
+        "questionnaireQuestion2": "Immisa jeer ayaad la kulantaa argagax?",
+        "questionnaireQuestion3": "Immisa jeer ayaad isku aragtaa inaad si degdeg ah u neefsanayso?",
+        "questionnaireQuestion4": "Immisa jeer ayaad la kulantaa dhidid xad-dhaaf ah?",
+        "questionnaireQuestion5": "Immisa jeer ayaad dhib kala kulantaa inaad diirada saarto?",
+        "questionnaireQuestion6": "Immisa jeer ayay dhib kugu tahay inaad seexato ama aad huruddo?",
+        "questionnaireQuestion7": "Immisa jeer ayaad la kulantaa dhibaatooyin ama caqabado shaqadaada?",
+        "questionnaireQuestion8": "Immisa jeer ayaad dareentaa rajo la'aan?",
+        "questionnaireQuestion9": "Immisa jeer ayaad dareemeysaa xanaaq?",
+        "questionnaireQuestion10": "Immisa jeer ayaad isku aragtaa inaad ka xanaaqsan tahay xaaladaha?",
+        "questionnaireQuestion11": "Immisa jeer ayaad la kulantaa isbeddello ku yimaada caadooyinkaaga cunto?",
+        "questionnaireQuestion12": "Immisa jeer ayaad qabtaa fikrado ah inaad naftaada waxyeelo u geysato ama aad noloshaada soo afjarto?",
+        "questionnaireQuestion13": "Immisa jeer ayaad dareentaa daal ama daal?",
+        "questionnaireQuestion14": "Immisa jeer ayaad wakhti la qaadataa saaxiib aad isku dhowdahay?",
+        "questionnaireQuestion15": "Immisa jeer ayaad isku aragtaa inaad waqti xad dhaaf ah ku bixinayso baraha bulshada?",
+        "questionnaireQuestion16": "Immisa jeer ayaad dareentaa isbeddellada miisaankaaga?",
+        "questionnaireQuestion17": "Immisa jeer ayaad door bidaa inaad keligaa waqti la qaadato intii aad dadka kale la qaadan lahayd?",
+        "questionnaireQuestion18": "Immisa jeer ayaad la kulantaa fikrado soo jiidasho leh ama xusuusta dhacdooyin walaac leh?",
+        "questionnaireQuestion19": "Immisa jeer ayaad la kulantaa qarow markaad huruddo?",
+        "questionnaireQuestion20": "Immisa jeer ayaad iska ilaalisaa isdhexgalka bulshada ama hawlaha?",
+        "questionnaireQuestion21": "Immisa jeer ayaad dareemeysaa dareen xun?",
+        "questionnaireQuestion22": "Immisa jeer ayaad dhib kala kulantaa inaad diirada saarto hawlaha?",
+        "questionnaireQuestion23": "Immisa jeer ayaad naftaada ku eedaysaa waxyaalaha khaldan?",
+        "questionnaireQuestion24": "Immisa jeer ayaad la kulantaa dhalanteed?",
+        "questionnaireQuestion25": "Immisa jeer ayaad samaysaa dhaqamo soo noqnoqda ama caadooyin?",
+        "questionnaireQuestion26": "Immisa jeer ayaad la kulantaa isbeddelada tamartaada ama heerarka dhaqdhaqaaqaaga oo ku saleysan xilliyada?",
+        "questionnaireQuestion27": "Immisa jeer ayaad la kulantaa xilliyada tamarta ama dhaqdhaqaaqa kordhay?",
+        "questionnaireOption1": "Weligay",
+        "questionnaireOption2": "Marmar",
+        "questionnaireOption3": "Mararka qaarkood",
+        "questionnaireOption4": "Si joogta ah",        
+        "questionnaireSubmittedMessage": "Waad ku mahadsan tahay buuxinta foomka su'aalaha! Jawaabahaaga si guul leh ayaa loo gudbiyay.",
+        "questionnaireGotoHome": "Tag Guriga",
+        "questionnairePrevious": "Previuos",
+        "questionnaireNext": "Next",
+        "questionnaireSubmit": "Submit"
+    },
+    "sidebar":{
+        "sidebarDashboard": "Dhashboard",
+        "sidebarAppointment": "Ballamaha",
+        "sidebarNotification": "Ogaysiis",
+        "sidebarRecord": "Diiwaanka",
+        "sidebarSetting": "Settings"
+    },
+    "message": {
+        "sendMessage": "Diri",
+        "typeMessage": "Ku qor fariintaada",
+        "selectMessage": "Dooro wada sheekeysi si aad fariimaha u bilowdo."
+    },
+    "record": {
+        "recordPayment": "Bukaanada laxiriira ee haysta Lacag-bixino guul leh",
+        "recordFirstName" :"Magaca koowaad",
+        "recordLastName" :"Magaca Dambe",
+        "recordPaymentAmount" :"Lacagta Bixinta",
+        "recordPaymentdate" :"Taariikhda lacag bixinta"
     }
       
 }

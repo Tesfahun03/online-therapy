@@ -1,13 +1,26 @@
 import React from "react";
 import "../../styles/Message.css";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import useAxios from "../../utils/useAxios";
 import { decryptMessage } from "../../utils/cryptoUtils";
+
 import jwtDecode from "jwt-decode";
 import { Link } from "react-router-dom/";
 import moment from "moment";
 
 function Message() {
+  const [t, i18n] = useTranslation("global");
+  const [selectedLanguage, setSelectedLanguage] = useState("english"); // State to store selected language
+
+  useEffect(() => {
+    // Check if a language is saved in local storage
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage); // Set selected language from local storage
+    }
+  }, []);
   const senderPrivateKey = localStorage.getItem("privateKey");
   const baseURL = "http://127.0.0.1:8000/session";
   // Create New State
@@ -303,7 +316,7 @@ function Message() {
                   style={{ left: "35%", top: "35%" }}
                 >
                   <div className="chat-message-left pb-4">
-                    <h5>Select a chat to start messaging.</h5>
+                    <h5>{t("message.selectMessage")}</h5>
                   </div>
                 </div>
               </div>
