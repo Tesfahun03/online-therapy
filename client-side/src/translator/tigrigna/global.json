@@ -148,6 +148,57 @@
         "therapistGender":"ጾታ",
         "preferedLanguage": "ዝምረጽ ቋንቋ",
         "therapistReligion": "ሃይማኖት"
-    }
+    },
+    "questionnaire":{
+        "questionnaireName": "መሕተቲ ጽሑፍ",
+        "questionnaireQuestion1": "ክንደይ ግዜ ስምዒት ስንባደ የጋጥመካ?",
+        "questionnaireQuestion2": "ክንደይ ግዜ ስንባደ የጋጥመካ?",
+        "questionnaireQuestion3": "ክንደይ ግዜ ንነብስኻ ብቕልጡፍ ከተስተንፍስ ትረኽባ?",
+        "questionnaireQuestion4": "ክንደይ ግዜ ካብ መጠን ንላዕሊ ረሃጽ የጋጥመካ?",
+        "questionnaireQuestion5": "ክንደይ ግዜ ኢኻ ከተተኩር ትሽገር?",
+        "questionnaireQuestion6": "ክንደይ ግዜ ድቃስ ክትወድቕ ወይ ድቃስ ክትጸንሕ ትሽገር?",
+        "questionnaireQuestion7": "ኣብ ስራሕካ ክንደይ ግዜ ጸገማት ወይ ብድሆታት የጋጥመካ?",
+        "questionnaireQuestion8": "ክንደይ ግዜ ተስፋ ዝስእን ኮይኑ ይስምዓካ?",
+        "questionnaireQuestion9": "ክንደይ ግዜ ስምዒት ቁጥዐ የጋጥመካ?",
+        "questionnaireQuestion10": "ክንደይ ግዜ ንኹነታት ካብ መጠን ንላዕሊ ምላሽ ክትህብ ትረኽባ?",
+        "questionnaireQuestion11": "ኣብ ኣመጋግባኻ ክንደይ ግዜ ለውጢ የጋጥመካ?",
+        "questionnaireQuestion12": "ክንደይ ግዜ ንነብስኻ ክትጎድእ ወይ ሂወትካ ከተብቅዕ ሓሳባት ይመጸካ?",
+        "questionnaireQuestion13": "ክንደይ ግዜ ድኻም ወይ ድኻም ይስምዓካ?",
+        "questionnaireQuestion14": "ክንደይ ግዜ ምስ ናይ ቀረባ ዓርክኻ ግዜ ተሕልፍ?",
+        "questionnaireQuestion15": "ክንደይ ግዜ ኣብ ማሕበራዊ መራኸቢታት ካብ መጠን ንላዕሊ ግዜ ከተሕልፍ ትረኽባ?",
+        "questionnaireQuestion16": "ክንደይ ግዜ ኣብ ክብደትካ ለውጢ ትዕዘብ?",
+        "questionnaireQuestion17": "ክንደይ ግዜ ካብ ምስ ካልኦት ንበይንኻ ግዜ ምሕላፍ ትመርጽ?",
+        "questionnaireQuestion18": "ክንደይ ግዜ ጣልቃ ዝኣትዉ ሓሳባት ወይ ዝኽሪ ውጥረት ዝመልኦም ፍጻመታት የጋጥመካ?",
+        "questionnaireQuestion19": "ክንደይ ግዜ ድቃስ ከለኻ ሕልሚ ቀትሪ የጋጥመካ?",
+        "questionnaireQuestion20": "ክሳብ ክንደይ ግዜ ኢኻ ካብ ማሕበራዊ ርክባት ወይ ንጥፈታት ትርሕቕ?",
+        "questionnaireሕቶ21": "ክንደይ ግዜ ኣሉታዊ ስምዒታት የጋጥመካ?",
+        "questionnaireQuestion22": "ክንደይ ግዜ ኣብ ዕማማት ትኹረት ክትገብር ትሽገር?",
+        "questionnaireQuestion23": "ንዝጋገ ነገራት ክንደይ ግዜ ኢኻ ንነብስኻ ትወቅስ?",
+        "questionnaireQuestion24": "ክንደይ ግዜ ምትላል የጋጥመካ?",
+        "questionnaireQuestion25": "ክንደይ ግዜ ኣብ ተደጋጋሚ ባህርያት ወይ ስርዓታት ትዋፈር?",
+        "questionnaireQuestion26": "ክንደይ ግዜ ኣብ ደረጃ ጸዓትካ ወይ ንጥፈታትካ ብመሰረት ወቕትታት ለውጢ የጋጥመካ?",
+        "questionnaireQuestion27": "ክንደይ ግዜ ናይ ምውሳኽ ጸዓት ወይ ምንቅስቓስ እዋናት የጋጥመካ?",
+        "questionnaireOption1": "ፈጺሙ",
+        "questionnaireOption2": "ሓሓሊፉ",
+        "questionnaireOption3": "ሓደ ሓደ ግዜ",
+        "questionnaireOption4": "ብተደጋጋሚ",       
+        "questionnaireSubmittedMessage": "እቲ መሕተቲ ጽሑፍ ስለ ዝመላእኩም የቐንየልና! መልስታትኩም ብዓወት ቀሪቡ ኣሎ።",
+        "questionnaireGotoHome": "ናብ ገዛ ኪድ",
+        "questionnairePrevious": "ቅድሚ ሕጂ",
+        "questionnaireNext": "ቀጺሉ",
+        "questionnaireSubmit": "ኣቕርብ"
+    },
+    "sidebar":{
+        "sidebarDashboard": "ዳሽቦርድ",
+        "sidebarAppointment": "ቆጸራታት",
+        "sidebarNotification": "መፍለጢ",
+        "sidebarRecord": "መዛግብቲ",
+        "sidebarSetting": "ቅጥዕታት"
+    },
+    "message": {
+        "sendMessage": "ስደድ",
+        "typeMessage": "መልእኽትኻ ጽሓፍ",
+        "selectMessage": "መልእኽቲ ንምጅማር ዕላል ምረጽ።"
+    }    
       
 }

@@ -150,6 +150,57 @@
         "therapistGender":"Gender",
         "preferedLanguage": "Prefered Language",
         "therapistReligion": "Religion"
+    },
+    "questionnaire":{
+        "questionnaireName": "Questionnaire",
+        "questionnaireQuestion1": "How often do you experience feelings of nervousness?",
+        "questionnaireQuestion2": "How often do you experience panic?",
+        "questionnaireQuestion3": "How often do you find yourself breathing rapidly?",
+        "questionnaireQuestion4": "How often do you experience excessive sweating?",
+        "questionnaireQuestion5": "How often do you have trouble concentrating?",
+        "questionnaireQuestion6": "How often do you have difficulty falling asleep or staying asleep?",
+        "questionnaireQuestion7": "How often do you face difficulties or challenges with your work?",
+        "questionnaireQuestion8": "How often do you feel hopeless?",
+        "questionnaireQuestion9": "How often do you experience feelings of anger?",
+        "questionnaireQuestion10": "How often do you find yourself overreacting to situations?",
+        "questionnaireQuestion11": "How often do you experience changes in your eating habits?",
+        "questionnaireQuestion12": "How often do you have thoughts of harming yourself or ending your life?",
+        "questionnaireQuestion13": "How often do you feel tired or fatigued?",
+        "questionnaireQuestion14": "How often do you spend time with a close friend?",
+        "questionnaireQuestion15": "How often do you find yourself spending excessive time on social media?",
+        "questionnaireQuestion16": "How often do you notice changes in your weight?",
+        "questionnaireQuestion17": "How often do you prefer spending time alone rather than with others?",
+        "questionnaireQuestion18": "How often do you experience intrusive thoughts or memories of stressful events?",
+        "questionnaireQuestion19": "How often do you experience nightmares while sleeping?",
+        "questionnaireQuestion20": "How often do you avoid social interactions or activities?",
+        "questionnaireQuestion21": "How often do you experience negative emotions?",
+        "questionnaireQuestion22": "How often do you have trouble staying focused on tasks?",
+        "questionnaireQuestion23": "How often do you blame yourself for things that go wrong?",
+        "questionnaireQuestion24": "How often do you experience hallucinations?",
+        "questionnaireQuestion25": "How often do you engage in repetitive behaviors or rituals?",
+        "questionnaireQuestion26": "How often do you experience changes in your energy or activity levels based on the seasons?",
+        "questionnaireQuestion27": "How often do you experience periods of increased energy or activity?",
+        "questionnaireOption1": "Never",
+        "questionnaireOption2": "Occasionally",
+        "questionnaireOption3": "Sometimes",
+        "questionnaireOption4": "Frequently",        
+        "questionnaireSubmittedMessage": "Thank you for completing the questionnaire! Your responses have been submitted successfully.",
+        "questionnaireGotoHome": "Go to Home",
+        "questionnairePrevious": "Previuos",
+        "questionnaireNext": "Next",
+        "questionnaireSubmit": "Submit"
+    },
+    "sidebar":{
+        "sidebarDashboard": "Dashboard",
+        "sidebarAppointment": "Appointments",
+        "sidebarNotification": "Notification",
+        "sidebarRecord": "Records",
+        "sidebarSetting": "Settings"
+    },
+    "message": {
+        "sendMessage": "Send",
+        "typeMessage": "Type your Message",
+        "selectMessage": "Select a chat to start messaging."
     }
       
 }

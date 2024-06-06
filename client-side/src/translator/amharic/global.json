@@ -148,6 +148,56 @@
         "therapistGender":"ጾታ",
         "preferedLanguage": "የተመረጠ ቋንቋ",
         "therapistReligion": "ሃይማኖት"
-    }
-      
+    },
+    "questionnaire": {
+        "questionnaireName": "መጠይቅ",
+        "questionnaireQuestion1": "ምን ያህል ጊዜ የመረበሽ ስሜት ይሰማዎታል?",
+        "questionnaireQuestion2": "ምን ያህል ጊዜ ድንጋጤ ያጋጥምዎታል?",
+        "questionnaireQuestion3": "በምን ያህል ጊዜ በፍጥነት መተንፈስ ታገኛለህ?",
+        "questionnaireQuestion4": "ብዙ ጊዜ ከመጠን በላይ ላብ ያጋጥማችኋል?",
+        "questionnaireQuestion5": "በምን ያህል ጊዜ ትኩረት ለማድረግ ይቸገራሉ?",
+        "questionnaireQuestion6": "በምን ያህል ጊዜ ለመተኛት ወይም ለመተኛት ይቸገራሉ?",
+        "questionnaireQuestion7": "በሥራህ ምን ያህል ጊዜ ችግሮች ወይም ፈተናዎች ያጋጥሙሃል?",
+        "questionnaireQuestion8": "ምን ያህል ጊዜ የተስፋ መቁረጥ ስሜት ይሰማዎታል?",
+        "questionnaireQuestion9": "በምን ያህል ጊዜ የቁጣ ስሜት ይሰማዎታል?",
+        "questionnaireQuestion10": "በሁኔታዎች ላይ ምን ያህል ጊዜ ራስህን ከልክ በላይ ስትቆጣ ታገኘዋለህ?",
+        "questionnaireQuestion11": "በአመጋገብ ልማድዎ ላይ ምን ያህል ጊዜ ለውጦች ያጋጥሙዎታል?",
+        "questionnaireQuestion12": "ራስህን ለመጉዳት ወይም ህይወትህን ለማጥፋት ምን ያህል ጊዜ ሀሳብ አለህ?",
+        "questionnaireQuestion13": "በምን ያህል ጊዜ ድካም ወይም ድካም ይሰማዎታል?",
+        "questionnaireQuestion14": "ከቅርብ ጓደኛህ ጋር ምን ያህል ጊዜ ታሳልፋለህ?",
+        "questionnaireQuestion15": "በማህበራዊ ሚዲያ ላይ ከመጠን ያለፈ ጊዜህን ምን ያህል ጊዜ እንደምታጠፋ ታያለህ?",
+        "questionnaireQuestion16": "በክብደትዎ ላይ ምን ያህል ጊዜ ለውጦችን ያስተውላሉ?",
+        "questionnaireQuestion17": "ከሌሎች ጋር ከመሆን ይልቅ ብቻዎን ምን ያህል ጊዜ ማሳለፍ ይመርጣሉ?",
+        "questionnaireQuestion18": "አስጨናቂ ክስተቶችን አስጨናቂ ሀሳቦችን ወይም ትዝታዎችን ምን ያህል ጊዜ ያጋጥሙዎታል?",
+        "questionnaireQuestion19": "በመተኛት ጊዜ ምን ያህል ጊዜ ቅዠቶች ያጋጥሙዎታል?",
+        "questionnaireQuestion20": "ማህበራዊ ግንኙነቶችን ወይም እንቅስቃሴዎችን ምን ያህል ጊዜ ያስወግዳሉ?",
+        "questionnaireQuestion21": "በምን ያህል ጊዜ አሉታዊ ስሜቶች ያጋጥሙዎታል?",
+        "questionnaireQuestion22": "በተግባር ላይ ለማተኮር ምን ያህል ጊዜ ይቸገራሉ?",
+        "questionnaireQuestion23": "ለተሳሳቱ ነገሮች ምን ያህል ጊዜ ራስህን ትወቅሳለህ?",
+        "questionnaireQuestion24": "በምን ያህል ጊዜ ቅዠት ያጋጥማችኋል?",
+        "questionnaireQuestion25": "በተደጋጋሚ ባህሪያት ወይም የአምልኮ ሥርዓቶች ምን ያህል ጊዜ ትሳተፋለህ?",
+        "questionnaireQuestion26": "ወቅቶችን መሰረት በማድረግ በጉልበትህ ወይም በእንቅስቃሴህ ላይ ምን ያህል ጊዜ ለውጦች ታገኛለህ?",
+        "questionnaireQuestion27": "በምን ያህል ጊዜ የኃይል መጨመር ወይም እንቅስቃሴ ያጋጥማችኋል?",
+        "questionnaireOption1": "በጭራሽ",
+        "questionnaireOption2": "አልፎ አልፎ",
+        "questionnaireOption3": "አንዳንድ ጊዜ",
+        "questionnaireOption4": "በተደጋጋሚ",        
+        "questionnaireSubmittedMessage": "መጠይቁን ስለጨረሱ እናመሰግናለን! ምላሾችዎ በተሳካ ሁኔታ ገብተዋል።",
+        "questionnaireGotoHome": "ወደ ቤት ሂድ",
+        "questionnairePrevious": "ከዚያ በፊት",
+        "questionnaireNext": "ቀጣይ",
+        "questionnaireSubmit": "አስረክብ"
+    },
+    "sidebar":{
+        "sidebarDashboard": "ዳሽቦርድ",
+        "sidebarAppointment": "ቀጠሮዎች",
+        "sidebarNotification": "ማሳወቂያ",
+        "sidebarRecord": "መዝገቦች",
+        "sidebarSetting": "ቅንጅቶች"
+    },
+    "message": {
+        "sendMessage": "ላክ",
+        "typeMessage": "መልእክትህን ተይብ",
+        "selectMessage": "መልእክት ለመጀመር ውይይት ምረጥ።"
+    }         
 }

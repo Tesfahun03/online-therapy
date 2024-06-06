@@ -5,6 +5,7 @@ import useAxios from "../../utils/useAxios";
 import ProgressBar from "../../component/ProgressBar.jsx";
 import Confetti from "react-confetti";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from "react-i18next";
 import {
   faCircleCheck,
   faHeartCircleCheck,
@@ -20,127 +21,145 @@ export default function PredictionQuestionnaire() {
   const user_id = decoded.user_id;
   const [successMessage, setSuccessMessage] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [t, i18n] = useTranslation("global");
+  const [selectedLanguage, setSelectedLanguage] = useState("english"); // State to store selected language
+
+  useEffect(() => {
+    // Check if a language is saved in local storage
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage); // Set selected language from local storage
+    }
+  }, []);
+
+  const handleChangeLanguage = (e) => {
+    const language = e.target.value;
+    i18n.changeLanguage(language);
+    setSelectedLanguage(language); // Update selected language in state
+    localStorage.setItem("preferredLanguage", language); // Save selected language in local storage
+  };
 
   const questions = [
     {
-      question: "How often do you experience feelings of nervousness?",
+      question: t("questionnaire.questionnaireQuestion1"),
       name: "q1",
     },
     {
-      question: "How often do you experience panic?",
+      question: t("questionnaire.questionnaireQuestion2"),
       name: "q2",
     },
     {
-      question: "How often do you find yourself breathing rapidly?",
+      question: t("questionnaire.questionnaireQuestion3"),
       name: "q3",
     },
     {
-      question: "How often do you experience excessive sweating?",
+      question: t("questionnaire.questionnaireQuestion4"),
       name: "q4",
     },
     {
-      question: "How often do you have trouble concentrating?",
+      question: t("questionnaire.questionnaireQuestion5"),
       name: "q5",
     },
     {
       question:
-        "How often do you have difficulty falling asleep or staying asleep?",
+      t("questionnaire.questionnaireQuestion6"),
       name: "q6",
     },
     {
       question:
-        "How often do you face difficulties or challenges with your work?",
+      t("questionnaire.questionnaireQuestion7"),
       name: "q7",
     },
     {
-      question: "How often do you feel hopeless?",
+      question: t("questionnaire.questionnaireQuestion8"),
       name: "q8",
     },
     {
-      question: "How often do you experience feelings of anger?",
+      question: t("questionnaire.questionnaireQuestion9"),
       name: "q9",
     },
     {
-      question: "How often do you find yourself overreacting to situations?",
+      question: t("questionnaire.questionnaireQuestion10"),
       name: "q10",
     },
     {
-      question: "How often do you experience changes in your eating habits?",
+      question: t("questionnaire.questionnaireQuestion11"),
       name: "q11",
     },
     {
       question:
-        "How often do you have thoughts of harming yourself or ending your life?",
+      t("questionnaire.questionnaireQuestion12"),
       name: "q12",
     },
     {
-      question: "How often do you feel tired or fatigued?",
+      question: t("questionnaire.questionnaireQuestion13"),
       name: "q13",
     },
     {
-      question: "How often do you spend time with a close friend?",
+      question: t("questionnaire.questionnaireQuestion14"),
       name: "q14",
     },
     {
       question:
-        "How often do you find yourself spending excessive time on social media?",
+      t("questionnaire.questionnaireQuestion15"),
       name: "q15",
     },
     {
-      question: "How often do you notice changes in your weight?",
+      question: t("questionnaire.questionnaireQuestion16"),
       name: "q16",
     },
     {
       question:
-        "How often do you prefer spending time alone rather than with others?",
+      t("questionnaire.questionnaireQuestion17"),
       name: "q17",
     },
     {
       question:
-        "How often do you experience intrusive thoughts or memories of stressful events?",
+      t("questionnaire.questionnaireQuestion18"),
       name: "q18",
     },
     {
-      question: "How often do you experience nightmares while sleeping?",
+      question: t("questionnaire.questionnaireQuestion19"),
       name: "q19",
     },
     {
-      question: "How often do you avoid social interactions or activities?",
+      question: t("questionnaire.questionnaireQuestion20"),
       name: "q20",
     },
     {
-      question: "How often do you experience negative emotions?",
+      question: t("questionnaire.questionnaireQuestion21"),
       name: "q21",
     },
     {
-      question: "How often do you have trouble staying focused on tasks?",
+      question: t("questionnaire.questionnaireQuestion22"),
       name: "q22",
     },
     {
-      question: "How often do you blame yourself for things that go wrong?",
+      question: t("questionnaire.questionnaireQuestion23"),
       name: "q23",
     },
     {
-      question: "How often do you experience hallucinations?",
+      question: t("questionnaire.questionnaireQuestion24"),
       name: "q24",
     },
     {
-      question: "How often do you engage in repetitive behaviors or rituals?",
+      question: t("questionnaire.questionnaireQuestion25"),
       name: "q25",
     },
     {
       question:
-        "How often do you experience changes in your energy or activity levels based on the seasons?",
+      t("questionnaire.questionnaireQuestion26"),
       name: "q26",
     },
     {
       question:
-        "How often do you experience periods of increased energy or activity?",
+      t("questionnaire.questionnaireQuestion7"),
       name: "q27",
     },
   ];
 
-  const options = ["Never", "Occasionally", "Sometimes", "Frequently"];
+  const options = [t("questionnaire.questionnaireOption1"), t("questionnaire.questionnaireOption2"), t("questionnaire.questionnaireOption3"), t("questionnaire.questionnaireOption4")];
   const optionValues = [0, 0, 1, 1];
 
   const handleChange = (e) => {
@@ -224,6 +243,19 @@ export default function PredictionQuestionnaire() {
 
   return (
     <div className="questionnaries mt-5 d-flex justify-content-center align-items-center">
+      <div className="languageForTranslate">
+        <select
+          className="preferedLanguage"
+          onChange={handleChangeLanguage}
+          value={selectedLanguage} // Set value to the selected language
+        >
+          <option value="english">English</option>
+          <option value="amharic">Amharic</option>
+          <option value="oromo">Oromo</option>
+          <option value="sumalic">Sumalic</option>
+          <option value="tigrigna">Tigrigna</option>
+        </select>
+      </div>
       <div className="container">
         {showConfetti && <Confetti />}
         {successMessage ? (
@@ -233,18 +265,17 @@ export default function PredictionQuestionnaire() {
               <div className="card-body text-center">
                 <h2 className="card-title">{successMessage}</h2>
                 <p className="card-text fs-sm-5 fs-5">
-                  Thank you for completing the questionnaire! Your responses
-                  have been submitted successfully.
+                {t("questionnaire.questionnaireSubmittedMessage")}
                 </p>
                 <button className="btn btn-secondary" onClick={redirectToHome}>
-                  <FontAwesomeIcon icon={faHome} /> Go to Home
+                  <FontAwesomeIcon icon={faHome} /> {t("questionnaire.questionnaireGotoHome")}
                 </button>
               </div>
             </div>
           </div>
         ) : (
           <>
-            <h2 className="mb-4 text-center">Questionnaire</h2>
+            <h2 className="mb-4 text-center">{t("questionnaire.questionnaireName")}</h2>
             <ProgressBar
               currentStep={currentStep}
               totalSteps={questions.length}
@@ -258,7 +289,7 @@ export default function PredictionQuestionnaire() {
                   onClick={prevStep}
                   disabled={currentStep === 0}
                 >
-                  Previous
+                  {t("questionnaire.questionnairePrevious")}
                 </button>
                 {currentStep < questions.length - 1 ? (
                   <button
@@ -266,11 +297,11 @@ export default function PredictionQuestionnaire() {
                     className="btn btn-primary"
                     onClick={nextStep}
                   >
-                    Next
+                    {t("questionnaire.questionnaireNext")}
                   </button>
                 ) : (
                   <button type="submit" className="btn btn-success">
-                    Submit
+                    {t("questionnaire.questionnaireSubmit")}
                   </button>
                 )}
               </div>

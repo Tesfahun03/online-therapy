@@ -29,6 +29,7 @@ export default function Message() {
   // Get sender's private key from local storage or backend
   const senderPrivateKey = localStorage.getItem("privateKey");
   const [receiverPublicKey, setReceiverPublicKey] = useState(null);
+  
 
   useEffect(() => {
     if (profile && profile.profile && profile.profile.publicKey) {

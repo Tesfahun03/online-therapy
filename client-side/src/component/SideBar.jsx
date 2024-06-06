@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
   BrowserRouter as Router,
   Link,
@@ -19,7 +20,23 @@ import {
 export default function SideBar() {
   const [activeButton, setActiveButton] = useState("Dashboard");
   const location = useLocation();
+  const [t, i18n] = useTranslation("global");
+  const [selectedLanguage, setSelectedLanguage] = useState("english");
 
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage);
+    }
+  }, [i18n]);
+
+  // const handleChangeLanguage = (e) => {
+  //   const language = e.target.value;
+  //   i18n.changeLanguage(language);
+  //   setSelectedLanguage(language);
+  //   localStorage.setItem("preferredLanguage", language);
+  // };
   function handleButtonId(buttonId) {
     if (buttonId != activeButton) {
       setActiveButton(buttonId);
@@ -46,7 +63,7 @@ export default function SideBar() {
           }}
         >
           <h6 className="fw-light" onClick={() => handleButtonId("Dashboard")}>
-            <FontAwesomeIcon icon={faDashboard} /> Dashboard
+            <FontAwesomeIcon icon={faDashboard} /> {t("sidebar.sidebarDasboard")}
           </h6>
         </div>
       </Link>
@@ -65,7 +82,7 @@ export default function SideBar() {
             className="fw-light"
             onClick={() => handleButtonId("Appointments")}
           >
-            <FontAwesomeIcon icon={faCalendar} /> Appointments
+            <FontAwesomeIcon icon={faCalendar} /> {t("sidebar.sidebarAppointment")}
           </h6>
         </div>
       </Link>
@@ -98,7 +115,7 @@ export default function SideBar() {
             className="fw-light"
             onClick={() => handleButtonId("Notification")}
           >
-            <FontAwesomeIcon icon={faBell} /> Notification
+            <FontAwesomeIcon icon={faBell} /> {t("sidebar.sidebarNotification")}
           </h6>
         </div>
       </Link>
@@ -113,7 +130,7 @@ export default function SideBar() {
           }}
         >
           <h6 className="fw-light" onClick={() => handleButtonId("Reports")}>
-            <FontAwesomeIcon icon={faNoteSticky} /> Records
+            <FontAwesomeIcon icon={faNoteSticky} /> {t("sidebar.sidebarRecords")}
           </h6>
         </div>
       </Link>
@@ -128,7 +145,7 @@ export default function SideBar() {
           }}
         >
           <h6 className="fw-light" onClick={() => handleButtonId("Settings")}>
-            <FontAwesomeIcon icon={faToolbox} /> Settings
+            <FontAwesomeIcon icon={faToolbox} /> {t("sidebar.sidebarSetting")}
           </h6>
         </div>
       </Link>
