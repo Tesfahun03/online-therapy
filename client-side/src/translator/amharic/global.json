@@ -135,7 +135,22 @@
 
     },
     "communitySpace":{
-
+        "communitySpaceStart": "ልጥፍ ጀምር",
+        "communitySpaceLiked": "ተወደደ",
+        "communitySpaceLike": "መውደድ",
+        "communitySpaceWrite1": "ሀሳብህን ጻፍ...",
+        "communitySpaceWrite2": "አንድ ነገር ጻፍ ...",
+        "communitySpaceTitle": "ርዕስ",
+        "communitySpacePublish": "አትም",
+        "communitySpaceContent": "ይዘት",
+        "communitySpaceImage": "ምስል (አማራጭ)",
+        "communitySpaceAskDelete1": "እርግጠኛ ነዎት ይህን ልጥፍ መሰረዝ ይፈልጋሉ?",
+        "communitySpaceAskDelete2": "እርግጠኛ ነዎት ይህን አስተያየት መሰረዝ ይፈልጋሉ?",
+        "communitySpaceDeleted1": "ይህ ልጥፍ እስከመጨረሻው ይወገዳል እና ወደነበረበት አይመለስም",
+        "communitySpaceDeleted2": "ይህ አስተያየት እስከመጨረሻው ይወገዳል!",
+        "communitySpaceCancel": "ሰርዝ",
+        "communitySpaceConfirm": "አረጋግጥ",
+        "communitySpaceComment": "አስተያየት"
     },
     "viewTherapist":{
         "bookAppointment":"የመጽሐፍ ቀጠሮ",
@@ -199,5 +214,13 @@
         "sendMessage": "ላክ",
         "typeMessage": "መልእክትህን ተይብ",
         "selectMessage": "መልእክት ለመጀመር ውይይት ምረጥ።"
-    }         
+    },
+    "record": {
+        "recordPayment": "የተሳካ ክፍያ ያላቸው ተዛማጅ ታካሚዎች",
+        "recordFirstName" : "የመጀመሪያ ስም",
+        "recordLastName" : "የአያት ስም",
+        "recordPaymentAmount" :"የክፍያ መጠን",
+        "recordPaymentdate" : "የክፍያ ቀን"
+    }
+
 }

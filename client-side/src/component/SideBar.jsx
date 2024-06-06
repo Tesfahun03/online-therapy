@@ -59,25 +59,20 @@ export default function SideBar( { isOffcanvasOpen } ) {
     matchPath(location.pathname, { path: "/records-t/:id", exact: true });
 
   return (
-    <div className="therapist-sidebar col col-lg-2 col-md-2 col-sm-2 min-vh-100 shadow">
-        <div className="side-container w-100">
-          <Link to="/dashboard-t" style={style}>
-            <div
-              className="row mt-2 p-1 ms-1 me-1 rounded"
-              style={{
-                background:
-                  location.pathname === "/dashboard-t" ? `${color}` : "",
-                cursor: "pointer",
-              }}
-            >
-              <h6
-                className="fw-light"
-                onClick={() => handleButtonId("Dashboard")}
-              >
-                <FontAwesomeIcon icon={faDashboard} /> {t("sidebar.sidebarDasboard")}
-              </h6>
-            </div>
-          </Link>
+    <div className="therapist-sidebar col col-auto col-lg-2 col-md-2 col-sm-3 min-vh-100 shadow position-fixed">
+      <Link to="/dashboard-t" style={style}>
+        <div
+          className="row mt-4 p-1 ms-1 me-1 rounded"
+          style={{
+            background: location.pathname === "/dashboard-t" ? `${color}` : "",
+            cursor: "pointer",
+          }}
+        >
+          <h6 className="fw-light" onClick={() => handleButtonId("Dashboard")}>
+            <FontAwesomeIcon icon={faDashboard} /> Dashboard
+          </h6>
+        </div>
+      </Link>
 
           <Link to="/appointments-t" style={style}>
             <div

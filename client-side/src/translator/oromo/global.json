@@ -135,7 +135,22 @@
 
     },
     "communitySpace":{
-
+        "communitySpaceStart": "Barreeffama Jalqaba", 
+        "communitySpaceLiked": "Jaalatame",
+        "communitySpaceLike": "Like", 
+        "communitySpaceWrite1": "Yaada kee barreessi ... ",
+        "communitySpaceWrite2": "Waan tokko Barreessuu ... ",
+        "communitySpaceTitle": "Mata duree", 
+        "communitySpacePublish": "Maxxansi",
+        "communitySpaceContent": "Qabiyyee", 
+        "communitySpaceImage": "Fakkii (dirqama)",
+        "communitySpaceAskDelete1": "Barreeffama kana haquu akka barbaaddu mirkaneeffatteettaa?",
+        "communitySpaceAskDelete2": "Yaada kana haquu akka barbaaddu mirkaneeffatteettaa?",
+        "communitySpaceDeleted1": "Barreeffamni kun dhaabbataadhaan ni haqama, hin deebi'u",
+        "communitySpaceDeleted2": "Yaadni kun dhaabbataadhaan ni haqama!",
+        "communitySpaceCancel": "Haquu", 
+        "communitySpaceConfirm": "Mirkaneessi", 
+        "communitySpaceComment": "Yaada"
     },
     "viewTherapist":{
         "bookAppointment":"Beellama Kitaaba", 
@@ -199,6 +214,13 @@
         "sendMessage": "Ergi",
         "typeMessage": "Ergaa kee barreessi",
         "selectMessage": "Ergaa jalqabuuf marii filadhu."
+    },
+    "record":{
+        "recordPayment": "Dhukkubsattoota Kaffaltii Milkaa'aa Qaban Waliin Walqabatan",
+        "recordFirstName" :"Maqaa Jalqabaa", 
+        "recordLastName" :"Maqaa Dhumaa", 
+        "recordPaymentAmount" :"Hanga Kaffaltii", 
+        "recordPaymentdate" :"Guyyaa Kaffaltii"
     }
 
 }

@@ -5,8 +5,21 @@ import { encryptMessage, decryptMessage } from "../../utils/cryptoUtils";
 import jwtDecode from "jwt-decode";
 import { Link, useParams, Redirect } from "react-router-dom/";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 export default function Message() {
+  const [t, i18n] = useTranslation("global");
+  const [selectedLanguage, setSelectedLanguage] = useState("english"); // State to store selected language
+
+  useEffect(() => {
+    // Check if a language is saved in local storage
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage); // Set selected language from local storage
+    }
+  }, []);
+
   const baseURL = "http://127.0.0.1:8000/session";
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState([]);
@@ -488,14 +501,14 @@ export default function Message() {
                         <input
                           type="text"
                           className="form-control p-2 rounded-0"
-                          placeholder="Type your message"
+                          placeholder={t("message.typeMessage")}
                           value={newMessage.message}
                           name="message"
                           id="text-input"
                           onChange={handleChange}
                         />
                         <button className="btn btn-primary rounded-0">
-                          Send
+                          {t("message.sendMessage")}
                         </button>
                       </form>
                     </div>

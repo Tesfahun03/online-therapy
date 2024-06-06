@@ -134,7 +134,22 @@
 
     },
     "communitySpace":{
-
+        "communitySpaceStart": "Boostada Bilow",
+        "communitySpaceLiked": "Liked",
+        "communitySpaceLike": "Like",
+        "communitySpaceWrite1": "Qor fikirkaaga...",
+        "communitySpaceWrite2": "Qor wax...",
+        "communitySpaceTitle": "Title",
+        "communitySpacePublish": "Daabac",
+        "communitySpaceContent": "Content",
+        "communitySpaceImage": "Sawirka (ikhtiyaarka)",
+        "communitySpaceAskDelete1": "Ma hubtaa inaad rabto inaad tirtirto qoraalkan?",
+        "communitySpaceAskDelete2": "Ma hubtaa inaad rabto inaad tirtirto faalladan?",
+        "communitySpaceDeleted1": "Boostada waa laga saarayaa si joogto ah lamana soo celin doono",
+        "communitySpaceDeleted2": "Faaladan si joogto ah ayaa looga saari doonaa!",
+        "communitySpaceCancel": "Cancel",
+        "communitySpaceConfirm": "Xaqiiji",
+        "communitySpaceComment": "Faallo"
     },
     "viewTherapist":{
         "bookAppointment":" Ballanta Buugga",
@@ -198,6 +213,13 @@
         "sendMessage": "Diri",
         "typeMessage": "Ku qor fariintaada",
         "selectMessage": "Dooro wada sheekeysi si aad fariimaha u bilowdo."
-    }  
+    },
+    "record": {
+        "recordPayment": "Bukaanada laxiriira ee haysta Lacag-bixino guul leh",
+        "recordFirstName" :"Magaca koowaad",
+        "recordLastName" :"Magaca Dambe",
+        "recordPaymentAmount" :"Lacagta Bixinta",
+        "recordPaymentdate" :"Taariikhda lacag bixinta"
+    }
       
 }

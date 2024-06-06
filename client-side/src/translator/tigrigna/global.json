@@ -135,7 +135,22 @@
 
     },
     "communitySpace":{
-
+        "communitySpaceStart": "ጽሑፍ ምጅማር",
+        "communitySpaceLiked": "ዝፈትዎ",
+        "communitySpaceLike": "ላይክ",
+        "communitySpaceWrite1": "ሓሳብካ ጽሓፍ ... ",
+        "communitySpaceWrite2": "ገለ ጽሓፍ ... ",
+        "communitySpaceTitle": "ኣርእስቲ",
+        "communitySpacePublish": "ምሕታም",
+        "communitySpaceContent": "ትሕዝቶ",
+        "communitySpaceImage": "ስእሊ (ኣማራጺ)",
+        "communitySpaceAskDelete1": "እዚ ጽሑፍ ክትድምስሶ ከም እትደሊ ርግጸኛ ዲኻ?",
+        "communitySpaceAskDelete2": "እዚ ርእይቶ ክትድምስሶ ከም እትደሊ ርግጸኛ ዲኻ?",
+        "communitySpaceDeleted1": "እዚ ጽሑፍ ንሓዋሩ ክእለ እዩ፡ ኣይክምለስን እዩ",
+        "communitySpaceDeleted2": "እዚ ርእይቶ ንሓዋሩ ክእለ እዩ!",
+        "communitySpaceCancel": "ስርዝ",
+        "communitySpaceConfirm": "ኣረጋግጽ",
+        "communitySpaceComment": "ርእይቶ"
     },
     "viewTherapist":{
         "bookAppointment":"መጽሓፍ ቆጸራ",
@@ -199,6 +214,13 @@
         "sendMessage": "ስደድ",
         "typeMessage": "መልእኽትኻ ጽሓፍ",
         "selectMessage": "መልእኽቲ ንምጅማር ዕላል ምረጽ።"
-    }    
+    },
+    "record": {
+        "recordPayment": "ዕዉት ክፍሊት ዘለዎም ተዛመድቲ ሕሙማት",
+        "recordFirstName" :"ቀዳማይ ስም",
+        "recordLastName" :"መወዳእታ ስም",
+        "recordPaymentAmount" :"ዓቐን ክፍሊት",
+        "recordPaymentdate" :"ዕለት ክፍሊት"
+    }  
       
 }

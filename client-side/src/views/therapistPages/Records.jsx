@@ -2,12 +2,30 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import ParentComponent from "../../component/ParentBar";
 import jwtDecode from "jwt-decode";
+import { useTranslation } from "react-i18next";
 import useAxios from "../../utils/useAxios";
 
 export default function Records() {
+  const [t, i18n] = useTranslation("global");
+  const [selectedLanguage, setSelectedLanguage] = useState("english"); // State to store selected language
+
+  useEffect(() => {
+    // Check if a language is saved in local storage
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage); // Set selected language from local storage
+    }
+  }, []);
+  const handleChangeLanguage = (e) => {
+    const language = e.target.value;
+    i18n.changeLanguage(language);
+    setSelectedLanguage(language); // Update selected language in state
+    localStorage.setItem("preferredLanguage", language); // Save selected language in local storage
+  };
   const history = useHistory();
   const axios = useAxios();
-
+  
   const [patients, setPatients] = useState([]);
   const [creditedPayments, setCreditedPayments] = useState([]);
   const [relatedPatients, setRelatedPatients] = useState([]);
@@ -69,17 +87,30 @@ export default function Records() {
 
   return (
     <div className="therapist-home d-flex flex-column m-0">
+      <div className="languageForTranslate">
+        <select
+          className="preferedLanguage"
+          onChange={handleChangeLanguage}
+          value={selectedLanguage} // Set value to the selected language
+        >
+          <option value="english">English</option>
+          <option value="amharic">Amharic</option>
+          <option value="oromo">Oromo</option>
+          <option value="sumalic">Sumalic</option>
+          <option value="tigrigna">Tigrigna</option>
+        </select>
+      </div>
       <ParentComponent/>
       <div className="main-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4 min-vh-100" style={{width:"75%"}}>
-        <h2>Related Patients with Successful Payments</h2>
+        <h2>{t("record.recordPayment")}</h2>
         <table className="table table-striped table-bordered table-hover shadow">
           <thead className="table-success">
             <tr>
               <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Payment Amount</th>
-              <th>Payment Date</th>
+              <th>{t("record.recordFirstName")}</th>
+              <th>{t("record.recordLastName")}</th>
+              <th>{t("record.recordPaymentAmount")}</th>
+              <th>{t("record.recordPaymentdate")}</th>
             </tr>
           </thead>
           <tbody>

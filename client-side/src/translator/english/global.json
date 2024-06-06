@@ -137,7 +137,22 @@
 
     },
     "communitySpace":{
-
+        "communitySpaceStart": "Start Post",
+        "communitySpaceLiked": "Liked",
+        "communitySpaceLike": "Like",
+        "communitySpaceWrite1": "Write your thought ... ",
+        "communitySpaceWrite2": "Write Something ... ",
+        "communitySpaceTitle": "Title",
+        "communitySpacePublish": "Publish",
+        "communitySpaceContent": "Content",
+        "communitySpaceImage": "Image (optional)",
+        "communitySpaceAskDelete1": "Are you sure you want to delete this post?",
+        "communitySpaceAskDelete2": "Are you sure you want to delete this comment?",
+        "communitySpaceDeleted1": "This post will be removed permanetly and will not be recovered",
+        "communitySpaceDeleted2": "This Comment will be removed permanetly!",
+        "communitySpaceCancel": "Cancel",
+        "communitySpaceConfirm": "Confirm",
+        "communitySpaceComment": "Comment"
     },
     "viewTherapist":{
         "bookAppointment":"Book Appointment",
@@ -201,6 +216,13 @@
         "sendMessage": "Send",
         "typeMessage": "Type your Message",
         "selectMessage": "Select a chat to start messaging."
+    },
+    "record":{
+        "recordPayment": "Related Patients with Successful Payments",
+        "recordFirstName" :"First Name",
+        "recordLastName" :"Last Name",
+        "recordPaymentAmount" :"Payment Amount",
+        "recordPaymentdate" :"Payment Date"
     }
       
 }
