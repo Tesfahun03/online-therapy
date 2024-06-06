@@ -61,7 +61,7 @@ export default function RecordsDetail() {
 
   useEffect(() => {
     patientData();
-  }, [id]);
+  }, []);
 
   const patientRecordData = async () => {
     try {
@@ -114,8 +114,8 @@ export default function RecordsDetail() {
     }
   };
 
-  const handleVideo = (patientId) => {
-    history.push(`/videochat-t/${patientId}`);
+  const handleVideo = (appointmentID) => {
+    history.push(`/videochat-t/${appointmentID}`);
   };
 
   return (
@@ -226,7 +226,6 @@ export default function RecordsDetail() {
                               <tr>
                                 <th>Date</th>
                                 <th>Time</th>
-                                <th>Condition</th>
                                 <th>Type</th>
                               </tr>
                             </thead>
@@ -246,7 +245,6 @@ export default function RecordsDetail() {
                                       minute: "2-digit",
                                     })}
                                   </td>
-                                  <td>{appointment.reason}</td>
                                   <td>
                                     {" "}
                                     <button
@@ -262,9 +260,6 @@ export default function RecordsDetail() {
                               ))}
                             </tbody>
                           </table>
-                          <a href="#" className="btn btn-primary">
-                            Add Appointment
-                          </a>
                         </div>
                       </div>
                     </div>

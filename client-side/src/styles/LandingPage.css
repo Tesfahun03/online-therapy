@@ -66,3 +66,13 @@
     background-color: #0056b3;
     border-color: #0056b3;
 }
+
+/* .card-custom-recomended {
+    border-radius: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+  } */
+  .profile-img:hover {
+    transform: scale(1.05);
+}

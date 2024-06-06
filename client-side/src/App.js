@@ -10,7 +10,7 @@ import LoginTherapist from "./views/therapistPages/LoginTherapist";
 import RegisterTherapist from "./views/therapistPages/RegisterTherapist";
 import CommunitySpace from "./views/commonPages/CommunitySpace";
 import CommunityDetail from "./views/commonPages/CommunityDetail";
-import ProfilePatient from "./views/patientPages/ProfilePatient";
+import Profile from "./views/commonPages/Profile";
 import NotificationPatient from "./views/patientPages/NotificationPatient";
 import ViewTherapist from "./views/patientPages/ViewTherapist";
 import Message from "./views/commonPages/Message";
@@ -29,7 +29,6 @@ import VerifyEmail from "./views/commonPages/VerifyEmail";
 import PredictionQuestionnaire from "./views/patientPages/PredictionQuestionnaire";
 import ForgotPassword from "./views/commonPages/ForgotPassword";
 import ResetPassword from "./views/commonPages/ResetPassword";
-import ParentComponent from "./component/ParentBar";
 
 
 function App() {
@@ -61,7 +60,7 @@ function App() {
                 path="/community-space/:id"
                 exact
               />
-              <PrivateRoute component={ProfilePatient} path="/profile-p" exact />
+              <PrivateRoute component={Profile} path="/profile" exact />
               <PrivateRoute
                 component={NotificationPatient}
                 path="/notification-p"

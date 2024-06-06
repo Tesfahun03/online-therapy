@@ -211,7 +211,7 @@ class ChangePasswordView(APIView):
 class TherapistDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Therapist.objects.all()
     serializer_class = TherapistSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def get_object(self):
         user_id = self.kwargs.get('user_id')

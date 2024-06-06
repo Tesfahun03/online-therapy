@@ -53,6 +53,8 @@ export default function BookAppointment() {
     });
   }
 
+  console.log(registerAppointment)
+
   const paymentChecker = async () => {
     try {
       const response = await axios.get(

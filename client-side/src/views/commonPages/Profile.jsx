@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import jwtDecode from "jwt-decode";
 import useAxios from "../../utils/useAxios";
 
-export default function ProfilePatient() {
+export default function Profile() {
   const [t, i18n] = useTranslation("global");
   const [selectedLanguage, setSelectedLanguage] = useState("english");
 
@@ -38,21 +38,41 @@ export default function ProfilePatient() {
   const decoded = jwtDecode(token);
   // const history = useHistory();
   const user_id = decoded.user_id;
-  const [patient, setPatient] = useState({});
+  const user_type = decoded.user_type;
+  console.log(user_type);
+
+  const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState();
 
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
   const patientData = async () => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/core/patients/${user_id}`
-      );
-      setPatient(response.data);
-      setPreviewImage(response.data.profile.image);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching patient data:", error);
+    if (user_type === "therapist") {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/core/therapists/${user_id}`
+        );
+        setUser(response.data);
+        setPreviewImage(response.data.profile.image);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching patient data:", error);
+      }
+    } else if (user_type === "patient") {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/core/patients/${user_id}`
+        );
+        setUser(response.data);
+        setPreviewImage(response.data.profile.image);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching patient data:", error);
+      }
     }
   };
 
@@ -63,7 +83,7 @@ export default function ProfilePatient() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    setPatient((prevPatient) => {
+    setUser((prevPatient) => {
       // Check if the field name exists in the profile object
       if (prevPatient.profile.hasOwnProperty(name)) {
         return {
@@ -85,22 +105,38 @@ export default function ProfilePatient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedPatient = {
-      ...patient,
-      profile: { ...patient.profile },
+    const updatedUser = {
+      ...user,
+      profile: { ...user.profile },
     };
-    delete updatedPatient.profile.user; // Remove the user object
-    delete updatedPatient.profile.image; // Remove the image field
+    delete updatedUser.profile.user; // Remove the user object
+    delete updatedUser.profile.image; // Remove the image field
+    delete updatedUser.licenses; // Remove the licenses field
 
-    try {
-      const test=await axios.patch(
-        `http://127.0.0.1:8000/core/patients/${user_id}/`,
-        updatedPatient
-      );
-      alert("Profile updated successfully!");
-      console.log(test)
-    } catch (error) {
-      console.error("Error updating profile:", error);
+    console.log(updatedUser);
+
+    if (user_type === "therapist") {
+      try {
+        const test = await axios.patch(
+          `http://127.0.0.1:8000/core/therapists/${user_id}/`,
+          updatedUser
+        );
+        alert("Profile updated successfully!");
+        console.log(test);
+      } catch (error) {
+        console.error("Error updating profile:", error);
+      }
+    } else if (user_type === "therapist") {
+      try {
+        const test = await axios.patch(
+          `http://127.0.0.1:8000/core/patients/${user_id}/`,
+          updatedUser
+        );
+        alert("Profile updated successfully!");
+        console.log(test);
+      } catch (error) {
+        console.error("Error updating profile:", error);
+      }
     }
   };
 
@@ -125,7 +161,7 @@ export default function ProfilePatient() {
     }
 
     try {
-      console.log(formData)
+      console.log(formData);
       const response = await axios.put(
         `http://127.0.0.1:8000/core/profile-update/${user_id}/`,
         formData,
@@ -149,10 +185,41 @@ export default function ProfilePatient() {
     }
   };
 
+  const handlePasswordSubmit = async (event) => {
+    event.preventDefault();
+
+    // Perform basic validation
+    if (newPassword !== confirmNewPassword) {
+      alert("New password and confirm password do not match");
+      return;
+    }
+
+    const payload = {
+      old_password: currentPassword,
+      new_password: newPassword,
+      confirm_new_password: confirmNewPassword,
+    };
+
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/core/change-password/${user_id}/`,
+        payload
+      );
+      if (response.status === 200) {
+        alert("Password changed successfully");
+      }
+    } catch (error) {
+      console.error("There was an error changing the password!", error);
+      alert("Failed to change password");
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  const { profile } = patient;
+  const { profile } = user;
+
+  console.log(user);
 
   return (
     <div className="profile-page min-vh-100">
@@ -169,7 +236,7 @@ export default function ProfilePatient() {
           <option value="tigrigna">Tigrigna</option>
         </select>
       </div>
-      {patient && (
+      {user && (
         <div className="row row-auto p-0 m-4 d-flex justify-content-between profile-contianer">
           <div className="col col-auto col-lg-3 col-md-3 col-sm-4 mb-3 mt-2 me-5 ms-5 profile-pic-container">
             <div className="card profile-pic-info">
@@ -236,7 +303,7 @@ export default function ProfilePatient() {
                     color: `${
                       activeButton === "AccountSetting" ? "black" : "gray"
                     }`,
-                    marginRight:"10%"
+                    marginRight: "10%",
                   }}
                   onClick={() => handleButtonId("AccountSetting")}
                 >
@@ -330,7 +397,7 @@ export default function ProfilePatient() {
                           className="form-control w-100 profile-input"
                           placeholder={t("profile.emailAddress")}
                           id="email"
-                          value={patient.profile.user.email}
+                          value={profile.user.email}
                           readOnly
                         />
                       </div>
@@ -463,26 +530,91 @@ export default function ProfilePatient() {
                         </select>
                       </div>
                     </div>
-                    <label
-                      htmlFor="occupation"
-                      style={{ width: "max-content" }}
-                      className="form-label m-0 p-0 ms-2 mb-1 "
-                    >
-                      {t("profile.occupation")}
-                    </label>
-                    <select
-                      name="occupation"
-                      className="form-select w-100 mb-4 profile-input"
-                      id="occupation"
-                      value={patient.occupation}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">{t("profile.occupation")}</option>
-                      <option value="STUDENT">Student</option>
-                      <option value="EMPLOYED">Employed</option>
-                      <option value="SELFEMPLOYED">Self-Employed</option>
-                      <option value="UNEMPLOYED">Unemployed</option>
-                    </select>
+                    {user_type === "patient" && (
+                      <>
+                        <label
+                          htmlFor="occupation"
+                          style={{ width: "max-content" }}
+                          className="form-label m-0 p-0 ms-2 mb-1 "
+                        >
+                          {t("profile.occupation")}
+                        </label>
+                        <select
+                          name="occupation"
+                          className="form-select w-100 mb-4 profile-input"
+                          id="occupation"
+                          value={user.occupation}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">{t("profile.occupation")}</option>
+                          <option value="STUDENT">Student</option>
+                          <option value="EMPLOYED">Employed</option>
+                          <option value="SELFEMPLOYED">Self-Employed</option>
+                          <option value="UNEMPLOYED">Unemployed</option>
+                        </select>
+                      </>
+                    )}
+                    {user_type === "therapist" && (
+                      <>
+                        <label
+                          htmlFor="religion"
+                          style={{ width: "max-content" }}
+                          className="form-label m-0 p-0 ms-2 mb-1 "
+                        >
+                          Religion
+                        </label>
+                        <select
+                          name="religion"
+                          className="form-select w-100 mb-4 profile-input"
+                          id="religion"
+                          value={user.religion}
+                          onChange={handleInputChange}
+                        >
+                          <option value="ORTHODOX">Orthodox</option>
+                          <option value="PROTESTANT">Protestant</option>
+                          <option value="MUSLIM">Muslim</option>
+                          <option value="CHATHOLIC">Chatholic</option>
+                        </select>
+                        <div className="row profile-input-row w-100">
+                          <div className="col col-auto col-lg-6 mb-3 profile-input-column">
+                            <label
+                              htmlFor="specialization"
+                              style={{ width: "max-content" }}
+                              className="form-label m-0 p-0 ms-2 mb-1"
+                            >
+                              Specialization
+                            </label>
+                            <input
+                              name="specialization"
+                              type="text"
+                              className="form-control w-100 profile-input"
+                              placeholder="specialization"
+                              id="specialization"
+                              value={user.specialization}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                          <div className="col col-auto col-lg-6 mb-3 profile-input-column">
+                            <label
+                              htmlFor="experience"
+                              style={{ width: "max-content" }}
+                              className="form-label m-0 p-0 ms-2 mb-1"
+                            >
+                              Experience
+                            </label>
+                            <input
+                              type="number"
+                              id="experience"
+                              placeholder="experience"
+                              name="experience"
+                              className="form-control"
+                              value={user.experience}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
 
                     <button
                       className="btn btn-primary ms-2 profile-button"
@@ -494,7 +626,7 @@ export default function ProfilePatient() {
                 )}
                 {activeButton === "ChangePassword" && (
                   <div>
-                    <form action="">
+                    <form onSubmit={handlePasswordSubmit}>
                       <label
                         htmlFor="current-password"
                         style={{ width: "max-content" }}
@@ -503,10 +635,12 @@ export default function ProfilePatient() {
                         {t("profile.currentPassword")}
                       </label>
                       <input
-                        type="text"
+                        type="password"
                         className="form-control w-100 profile-input mb-3"
                         placeholder={t("profile.currentPassword")}
                         id="current-password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
                       />
                       <label
                         htmlFor="new-password"
@@ -516,10 +650,12 @@ export default function ProfilePatient() {
                         {t("profile.newPassword")}
                       </label>
                       <input
-                        type="text"
+                        type="password"
                         className="form-control w-100 profile-input mb-3"
                         placeholder={t("profile.newPassword")}
                         id="new-password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
                       />
                       <label
                         htmlFor="confirm-password"
@@ -529,13 +665,14 @@ export default function ProfilePatient() {
                         {t("profile.confirmPassword")}
                       </label>
                       <input
-                        type="text"
+                        type="password"
                         className="form-control w-100 profile-input mb-4"
                         placeholder={t("profile.confirmPassword")}
                         id="confirm-password"
+                        value={confirmNewPassword}
+                        onChange={(e) => setConfirmNewPassword(e.target.value)}
                       />
-
-                      <button className="btn btn-primary ms-1">
+                      <button type="submit" className="btn btn-primary ms-1">
                         {t("profile.updatePassword")}
                       </button>
                     </form>

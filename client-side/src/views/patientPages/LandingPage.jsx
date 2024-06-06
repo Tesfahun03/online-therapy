@@ -4,8 +4,14 @@ import jwtDecode from "jwt-decode";
 import "../../styles/LandingPage.css";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { Card, Button } from "react-bootstrap";
+import {
+  faSearch,
+  faVideo,
+  faStar,
+  faArrowCircleRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { Card, Button, Table, Alert, Modal } from "react-bootstrap";
+import moment from "moment";
 
 export default function LandingPage() {
   const baseURL = "http://127.0.0.1:8000/core";
@@ -15,6 +21,11 @@ export default function LandingPage() {
   const [searchResults, setSearchResults] = useState([]);
   const [therapists, setTherapists] = useState([]);
   const [recommendedTherapists, setRecommendedTherapists] = useState(null);
+  const [appointments, setAppointments] = useState([]);
+  const [modalBody, setModalBody] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
+  const [cancelAppointment, setCancleAppointment] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   //Getting the token and decode using jwtDecode
   const token = localStorage.getItem("authTokens");
@@ -70,6 +81,10 @@ export default function LandingPage() {
   const handleTherapistSelect = (therapistid) => {
     history.push(`/viewtherapist/${therapistid}`);
   };
+  
+  const handleVideo = (appointmentID) => {
+    history.push(`/videochat-p/${appointmentID}`);
+  };
 
   const SearchTherapist = async () => {
     try {
@@ -123,6 +138,42 @@ export default function LandingPage() {
   );
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/session/patient/${user_id}/appointments`
+        );
+        setAppointments(response.data);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+      }
+    };
+
+    fetchAppointments();
+  }, []);
+
+  const handleDeleteAppointmentModal = (appointmentID) => {
+    setCancleAppointment(appointmentID);
+    setModalTitle("Cancle Appointment");
+    setModalBody("Are you sure you want to cancle the appointment!");
+    setShowModal(true);
+  };
+  const handleDeleteAppointmentSubmit = async (appointmentID) => {
+    const response = await axios.delete(
+      `http://127.0.0.1:8000/session/patient/${user_id}/appointments/${appointmentID}`
+    );
+
+    if (response.status === 204) {
+      setShowModal(false);
+      window.location.reload();
+    }
+  };
+  const handleModalClose = () => {
+    setShowModal(false);
+    window.location.reload(); // Refresh the page
   };
 
   return (
@@ -183,44 +234,101 @@ export default function LandingPage() {
         )}
       </div>
       
+      {appointments.length > 0 && (
+        <div className="container mt-4">
+          <h2 className="text-center my-4">Upcomming Appointments</h2>
 
-      <div className="recommendedTherapists mt-4">
+          <div className="table-responsive">
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Date and time</th>
+                  <th>Therapist name</th>
+                  <th>Type</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {appointments.map((appointment) => (
+                  <tr key={appointment.id}>
+                    <td>
+                      {moment(appointment.appointment_date).format(
+                        "DD MMM YYYY"
+                      )}
+                    </td>
+                    <td>
+                      {appointment.therapist_first_name +
+                        " " +
+                        appointment.therapist_last_name}
+                    </td>
+                    <td>
+                      {" "}
+                      <button
+                        className="btn btn-outline-success"
+                        onClick={() => handleVideo(appointment.id)}
+                      >
+                        <FontAwesomeIcon icon={faVideo} />
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() =>
+                          handleDeleteAppointmentModal(appointment.id)
+                        }
+                      >
+                        Cancle
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </div>
+      )}
+
+      <div className="recommendedTherapists  mt-4">
         <h2 className="text-center">Recommended Therapists</h2>
-        <div className="row m-0 p-0 d-flex align-items-center">
+        <div className="container row ms-sm-0 ms-lg-2 ms-md-2 d-flex align-items-center">
           {recommendedTherapists &&
             recommendedTherapists.map((therapist) => (
-              <div className="col-md-3 mb-4 mt-4" key={therapist.id}>
-                <Card className="h-100 py-2 px-3 shadow border-0">
-                  <div className="d-flex align-items-center justify-content-between">
-                    <Card.Img
-                      variant="top"
+              <div className="col-md-4 mb-4" key={therapist.id}>
+                <div class="container mt-3">
+                  <div class="card card-custom-recomended shadow border-0">
+                    <div class="star-rating">
+                      <span>
+                        <FontAwesomeIcon icon={faStar} color="#f59505a4" />{" "}
+                        {therapist.rating.toFixed(1)}
+                      </span>
+                    </div>
+                    <img
                       src={therapist.profile.image}
-                      alt={`${therapist.profile.first_name} ${therapist.profile.last_name}`}
-                      className="therapistImage"
+                      class="profile-img img-fluid"
+                      alt="Doctor Image"
+                      width="150"
+                      height="150"
                     />
-                    <div>
-                      <Card.Title className="therapistName">
-                        {capitalizeFirstLetter(therapist.profile.first_name)}{" "}
-                        {capitalizeFirstLetter(therapist.profile.last_name)}
-                      </Card.Title>
-                      <Card.Text className="therapistDetails">
-                        Counceling Therapist{therapist.specialization} <br />
-                        with {therapist.experience}{" "}
-                        years experience
-                      </Card.Text>
+                    <div className="d-flex align-items-center justify-content-between px-2">
+                      <div>
+                        <h5 class="card-title-view ms-2">
+                          {therapist.profile.first_name +
+                            " " +
+                            therapist.profile.last_name}
+                        </h5>
+                        <div class="speciality">{therapist.specialization}</div>
+                      </div>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() =>
+                          handleTherapistSelect(therapist.profile.user.id)
+                        }
+                      >
+                        <FontAwesomeIcon icon={faArrowCircleRight} />
+                      </Button>
                     </div>
                   </div>
-                  <Card.Body className="">
-                    <Button
-                      variant="primary"
-                      onClick={() =>
-                        handleTherapistSelect(therapist.profile.user.id)
-                      }
-                    >
-                      View Profile
-                    </Button>
-                  </Card.Body>
-                </Card>
+                </div>
               </div>
             ))}
         </div>
@@ -244,39 +352,71 @@ export default function LandingPage() {
         </div>
       </div> */}
 
-      <div className="ourTherapist ms-5 me-5 mt-3">
-        <h2 className="text-center mt-5 fs-1">Our Therapist</h2>
-        <div className="therapistList row row-auto">
-          {filteredTherapists.length > 0 ? (
-            filteredTherapists.map((therapist) => (
-              <div
-                className="col col-auto border-0 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap shadow pe-3 me-5 mb-3 mt-4"
-                key={therapist.profile.user.id}
-                onClick={() => handleTherapistSelect(therapist.profile.user.id)}
-              >
-                <img
-                  src={therapist.profile.image}
-                  className="licenses img-fluid ms-2"
-                  alt={`${therapist.profile.first_name} ${therapist.profile.last_name}`}
-                />
-                <h5 className="ms-2 fs-4 mb-2 mt-2">
-                  {therapist.profile.first_name} {therapist.profile.last_name}
-                </h5>
-                <h5
-                  className="ms-2"
-                  style={{ color: "gray", marginTop: "-10px" }}
-                >
-                  {therapist.specialization}
-                </h5>
+      <div className="ourTherapist mt-4 ">
+        <h3 className="text-center">Our Therapists</h3>
+        <div className="container row ms-sm-0 ms-lg-2 ms-md-2 d-flex align-items-center">
+          {recommendedTherapists &&
+            recommendedTherapists.map((therapist) => (
+              <div className="col-md-4 mb-4" key={therapist.id}>
+                <div class="container mt-3">
+                  <div class="card card-custom-recomended shadow border-0">
+                    <div class="star-rating">
+                      <span>
+                        <FontAwesomeIcon icon={faStar} color="#f59505a4" />{" "}
+                        {therapist.rating.toFixed(1)}
+                      </span>
+                    </div>
+                    <img
+                      src={therapist.profile.image}
+                      class="profile-img img-fluid"
+                      alt="Doctor Image"
+                      width="150"
+                      height="150"
+                    />
+                    <div className="d-flex align-items-center justify-content-between px-2">
+                      <div>
+                        <h5 class="card-title-view ms-2">
+                          {therapist.profile.first_name +
+                            " " +
+                            therapist.profile.last_name}
+                        </h5>
+                        <div class="speciality">{therapist.specialization}</div>
+                      </div>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() =>
+                          handleTherapistSelect(therapist.profile.user.id)
+                        }
+                      >
+                        <FontAwesomeIcon icon={faArrowCircleRight} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            ))
-          ) : (
-            <div className="alert alert-info text-center mt-1">
-              Sorry, no therapists available for now.
-            </div>
-          )}
+            ))}
         </div>
       </div>
+      <Modal show={showModal} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalBody}</Modal.Body>
+        <Modal.Footer>
+          {cancelAppointment ? (
+            <Button
+              variant="outline-danger"
+              onClick={() => handleDeleteAppointmentSubmit(cancelAppointment)}
+            >
+              Delete
+            </Button>
+          ) : (
+            <Button variant="primary" onClick={handleModalClose}>
+              Close
+            </Button>
+          )}
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

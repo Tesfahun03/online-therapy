@@ -135,7 +135,7 @@ class CounterView(generics.RetrieveUpdateAPIView):
 class TherapistAvailabilityViewSet(viewsets.ModelViewSet):
     queryset = TherapistAvailability.objects.all()
     serializer_class = TherapistAvailabilitySerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def get_queryset(self):
         therapist_id = self.kwargs.get('therapist_id')

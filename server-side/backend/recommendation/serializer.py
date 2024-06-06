@@ -5,4 +5,4 @@ class SimpleTherapistSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
     class Meta:
         model = Therapist
-        fields =['id', 'profile', 'experience', 'licenses', 'religion']
+        fields =['id', 'profile', 'experience','specialization','rating', 'licenses', 'religion']

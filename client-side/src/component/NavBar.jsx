@@ -312,7 +312,7 @@ export default function NavBar({ toggleOffcanvas }) {
                 </div>
               </Link>
 
-              <Link to="/profile-p" style={{ textDecoration: "none" }}>
+              <Link to="/profile" style={{ textDecoration: "none" }}>
                 <div className="profile-button">
                   <FontAwesomeIcon
                     icon={faUser}
