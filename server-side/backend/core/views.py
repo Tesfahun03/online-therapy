@@ -355,10 +355,36 @@ class SearchUser(generics.ListAPIView):
     permission_classes = [IsAuthenticated]  
 
     def list(self, request, *args, **kwargs):
-        username = self.kwargs['username']
+        username = self.kwargs['username'].strip()
         logged_in_user = self.request.user
-        users = Profile.objects.filter(Q(user__username__icontains=username) | Q(first_name__icontains=username) | Q(user__email__icontains=username) & 
-                                       ~Q(user=logged_in_user))
+        names = username.split()
+        
+        if not username:  # Check if username is empty after stripping
+            return Response(
+                {"detail": "No users found."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        if len(names) == 1:
+            # If only one name is provided, search in all relevant fields
+            users = Profile.objects.filter(
+                (Q(user__username__icontains=username) |
+                Q(first_name__icontains=username) |
+                Q(last_name__icontains=username) |
+                Q(user__email__icontains=username)) &
+                ~Q(user=logged_in_user)
+            )
+        else:
+            # If two names are provided, assume the first one is first name and the second one is last name
+            first_name = names[0]
+            last_name = names[1]
+            users = Profile.objects.filter(
+                (Q(first_name__icontains=first_name) & Q(last_name__icontains=last_name)) |
+                (Q(user__username__icontains=username) |
+                Q(user__email__icontains=username)) &
+                ~Q(user=logged_in_user)
+            )
+        
 
         if not users.exists():
             return Response(

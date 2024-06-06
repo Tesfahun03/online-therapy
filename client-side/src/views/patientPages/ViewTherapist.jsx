@@ -145,6 +145,10 @@ export default function ViewTherapist() {
     history.push(`/message/${therapistid}`);
   };
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <div className="view-therapist min-vh-100">
       <div className="languageForTranslate">
@@ -175,8 +179,8 @@ export default function ViewTherapist() {
               className="ms-2 fs-4 mb-2 mt-2 text-center"
               key={`name-${selectedTherapist.profile.user.id}`}
             >
-              {selectedTherapist.profile.first_name}{" "}
-              {selectedTherapist.profile.last_name}
+              {capitalizeFirstLetter(selectedTherapist.profile.first_name)}{" "}
+              {capitalizeFirstLetter(selectedTherapist.profile.last_name)}
             </h5>
             <h5
               className="ms-2 text-center"

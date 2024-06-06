@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../../utils/useAxios";
 import jwtDecode from "jwt-decode";
 import "../../styles/LandingPage.css";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Card, Button } from "react-bootstrap";
@@ -11,7 +11,8 @@ export default function LandingPage() {
   const baseURL = "http://127.0.0.1:8000/core";
 
   const axios = useAxios();
-  const [searchTherapist, setSearchTherapist] = useState({ search: "" });
+  let [searchTherapist, setSearchTherapist] = useState({ search: "" });
+  const [searchResults, setSearchResults] = useState([]);
   const [therapists, setTherapists] = useState([]);
   const [recommendedTherapists, setRecommendedTherapists] = useState(null);
 
@@ -70,6 +71,23 @@ export default function LandingPage() {
     history.push(`/viewtherapist/${therapistid}`);
   };
 
+  const SearchTherapist = async () => {
+    try {
+      const response = await axios.get(
+        'http://127.0.0.1:8000/core/search/' + searchTherapist.username + '/'
+      );
+      if (response.status === 200) {
+        setSearchResults(response.data);
+      } else if (response.status === 404) {
+        console.log(response.data.detail);
+        alert("User does not exist");
+      }
+    } catch (error) {
+      console.error("Error searching therapist:", error);
+      alert("Error searching therapist");
+    }    
+};
+
   function handelSearch(event) {
     const { name, value } = event.target;
 
@@ -112,8 +130,8 @@ export default function LandingPage() {
       <h2 className="hi text-center fw-bold fs-1 mt-3 mb-3">
         Hi, {first_name}!
       </h2>
-      <div className="search d-flex justify-content-around">
-        <form className="d-flex w-50">
+      <div className="row search d-flex justify-content-around">
+        <form className="d-flex w-50" onSubmit={(e) => { e.preventDefault(); }}>
           <input
             type="text"
             placeholder="Search Therapist"
@@ -121,11 +139,50 @@ export default function LandingPage() {
             className="searchBar form-control rounded-0 w-100"
             onChange={handelSearch}
           />
-          <button className="searchButton btn btn-secondary rounded-0">
+          <button onClick = {SearchTherapist} className="searchButton btn btn-secondary rounded-0">
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </form>
       </div>
+      <div className="searchResults mt-4 justify-content-center d-flex">
+        {searchResults.length > 0 && (
+          <div>
+            <h2 className="text-center">Search Results</h2>
+            {searchResults.map((user) => {
+              if (user.user_type === 'therapist') {
+                return (
+                  <Link
+                    to={`/viewtherapist/${user.user_id}`}
+                    className="list-group-item list-group-item-action border-0"
+                    key={user.user_id}
+                  >
+                    <div className="d-flex align-items-start">
+                      <img
+                        src={user.image}
+                        className="rounded-circle mr-1"
+                        alt="Profile"
+                        width={40}
+                        height={40}
+                      />
+                      <div className="flex-grow-1 ml-3">
+                        {capitalizeFirstLetter(user.first_name)} {" "} {capitalizeFirstLetter(user.last_name)}
+                        <div className="small">
+                          <small>
+                            <i className="fas fa-envelope"> View Profile</i>
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              } else {
+                return null; // Skip rendering if user is not a therapist
+              }
+            })}
+          </div>
+        )}
+      </div>
+      
 
       <div className="recommendedTherapists mt-4">
         <h2 className="text-center">Recommended Therapists</h2>
