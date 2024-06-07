@@ -10,7 +10,7 @@ import {
   faStar,
   faArrowCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { Card, Button, Table, Alert, Modal } from "react-bootstrap";
+import { Tooltip, OverlayTrigger, Card, Button, Table, Alert, Modal } from "react-bootstrap";
 import moment from "moment";
 
 export default function LandingPage() {
@@ -176,6 +176,17 @@ export default function LandingPage() {
     window.location.reload(); // Refresh the page
   };
 
+  const isVideoButtonEnabled = (appointmentDate, startTime) => {
+    const appointmentDateTime = moment(appointmentDate).set({
+      hour: moment(startTime, "HH:mm:ss").hour(),
+      minute: moment(startTime, "HH:mm:ss").minute(),
+      second: moment(startTime, "HH:mm:ss").second(),
+    });
+    // Subtract 5 minutes from the appointment time
+    const videoAvailableTime = moment(appointmentDateTime).subtract(5, "minutes");
+    return moment().isSameOrAfter(videoAvailableTime);
+  };
+
   return (
     <div className="landingPage">
       <h2 className="hi text-center fw-bold fs-1 mt-3 mb-3">
@@ -254,6 +265,13 @@ export default function LandingPage() {
                     <td>
                       {moment(appointment.appointment_date).format(
                         "DD MMM YYYY"
+                      )}  ,{" "}
+                      {moment(appointment.start_time, "HH:mm:ss").format(
+                        "hh:mm A"
+                      )}{" "}
+                      -{" "}
+                      {moment(appointment.end_time, "HH:mm:ss").format(
+                        "hh:mm A"
                       )}
                     </td>
                     <td>
@@ -263,12 +281,30 @@ export default function LandingPage() {
                     </td>
                     <td>
                       {" "}
-                      <button
-                        className="btn btn-outline-success"
-                        onClick={() => handleVideo(appointment.id)}
-                      >
-                        <FontAwesomeIcon icon={faVideo} />
-                      </button>
+                      <OverlayTrigger
+                      overlay={
+                        <Tooltip>
+                          {isVideoButtonEnabled(appointment.date, appointment.start_time)
+                            ? "Start Video"
+                            : "Video will be available at the appointment time"}
+                        </Tooltip>
+                      }
+                    >
+                      <span className="d-inline-block">
+                        <button
+                          className="btn btn-outline-success"
+                          onClick={() => handleVideo(appointment.id)}
+                          disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
+                          style={{
+                            pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
+                              ? "auto"
+                              : "none",
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faVideo} />
+                        </button>
+                      </span>
+                    </OverlayTrigger>
                     </td>
                     <td>
                       <button
@@ -277,7 +313,7 @@ export default function LandingPage() {
                           handleDeleteAppointmentModal(appointment.id)
                         }
                       >
-                        Cancle
+                        Cancel
                       </button>
                     </td>
                   </tr>
@@ -312,9 +348,9 @@ export default function LandingPage() {
                     <div className="d-flex align-items-center justify-content-between px-2">
                       <div>
                         <h5 class="card-title-view ms-2">
-                          {therapist.profile.first_name +
+                          {capitalizeFirstLetter(therapist.profile.first_name) +
                             " " +
-                            therapist.profile.last_name}
+                            capitalizeFirstLetter(therapist.profile.last_name)}
                         </h5>
                         <div class="speciality">{therapist.specialization}</div>
                       </div>
@@ -376,9 +412,9 @@ export default function LandingPage() {
                     <div className="d-flex align-items-center justify-content-between px-2">
                       <div>
                         <h5 class="card-title-view ms-2">
-                          {therapist.profile.first_name +
+                          {capitalizeFirstLetter(therapist.profile.first_name) +
                             " " +
-                            therapist.profile.last_name}
+                            capitalizeFirstLetter(therapist.profile.last_name)}
                         </h5>
                         <div class="speciality">{therapist.specialization}</div>
                       </div>

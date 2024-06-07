@@ -6,7 +6,7 @@ import moment from "moment";
 import useAxios from "../../utils/useAxios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Button, Modal } from "react-bootstrap";
+import { Tooltip, OverlayTrigger, Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faVideo } from "@fortawesome/free-solid-svg-icons";
 
@@ -105,7 +105,8 @@ export default function Appointments() {
         throw new Error("Network response was not ok");
       }
       const data = await response.data;
-      setAppointments(data);
+      const filteredAppointments = data.filter(appointment => moment(appointment.end_time, 'HH:mm:ss').isAfter(moment()));
+      setAppointments(filteredAppointments);
     } catch (error) {
       console.error("There was a problem fetching the data", error);
     }
@@ -142,6 +143,26 @@ export default function Appointments() {
       alert("The end time must be after the start time.");
       return;
     }
+
+     // Check for overlapping availabilities
+  const overlappingAvailability = showAvalability.some((availability) => {
+    const availStart = moment(availability.start_time, "HH:mm:ss");
+    const availEnd = moment(availability.end_time, "HH:mm:ss");
+    const newStart = moment(start_time, "HH:mm:ss");
+    const newEnd = moment(end_time, "HH:mm:ss");
+
+    // Check if the new availability overlaps with existing availability
+    return (
+      (newStart.isSameOrAfter(availStart) && newStart.isBefore(availEnd)) ||
+      (newEnd.isAfter(availStart) && newEnd.isSameOrBefore(availEnd)) ||
+      (newStart.isBefore(availStart) && newEnd.isAfter(availEnd))
+    );
+  });
+
+  if (overlappingAvailability) {
+    alert("The selected time conflicts with an existing availability.");
+    return;
+  }
 
     // Submit the form or perform further actions
     // ...
@@ -201,6 +222,17 @@ export default function Appointments() {
   };
   const handleVideo = (patientId) => {
     history.push(`/videochat-t/${patientId}`);
+  };
+
+  const isVideoButtonEnabled = (appointmentDate, startTime) => {
+    const appointmentDateTime = moment(appointmentDate).set({
+      hour: moment(startTime, "HH:mm:ss").hour(),
+      minute: moment(startTime, "HH:mm:ss").minute(),
+      second: moment(startTime, "HH:mm:ss").second(),
+    });
+    // Subtract 5 minutes from the appointment time
+    const videoAvailableTime = moment(appointmentDateTime).subtract(5, "minutes");
+    return moment().isSameOrAfter(videoAvailableTime);
   };
 
   return (
@@ -334,12 +366,30 @@ export default function Appointments() {
                             >
                               <FontAwesomeIcon icon={faMessage} />
                             </button>
-                            <button
-                              className="btn btn-success"
-                              onClick={() => handleVideo(appointment.id)}
-                            >
-                              <FontAwesomeIcon icon={faVideo} />
-                            </button>
+                            <OverlayTrigger
+                            overlay={
+                              <Tooltip>
+                                {isVideoButtonEnabled(appointment.date, appointment.start_time)
+                                  ? "Start Video"
+                                  : "Video will be available at the appointment time"}
+                              </Tooltip>
+                            }
+                          >
+                            <span className="d-inline-block">
+                              <button
+                                className="btn btn-outline-success"
+                                onClick={() => handleVideo(appointment.id)}
+                                disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
+                                style={{
+                                  pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
+                                    ? "auto"
+                                    : "none",
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faVideo} />
+                              </button>
+                            </span>
+                          </OverlayTrigger>
                           </div>
                         </td>
                       </tr>

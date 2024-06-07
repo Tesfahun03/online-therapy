@@ -29,6 +29,7 @@ import VerifyEmail from "./views/commonPages/VerifyEmail";
 import PredictionQuestionnaire from "./views/patientPages/PredictionQuestionnaire";
 import ForgotPassword from "./views/commonPages/ForgotPassword";
 import ResetPassword from "./views/commonPages/ResetPassword";
+import TermsAndConditions from "./views/commonPages/TermsAndConditions";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
             <Switch>
               <Route component={Home} path="/" exact />
               <Route component={LoginPatient} path="/login-p" exact />
+              <Route component={TermsAndConditions} path="/terms-and-conditions" exact />
               <Route component={RegisterPatient} path="/register-p" exact />
               <PrivateRoute component={LandingPage} path="/home-p" exact />
               <Route component={LoginTherapist} path="/login-t" exact />

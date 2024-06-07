@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { useRouteMatch } from "react-router-dom/cjs/react-router-dom.min";
 import "../styles/Footer.css";
 
@@ -17,8 +18,11 @@ export default function Footer() {
         >
           <h6>@ BunnaMind 2024</h6>
           <div className="d-flex">
-            <h6 className="mr-5">Privacy and Policy</h6>
-            <h6 className="ms-5">Term and condition</h6>
+            <Link to = "/terms-and-conditions"
+            style={{ textDecoration: "none", color: "white" }}
+            >
+            <h6 className="ms-5">Terms and Conditions</h6>
+            </Link>
           </div>
           <div className="icon d-flex flex-column justify-content-between">
             <h6>FaceBook</h6>

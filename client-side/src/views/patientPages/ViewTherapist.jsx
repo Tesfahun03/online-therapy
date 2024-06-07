@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import "../../styles/ViewTherapist.css";
 import { useTranslation } from "react-i18next";
 import useAxios from "../../utils/useAxios";
-import { Alert, Modal, Button } from "react-bootstrap";
+import { Tooltip, OverlayTrigger, Alert, Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faVideo, faStar } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
@@ -267,6 +267,21 @@ export default function ViewTherapist() {
     history.push(`/videochat-p/${appointmentID}`);
   };
 
+  const isVideoButtonEnabled = (appointmentDate, startTime) => {
+    const appointmentDateTime = moment(appointmentDate).set({
+      hour: moment(startTime, "HH:mm:ss").hour(),
+      minute: moment(startTime, "HH:mm:ss").minute(),
+      second: moment(startTime, "HH:mm:ss").second(),
+    });
+    // Subtract 5 minutes from the appointment time
+    const videoAvailableTime = moment(appointmentDateTime).subtract(5, "minutes");
+    return moment().isSameOrAfter(videoAvailableTime);
+  };
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <div className="view-therapist min-vh-100">
       <div className="languageForTranslate">
@@ -305,9 +320,9 @@ export default function ViewTherapist() {
                   height="150"
                 />
                 <h5 class="card-title-view">
-                  {selectedTherapist.profile.first_name +
+                  {capitalizeFirstLetter(selectedTherapist.profile.first_name) +
                     " " +
-                    selectedTherapist.profile.last_name}
+                    capitalizeFirstLetter(selectedTherapist.profile.last_name)}
                 </h5>
                 <div class="speciality">{selectedTherapist.specialization}</div>
                 <div class="footer-buttons">
@@ -529,12 +544,31 @@ export default function ViewTherapist() {
                           </td>
                           <td>
                             {" "}
-                            <button
-                              className="btn btn-outline-success"
-                              onClick={() => handleVideo(appointment.id)}
-                            >
-                              <FontAwesomeIcon icon={faVideo} />
-                            </button>
+                            <OverlayTrigger
+                            overlay={
+                              <Tooltip>
+                                {isVideoButtonEnabled(appointment.date, appointment.start_time)
+                                  ? "Start Video"
+                                  : "Video will be available at the appointment time"}
+                              </Tooltip>
+                            }
+                          >
+                            <span className="d-inline-block">
+                              <button
+                                className="btn btn-outline-success"
+                                onClick={() => handleVideo(appointment.id)}
+                                disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
+                                style={{
+                                  pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
+                                    ? "auto"
+                                    : "none",
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faVideo} />
+                              </button>
+                            </span>
+                          </OverlayTrigger>
+
                           </td>
                           <td>
                             <button
@@ -543,7 +577,7 @@ export default function ViewTherapist() {
                                 ()=>handleDeleteAppointmentModal(appointment.id)
                               }
                             >
-                              Cancle
+                              Cancel
                             </button>
                           </td>
                         </tr>
