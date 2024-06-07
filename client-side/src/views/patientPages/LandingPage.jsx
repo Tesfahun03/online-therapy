@@ -145,8 +145,14 @@ export default function LandingPage() {
       try {
         const response = await axios.get(
           `http://127.0.0.1:8000/session/patient/${user_id}/appointments`
-        );
-        setAppointments(response.data);
+        );const data = await response.data;
+        const now = moment();
+        // Filter out appointments that are in the past or have ended
+        const filteredAppointments = data.filter(appointment => {
+        const appointmentEnd = moment(`${appointment.date} ${appointment.end_time}`, "YYYY-MM-DD HH:mm:ss");
+        return appointmentEnd.isAfter(now);
+      });
+        setAppointments(filteredAppointments);
       } catch (error) {
         console.error("Error fetching appointments:", error);
       }

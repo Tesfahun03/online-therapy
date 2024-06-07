@@ -61,7 +61,17 @@ export default function ViewTherapist() {
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/session/therapist/${id}/availability/`)
-      .then((response) => setAvailability(response.data))
+      .then((response) => 
+        {
+        const data = response.data
+        const now = moment();
+        // Filter out appointments that are in the past or have ended
+        const filteredAvailabilities = data.filter(availability => {
+        const availabilityEnd = moment(`${availability.date} ${availability.end_time}`, "YYYY-MM-DD HH:mm:ss");
+        return availabilityEnd.isAfter(now);
+    });
+        setAvailability(filteredAvailabilities);
+        })
       .catch((error) => console.error("Error fetching availability:", error));
   }, [id]);
 
@@ -70,7 +80,14 @@ export default function ViewTherapist() {
       const appointmentResponse = await axios.get(
         `http://127.0.0.1:8000/session/patient/${user_id}/appointments/`
       );
-      setAppointments(appointmentResponse.data);
+      const data = await appointmentResponse.data;
+      const now = moment();
+      // Filter out appointments that are in the past or have ended
+      const filteredAppointments = data.filter(appointment => {
+      const appointmentEnd = moment(`${appointment.date} ${appointment.end_time}`, "YYYY-MM-DD HH:mm:ss");
+      return appointmentEnd.isAfter(now);
+    });
+      setAppointments(filteredAppointments);
     } catch (error) {
       console.error("Error fetching patient data:", error);
     }
@@ -79,6 +96,29 @@ export default function ViewTherapist() {
   useEffect(() => {
     appointmentData();
   }, []);
+
+  useEffect(() => {
+    console.log("Filtered Appointments:", filteredAppointments);
+  }, [filteredAppointments]);
+
+  useEffect(() => {
+    console.log("Availability:", availability);
+    console.log("Filtered Appointments:", filteredAppointments);
+    const now = moment();
+    if (filteredAppointments.length > 0) {
+      availability.forEach(slot => {
+        const hasFutureAppointment = filteredAppointments.some(
+          (appointment) =>
+            moment(appointment.date).isAfter(now) &&
+            moment(appointment.date).isSameOrBefore(slot.date) ||
+            moment(appointment.date).isSameOrAfter(slot.date)
+           // moment(appointment.end_time).isBefore(slot.start_time)
+        );
+        console.log(`Slot: ${slot.date} ${slot.start_time} - ${slot.end_time}, Has Future Appointment: ${hasFutureAppointment}`);
+      });
+    }
+  }, [availability, filteredAppointments]);
+  
 
   useEffect(() => {
     if (appointments.length > 0) {
@@ -146,7 +186,7 @@ export default function ViewTherapist() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/session/therapist/14/reviews/",
+        `http://127.0.0.1:8000/session/therapist/${id}/reviews/`,
         feedback
       );
       console.log("Feedback submitted successfully:", response.data);
@@ -281,6 +321,10 @@ export default function ViewTherapist() {
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
+  const renderTooltip = (message) => (
+    <Tooltip id="disabled-button-tooltip">{message}</Tooltip>
+  );
 
   return (
     <div className="view-therapist min-vh-100">
@@ -599,32 +643,51 @@ export default function ViewTherapist() {
                         <th>Date</th>
                         <th>Start Time</th>
                         <th>End Time</th>
-                        <th>Action</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {availability.map((slot) => (
+                    {availability.map((slot) => {
+                      const now = moment()
+                      const hasFutureAppointment = filteredAppointments.some(
+                        (appointment) =>
+                          moment(appointment.date).isAfter(now) && 
+                          moment(appointment.date).isSameOrBefore(slot.date) || 
+                          moment(appointment.date).isSameOrAfter(slot.date)
+                      );
+
+                      const disabledMessage = hasFutureAppointment
+                        ? "You already have an appointment."
+                         : " ";
+
+                      return (
                         <tr key={`${slot.date}-${slot.start_time}`}>
                           <td>{moment(slot.date).format("DD MMM YYYY")}</td>
+                          <td>{moment(slot.start_time, "HH:mm").format("h:mm A")}</td>
+                          <td>{moment(slot.end_time, "HH:mm").format("h:mm A")}</td>
                           <td>
-                            {moment(slot.start_time, "HH:mm").format("h:mm A")}
-                          </td>
-                          <td>
-                            {moment(slot.end_time, "HH:mm").format("h:mm A")}
-                          </td>
-                          <td>
-                            <button
-                              className="btn btn-primary btn-primary-book "
-                              onClick={() =>
-                                handleBookAppointment(user_id, slot.id)
-                              }
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={renderTooltip(disabledMessage)}
+                          >
+                            <span>
+                              {hasPaid ?
+                              <button
+                              className="btn btn-primary btn-primary-book"
+                              onClick={() => handleBookAppointment(user_id, slot.id)}
+                              disabled={hasFutureAppointment}
                             >
                               Book Appointment
                             </button>
+                              : " "}
+                              
+                            </span>
+                          </OverlayTrigger>
                           </td>
                         </tr>
-                      ))}
-                    </tbody>
+                      );
+                    })}
+                  </tbody>
                   </table>
                 </div>
               ) : (

@@ -91,7 +91,13 @@ export default function Appointments() {
         throw new Error("Network response was not ok");
       }
       const data = await response.data;
-      setShowAvalability(data);
+      const now = moment();
+      // Filter out appointments that are in the past or have ended
+      const filteredAvailabilities = data.filter(availability => {
+      const availabilityEnd = moment(`${availability.date} ${availability.end_time}`, "YYYY-MM-DD HH:mm:ss");
+      return availabilityEnd.isAfter(now);
+    });
+      setShowAvalability(filteredAvailabilities);
     } catch (error) {
       console.error("There was a problem fetching the data", error);
     }
@@ -105,7 +111,12 @@ export default function Appointments() {
         throw new Error("Network response was not ok");
       }
       const data = await response.data;
-      const filteredAppointments = data.filter(appointment => moment(appointment.end_time, 'HH:mm:ss').isAfter(moment()));
+      const now = moment();
+      // Filter out appointments that are in the past or have ended
+      const filteredAppointments = data.filter(appointment => {
+      const appointmentEnd = moment(`${appointment.date} ${appointment.end_time}`, "YYYY-MM-DD HH:mm:ss");
+      return appointmentEnd.isAfter(now);
+    });
       setAppointments(filteredAppointments);
     } catch (error) {
       console.error("There was a problem fetching the data", error);
@@ -146,16 +157,19 @@ export default function Appointments() {
 
      // Check for overlapping availabilities
   const overlappingAvailability = showAvalability.some((availability) => {
+    const availDate = moment(availability.date);
     const availStart = moment(availability.start_time, "HH:mm:ss");
     const availEnd = moment(availability.end_time, "HH:mm:ss");
+    const newDate = moment(date);
     const newStart = moment(start_time, "HH:mm:ss");
     const newEnd = moment(end_time, "HH:mm:ss");
 
     // Check if the new availability overlaps with existing availability
     return (
-      (newStart.isSameOrAfter(availStart) && newStart.isBefore(availEnd)) ||
+      (newDate.isSame(availDate) && ((newStart.isSameOrAfter(availStart) && newStart.isBefore(availEnd)) ||
       (newEnd.isAfter(availStart) && newEnd.isSameOrBefore(availEnd)) ||
-      (newStart.isBefore(availStart) && newEnd.isAfter(availEnd))
+      (newStart.isBefore(availStart) && newEnd.isAfter(availEnd))))
+      
     );
   });
 
