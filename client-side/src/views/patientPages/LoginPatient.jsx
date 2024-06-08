@@ -68,6 +68,7 @@ export default function LoginPatient() {
               placeholder={t("login.patientloginEmailAddress")}
               name="email"
               className="form-control"
+              required
             />
             <input
               type="password"

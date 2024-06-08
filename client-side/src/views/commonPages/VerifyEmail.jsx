@@ -10,7 +10,6 @@ const VerifyEmail = () => {
   const [message, setMessage] = useState("Verifying...");
   const [redirectUrl, setRedirectUrl] = useState("/");
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
 
   useEffect(() => {
     axios

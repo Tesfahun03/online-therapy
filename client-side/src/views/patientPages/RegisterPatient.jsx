@@ -3,7 +3,8 @@ import "../../styles/RegisterPatient.css";
 import { useTranslation } from "react-i18next";
 import AuthContext from "../../context/AuthContext";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 export default function RegisterPatient() {
   const [t, i18n] = useTranslation("global");
@@ -43,6 +44,12 @@ export default function RegisterPatient() {
   });
 
   const { registerPatient } = useContext(AuthContext);
+  const [errors, setErrors] = useState({});
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  function handleCheckboxChange(event) {
+    setAcceptedTerms(event.target.checked);
+  }
 
   function handleRegisterData(event) {
     const { name, value } = event.target;
@@ -62,8 +69,61 @@ export default function RegisterPatient() {
     };
   };
 
+  const validate = () => {
+    const errors = {};
+    const phoneRegex = /^(\+251|0)?9\d{8}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+\.com$/;
+
+    if (!phoneRegex.test(registerData.phoneNumber)) {
+      errors.phoneNumber =
+        "Phone number must be a valid Ethiopian mobile number.";
+    }
+    if (!registerData.firstName.match(/^[A-Z][a-z]*$/)) {
+      errors.firstName = "First name must start with a capital letter.";
+    }
+    if (!registerData.lastName.match(/^[A-Z][a-z]*$/)) {
+      errors.lastName = "Last name must start with a capital letter.";
+    }
+    if (!passwordRegex.test(registerData.password)) {
+      errors.password =
+        "8 character long, include uppercase, lowercase, and number.";
+    }
+    if (!emailRegex.test(registerData.emailAddress)) {
+      errors.emailAddress = "Email must be a valid email address.";
+    }
+
+    if (registerData.password !== registerData.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match.";
+    }
+    if (registerData.age < 21) {
+      errors.age = "Your age must be greater than or equal to 21";
+    }
+    if (registerData.age > 65) {
+      errors.age = "Your age must be less than or equal to 65";
+    }
+    if (!registerData.gender) {
+      errors.gender = "Gender is required.";
+    }
+    if (!registerData.martialStatus) {
+      errors.martialStatus = "Martial Status is required.";
+    }
+    if (!registerData.languagePreference) {
+      errors.languagePreference = "Language Preference is required.";
+    }
+    if (!registerData.occupation) {
+      errors.occupation = "Occupation is required.";
+    }
+
+    return errors;
+  };
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
     const first_name = registerData.firstName;
     const last_name = registerData.lastName;
     const email = registerData.emailAddress;
@@ -81,9 +141,9 @@ export default function RegisterPatient() {
     const occupation = registerData.occupation;
     const has_paid = registerData.has_paid;
 
-     // Generate keys
-     const {publicKey} = generateKeys();
-     console.log('Public Key:', publicKey);
+    // Generate keys
+    const { publicKey } = generateKeys();
+    console.log("Public Key:", publicKey);
 
     const patientData = {
       profile: {
@@ -103,7 +163,7 @@ export default function RegisterPatient() {
         city,
         region,
         user_type,
-        publicKey
+        publicKey,
       },
       occupation,
       has_paid,
@@ -141,43 +201,83 @@ export default function RegisterPatient() {
         </div>
         <div className="register-form">
           <form onSubmit={handleRegisterSubmit}>
-            <div className="form-outline d-flex">
-              <input
-                type="text"
-                id="first-name"
-                placeholder={t("register.registerFirstName")}
-                name="firstName"
-                onChange={handleRegisterData}
-                className="form-control"
-              />
-              <input
-                type="text"
-                id="last-name"
-                placeholder={t("register.registerLastName")}
-                name="lastName"
-                onChange={handleRegisterData}
-                className="form-control"
-              />
+            <div className="form-outline d-flex d-registerThera">
+              <div className="input-container">
+                <input
+                  type="text"
+                  id="first-name"
+                  placeholder={t("register.registerFirstName")}
+                  name="firstName"
+                  className={`form-control ${
+                    errors.firstName ? "is-invalid" : ""
+                  }`}
+                  onChange={handleRegisterData}
+                  required
+                />
+                {errors.firstName && (
+                  <div className="invalid-feedback text-start ms-1">
+                    {errors.firstName}
+                  </div>
+                )}
+              </div>
+              <div className="input-container">
+                <input
+                  type="text"
+                  id="last-name"
+                  placeholder={t("register.registerLastName")}
+                  name="lastName"
+                  className={`form-control ${
+                    errors.lastName ? "is-invalid" : ""
+                  }`}
+                  onChange={handleRegisterData}
+                  required
+                />
+                {errors.lastName && (
+                  <div className="invalid-feedback text-start ms-1">
+                    {errors.lastName}
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="form-outline d-flex">
-              <input
-                type="email"
-                id="email-address"
-                placeholder={t("register.registerEmailAddress")}
-                name="emailAddress"
-                onChange={handleRegisterData}
-                className="form-control"
-              />
-              <input
-                type="tel"
-                id="phone"
-                placeholder={t("register.registerPhoneNumber")}
-                name="phoneNumber"
-                className="form-control"
-                onChange={handleRegisterData}
-                data-mdb-input-mask="999-999-999?9"
-              />
+            <div className="form-outline d-registerThera d-flex">
+              <div className="input-container">
+                <input
+                  type="email"
+                  id="email-address"
+                  placeholder={t("register.registerEmailAddress")}
+                  name="emailAddress"
+                  className={`form-control ${
+                    errors.emailAddress ? "is-invalid" : ""
+                  }`}
+                  onChange={handleRegisterData}
+                  required
+                />
+                {errors.emailAddress && (
+                  <div className="invalid-feedback text-start ms-1 w-100">
+                    {errors.emailAddress}
+                  </div>
+                )}
+              </div>
+              <div className="input-container">
+                <input
+                  type="tel"
+                  id="phonenumber"
+                  name="phoneNumber"
+                  placeholder={t("register.registerPhoneNumber")}
+                  className={`form-control ${
+                    errors.phoneNumber ? "is-invalid" : ""
+                  }`}
+                  onChange={handleRegisterData}
+                  data-mdb-input-mask="999-999-999?9"
+                  required
+                />
+                {errors.phoneNumber && (
+                  <div className="invalid-feedback text-start ms-1  w-100">
+                    {errors.phoneNumber}
+                  </div>
+                )}
+              </div>
             </div>
 
             <input
@@ -189,90 +289,144 @@ export default function RegisterPatient() {
               className="form-control"
             />
 
-            <div className="form-outline d-flex">
-              <input
-                type="password"
-                id="password"
-                placeholder={t("register.registerPassword")}
-                name="password"
-                onChange={handleRegisterData}
-                className="form-control"
-              />
-              <input
-                type="password"
-                id="confirm-password"
-                placeholder={t("register.registerConfirmPassword")}
-                name="confirmPassword"
-                onChange={handleRegisterData}
-                className="form-control"
-              />
+            <div className="form-outline d-registerThera d-flex">
+              <div className="input-container">
+                <input
+                  type="password"
+                  id="password"
+                  placeholder={t("register.registerPassword")}
+                  name="password"
+                  className={`form-control ${
+                    errors.password ? "is-invalid" : ""
+                  }`}
+                  onChange={handleRegisterData}
+                  required
+                />
+                {errors.password && (
+                  <div className="invalid-feedback text-start ms-1 w-100">
+                    {errors.password}
+                  </div>
+                )}
+              </div>
+              <div className="input-container">
+                <input
+                  type="password"
+                  id="confirm-password"
+                  placeholder={t("register.registerConfirmPassword")}
+                  name="confirmPassword"
+                  className={`form-control ${
+                    errors.confirmPassword ? "is-invalid" : ""
+                  }`}
+                  onChange={handleRegisterData}
+                  required
+                />
+                {errors.confirmPassword && (
+                  <div className="invalid-feedback text-start ms-1 w-100">
+                    {errors.confirmPassword}
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="form-outline d-flex">
-              <select
-                name="gender"
-                className="formSelect"
-                id="gender"
-                value={registerData.gender}
-                onChange={handleRegisterData}
-              >
-                <option className="" value="">
-                  {t("register.registerGender")}
-                </option>
-                <option value="MALE">{t("register.registerGenderMale")}</option>
-                <option value="FEMALE">
-                  {t("register.registerGenderFemale")}
-                </option>
-              </select>
-              <input
-                type="number"
-                id="age"
-                placeholder={t("register.registerAge")}
-                name="age"
-                min={21}
-                max={105}
-                step={1}
-                onChange={handleRegisterData}
-                className="form-control"
-                value={registerData.age}
-              />
+            <div className="form-outline d-flex d-registerThera">
+              <div className="input-container">
+                <select
+                  name="gender"
+                  className={`formSelect select-arrow  ${
+                    errors.gender ? "is-invalid" : ""
+                  }`}
+                  id="gender"
+                  onChange={handleRegisterData}
+                  value={registerData.gender}
+                >
+                  <option value="" className="SelectOptionDefault">
+                    {t("register.registerGender")}
+                  </option>
+                  <option value="MALE">
+                    {t("register.registerGenderMale")}
+                  </option>
+                  <option value="FEMALE">
+                    {t("register.registerGenderFemale")}
+                  </option>
+                </select>
+                {errors.gender && (
+                  <div className="invalid-feedback text-start">
+                    {errors.gender}
+                  </div>
+                )}
+              </div>
+              <div className="input-container">
+                <input
+                  type="number"
+                  id="age"
+                  placeholder={t("register.registerAge")}
+                  name="age"
+                  step={1}
+                  className={`form-control ${errors.age ? "is-invalid" : ""}`}
+                  onChange={handleRegisterData}
+                  required
+                />
+                {errors.age && (
+                  <div className="invalid-feedback text-start ms-1 w-100">
+                    {errors.age}
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="form-outline d-flex">
-              <select
-                name="martialStatus"
-                className="formSelect"
-                id="martial-status"
-                value={registerData.martialStatus}
-                onChange={handleRegisterData}
-              >
-                <option value="">{t("register.registerMartialStatus")}</option>
-                <option value="SINGLE">
-                  {t("register.registerMartialStatus1")}
-                </option>
-                <option value="MARRIED">
-                  {t("register.registerMartialStatus2")}
-                </option>
-                <option value="DIVORCED">
-                  {t("register.registerMartialStatus3")}
-                </option>
-              </select>
-              <select
-                name="languagePreference"
-                className="formSelect"
-                id="language-preference"
-                value={registerData.languagePreference}
-                onChange={handleRegisterData}
-              >
-                <option value="">
-                  {t("register.registerLanguagePreference")}
-                </option>
-                <option value="AMHARIC">Amharic</option>
-                <option value="OROMIFA">Oromifa</option>
-                <option value="SOMALLI">Somalli</option>
-                <option value="TIGRIGNA">Tigrigna</option>
-                <option value="ENGLISH">English</option>
-              </select>
+            <div className="form-outline d-flex d-registerThera">
+              <div className="input-container">
+                <select
+                  name="martialStatus"
+                  className={`formSelect select-arrow  ${
+                    errors.martialStatus ? "is-invalid" : ""
+                  }`}
+                  id="martial-status"
+                  onChange={handleRegisterData}
+                >
+                  <option value="" className="SelectOptionDefault">
+                    {t("register.registerMartialStatus")}
+                  </option>
+                  <option value="SINGLE">
+                    {t("register.registerMartialStatus1")}
+                  </option>
+                  <option value="MARRIED">
+                    {t("register.registerMartialStatus2")}
+                  </option>
+                  <option value="DIVORCED">
+                    {t("register.registerMartialStatus3")}
+                  </option>
+                </select>
+                {errors.martialStatus && (
+                  <div className="invalid-feedback text-start">
+                    {errors.martialStatus}
+                  </div>
+                )}
+              </div>
+              <div className="input-container">
+                <select
+                  name="languagePreference"
+                  className={`formSelect select-arrow  ${
+                    errors.languagePreference ? "is-invalid" : ""
+                  }`}
+                  id="language-preference"
+                  onChange={handleRegisterData}
+                >
+                  <option value="" className="SelectOptionDefault">
+                    {t("register.registerLanguagePreference")}
+                  </option>
+                  <option value="AMHARIC">Amharic</option>
+                  <option value="OROMIFA">Oromifa</option>
+                  <option value="SOMALLI">Somalli</option>
+                  <option value="TIGRIGNA">Tigrigna</option>
+                  <option value="ENGLISH">English</option>
+                </select>
+                {errors.languagePreference && (
+                  <div className="invalid-feedback text-start">
+                    {errors.languagePreference}
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="form-outline d-flex">
@@ -284,6 +438,7 @@ export default function RegisterPatient() {
                 value={registerData.city}
                 onChange={handleRegisterData}
                 className="form-control"
+                required
               />
 
               <input
@@ -293,24 +448,80 @@ export default function RegisterPatient() {
                 value={registerData.region}
                 onChange={handleRegisterData}
                 className="form-control"
+                required
               />
             </div>
-            <div className="form-outline d-flex">
-              <select
-                name="occupation"
-                className="formSelect"
-                id="occupation"
-                value={registerData.occupation}
-                onChange={handleRegisterData}
-              >
-                <option value="">{t("register.registerOccupation")}</option>
-                <option value="STUDENT">Student</option>
-                <option value="EMPLOYED">Employed</option>
-                <option value="SELFEMPLOYED">Self-Employed</option>
-                <option value="UNEMPLOYED">Unemployed</option>
-              </select>
+            <div className="form-outline">
+              <div className="input-container">
+                <select
+                  name="occupation"
+                  className={`formSelect select-arrow  ${
+                    errors.occupation ? "is-invalid" : ""
+                  }`}
+                  id="occupation"
+                  value={registerData.occupation}
+                  onChange={handleRegisterData}
+                >
+                  <option value="">{t("register.registerOccupation")}</option>
+                  <option value="STUDENT">Student</option>
+                  <option value="EMPLOYED">Employed</option>
+                  <option value="SELFEMPLOYED">Self-Employed</option>
+                  <option value="UNEMPLOYED">Unemployed</option>
+                </select>
+                {errors.occupation && (
+                  <div className="invalid-feedback text-start">
+                    {errors.occupation}
+                  </div>
+                )}
+              </div>
             </div>
-            <button>{t("register.registerBtn")}</button>
+
+            <div className="form-check ms-2 d-flex align-items-start">
+            <input
+                type="checkbox"
+                id="terms-and-conditions"
+                className={`form-check-input custom-checkbox ${
+                  errors.acceptedTerms ? "is-invalid" : ""
+                }`}
+                checked={acceptedTerms}
+                onChange={handleCheckboxChange}
+                required
+                style={{width:"20px", height:"20px"}}
+              />
+              <label
+                className="form-check-label ms-2"
+                htmlFor="terms-and-conditions"
+              >
+                I accept{" "}
+                <Link to="/terms-and-conditions">
+                  BunnaMind's terms and conditions
+                </Link>
+              </label>
+            </div>
+
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={
+                !acceptedTerms ? (
+                  <Tooltip id="button-tooltip">
+                    You must accept the terms and conditions to register.
+                  </Tooltip>
+                ) : (
+                  <></>
+                )
+              }
+            >
+              <span className="d-inline-block w-100">
+                <button
+                  className="w-100"
+                  disabled={!acceptedTerms}
+                  style={{ pointerEvents: !acceptedTerms ? "none" : "auto" }}
+                >
+                 {t("register.registerBtn")}
+                </button>
+              </span>
+            </OverlayTrigger>
             <Link
               to="#"
               style={{

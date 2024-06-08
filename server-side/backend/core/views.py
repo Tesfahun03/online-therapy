@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import Http404, JsonResponse, HttpResponseRedirect
 from django.db.models import OuterRef, Subquery
 from django.db.models import Q
 

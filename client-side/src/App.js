@@ -21,8 +21,6 @@ import Appointments from "./views/therapistPages/Appointments";
 import NotificationTherapist from "./views/therapistPages/NotificationTherapist";
 import Records from "./views/therapistPages/Records";
 import RecordsDetail from "./views/therapistPages/RecordsDetail";
-import Settings from "./views/therapistPages/Settings";
-import BookAppointment from "./views/patientPages/BookAppointment";
 import VideoChat from "./views/therapistPages/VideoChatTherapist";
 import VideoChatPatient from "./views/patientPages/VideoChatPatient";
 import VerifyEmail from "./views/commonPages/VerifyEmail";
@@ -73,11 +71,6 @@ function App() {
                 path="/viewtherapist/:id"
                 exact
               />
-              <PrivateRoute
-                component={BookAppointment}
-                path="/bookappointment/:id"
-                exact
-              />
               <Route component={Dashboard} path="/dashboard-t" exact />
               <Route
                 component={Appointments}
@@ -91,7 +84,6 @@ function App() {
               />
               <Route component={Records} path="/records-t" exact />
               <Route component={RecordsDetail} path="/records-t/:id" exact />
-              <Route component={Settings} path="/settings-t" exact />
               <PrivateRoute component={MessageBox} path="/message-box/" exact />
               <PrivateRoute component={Message} path="/message/:id" exact />
               <PrivateRoute component={VideoChat} path="/videochat-t/:id" exact/>

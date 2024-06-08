@@ -6,7 +6,9 @@
     padding-top: 7vw;
     text-align: center;
 }
-
+.container-term{
+    padding-top: 7vw;
+}
 .register-welcome-info .welcome {
     font-size: 3vw;
     color: #502828;
