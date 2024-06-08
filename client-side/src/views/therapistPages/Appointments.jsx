@@ -255,7 +255,7 @@ export default function Appointments() {
       <div className="appointment-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4">
         {showAvalability !== null && showAvalability !== undefined && (
           <div className="row shadow py-3">
-            <h4>List of avalability (International Time Zone)</h4>
+            <h4>{t("appointments.listofAvailablity")}</h4>
             {showAvalability.length > 0 ? (
               showAvalability.map((avalabilitys, index) => (
                 <div
@@ -273,7 +273,7 @@ export default function Appointments() {
                       "hh:mm A"
                     )}
                   </p>
-                  <button className="btn btn-success">Edit</button>
+                  <button className="btn btn-success">{t("appointments.edit")}</button>
                   <button
                     className="btn btn-danger"
                     onClick={() => {
@@ -281,24 +281,24 @@ export default function Appointments() {
                       handleDeleteAvalabilitySubmit(avalabilitys.id);
                     }}
                   >
-                    Delete
+                    {t("appointments.delete")}
                   </button>
                 </div>
               ))
             ) : (
-              <p>No available date is found.</p>
+              <p>{t("appointments.nodateFound")}</p>
             )}
           </div>
         )}
 
         <div className="row mt-4 shadow py-3">
-          <h4>Set New Availability</h4>
+          <h4> {t("appointments.setNewAvalability")}</h4>
           <div className="row position-relative" style={{ zIndex: 1000 }}>
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               dateFormat="MMMM d, yyyy"
-              placeholderText="Select a date"
+              placeholderText={t("appointments.selectDate")}
               className="form-control mb-2"
               popperClassName="date-picker-popper"
               style={{ marginRight: "10px" }}
@@ -311,7 +311,7 @@ export default function Appointments() {
               timeIntervals={15}
               timeCaption="Start Time"
               dateFormat="h:mm aa"
-              placeholderText="Select start time"
+              placeholderText={t("appointments.selectStartTime")}
               className="form-control mb-2"
               popperClassName="date-picker-popper"
             />
@@ -323,7 +323,7 @@ export default function Appointments() {
               timeIntervals={15}
               timeCaption="End Time"
               dateFormat="h:mm aa"
-              placeholderText="Select end time"
+              placeholderText={t("appointments.selectEndTime")}
               className="form-control mb-2"
               popperClassName="date-picker-popper"
             />
@@ -336,20 +336,20 @@ export default function Appointments() {
                   : handleAppointmentSubmit
               }
             >
-              Save Availability
+              {t("appointments.saveAvalability")}
             </button>
           </div>
         </div>
         <div className="row mt-4 shadow py-3 px-2 mb-4">
-          <h4>Schedule List</h4>
+          <h4>{t("appointments.scheduleList")}</h4>
           {appointments !== null && appointments !== undefined && (
             <>
               {appointments.length > 0 ? (
                 <table className="table  table-striped table-bordered mt-2">
                   <thead>
                     <tr>
-                      <th className="text-center">Client Name</th>
-                      <th className="text-center">Date and Time</th>
+                      <th className="text-center">{t("appointments.clientName")}</th>
+                      <th className="text-center">{t("appointments.dateTime")}</th>
                       <th className="text-center">Type</th>
                     </tr>
                   </thead>
@@ -411,7 +411,7 @@ export default function Appointments() {
                   </tbody>
                 </table>
               ) : (
-                <p>No available date is found.</p>
+                <p>{t("appointments.nodateFound")}</p>
               )}
             </>
           )}

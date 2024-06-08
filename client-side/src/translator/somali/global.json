@@ -113,6 +113,15 @@
     },
     "appointments":{
         "listofAvailablity": "Liiska la heli karo",
+        "listofAvailablity2": "Liiska helitaanka (Aagga Waqtiga Caalamiga ah)",
+        "nodateFound": "Ma jiro taariikh la heli karo.",
+        "selectDate": "Dooro taariikh",        
+        "selectStartTime": "Dooro waqtiga bilowga",        
+        "selectEndTime": "Dooro wakhtiga dhamaadka",        
+        "scheduleList": "Liiska jadwalka",        
+        "clientName": "Magaca macmiilka",        
+        "dateTime": "Taariikhda iyo Waqtiga",        
+        "type": "Nooca",
         "edit": "Wax ka beddel",
         "delete": "Tirtir", 
         "setNewAvalability": "Deji helitaan cusub",
@@ -220,6 +229,33 @@
         "recordLastName" :"Magaca Dambe",
         "recordPaymentAmount" :"Lacagta Bixinta",
         "recordPaymentdate" :"Taariikhda lacag bixinta"
+    },
+    "setting":{
+        "yourpaymentRate1": "Heerka lacag-bixintaada bishii (ETB/bishii) waa 0 ETB",
+        "enterNumber": "Gali nambar",
+        "yourpaymentRate2": "Qiimaha lacag bixinta halkii bil",
+        "update": "Cusbooneysiin"
+    },
+    "resetPassword": {
+        "resetPasswordTitle": "Dib u deji erayga sirta ah",
+        "newPassword1": "Password cusub",
+        "newPassword2": " Geli erayga sirta ah cusub",
+        "confirmNewPassword1": "Xaqiiji erayga sirta ah ee cusub",
+        "confirmNewPassword2": "Xaqiiji erayga sirta ah ee cusub",
+        "submit": "Submit"
+    },
+    "verifyEmail":{
+        "verifingEmail": " Xaqiijinta...",        
+        "verification": " Xaqiijinta",        
+        "emailverified": "Cinwaanka iimaylkaagu si guul leh loo xaqiijiyay fadlan guji badhanka hoose si aad ugu jihayso bogga soo galitaanka!!!",        
+        "gotoHome": "Tag bogga guriga"
+    },
+    "forgotPassword": {
+        "forgotPasswordTitle": "Lagu iloobay erayga sirta ah",
+        "emailAddress": "Cinwaanka iimaylka",
+        "enterYourEmail": "Emailka geli",
+        "submit": "Submit"
+
     }
       
 }

@@ -334,11 +334,11 @@ export default function ViewTherapist() {
           onChange={handleChangeLanguage}
           value={selectedLanguage} // Set value to the selected language
         >
-          <option value="english">English</option>
-          <option value="amharic">Amharic</option>
-          <option value="oromo">Oromo</option>
-          <option value="sumalic">Sumalic</option>
-          <option value="tigrigna">Tigrigna</option>
+          <option value="english">Eng</option>
+          <option value="amharic">Amh</option>
+          <option value="oromo">Oro</option>
+          <option value="sumalic">Sum</option>
+          <option value="tigrigna">Tig</option>
         </select>
       </div>
       {selectedTherapist ? (
@@ -588,32 +588,13 @@ export default function ViewTherapist() {
                           </td>
                           <td>
                             {" "}
-                            <OverlayTrigger
-                            overlay={
-                              <Tooltip>
-                                {isVideoButtonEnabled(appointment.date, appointment.start_time)
-                                  ? "Start Video"
-                                  : "Video will be available at the appointment time"}
-                              </Tooltip>
-                            }
-                          >
-                            <span className="d-inline-block">
-                              <button
-                                className="btn btn-outline-success"
-                                onClick={() => handleVideo(appointment.id)}
-                                disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
-                                style={{
-                                  pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
-                                    ? "auto"
-                                    : "none",
-                                }}
-                              >
-                                <FontAwesomeIcon icon={faVideo} />
-                              </button>
-                            </span>
-                          </OverlayTrigger>
-
-                          </td>
+                            <button
+                              className="btn btn-outline-success"
+                              onClick={() => handleVideo(appointment.id)}
+                            >
+                              <FontAwesomeIcon icon={faVideo} />
+                            </button>
+                          </td> 
                           <td>
                             <button
                               className="btn btn-outline-danger"

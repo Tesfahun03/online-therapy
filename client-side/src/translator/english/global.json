@@ -114,6 +114,15 @@
     },
     "appointments":{
         "listofAvailablity": "List of availability",
+        "listofAvailablity2": "List of availability (International Time Zone)",
+        "nodateFound": "No available date is found.",
+        "selectDate": "Select a date",        
+        "selectStartTime": "Select start time",        
+        "selectEndTime": "Select end time",        
+        "scheduleList": "Schedule List",        
+        "clientName": "Client Name",        
+        "dateTime": "Date and Time",        
+        "type": "Type",        
         "edit": "Edit",
         "delete": "Delete",
         "setNewAvalability": "Set new Avalability",
@@ -223,6 +232,34 @@
         "recordLastName" :"Last Name",
         "recordPaymentAmount" :"Payment Amount",
         "recordPaymentdate" :"Payment Date"
+    },
+    "setting":{
+        "yourpaymentRate1": "Your Payment rate per month (ETB/month) is 0 ETB",
+        "enterNumber": "Enter a number",
+        "yourpaymentRate2": "Your payment rate per mounth",
+        "update": "Update"
+    },
+    "resetPassword": {
+        "resetPasswordTitle": "Reset Password",
+        "newPassword1": "New Password",
+        "newPassword2": "Enter new password",
+        "confirmNewPassword1": "Confirm New Password",
+        "confirmNewPassword2": "Confirm new password",
+        "submit": "Submit"
+    },
+    "verifyEmail":{
+        "verifingEmail": "Verifying...",        
+        "verification": "Verification",        
+        "emailverified": "Your email address verified successfully please click the button below to redirect to the login page!!!",        
+        "gotoHome": "Go to home page"
+    },
+    "forgotPassword": {
+        "forgotPasswordTitle": "Forgot Password",
+        "emailAddress": "Email Address",
+        "enterYourEmail": "Enter your email",
+        "submit": "Submit"
+
     }
+    
       
 }

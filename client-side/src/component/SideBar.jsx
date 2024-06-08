@@ -69,7 +69,7 @@ export default function SideBar( { isOffcanvasOpen } ) {
           }}
         >
           <h6 className="fw-light" onClick={() => handleButtonId("Dashboard")}>
-            <FontAwesomeIcon icon={faDashboard} /> Dashboard
+            <FontAwesomeIcon icon={faDashboard} /> {t("sidebar.sidebarDashboard")}
           </h6>
         </div>
       </Link>
@@ -107,7 +107,7 @@ export default function SideBar( { isOffcanvasOpen } ) {
             className="fw-light"
             onClick={() => handleButtonId("Notification")}
           >
-            <FontAwesomeIcon icon={faBell} /> Notification
+            <FontAwesomeIcon icon={faBell} /> {t("sidebar.sidebarNotification")}
           </h6>
         </div>
       </Link>
@@ -122,7 +122,7 @@ export default function SideBar( { isOffcanvasOpen } ) {
           }}
         >
           <h6 className="fw-light" onClick={() => handleButtonId("Reports")}>
-            <FontAwesomeIcon icon={faNoteSticky} /> Records
+            <FontAwesomeIcon icon={faNoteSticky} /> {t("sidebar.sidebarRecord")}
           </h6>
         </div>
       </Link>
@@ -137,7 +137,7 @@ export default function SideBar( { isOffcanvasOpen } ) {
           }}
         >
           <h6 className="fw-light" onClick={() => handleButtonId("Settings")}>
-            <FontAwesomeIcon icon={faToolbox} /> Settings
+            <FontAwesomeIcon icon={faToolbox} /> {t("sidebar.sidebarSetting")}
           </h6>
         </div>
       </Link>
