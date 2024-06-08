@@ -74,7 +74,7 @@ export default function Home(){
                 </div>
             </div>
             <div className="Faq" id='Faq'>
-                <h1>{t('home.homeFaqTitle')}</h1>
+                <h1 className='text-center'>{t('home.homeFaqTitle')}</h1>
                 <div className='faq-even'>
                     <div className="faq-number">1</div>
                     <div className="faq-q-and-a">

@@ -126,21 +126,6 @@ export default function SideBar( { isOffcanvasOpen } ) {
           </h6>
         </div>
       </Link>
-
-      <Link to="/settings-t" style={style}>
-        <div
-          className="row mt-4 p-1 ms-1 me-1 rounded"
-          style={{
-            textDecoration: "none",
-            background: location.pathname === "/settings-t" ? `${color}` : "",
-            cursor: "pointer",
-          }}
-        >
-          <h6 className="fw-light" onClick={() => handleButtonId("Settings")}>
-            <FontAwesomeIcon icon={faToolbox} /> {t("sidebar.sidebarSetting")}
-          </h6>
-        </div>
-      </Link>
     </div>
   );
 }
