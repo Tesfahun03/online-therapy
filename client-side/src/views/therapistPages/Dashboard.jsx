@@ -108,11 +108,11 @@ export default function Dashboard() {
             onChange={handleChangeLanguage}
             value={selectedLanguage} 
         >
-            <option value="english">English</option>
-            <option value="amharic">Amharic</option>
-            <option value="oromo">Oromo</option>
+            <option value="english">Eng</option>
+            <option value="amharic">Amh</option>
+            <option value="oromo">Oro</option>
             <option value="sumalic">Sumalic</option>
-            <option value="tigrigna">Tigrigna</option>
+            <option value="tigrigna">Tig</option>
         </select>
       </div>
       <div className="col col-lg-2 col-md-2 col-sm-3 m-0 p-0">

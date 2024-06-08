@@ -114,6 +114,15 @@
     },
     "appointments":{
         "listofAvailablity": "የተገኝነት ዝርዝር",
+        "listofAvailablity2": "የተገኝነት ዝርዝር (ዓለም አቀፍ የሰዓት ሰቅ)",
+        "nodateFound": "ምንም የሚገኝ ቀን አልተገኘም።",
+        "selectDate": "ቀን ምረጥ",        
+        "selectStartTime": "የመጀመሪያ ጊዜ ምረጥ",        
+        "selectEndTime": "የመጨረሻ ጊዜ ምረጥ",        
+        "scheduleList": "የጊዜ መርሐግብር ዝርዝር",        
+        "clientName": "የደንበኛ ስም",        
+        "dateTime": "ቀን እና ሰዓት",        
+        "ዓይነት": "ዓይነት",
         "edit": "አርትዕ",
         "delete": "ሰርዝ",
         "setNewAvalability": "አዲስ ተገኝነትን አዘጋጅ",
@@ -198,7 +207,7 @@
         "questionnaireOption3": "አንዳንድ ጊዜ",
         "questionnaireOption4": "በተደጋጋሚ",        
         "questionnaireSubmittedMessage": "መጠይቁን ስለጨረሱ እናመሰግናለን! ምላሾችዎ በተሳካ ሁኔታ ገብተዋል።",
-        "questionnaireGotoHome": "ወደ ቤት ሂድ",
+        "questionnaireGotoHome": "ወደ መነሻ ገጽ ሂድ",
         "questionnairePrevious": "ከዚያ በፊት",
         "questionnaireNext": "ቀጣይ",
         "questionnaireSubmit": "አስረክብ"
@@ -221,6 +230,33 @@
         "recordLastName" : "የአያት ስም",
         "recordPaymentAmount" :"የክፍያ መጠን",
         "recordPaymentdate" : "የክፍያ ቀን"
+    },
+    "setting":{
+        "yourpaymentRate1": "የእርስዎ የክፍያ መጠን በወር (ETB/ወር) 0 ETB ነው",
+        "enterNumber": "ቁጥር አስገባ",
+        "yourpaymentRate2": "የእርስዎ የክፍያ መጠን በአንድ ተራራ",
+        "update": "አዘምን"
+    },
+    "resetPassword": {
+        "resetPasswordTitle": "የይለፍ ቃል ዳግም አስጀምር",
+        "newPassword1": "አዲስ የይለፍ ቃል",
+        "newPassword2": "አዲስ የይለፍ ቃል አስገባ",
+        "confirmNewPassword1": "አዲስ የይለፍ ቃል አረጋግጥ",
+        "confirmNewPassword2": "አዲስ የይለፍ ቃል አረጋግጥ",
+        "submit": "አስረክብ"
+    },
+    "verifyEmail":{
+        "verifingEmail": "በማረጋገጥ ላይ...",      
+        "verification": "ማረጋገጫ",        
+        "emailverified": "የእርስዎ ኢሜይል አድራሻ በተሳካ ሁኔታ ተረጋግጧል እባኮትን ወደ የመግቢያ ገጹ ለማዞር ከታች ያለውን ቁልፍ ይጫኑ!!!",       
+        "gotoHome": "ወደ መነሻ ገጽ ሂድ"
+    },
+    "forgotPassword": {
+        "forgotPasswordTitle": "የይለፍ ቃል ረሳው",
+        "emailAddress": "ኢሜል አድራሻ",
+        "enterYourEmail": "ኢሜልዎን ያስገቡ",
+        "submit": "አስረክብ"
+
     }
 
 }

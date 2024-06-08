@@ -114,6 +114,15 @@
     },
     "appointments":{
         "listofAvailablity": "Tarree argama",
+        "listofAvailablity2": "Tarree argamaa (Naannoo Sa'aatii Idil-addunyaa)",
+        "nodateFound": "Guyyaan argamu hin argamne.",
+        "selectDate": "Guyyaa filadhu",        
+        "selectStartTime": "Yeroo jalqabaa filadhu",        
+        "selectEndTime": "Yeroo xumuraa filadhu",        
+        "scheduleList": "Tarree Sagantaa",        
+        "clientName": "Maqaa Maamilaa",        
+        "dateTime": "Guyyaa fi Sa'aatii",      
+        "type": "Akaakuu",
         "edit": "Gulaali",
         "delete": "Haqi",
         "setNewAvalability": "Argamuu haaraa saagi", 
@@ -221,6 +230,33 @@
         "recordLastName" :"Maqaa Dhumaa", 
         "recordPaymentAmount" :"Hanga Kaffaltii", 
         "recordPaymentdate" :"Guyyaa Kaffaltii"
+    },
+    "setting":{
+        "yourpaymentRate1": "Safartuu Kaffaltii keessanii ji'atti (ETB/ji'atti) 0 ETB dha",
+        "enterNumber": "Lakkoofsa galchi", 
+        "yourpaymentRate2": "Safartuu kaffaltii kee ji'a tokkoof",
+        "update": "Haaromsa"
+    },
+    "resetPassword": {
+        "resetPasswordTitle": "Jecha Iccitii Irra Deebi'ii Saagi", 
+        "newPassword1": "Jecha Iccitii Haaraa",
+        "newPassword2": "Jecha icciitii haaraa galchi",
+        "confirmNewPassword1": "Jecha Iccitii Haaraa Mirkaneessi",
+        "confirmNewPassword2": "Jecha icciitii haaraa mirkaneessi",
+        "submit": "Galchii"
+    },
+    "verifyEmail":{
+        "verifingEmail": "Mirkaneessaa jira...",        
+        "verification": "Mirkaneessuu",        
+        "emailverified": "Teessoon email kee milkaa'inaan mirkanaa'eera maaloo gara fuula seensaa qajeelchuuf button armaan gadii cuqaasaa!!!",       
+        "gotoHome": "Gara fuula jalqabaa deemi"
+    },
+    "forgotPassword": {
+        "forgotPasswordTitle": "Jecha Icciitii dagadhe",
+        "emailAddress": "Teessoo Imeelii",
+        "enterYourEmail": "Email kee galchi",
+        "submit": "Galchii"
+
     }
 
 }

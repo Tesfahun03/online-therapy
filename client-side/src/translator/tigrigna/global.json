@@ -114,6 +114,15 @@
     },
     "appointments":{
         "listofAvailablity": "ዝርዝር ምህላው",
+        "listofAvailablity2": "ዝርዝር ምህላው (ዓለምለኻዊ ዞባ ሰዓት)",
+        "nodateFound": "ዝርከብ ዕለት ኣይተረኽበን።",
+        "selectDate": "ዕለት ምረጽ",     
+        "selectStartTime": "ናይ ምጅማር ሰዓት ምረጽ",       
+        "selectEndTime": "ናይ መወዳእታ ግዜ ምረጽ",        
+        "scheduleList": "ዝርዝር መደብ ስራሕ",        
+        "clientName": "ስም ዓሚል",       
+        "dateTime": "ዕለትን ሰዓትን",        
+        "Type": "ዓይነት",
         "edit": "ኣርትዖት",
         "delete": "ምድምሳስ",
         "setNewAvalability": "ሓድሽ ምህላው ኣቐምጥ",
@@ -221,6 +230,33 @@
         "recordLastName" :"መወዳእታ ስም",
         "recordPaymentAmount" :"ዓቐን ክፍሊት",
         "recordPaymentdate" :"ዕለት ክፍሊት"
+    },
+    "setting":{
+        "yourpaymentRate1": "ደረጃ ክፍሊትካ ኣብ ወርሒ (ETB/ወርሒ) 0 ETB እዩ",
+        "enterNumber": "ቁጽሪ ኣእቱ",
+        "yourpaymentRate2": "ደረጃ ክፍሊትካ ኣብ ነፍሲ ወከፍ ወርሒ",
+        "update": "ምዕራፍ"
+    },
+    "resetPassword": {
+        "resetPasswordTitle": "መሕለፊ ቃል ዳግማይ ምቕማጥ",
+        "newPassword1": "ሓድሽ ምልክት ቃል",
+        "newPassword2": "ሓድሽ ምልክት ቃል ኣእቱ",
+        "confirmNewPassword1": "ሓድሽ ምልክት ቃል ኣረጋግጽ",
+        "confirmNewPassword2": "ሓድሽ ምልክት ቃል ኣረጋግጽ",
+        "submit": "ኣቕርብ"
+    },
+    "verifyEmail":{
+        "verifingEmail": "ምርግጋጽ...",        
+        "verification": "ምርግጋጽ",       
+        "emailverified": "ኢመይል ኣድራሻኻ ብዓወት ተረጋጊጹ በጃኻ ናብ መእተዊ ገጽ ንምቕናዕ ኣብ ታሕቲ ዘሎ ቁልፊ ጠውቕ!!!",       
+        "gotoHome": "ናብ መበገሲ ገጽ ኪድ"
+    },
+    "forgotPassword": {
+        "forgotPasswordTitle": "መሕለፊ ቃል ረሲዐ",
+        "emailAddress": "ኣድራሻ ኢመይል",
+        "enterYourEmail": "ኢመይልካ ኣእቱ",
+        "submit": "ኣቕርብ"
+
     }  
       
 }

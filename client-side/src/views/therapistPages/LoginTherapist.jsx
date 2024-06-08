@@ -46,11 +46,11 @@ export default function LoginTherapist() {
                     onChange={handleChangeLanguage}
                     value={selectedLanguage} // Set value to the selected language
                 >
-                    <option value="english">English</option>
-                    <option value="amharic">Amharic</option>
-                    <option value="oromo">Oromo</option>
-                    <option value="sumalic">Sumalic</option>
-                    <option value="tigrigna">Tigrigna</option>
+                    <option value="english">Eng</option>
+                    <option value="amharic">Amh</option>
+                    <option value="oromo">Oro</option>
+                    <option value="sumalic">Sum</option>
+                    <option value="tigrigna">Tig</option>
                 </select>
             </div>
             <div className="container">

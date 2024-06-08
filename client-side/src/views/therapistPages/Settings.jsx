@@ -3,6 +3,7 @@ import ParentComponent from "../../component/ParentBar";
 import { Alert } from "react-bootstrap";
 import { faThermometerHalf } from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../../utils/useAxios";
+import { useTranslation } from "react-i18next";
 import jwtDecode from "jwt-decode";
 
 export default function Settings() {
