@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useAxios from "../../utils/useAxios";
+import { useTranslation } from "react-i18next";
 import jwtDecode from "jwt-decode";
 import "../../styles/LandingPage.css";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -22,6 +23,25 @@ import {
 import moment from "moment";
 
 export default function LandingPage() {
+  const [t, i18n] = useTranslation("global");
+  const [selectedLanguage, setSelectedLanguage] = useState("english"); // State to store selected language
+
+  useEffect(() => {
+    // Check if a language is saved in local storage
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+      setSelectedLanguage(savedLanguage); // Set selected language from local storage
+    }
+  }, []);
+
+  const handleChangeLanguage = (e) => {
+    const language = e.target.value;
+    i18n.changeLanguage(language);
+    setSelectedLanguage(language); // Update selected language in state
+    localStorage.setItem("preferredLanguage", language); // Save selected language in local storage
+  };
+
   const baseURL = "http://127.0.0.1:8000/core";
 
   const axios = useAxios();
@@ -224,112 +244,106 @@ export default function LandingPage() {
   console.log(searchResults)
   return (
     <div className="landingPage">
+      <div className="languageForTranslate">
+        <select
+          className="preferedLanguage"
+          onChange={handleChangeLanguage}
+          value={selectedLanguage}
+        >
+          <option value="english">Eng</option>
+          <option value="amharic">Amh</option>
+          <option value="oromo">Oro</option>
+          <option value="sumalic">Sum</option>
+          <option value="tigrigna">Tig</option>
+        </select>
+      </div>
       <h2 className="hi text-center fw-bold fs-1 mt-3 mb-3">
-        Hi, {first_name}!
+        {t("landingPage.hiPatientName")}, {first_name}!
       </h2>
-      <div className="searchContainer">
-        <div className="row m-0 p-0 search d-flex justify-content-around">
-          <form
-            className="d-flex w-50"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Search Therapist"
-              name="username"
-              className="searchBar form-control rounded-0 w-100"
-              onChange={handelSearch}
-            />
-            <button className="searchButton btn btn-secondary rounded-0">
-              <FontAwesomeIcon icon={faSearch} />
-            </button>
-          </form>
-        </div>
-        <div className="searchResults mt-4 justify-content-center d-flex">
-          {searchResults.length > 0 && (
-            <div className="searchResultsContainer w-50 shadow">
-              <h2 className="text-center">Search Results</h2>
-              {searchResults.map((user) => {
-                if (user.user_type === "therapist") {
-                  return (
-                    <Link
-                      to={`/viewtherapist/${user.user_id}`}
-                      className="list-group-item list-group-item-action border-0"
-                      key={user.user_id}
-                    >
-                      <div className="search-result d-flex align-items-start mb-2 hover border p-2">
-                        <img
-                          src={user.image}
-                          className="rounded-circle mr-1"
-                          alt="Profile"
-                          width={40}
-                          height={40}
-                        />
-                        <div className="flex-grow-1 ms-3">
-                          {capitalizeFirstLetter(user.first_name)}{" "}
-                          {capitalizeFirstLetter(user.last_name)}
-                          <div className="small" style={{color:"gray"}}>
-                             View profile <FontAwesomeIcon icon={faArrowCircleRight}/>
-                          </div>
+      <div className="row search d-flex justify-content-around">
+        <form className="d-flex w-50" onSubmit={(e) => { e.preventDefault(); }}>
+          <input
+            type="text"
+            placeholder={t("landingPage.searchTherapist")}
+            name="username"
+            className="searchBar form-control rounded-0 w-100"
+            onChange={handelSearch}
+          />
+          <button onClick={SearchTherapist} className="searchButton btn btn-secondary rounded-0">
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </form>
+      </div>
+      <div className="searchResults mt-4 justify-content-center d-flex">
+        {searchResults.length > 0 && (
+          <div>
+            <h2 className="text-center">{t("landingPage.searchResult")}</h2>
+            {searchResults.map((user) => {
+              if (user.user_type === 'therapist') {
+                return (
+                  <Link
+                    to={`/viewtherapist/${user.user_id}`}
+                    className="list-group-item list-group-item-action border-0"
+                    key={user.user_id}
+                  >
+                    <div className="d-flex align-items-start">
+                      <img
+                        src={user.image}
+                        className="rounded-circle mr-1"
+                        alt="Profile"
+                        width={40}
+                        height={40}
+                      />
+                      <div className="flex-grow-1 ml-3">
+                        {capitalizeFirstLetter(user.first_name)}{" "}{capitalizeFirstLetter(user.last_name)}
+                        <div className="small">
+                          <small>
+                            <i className="fas fa-envelope"> {t("landingPage.viewProfile")}</i>
+                          </small>
                         </div>
                       </div>
-                    </Link>
-                  );
-                } else {
-                  return null; // Skip rendering if user is not a therapist
-                }
-              })}
-            </div>
-          )}
-        </div>
+                    </div>
+                  </Link>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
+        )}
       </div>
 
       {appointments.length > 0 && (
-        <div className="container mt-4 ">
-          <h2 className="text-center my-4">Upcomming Appointments</h2>
-
+        <div className="container mt-4">
+          <h2 className="text-center my-4">{t("landingPage.upcomingAppointment")}</h2>
           <div className="table-responsive">
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>Date and time</th>
-                  <th>Therapist name</th>
-                  <th>Type</th>
-                  <th>Action</th>
+                  <th>{t("landingPage.dateAndTime")}</th>
+                  <th>{t("landingPage.therapistName")}</th>
+                  <th>{t("landingPage.type")}</th>
+                  <th>{t("landingPage.action")}</th>
                 </tr>
               </thead>
               <tbody>
                 {appointments.map((appointment) => (
                   <tr key={appointment.id}>
                     <td>
-                      {moment(appointment.appointment_date).format(
-                        "DD MMM YYYY"
-                      )}{" "}
+                      {moment(appointment.appointment_date).format("DD MMM YYYY")}{" "}
                       ,{" "}
-                      {moment(appointment.start_time, "HH:mm:ss").format(
-                        "hh:mm A"
-                      )}{" "}
+                      {moment(appointment.start_time, "HH:mm:ss").format("hh:mm A")}{" "}
                       -{" "}
-                      {moment(appointment.end_time, "HH:mm:ss").format(
-                        "hh:mm A"
-                      )}
+                      {moment(appointment.end_time, "HH:mm:ss").format("hh:mm A")}
                     </td>
                     <td>
-                      {appointment.therapist_first_name +
-                        " " +
-                        appointment.therapist_last_name}
+                      {appointment.therapist_first_name + " " + appointment.therapist_last_name}
                     </td>
                     <td>
-                      {" "}
                       <OverlayTrigger
                         overlay={
                           <Tooltip>
-                            {isVideoButtonEnabled(
-                              appointment.date,
-                              appointment.start_time
-                            )
+                            {isVideoButtonEnabled(appointment.appointment_date, appointment.start_time)
                               ? "Start Video"
                               : "Video will be available at the appointment time"}
                           </Tooltip>
@@ -339,17 +353,9 @@ export default function LandingPage() {
                           <button
                             className="btn btn-outline-success"
                             onClick={() => handleVideo(appointment.id)}
-                            disabled={
-                              !isVideoButtonEnabled(
-                                appointment.date,
-                                appointment.start_time
-                              )
-                            }
+                            disabled={!isVideoButtonEnabled(appointment.appointment_date, appointment.start_time)}
                             style={{
-                              pointerEvents: isVideoButtonEnabled(
-                                appointment.date,
-                                appointment.start_time
-                              )
+                              pointerEvents: isVideoButtonEnabled(appointment.appointment_date, appointment.start_time)
                                 ? "auto"
                                 : "none",
                             }}
@@ -362,11 +368,9 @@ export default function LandingPage() {
                     <td>
                       <button
                         className="btn btn-outline-danger"
-                        onClick={() =>
-                          handleDeleteAppointmentModal(appointment.id)
-                        }
+                        onClick={() => handleDeleteAppointmentModal(appointment.id)}
                       >
-                        Cancel
+                        {t("landingPage.cancel")}
                       </button>
                     </td>
                   </tr>
@@ -377,75 +381,11 @@ export default function LandingPage() {
         </div>
       )}
 
-      <div className="recommendedTherapists  mt-4">
-        <h2 className="text-center">Recommended Therapists</h2>
-        <div className="container row ms-sm-0 ms-lg-2 ms-md-2 d-flex align-items-center">
+      <div className="recommendedTherapists mt-4">
+        <h2 className="text-center">{t("landingPage.recommendTherapist")}</h2>
+        <div className="container row ms-sm-0 ms-lg-2 ms-md-2d-flex align-items-center">
           {filteredTherapists &&
             filteredTherapists.map((therapist) => (
-              <div className="col-md-4 mb-4" key={therapist.id}>
-                <div class="container mt-3">
-                  <div class="card card-custom-recomended shadow border-0">
-                    <div class="star-rating">
-                      <span>
-                        <FontAwesomeIcon icon={faStar} color="#f59505a4" />{" "}
-                        {therapist.rating.toFixed(1)}
-                      </span>
-                    </div>
-                    <img
-                      src={therapist.profile.image}
-                      class="profile-img img-fluid"
-                      alt="Doctor Image"
-                      width="150"
-                      height="150"
-                    />
-                    <div className="d-flex align-items-center justify-content-between px-2">
-                      <div>
-                        <h5 class="card-title-view ms-2">
-                          {capitalizeFirstLetter(therapist.profile.first_name) +
-                            " " +
-                            capitalizeFirstLetter(therapist.profile.last_name)}
-                        </h5>
-                        <div class="speciality">{therapist.specialization}</div>
-                      </div>
-                      <Button
-                        variant="outline-secondary"
-                        onClick={() =>
-                          handleTherapistSelect(therapist.profile.user.id)
-                        }
-                      >
-                        <FontAwesomeIcon icon={faArrowCircleRight} />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
-      </div>
-
-      {/* <div className="feeling text-center">
-        <h2 className="mb-3 mt-5">How You feel Today?</h2>
-        <div className="how-you-feel row row-auto d-flex m-0 p-0">
-          <div className="emoji col col-4 col-auto">
-            <h3>😊</h3>
-            <h4>Happy</h4>
-          </div>
-          <div className="emoji col col-4 col-auto">
-            <h3>🙂</h3>
-            <h4>Normal</h4>
-          </div>
-          <div className="emoji col col-4 col-auto">
-            <h3>😐</h3>
-            <h4>Sad</h4>
-          </div>
-        </div>
-      </div> */}
-
-      <div className="ourTherapist mt-4 ">
-        <h3 className="text-center">Our Therapists</h3>
-        <div className="container row ms-sm-0 ms-lg-2 ms-md-2 d-flex align-items-center">
-          {recommendedTherapists &&
-            recommendedTherapists.map((therapist) => (
               <div className="col-md-4 mb-4" key={therapist.id}>
                 <div class="container mt-3">
                   <div class="card card-custom-recomended shadow border-0">
@@ -497,15 +437,16 @@ export default function LandingPage() {
               variant="outline-danger"
               onClick={() => handleDeleteAppointmentSubmit(cancelAppointment)}
             >
-              Cancle
+              {t("landingPage.delete")}
             </Button>
           ) : (
             <Button variant="primary" onClick={handleModalClose}>
-              Close
+              {t("landingPage.close")}
             </Button>
           )}
         </Modal.Footer>
       </Modal>
     </div>
+    
   );
 }

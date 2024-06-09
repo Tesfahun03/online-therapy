@@ -133,12 +133,21 @@
         "bookedBy": "ብ ዝተሓዝአ"
     },
     "landingPage":{
-        "hiPatientName":"hi",
-        "feelingToday": "How You feel Today?",
-        "happy": "Happy",
-        "normal": "Normal",
-        "sad": "Sad",
-        "ourTherapist": "Our Therapist"
+        "hiPatientName":"ሰላም",
+        "feelingToday": "ሎሚ ከመይ ይስምዓካ?",
+        "searchTherapist": "ሓኪም ምድላይ",
+        "viewProfile": "ፕሮፋይል ርአ",
+        "searchResult": "ውጽኢት ምድላይ",
+        "upcomingAppointment": "ዝመጽእ ቆጸራታት",
+        "dateAndTime": "ዕለትን ሰዓትን",
+        "therapistName": "ስም ቴራፒስት",
+        "cancel":"ስርዝ",
+        "recommendTherapist": "ዝምከሩ ቴራፒስት",
+        "type": "ዓይነት",
+        "action" :"ተግባር",
+        "ourTherapist": "ሓኪምና",
+        "delete":"ምድምሳስ",
+        "close":"ዕጸው"
     },
     "notification":{
 
@@ -171,7 +180,30 @@
         "therapistBio": "ባዮ",
         "therapistGender":"ጾታ",
         "preferedLanguage": "ዝምረጽ ቋንቋ",
-        "therapistReligion": "ሃይማኖት"
+        "therapistReligion": "ሃይማኖት",
+        "payForAppointment": "ንቆጸራ ምኽፋል",
+        "message": "መልእኽቲ",
+        "rate": "ደረጃ",
+        "submitRating": "ደረጃ ብዓወት ቀሪቡ",
+        "rateTherapist": "ንቴራፒስት ደረጃ ሃቦ",
+        "description": "መግለጺ",
+        "writeDescription": "ሓጺር መግለጺ ጽሓፍ...",
+        "rating": "ደረጃ",
+        "submit": "ኣቕርብ",
+        "dateAndTime": "ዕለትን ሰዓትን",
+        "type": "ዓይነት",
+        "action": "ተግባር",
+        "cancel": "ስርዝ",
+        "noAppointmentFound": "ቆጸራ ኣይተረኽበን።",
+        "therapistAvailability": "ቴራፒስት ምህላው",
+        "date": "ዕለት",
+        "startTime": "ናይ ምጅማር ሰዓት",
+        "endTime": "መወዳእታ ግዜ",
+        "notFound": "ተረባሕነት ኣይተረኽበን",
+        "delete":"ምድምሳስ",
+        "close": "ዕጸው",
+        "thisTherapist": "እዚ ቴራፒስት ባዮ የብሉን",
+        "upcomingTherapist": "ኣብ ዝመጽእ ቆጸራታት ምስ ቴራፒስት"
     },
     "questionnaire":{
         "questionnaireName": "መሕተቲ ጽሑፍ",
@@ -257,6 +289,69 @@
         "enterYourEmail": "ኢመይልካ ኣእቱ",
         "submit": "ኣቕርብ"
 
-    }  
+    },
+    "termsAndConditions":{
+        "termCondition": "ውዕላትን ቅጥዕታትን",
+        "termConditionIntroduction": "መእተዊ",
+        "termConditionWelcome": "እንቋዕ ናብ",
+        "termConditionOverView": "እዚ ውዕላትን ቅጥዕታትን ንኣጠቓቕማ መርበብ ሓበሬታና፡ ሞባይል መተግበሪና፡ ከምኡ'ውን ካልእ ብኣና እንህቦ ፍርያትን ኣገልግሎታትን ዝምልከት እዩ። ኣገልግሎታትና ብምእታው ወይ ብምጥቃም፡ በዚ ውዕላትን ፖሊሲ ውልቃዊ ሓበሬታናን ክትቅየድ ትሰማማዕ። እንተድኣ... ነዚ ውዕላት እዚ ኣይትሰማምዑን፣ በጃኹም ኣገልግሎታትና ኣይትጠቐሙ",
+
+        "termConditionUserAccount": "ሕሳባት ተጠቃሚ",
+        "termConditionUserAccount1": "ምዝገባ ተጠቃሚ",
+        "termConditionUserAccountDesc1": "ንገለ ባህርያት ኣገልግሎታትና ንምርካብ፡ ንሓደ ኣካውንት ክትምዝገብ ኣለካ። ኣብ እዋን ምዝገባ፡ ቅኑዕን ምሉእን ሓበሬታ ክትህብን ነዚ ሓበሬታ እዋናዊ ክትከውንን ትሰማማዕ። ነፍሲ ወከፍ ምዝገባ ንሓደ ተጠቃሚ ጥራይ እዩ፡ ብኣና ብግልጺ ብኻልእ መንገዲ እንተዘይተሰማሚዕና",
+        "termConditionUserAccount2": "ድሕነት ሕሳብ",
+        "termConditionUserAccountDesc2": "ምስጢራዊነት ናይ ኣካውንት መእተዊ ሓበሬታካን ንኹሉ ኣብ ትሕቲ ኣካውንትካ ዝፍጸም ንጥፈታትን ናይ ምሕላው ሓላፍነት ኣለካ። ዝኾነ ዘይፍቓድ ኣጠቓቕማ ኣካውንትካ ወይ ካልእ ምጥሓስ ድሕነት ብቕልጡፍ ከተፍልጠና ትሰማማዕ።",
+        "termConditionUserAccount3": "ምርግጋጽ",
+        "termConditionUserAccountDesc3": "ኣብ እዋን ምዝገባ፡ ኢመይል ኣድራሻኻ ከተረጋግጽ ክትግደድ ትኽእል ኢኻ። ኣብ እዋን ምዝገባ ናብቲ ዝሃብካዮ ኢመይል ኣድራሻ ናይ ምርግጋጽ መላግቦ ክንሰድድ ኢና። መስርሕ ምዝገባ ንምዝዛም ኣብቲ ናይ ምርግጋጽ መላግቦ ጠዊቕካ ኣለና። መሰልና ዝተሓለወ እዩ። ዝኾነ ዘይተረጋገጸ ኣካውንት ንምዕጻው።",
+
+        "termConditionUserConduct": "ኣካይዳ ተጠቃሚ",
+        "termConditionUserConduct1": "ዝተኸልከሉ ንጥፈታት",
+        "termConditionUserConductDesc1": "ኣብ ዝኾነ ካብዞም ዝስዕቡ ዝተኸልከሉ ንጥፈታት ከይትዋፈር ትሰማማዕ:",
+        "termConditionUserConductDesc2": "ነቶም ኣገልግሎታት ንዝኾነ ዘይሕጋዊ ዕላማ ምጥቃም ወይ ንዝኾነ ከባብያዊ፡ ግዝኣታዊ፡ ሃገራዊ ወይ ኣህጉራዊ ሕጊ ብምጥሓስ ምጥቃም።",
+        "termConditionUserConductDesc3": "ዝጥሕስ፣ ጸለመ፣ ጸለመ፣ ጸርፊ፣ ኣጸያፊ፣ ጽዩፍ ወይ ብኻልእ መንገዲ ተቓውሞ ዝፈጥር ትሕዝቶ ምልጣፍ ወይ ምትሕልላፍ።",
+        "termConditionUserConductDesc4": "ዝኾነ ሰብ ወይ ኣካል ምምሳል፡ ወይ ምስ ሓደ ሰብ ወይ ኣካል ዘለካ ምትእስሳር ብሓሶት ምግላጽ ወይ ብኻልእ መንገዲ ብጌጋ ምግላጽ።",
+        "termConditionUserConductDesc5": "ንኣሰራርሓ ናይቶም ኣገልግሎታት ወይ ነቶም ኣገልግሎታት ንኽቐርቡ ዝጥቀሙሉ ኣገልገልቲ ወይ መርበባት ምትእትታው ወይ ምዝራግ።",
+        "termConditionUserConductDesc6": "ኣብ ዝኾነ ንኣገልግሎታት ክጎድእ፡ ከሰናኽል፡ ልዕሊ ዓቐን ጾር ከስዕቦ ወይ ከዳኽም ዝኽእል ንጥፈት ምውፋር።",
+
+        "termConditionIntellectualProperty": "ኣእምሮኣዊ ንብረት",
+        "termConditionIntellectualProperty1": "ዋንነት",
+        "termConditionIntellectualPropertyDesc": "ኩሉ ብመንገዲ ኣገልግሎታትና ዝቐርብ ትሕዝቶ፡ ባህርያትን ተግባራትን፡ ጽሑፍ፡ ስእልታት፡ ኣርማታት፡ ምልክታት፡ ምስልታት፡ ድምጺ ክሊፕ፡ ቪድዮ ክሊፕ፡ ምትእኽኻብ ዳታ፡ ሶፍትዌርን ካልእ ንብረትን ሓዊሱ ግን ብእኡ ጥራይ ዝተሓጽረ ኣይኮነን። ",
+        "termConditionIntellectualPropertyDesc1": " ወይ ፈቓድ ዝሃቡን ብተግባራዊ ሕግታት ኣእምሮኣዊ ንብረት ዝሕለዉን እዮም።",
+        "termConditionIntellectualProperty2": "ፍቓድ",
+        "termConditionIntellectualPropertyDesc2": "ነቶም ኣገልግሎታትን ትሕዝቶን ንውልቃዊ፡ ንዘይንግዳዊ ኣጠቓቕማኻ ክትረኽቦን ክትጥቀመሉን ውሱን፡ ዘይፍሉይ፡ ዘይሰጋገርን ዝስረዝን ፍቓድ ንህበካ፡ ብመሰረት እዚ ውዕላት። ክትባዝሖ ኣይትኽእልን ኢኻ፡ ብዘይ ኣቐዲምና ብጽሑፍ ፍቓድና ዝኾነ ይኹን ትሕዝቶ ምዝርጋሕ፡ ምቕያር፡ መውጽኢ ስራሓት ምፍጣር፡ ብህዝቢ ምርኣይ፡ ብህዝቢ ምፍጻም፡ ዳግማይ ምሕታም፡ ምውራድ፡ ምዕቃብ ወይ ምትሕልላፍ።",
+
+        "termConditionDataPrivacy": "ብሕታዊነት ዳታ",
+        "termConditionDataPrivacyDesc1": "ንሕና ብሕታዊነትካ ነኽብርን ውልቃዊ መረዳእታኻ ንምሕላው ቃል ኣቲና ኣለና። ፖሊሲ ውልቃዊ ሓበሬታና ኣገልግሎታትና ክትጥቀም ከለኻ ብዛዕባኻ ሓበሬታ ብኸመይ ከም እንእክብ፡ ከም እንጥቀመሉን ከም እንካፈልን ይገልጽ። ኣገልግሎታትና ብምጥቃም፡ ንኣከባቢና ትሰማማዕን... ከምቲ ኣብ ፖሊሲ ​​ውልቃዊ ሓበሬታ ተገሊጹ ዘሎ ኣጠቓቕማ ዳታኻ።",
+        "termConditionDataPrivacy1": "ንመጻኢ ምፍራይ ውልቃዊ ሓበሬታ ምጥቃም",
+        "termConditionDataPrivacyDesc2": "ንዕላማ ምምሕያሽን ምዕባይን ኣገልግሎታትና ንውልቃዊ ሓበሬታኻ፡ እንተላይ ግን ኣብዚ ጥራይ ዘይተሓጽረ፡ ናይ ኣጠቓቕማ ዳታኻ፡ ምርጫታትካን ምስ ኣገልግሎታት ዘለካ ርክባትን ክንጥቀመሉ ንኽእል ኢና። እዚ ድማ ማሽን ትምህርትን ካልእ ብዳታ ዝምራሕን ምጥቃም ከጠቓልል ይኽእል። ቴክኖሎጂታት ንባህርያት ተጠቀምቲ ንምትንታንን ንምግማትን፡ ተመኩሮኻ ብሕታዊ ንምግባርን ሓደስቲ ባህርያት ንምምዕባልን ኣገልግሎታትና ብምጥቃም፡ ንኸምዚ ዝኣመሰለ ኣጠቓቕማ ውልቃዊ ሓበሬታኻ ትሰማማዕ።",
+
+        "termConditionBookingAndPayment": "ምዝገባን ክፍሊትን",
+        "termConditionBookingAndPayment1": "ቆጸራታት",
+        "termConditionBookingAndPaymentDesc1": "ቴራፒስት ብመንገዲ ኣገልግሎታትና ተረባሕነቶም ከቐምጡ ይኽእሉ እዮም። ሕሙማት ኣብቲ ዘሎ ናይ ግዜ ፍልልይ መሰረት ቆጸራ ክሕዙ ይኽእሉ። ሓደ ናይ ግዜ ፍልልይ ምስ ተሓዝአ ድሕሪ ደጊም ንኻልኦት ሕሙማት ኣይክቐርብን እዩ።",
+        "termConditionBookingAndPayment2": "ክፍሊት",
+        "termConditionBookingAndPaymentDesc2": "ሕሙማት ኣብ እዋን ምዝገባ ቆጸራታት ክኸፍሉ ይግደዱ። ኣገልግሎት መስርሕ ክፍሊት ብሳልሳይ ወገን መስርሒ ክፍሊት እዩ ዝወሃብ። ምስ መስርሕ ክፍሊት ዝተኣሳሰር ዝኾነ ይኹን ጌጋ ወይ ጉዳያት ሓላፍነት ኣይንወስድን ኢና።",
+        "termConditionBookingAndPayment3": "ምስርዛዝን ምምላስን",
+        "termConditionBookingAndPaymentDesc3": "ንቆጸራታት ናይ ምስራዝን ምምላስን ፖሊሲታት ክፈላለዩ ይኽእሉ እዮም፡ ኣብ እዋን ምዝገባ ድማ ብንጹር ክግለጹ እዮም። በጃኹም ቅድሚ ምዝገባ ምግባርኩም ነዞም ፖሊሲታት ብጥንቃቐ ርኣይዎም።",
+
+        "termConditionDesclaimer": "ምውጋድ ሓላፍነትን ገደብ ተሓታትነትን",
+        "termConditionDesclaimer1": "ምሕላፍ ሓላፍነት",
+        "termConditionDesclaimerDesc1": "እቶም ኣገልግሎታት ከም ዘለዉዎን ከም ዘሎን መሰረት እዮም ዝቐርቡ። ነቶም ኣገልግሎታት ወይ ትሕዝቶ ብዝምልከት ዝኾነ ይኹን ዓይነት ውክልና ወይ ውሕስነት ኣይንህብን ኢና፣ ብግልጺ ይኹን ብተዘዋዋሪ፣ ብዛዕባ እቶም ኣገልግሎታት ወይ ትሕዝቶ፣ እንተላይ ግን ኣብዚ ዘይተሓጽረ ዋሕስ ሸቐጥነት፣ ንብቕዓት ፍሉይ ዕላማ፣ ዘይምጥሓስ ወይ ልክዕነት።",
+        "termConditionDesclaimer2": "ገደብ ተሓታትነት",
+        "termConditionDesclaimerDesc2": "ብዝተግባራዊ ሕጊ ብዝተፈቕደሉ ዝለዓለ ደረጃ፡ ንዝኾነ ዘይቀጥታዊ፡ ኣጋጣሚ፡ ፍሉይ፡ ሳዕቤናዊ፡ ወይ መቕጻዕታዊ ዕንወት፡ ወይ ዝኾነ ይኹን ክሳራ መኽሰብ ወይ ኣታዊታት፡ ብቐጥታ ይኹን ብተዘዋዋሪ፡ ወይ ዝኾነ ክሳራ ተሓተትቲ ኣይንኸውንን። ናይ ዳታ፣ ኣጠቓቕማ፣ ሰናይ ድሌት፣ ወይ ካልእ ዘይጭበጥ ክሳራታት፣ ውጽኢት (ሀ) ኣጠቓቕማኻ ወይ ምጥቃም ዘይምኽኣልካ ናብ ኣገልገልትናን/ወይ ዝኾነ ኣብኡ ዝተዓቀበ ውልቃዊ ሓበሬታን፤ ዝኾነ ይኹን ምቁራጽ ወይ ምቁራጽ ምትሕልላፍ ናብ ወይ ካብ ኣገልግሎታት (መ) ዝኾነ ይኹን ብልሽት፣ ቫይረሳት፣ ትሮጃን ኣፍራስ፣ ወይ ከምኡ ዝኣመሰለ ናብ ወይ ብመንገዲ ኣገልግሎታት ብዝኾነ ሳልሳይ ወገን ክመሓላለፍ ዝኽእል (ሠ) ዝኾነ ጌጋ ወይ ምጉዳል ኣብ ዝኾነ ትሕዝቶ፤ ወይ ድማ ብሰንኪ እቲ ብመንገዲ ኣገልግሎታት ዝተለጠፈ፡ ብኢመይል ዝተላእከ፡ ዝተመሓላለፈ፡ ወይ ብኻልእ መንገዲ ዝቐርብ ትሕዝቶ ምጥቃምካ ንዝመጽእ ዝኾነ ይኹን ክሳራ ወይ ጉድኣት፤",
+
+        "termConditionIndemnification": "ካሕሳ",
+        "termConditionIndemnificationDesc": "ክትከሕስ፣ ክትከላኸልን ዘይጎድእ ክትሕዝን ትሰማማዕ",
+        "termConditionIndemnificationDesc1": "መኮንናቱ፡ ዳይረክተራቱ፡ ሰራሕተኛታቱ፡ ወከልቱ፡ ፈቓደኛታትን ኣቕረብቱን ካብን ኣንጻርን ኩሉ ካብ ኣጠቓቕማኻ ወይ ምስ ኣጠቓቕማኻ ዝተኣሳሰር ጠለባት፡ ዕዳታት፡ ዕንወት፡ ክሳራታት፡ ወጻኢታትን ወጻኢታትን (ምኽንያታዊ ክፍሊት ጠበቓታት ሓዊሱ) እቶም ኣገልግሎታት፡ ነዚ ውዕላት ምጥሓስካ፡ ወይ ዝኾነ መሰል ካልእ ምጥሓስካ።",
+
+        "termConditionChangeTerm": "ለውጢ ኣብ ውዕላት",
+        "termConditionChangeTermDesc1": "ነዞም ውዕላት ኣብ ዝኾነ እዋን ክንቅይሮም ንኽእል ኢና። ዝኾነ ለውጢ እቲ ዝተመሓየሸ ውዕላት ኣብ መርበብ ሓበሬታና ምስ ተለጠፈ ብቕጽበት ውጽኢታዊ ክኸውን እዩ። ድሕሪ ምልጣፍ ለውጢ ነቶም ኣገልግሎታት ቀጻሊ ኣጠቓቕማኻ ንኸምዚ ዝኣመሰለ ለውጢ ከም ዝተቐበልካ ዘመልክት እዩ።",
+
+        "termConditionGoverningLaw": "ኣመሓዳሪ ሕጊ",
+        "termConditionGoverningLawDesc1": "እዚ ውዕላትን ካብዚ ውዕላት ወይ ምስ ኣጠቓቕማ ኣገልግሎታት ዝፍጠር ወይ ምስኡ ዝተኣሳሰር ዝኾነ ይኹን ክርክርን፡ ብሕግታት ኢትዮጵያ ዝምራሕን ዝትርጎምን፡ ምስ መትከላት ሕጊ ዝጋጮ ከይተገደሰ፡ ብሕግታት ኢትዮጵያ ክምራሕን ዝትርጎምን እዩ።",
+        
+        "termConditionContact": "ርኸቡና",
+        "termConditionContactDesc1": "ብዛዕባ እዚ ውዕላት ዝኾነ ሕቶ ምስ ዝህልወኩም በዚ ዝስዕብ ኣድራሻ ርኸቡና:"
+        
+    }
       
 }

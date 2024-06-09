@@ -133,12 +133,21 @@
         "bookedBy": "Kan galmeesse"
     },
     "landingPage":{
-        "hiPatientName":"hi",
-        "feelingToday": "How You feel Today?",
-        "happy": "Happy",
-        "normal": "Normal",
-        "sad": "Sad",
-        "ourTherapist": "Our Therapist"
+        "hiPatientName":"Akkam",
+        "feelingToday": "Har'a maaltu sitti dhaga'ama?",
+        "searchTherapist": "Ogeessa Barbaadi",
+        "viewProfile": "Profaayila Ilaali",
+        "searchResult": "Bu'aa Barbaacha", 
+        "upcomingAppointment": "Beellama Dhufu",
+        "dateAndTime": "Guyyaa fi Sa'aatii",
+        "therapistName": "Maqaa Therapist",
+        "cancel":"Haqi",
+        "recommendTherapist": "Teraappiistota Gorfaman",
+        "type": "Gosa",
+        "action" :"Gocha",
+        "ourTherapist": "Teraapistii keenya",
+        "delete":"Haqi",
+        "close":"Cufi"
     },
     "notification":{
 
@@ -171,7 +180,30 @@
         "therapistBio": "Baayoo", 
         "therapistGender":"Sala", 
         "preferedLanguage": "Afaan Filatamaa", 
-        "therapistReligion": "Amantii"
+        "therapistReligion": "Amantii",
+        "payForAppointment": "Beellamaaf kafaali",
+        "message": "Ergaa",
+        "rate": "Sadarkaa",
+        "submitRating": "Sadarkaan milkaa'inaan dhiyaate",
+        "rateTherapist": "Sadarkaa Therapist kennuu",
+        "description": "Ibsa",
+        "writeDescription": "Ibsa gabaabaa barreessi...",
+        "rating": "Sadarkaa kennuu",
+        "submit": "Galchii",
+        "dateAndTime": "Guyyaa fi Sa'aatii",
+        "type": "Akkaataa",
+        "action": "Gocha",
+        "cancel": "Haquu",
+        "noAppointmentFound": "Beellamni hin argamne.",
+        "therapistAvailability": "Argamuu Therapist",
+        "date": "Guyyaa",
+        "startTime": "Yeroo Jalqabaa",
+        "endTime": "Yeroo Xumuraa",
+        "notFound": "Hin Argamuu",
+        "delete":"Haquu",
+        "close": "Cufii",
+        "thisTherapist": "Therapist kun bio hin qabu",
+        "upcomingTherapist": "Beellama dhufu ogeessa fayyaa waliin"
     },
     "questionnaire": {
         "questionnaireName": "Gaaffii",
@@ -257,6 +289,68 @@
         "enterYourEmail": "Email kee galchi",
         "submit": "Galchii"
 
+    },
+    "termsAndConditions":{
+        "termCondition": "Haalawwanii fi Dambiiwwan", 
+        "termConditionIntroduction": "Seensa", 
+        "termConditionWelcome": "Baga Nagaan Dhuftan",
+        "termConditionOverView": "Haalawwanii fi Dambiiwwan kun itti fayyadama marsariitii keenyaa, aplikeeshinii moobaayilaa, fi oomishaalee fi tajaajiloota biroo nuti kenninu ni bulchu. Tajaajiloota keenya argachuudhaan ykn itti fayyadamuudhaan, Haalawwan kanaa fi Imaammata Dhuunfaa keenyaan akka hidhamtu walii galtee qabda. Yoo ati Haalawwan kana irratti walii hin galle, maaloo Tajaajila keenya hin fayyadaminaa",
+
+        "termConditionUserAccount": "Herrega Fayyadamtootaa", 
+        "termConditionUserAccount1": "Galmee Fayyadamtootaa",
+        "termConditionUserAccountDesc1": "Amaloota Tajaajiloota keenyaa tokko tokko argachuuf, herrega galmaa'uu qabda. Yeroo galmee, odeeffannoo sirrii fi guutuu ta'e kennuu fi odeeffannoo kana yeroo yeroon akka eegamu walii galtee qabda. Tokkoon tokkoon galmee fayyadamaa tokkoof qofa, yoo nuti ifatti waliigalle malee.",
+        "termConditionUserAccount2": "Nageenya Herregaa", 
+        "termConditionUserAccountDesc2": "Odeeffannoo galmee herrega keetii fi sochiiwwan herrega kee jalatti raawwataman hundaaf iccitii eeguuf itti gaafatamummaa qabda. Akkaawuntii kee hayyama malee fayyadamuu ykn nageenya cabsuu biroo kamiyyuu hatattamaan nu beeksisuuf walii galtee irra geesse.",
+        "termConditionUserAccount3": "Mirkaneessuu", 
+        "termConditionUserAccountDesc3": "akkaawuntii hin mirkanoofne kamiyyuu hojii irraa oolchuuf.",
+
+        "termConditionUserConduct": "Amala Fayyadamaa", 
+        "termConditionUserConduct1": "Gochaalee Dhorkaman",
+        "termConditionUserConductDesc1": "Gochaalee dhorkaman armaan gadii kamiyyuu irratti akka hin bobbaane walii galtee qabda:",
+        "termConditionUserConductDesc2": "Tajaajiloota kaayyoo seeraan alaa kamiifuu ykn seera naannoo, naannoo, biyyaalessaa, ykn idil-addunyaa kamiyyuu cabsuun fayyadamuu.",
+        "termConditionUserConductDesc3": "Qabiyyee sarbama, maqaa balleessii, maqaa balleessii, arrabsoo, nama aarsu, xuraa'aa, ykn karaa biraatiin mormii qabu maxxansuu ykn dabarsuu.",
+        "termConditionUserConductDesc4": "Nama ykn qaama kamiyyuu fakkeessuu, ykn sobaan ibsuu ykn karaa biraatiin walitti dhufeenya nama ykn qaama tokko waliin qabdu dogoggoraan ibsuu.",
+        "termConditionUserConductDesc5": "Hojii Tajaajiloota ykn sarvaroota ykn neetworkota Tajaajiloota akka argaman gochuuf itti fayyadaman gidduu seenuun ykn jeequun.",
+        "termConditionUserConductDesc6": "Gocha kamiyyuu kan Tajaajiloota miidhuu, hojii dhaabuu, garmalee ba'aa ta'uu, ykn miidhuu danda'u irratti bobba'uu.",
+
+        "termConditionIntellectualProperty": "Qabeenya Kalaqa Sammuu", 
+        "termConditionIntellectualProperty1": "Abbummaa", 
+        "termConditionIntellectualPropertyDesc": "Qabiyyee, amaloonni, fi hojiiwwan karaa Tajaajiloota keenyaa argaman hundi, barruu, giraafiksii, asxaa, mallattoo, fakkii, kilippii sagalee, kilippii viidiyoo, qindeessaa deetaa, sooftiweerii, fi meeshaalee biroo dabalatee garuu kanneen kanaan hin daangeffamne ",
+        "termConditionIntellectualPropertyDesc1": " ykn hayyamtoota isaa fi seera qabeenya kalaqa sammuu hojiirra jiruun eegumsa argatu.",
+        "termConditionIntellectualProperty2": "Heyyama", 
+        "termConditionIntellectualPropertyDesc2": "Tajaajiloota fi Qabiyyee itti fayyadama dhuunfaa, daldalaaf hin taaneef, Haalawwan kanaan akka argattu fi itti fayyadamuuf hayyama daangeffame, kan adda hin taane, kan hin dabarfamin, fi haqamuu danda'u siif kennina. Akkaataa baay'isuu hin dandeessu, raabsuu, fooyyessuu, hojiiwwan bu'aa ta'an uumuu, ifatti agarsiisuu, ifatti raawwachuu, irra deebi'anii maxxansuu, buufachuu, kuusuu, ykn hayyama barreeffamaa keenyaan alatti dabarsuu.",
+
+        "termConditionDataPrivacy": "Icciitii Deetaa", 
+        "termConditionDataPrivacyDesc1": "Iccitii kee kabajna, daataa dhuunfaa kee eeguuf waadaa seennee jirra. Imaammanni Dhuunfaa keenya yeroo Tajaajila keenya fayyadamtu odeeffannoo waa'ee kee akkamitti akka walitti qabnu, itti fayyadamnu, fi qoodnu ibsa. Tajaajila keenya fayyadamuudhaan, walitti qabama keenyaaf hayyama kennitee fi itti fayyadama daataa keessanii akkaataa Imaammata Dhuunfaa keessatti ibsametti.",
+        "termConditionDataPrivacy1": "Itti Fayyadama Odeeffannoo Dhuunfaa Omisha Fuulduraaf",
+        "termConditionDataPrivacyDesc2": "Odeeffannoo dhuunfaa kee, daataa itti fayyadama kee, filannoowwan, fi walqunnamtii Tajaajiloota waliin qabdu dabalatee, garuu kanneen kanaan hin daangeffamne, kaayyoo Tajaajila keenya fooyyessuu fi fooyyessuuf fayyadamuu dandeenya. Kunis barumsa maashinii fi kanneen biroo deetaadhaan geggeeffaman fayyadamuu dabalatee ta'uu danda'a. teeknooloojiiwwan amala fayyadamtootaa xiinxaluu fi tilmaamuuf, muuxannoo kee dhuunfachiisuuf, fi amaloota haaraa qopheessuuf Tajaajiloota keenya fayyadamuudhaan, odeeffannoo dhuunfaa kee akkasitti fayyadamuuf hayyamta.",
+
+        "termConditionBookingAndPayment": "Buukii fi Kaffaltii",
+        "termConditionBookingFiKaffaltii1": "Beellama", 
+        "termConditionBookingAndPaymentDesc1": "Therapists karaa Tajaajila keenyaatiin argama isaanii saaguu danda'u. Dhukkubsattoonni yeroo jiru irratti hundaa'uun beellama qabachuu danda'u. Yeroon tokko erga qabamee booda, kana booda dhukkubsattoota biroof hin argamu.",
+        "termConditionBookingFiKaffaltii2": "Kaffaltii",
+        "termConditionBookingAndPaymentDesc2": "Dhukkubsattoonni yeroo buukii qabanitti beellamaaf kaffaltii kaffaluun dirqama. Tajaajilli adeemsa kaffaltii kan kennamu adeemsitoota kaffaltii qaama sadaffaatiin. Dogoggora ykn dhimmoota adeemsa kaffaltii wajjin walqabatan kamiifuu itti gaafatamummaa hin fudhannu.",
+        "termConditionBookingAndPayment3": "Haquu fi Deebi'uu",
+        "termConditionBookingAndPaymentDesc3": "Imaammattoonni haquu fi deebisuu beellamaaf garaagarummaa qabaachuu waan danda'aniif yeroo buukii qabattan ifatti ni ibsama. Maaloo buukii gochuu keessan dura imaammata kana sirriitti ilaalaa.",
+
+       "termConditionDesclaimer": "Itti Gaafatamummaa Itti Gaafatamummaa fi Daangaa Itti Gaafatamummaa",
+        "termConditionDesclaimer1": "Itti gaafatamummaa", 
+        "termConditionDesclaimerDesc1": "Tajaajiloonni kan kennaman bu'uura akka jiruu fi akka jiruutti. Tajaajiloota ykn Qabiyyee ilaalchisee bakka bu'ummaa ykn wabii gosa kamiyyuu, ibsames ta'e kan hin ibsamne, wabiiwwan daldalamuu danda'uu, mijachuu dabalatee garuu kanneen kanaan hin daangeffamne hin kenninu kaayyoo addaa, sarbama hin qabne, ykn sirrii ta'uu.",
+        "termConditionDesclaimer2": "Daangaa Itti Gaafatamummaa", 
+        "termConditionDesclaimerDesc2": "Hanga seera rogummaa qabuun hayyamametti, miidhaa al-kallatti, tasa, addaa, bu'aa, ykn adabbii kamiyyuu, ykn kasaaraa bu'aa ykn galii kamiyyuu, kallattiinis ta'e al-kallattiin, ykn kasaaraa kamiifuu itti gaafatamummaa hin qabnu. kan daataa, itti fayyadama, fedhii gaarii, ykn kasaaraa hin qabamne kan biroo, kan bu’aa (a) itti fayyadama ykn itti fayyadamuu dadhabuu kee irraa kan ka’e (b) hayyama malee sarvaroota keenyaa fi/ykn odeeffannoo dhuunfaa achi keessatti kuufame kamiyyuu; Dabarsi gara Tajaajilootaatti ykn irraa addaan cituu ykn dhaabbate kamiyyuu (d) dogoggora, vaayirasii, fardeen trojan, ykn kan kana fakkaatan qaama sadaffaa kamiinuu gara Tajaajilootaatti ykn karaa Tajaajilootaatti darbuu danda’u (e) Dogoggora ykn dhiisuu Qabiyyee kamiyyuu; yookiin sababa itti fayyadama Qabiyyee kamiyyuu kan karaa Tajaajilootaatti maxxanfame, iimeeliidhaan ergame, dabarfamee, yookiin karaa biraatiin akka dhiyaatu taasifamee fi/ykn (f) gocha maqaa balleessii, nama aarsu, yookiin gocha seeraan alaa qaama sadaffaa kamiyyuu irraa kan ka’e;" , 
+
+        "termConditionIndemnification": "Beedhii", 
+        "termConditionIndemnificationDesc": "Ati beenyaa kaffaluuf, ittisuuf, fi miidhaa malee qabachuuf walii galtee qabda",
+        "termConditionIndemnificationDesc1": "qondaaltota isaa, daayreektaroota, hojjettoota, ergamtoota, hayyamtoota, fi dhiyeessitoota isaa himannaa, itti gaafatamummaa, miidhaa, kasaaraa, baasii, fi baasii (kaffaltii abukaatoo madaalawaa dabalatee) kan itti fayyadama kee irraa kan ka'e ykn kan walqabatu hunda irraa fi irratti Tajaajiloota, Haalawwan kana cabsuu kee, ykn mirga nama biraa kamiyyuu cabsuu kee.",
+
+        "termConditionChangeTerm": "Jijjiirama Haalawwan", 
+        "termConditionChangeTermDesc1": "Yeroo barbaannetti Haalawwan kana fooyyessuu dandeenya. Jijjiiramni kamiyyuu battalumatti Haalawwan fooyya'an marsariitii keenya irratti maxxansuun hojiirra oola. Jijjiiramni maxxanfamuu hordofee Tajaajiloota itti fayyadamuu kee itti fufuun kee jijjiirama akkasii fudhachuu kee agarsiisa." , 
+
+        "termConditionGoverningLaw": "Seera Bulchiinsaa", 
+        "termConditionGoverningLawDesc1": "Haalawwan kunneenii fi falmiin Haalawwan kana irraa kan ka'e ykn waliin walqabatu ykn itti fayyadama Tajaajiloota kanaa wajjin walqabatu kamiyyuu, seera Itoophiyaatiin kan bulfamuu fi kan hiikamu ta'a, seera Itiyoophiyaan, waldhabdee qajeeltoowwan seeraa ishee osoo hin ilaalin.",
+        
+        "termConditionContact": "Nu Qunnamaa",
+        "termConditionContactDesc1": "Waa'ee Haalawwan kanaa gaaffii yoo qabaattan, maaloo karaa:"
     }
 
 }

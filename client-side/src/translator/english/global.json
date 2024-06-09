@@ -137,10 +137,19 @@
     "landingPage":{
         "hiPatientName":"hi",
         "feelingToday": "How You feel Today?",
-        "happy": "Happy",
-        "normal": "Normal",
-        "sad": "Sad",
-        "ourTherapist": "Our Therapist"
+        "searchTherapist": "Search Therapist",
+        "viewProfile": "View Profile",
+        "searchResult": "Search Results",
+        "upcomingAppointment": "Upcoming Appointments",
+        "dateAndTime": "Date and Time",
+        "therapistName": "Therapist Name",
+        "cancel":"Cancel",
+        "recommendTherapist": "Recommended Therapists",
+        "type": "Type",
+        "action" :"Action",
+        "ourTherapist": "Our Therapist",
+        "delete":"Delete",
+        "close":"Close"
     },
     "notification":{
 
@@ -165,7 +174,6 @@
     },
     "viewTherapist":{
         "bookAppointment":"Book Appointment",
-        "payforAppointment": "Pay for appointment",
         "emailAddress":"Email Address",
         "phoneNumber": "Phone Number",
         "therapistCity":"City",
@@ -173,7 +181,30 @@
         "therapistBio": "About me",
         "therapistGender":"Gender",
         "preferedLanguage": "Prefered Language",
-        "therapistReligion": "Religion"
+        "therapistReligion": "Religion",
+        "payForAppointment": "Pay for appointment",
+        "message": "Message",
+        "rate": "Rate",
+        "submitRating": "Rating submitted successfully",
+        "rateTherapist": "Rate the Therapist",
+        "description": "Description",
+        "writeDescription": "Write a brief description...",
+        "rating": "Rating",
+        "submit": "Submit",
+        "dateAndTime": "Date and Time",
+        "type": "Type",
+        "action": "Action",
+        "cancel": "Cancel",
+        "noAppointmentFound": "No appointment found.",
+        "therapistAvailability": "Therapist Availability",
+        "date": "Date",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "notFound": "Availability not found",
+        "delete":"Delete",
+        "close": "Close",
+        "thisTherapist": "This therapist doesn't have a bio",
+        "upcomingTherapist": "Upcoming appointments with therapist"
     },
     "questionnaire":{
         "questionnaireName": "Questionnaire",
@@ -258,6 +289,69 @@
         "emailAddress": "Email Address",
         "enterYourEmail": "Enter your email",
         "submit": "Submit"
+
+    },
+    "termsAndConditions":{
+        "termCondition": "Terms and Conditions",
+        "termConditionIntroduction": "Introduction",
+        "termConditionWelcome": "Welcome to",
+        "termConditionOverView": "These Terms and Conditions govern your use of our website, mobile application, and other products and services provided by us. By accessing or using our Services, you agree to be bound by these Terms and our Privacy Policy. If  you do not agree to these Terms, please do not use our Services",
+
+        "termConditionUserAccount": "User Accounts",
+        "termConditionUserAccount1": "User Registration",
+        "termConditionUserAccountDesc1": "To access certain features of our Services, you must register for an account. During registration, you agree to provide accurate and complete information and keep this information up-to-date. Each registration is for a single user only, unless expressly agreed otherwise by us.",
+        "termConditionUserAccount2": "Account Security",
+        "termConditionUserAccountDesc2": "You are responsible for maintaining the confidentiality of your account login information and for all activities that occur under your account. You agree to immediately notify us of any unauthorized use of your account or any other breach of security.",
+        "termConditionUserAccount3": "Verification",
+        "termConditionUserAccountDesc3": "Upon registration, you may be required to verify your email address. We will send a verification link to the email address you provided during registration. You must click on the verification link to complete the registration process. We reserve the right to disable any account that has not been verified.",
+
+        "termConditionUserConduct": "User Conduct",
+        "termConditionUserConduct1": "Prohibited Activities",
+        "termConditionUserConductDesc1": "You agree not to engage in any of the following prohibited activities:",
+        "termConditionUserConductDesc2": "Using the Services for any illegal purpose or in violation of any local, state, national, or international law.",
+        "termConditionUserConductDesc3": "Posting or transmitting content that is infringing, libelous, defamatory, abusive, offensive, obscene, or otherwise objectionable.",
+        "termConditionUserConductDesc4": "Impersonating any person or entity, or falsely stating or otherwise misrepresenting your affiliation with a person or entity.",
+        "termConditionUserConductDesc5": "Interfering with or disrupting the operation of the Services or the servers or networks used to make the Services available.",
+        "termConditionUserConductDesc6": "Engaging in any activity that could damage, disable, overburden, or impair the Services.",
+
+        "termConditionIntellectualProperty": "Intellectual Property",
+        "termConditionIntellectualProperty1": "Ownership",
+        "termConditionIntellectualPropertyDesc": "All content, features, and functionality available through our Services, including but not limited to text, graphics, logos, icons, images, audio clips, video clips, data compilations, software, and other materials are the property of",
+        "termConditionIntellectualPropertyDesc1": " or its licensors and are protected by applicable intellectual property laws.",
+        "termConditionIntellectualProperty2": "License",
+        "termConditionIntellectualPropertyDesc2": "We grant you a limited, non-exclusive, non-transferable, and revocable license to access and use the Services and the Content for your personal, non-commercial use, subject to these Terms. You may not reproduce, distribute, modify, create derivative works of, publicly display, publicly perform, republish, download, store, or transmit  any of the Content without our prior written consent.",
+
+        "termConditionDataPrivacy": "Data Privacy",
+        "termConditionDataPrivacyDesc1": "We respect your privacy and are committed to protecting your personal data. Our Privacy Policy explains how we collect, use, and share information about you when you use our Services. By using our Services, you consent to our collection and use of your data as described in the Privacy Policy.",
+        "termConditionDataPrivacy1": "Use of Personal Information for Future Production",
+        "termConditionDataPrivacyDesc2": "We may use your personal information, including but not limited to your usage data, preferences, and interactions with the Services, for the purpose of improving and enhancing our Services. This may include using machine learning and other data-driven technologies to analyze and predict user behavior, personalize your experience, and develop new features. By using our Services, you consent to such use of your personal information.",
+
+        "termConditionBookingAndPayment": "Booking and Payment",
+        "termConditionBookingAndPayment1": "Appointments",
+        "termConditionBookingAndPaymentDesc1": "Therapists may set their availability through our Services. Patients can book appointments based on the available time slots. Once a time slot is booked, it will no longer be available to other patients.",
+        "termConditionBookingAndPayment2": "Payment",
+        "termConditionBookingAndPaymentDesc2": "Patients are required to pay for appointments at the time of booking. Payment processing services are provided by third-party payment processors. We are not responsible for any errors or issues related to payment processing.",
+        "termConditionBookingAndPayment3": "Cancellations and Refunds",
+        "termConditionBookingAndPaymentDesc3": "Cancellation and refund policies for appointments may vary and will be clearly stated at the time of booking. Please review these policies carefully before making a booking.",
+
+        "termConditionDesclaimer": "Disclaimers and Limitation of Liability",
+        "termConditionDesclaimer1": "Disclaimers",
+        "termConditionDesclaimerDesc1": "The Services are provided on an as is and as available basis. We make no representations or warranties of any kind, express or implied, regarding the Services or the Content, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, or accuracy.",
+        "termConditionDesclaimer2": "Limitation of Liability",
+        "termConditionDesclaimerDesc2": "To the maximum extent permitted by applicable law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (a) your use or inability to use the Services; (b) any unauthorized access to or use of our servers and/or any personal information stored therein; (c) any interruption or cessation of transmission to or from the Services; (d) any bugs, viruses, trojan horses, or the like that may be transmitted to or through the Services by any third party; (e) any errors or omissions in any Content or for any loss or damage incurred as a result of your use of any Content posted, emailed, transmitted, or otherwise made available through the Services; and/or (f) the defamatory, offensive, or illegal conduct of any third party.",
+
+        "termConditionIndemnification": "Indemnification",
+        "termConditionIndemnificationDesc": "You agree to indemnify, defend, and hold harmless",
+        "termConditionIndemnificationDesc1": "its officers, directors, employees, agents, licensors, and suppliers from and against all claims, liabilities, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising out of or related to your use of the Services, your violation of these Terms, or your violation of any rights of another.",
+        
+        "termConditionChangeTerm": "Changes to the Terms",
+        "termConditionChangeTermDesc1": "We may modify these Terms at any time. Any changes will be effective immediately upon posting of the revised Terms on our website. Your continued use of the Services following the posting of changes will constitute your acceptance of such changes.",
+
+        "termConditionGoverningLaw": "Governing Law",
+        "termConditionGoverningLawDesc1": "These Terms and any dispute arising out of or related to these Terms or the use of the Services will be governed by and construed in accordance with the laws of Ethiopia, without regard to its conflict of law principles.",
+        
+        "termConditionContact": "Contact Us",
+        "termConditionContactDesc1": "If you have any questions about these Terms, please contact us at:"
 
     }
     

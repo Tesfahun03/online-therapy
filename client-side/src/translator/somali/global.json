@@ -133,11 +133,20 @@
     },
     "landingPage":{
         "hiPatientName":"hi",
-        "feelingToday": "How You feel Today?",
-        "happy": "Happy",
-        "normal": "Normal",
-        "sad": "Sad",
-        "ourTherapist": "Our Therapist"
+        "feelingToday": "Sidee dareemaysaa maanta?",
+        "searchTherapist": "Daaweeyaha Raadinta",
+        "viewProfile": "Arag Profile",
+        "searchResult": "Natiijooyinka raadinta",
+        "upcomingAppointment": "Ballamaha soo socda",
+        "dateAndTime": "Taariikhda iyo Waqtiga",
+        "therapistName": "Magaca daaweeyaha",
+        "cancel":"Cancel",
+        "recommendTherapist": "Daaweeyayaasha lagu taliyay",
+        "type": "Nooca",
+        "action" :"Ficil",
+        "our Therapist": "Daaweeyahayaga",
+        "Delete":"Delete",
+        "close":"xir"
     },
     "notification":{
 
@@ -170,7 +179,30 @@
         "therapistBio": "Bio",
         "therapistGender":" Jinsi",
         "preferedLanguage": "Luqadda la door biday",
-        "therapistReligion": "Diinta"
+        "therapistReligion": "Diinta",
+        "payForAppointment": "Bixi balanta",
+        "message": "Fariin",
+        "rate": "Qiim",
+        "submitRating": "Qiimaynta si guul leh ayaa loo soo gudbiyay",
+        "rateTherapist": "Qiimee daaweeyaha",
+        "description": "Sharaxaad",
+        "writeDescription": "Qor sharraxaad kooban...",        
+        "rating": "Qiimaynta",
+        "Submit": "Submit",
+        "dateAndTime": "Taariikhda iyo Waqtiga",
+        "type": "Nooca",
+        "action": "Ficil",
+        "cancel": "Cancel",
+        "noAppointmentFound": "Wax ballan ah lama helin.",
+        "therapistAvailability": "Availability therapist",
+        "date": "Taariikh",
+        "startTime": "Waqtiga Bilowga",
+        "EndTime": "Waqtiga Dhammaadka",
+        "notFound": "Lama helin helitaan",
+        "delete":"Delete",
+        "close": "xir",
+        "thisTherapist": "Daaweeyahani ma laha bio",
+        "upcomingTherapist": "Ballamaha soo socda ee daaweeyaha"
     },
     "questionnaire":{
         "questionnaireName": "Xog-waraysi",
@@ -256,6 +288,68 @@
         "enterYourEmail": "Emailka geli",
         "submit": "Submit"
 
+    },
+    "termsAndConditions":{
+        "termCondition": "Shuruudaha iyo Shuruudaha",
+        "termConditionIntroduction": "hordhac",
+        "termConditionWelcome": "ku soo dhawaada",
+        "termConditionOverView": "Shuruudahan iyo shuruudahan ayaa xukuma isticmaalkaaga mareegahayaga, mobaylka, iyo alaabta iyo adeegyada kale ee aanu bixino ha aqbalin Shuruudahan, fadlan ha isticmaalin Adeegyadayada",
+
+        "termConditionUserAccount": "Akoonka Isticmaalaha",
+        "termConditionUserAccount1": "Diiwaangelinta Isticmaalaha",
+        "termConditionUserAccountDesc1": "Si aad u hesho muuqaalada Adeegyadayada qaarkood, waa inaad iska diiwaan gelisaa akoon haddii aan si cad aan si kale ugu heshiin.",
+        "termConditionUserAccount2": "Account Security",
+        "termConditionUserAccountDesc2": "Adiga ayaa mas'uul ka ah ilaalinta sirta macluumaadka gelitaanka akoonkaaga iyo dhammaan hawlaha ka dhaca akoonkaaga. Waxaad ogolaatay inaad isla markiiba nagu soo wargeliso isticmaalka aan la ogolayn ee akoonkaaga ama wax kasta oo kale oo amniga jebiyey.",
+        "termConditionUserAccount3": "Verification",
+        "termConditionUserAccountDesc3": "Marka aad isdiiwaangeliso, waxaa laga yaabaa in lagu weydiiyo inaad xaqiijiso ciwaanka emailkaaga si loo joojiyo akoon kasta oo aan la xaqiijin.",
+
+        "termConditionUserConduct": "Akhlaaqda Isticmaalaha",
+        "termConditionUserConduct1": "Hawlaha Mamnuuc",
+        "termConditionUserConductDesc1": "Waxaad ogolaatay inaadan galin mid ka mid ah hawlaha soo socda ee la mamnuucay:",
+        "termConditionUserConductDesc2": "Isticmaalka Adeegyada ujeedo kasta oo sharci darro ah ama ku xad-gudbida mid kasta oo degaanka, gobolka, qaranka, ama sharciga caalamiga ah.",
+        "termConditionUserConductDesc3": "Soo dhejinta ama gudbinta macluumaadka ku xad-gudbaya, aflagaado, sumcad dil, aflagaado, aflagaado, fisqi, ama haddii kale la diidi karo.",
+        "termConditionUserConductDesc4": "Is-yeelyeelida qof kasta ama hay'ad, ama si been abuur ah u sheegayso ama si kale u muujinayso xidhiidhkaaga qof ama cid.",
+        "termConditionUserConductDesc5": "Faragelinta ama carqaladaynta shaqada Adeegyada ama server-yada ama shabakadaha loo isticmaalo in Adeegyada la helo.",
+        "termConditionUserConductDesc6": "Ka qayb qaadashada hawl kasta oo dhaawici karta, curyaamin karta, culayska badan, ama wax u dhimi karta Adeegyada.",
+
+        "termConditionIntellectualProperty": "Intellectual Property",
+        "termConditionIntellectualProperty1": "Lahaanshaha",
+        "termConditionIntellectualPropertyDesc": "Dhammaan waxa ku jira, sifooyinka, iyo shaqada laga heli karo adeegyadayada, oo ay ku jiraan laakiin aan ku xaddidnayn qoraalka, garaafyada, calaamadaha, calaamadaha, sawirada, cajaladaha maqalka ah, cajaladaha fiidyowga ah, ururinta xogta, software, iyo alaabta kale waa hantida ",
+        "termConditionIntellectualPropertyDesc1": "ama shati bixiyayaasheeda waxaana ilaaliya sharciyada hantida garaadka ee lagu dabaqi karo.",
+        "termConditionIntellectualProperty2": "License",
+        "termConditionIntellectualPropertyDesc2": "Waxaan ku siinay liisan xadidan, aan gaar ahayn, aan la wareejin karin, iyo shatiga lagala noqon karo si aad u gasho oo aad u isticmaasho Adeegyada iyo waxa ku jira isticmaalkaaga shaqsi, ee aan ganacsiga ahayn, iyadoo ku xiran Shuruudahan. Ma soo saari kartid, qaybiyaan, wax ka beddel, abuuraan shaqooyin kala duwan oo ah, si guud u soo bandhigaan, si guud u qabtaan, dib u daabacaan, u soo dejiyaan, u kaydiyaan, ama u gudbiyaan wax kasta oo ka mid ah Mawduuca iyada oo aan oggolaansho qoraal ah laga helin.",
+
+        "termConditionDataPrivacy": "Data Privacy",
+        "termConditionDataPrivacyDesc1": "Waan ixtiraameynaa sirtaada waxaana naga go'an inaan ilaalino xogtaada khaaska ah. Siyaasadayada Qarsoontu waxay sharxaysaa sida aan u ururino, u isticmaalno, una wadaagno macluumaadka kugu saabsan marka aad isticmaaleyso adeegyadayada, waxaad ogolaatay ururintayada iyo Isticmaal xogtaada sida lagu qeexay Siyaasadda Qarsoonnimada.",
+        "termConditionDataPrivacy1": "Isticmaalka Xogta Shakhsiyeed ee Soo saarista Mustaqbalka",
+        "termConditionDataPrivacyDesc2": "Waxaa laga yaabaa inaan isticmaalno macluumaadkaaga khaaska ah, oo ay ku jiraan laakiin aan ku xaddidnayn xogta isticmaalkaaga, dookhyada, iyo la dhexgalka Adeegyada, ujeedada hagaajinta iyo horumarinta Adeegyadayada. Tan waxaa ku jiri kara isticmaalka barashada mashiinka iyo xogta kale ee ay wado. teknoolojiyadda si loo falanqeeyo oo loo saadaaliyo hab-dhaqanka isticmaalaha, lagu shakhsiyeeyo khibradaada, oo loo horumariyo sifooyin cusub Adigoo isticmaalaya adeegyadeena, waxaad ogolaatay isticmaalka macluumaadkaaga khaaska ah.",
+
+        "termConditionBookingAndPayment": "Boojinta iyo Lacag-bixinta",
+        "termConditionBookingAndPayment1": "Ballamaha",
+        "termConditionBookingAndPaymentDesc1": "Daaweeyayaashu waxay dejin karaan helitaankooda iyada oo loo marayo Adeegyadayada. Bukaanku waxay ballan qabsan karaan ballamaha ku salaysan wakhtiga la heli karo. Marka booska wakhtiga la ballansado, mar dambe ma heli doono bukaannada kale.",
+        "termConditionBookingAndPayment2": "Payment",
+        "termConditionBookingAndPaymentDesc2": "Bukaannada waxaa looga baahan yahay inay bixiyaan kharashka ballamaha wakhtiga ballansashada. Adeegyada habaynta lacag bixinta waxaa bixiya qayb saddexaad oo wax-soo-saareyaasha lacag-bixinta ah. Annagu kama mas'uul ahayn wixii khalad ah ama arrimo la xiriira hab-socodka lacag-bixinta.",
+        "termConditionBookingAndPayment3": "Laalinta iyo Lacag-celinta",
+        "termConditionBookingAndPaymentDesc3": " siyaasadaha burinta iyo lacag celinta balamaha way kala duwanaan karaan oo si cad ayaa loo sheegi doonaa wakhtiga ballansashada. Fadlan si taxadar leh dib u eeg xeerarkan ka hor inta aanad ballansan.",
+        
+        "termConditionDesclaimer": "Afeef iyo Xadaynta Mas'uuliyadda",
+        "termConditionDesclaimer1": "Afeef",
+        "termConditionDesclaimerDesc1": "Adeegyada waxaa lagu bixiyaa sida la heli karo iyo sida la heli karo ujeedo gaar ah, xadgudub la'aan, ama saxsanaan.",
+        "termConditionDesclaimer2": "Xadidaada Masuuliyadda",
+        "termConditionDesclaimerDesc2": "Illaa inta ugu badan ee uu ogol yahay sharciga lagu dabaqi karo, mas'uul kama noqon doono wixii dhaawac ah oo toos ah, shil, gaar ah, cawaaqib xumo ama ciqaab ah, ama khasaare kasta oo faa'iido ama dakhli ah, ha ahaado mid toos ah ama si dadban, ama khasaare kasta xogta, isticmaalka, niyad-wanaagga, ama khasaare kale oo aan la taaban karin, oo ka dhashay (a) isticmaalkaaga ama awoodid la'aanta isticmaalka Adeegyada; Joojin kasta ama joojinta gudbinta ama ka noqoshada Adeegyada; ama wixii khasaare ah ama dhaawac ah ee ka dhashay isticmaalkaaga wax kasta oo la soo dhejiyay, iimaylka, la gudbiyay, ama haddii kale lagu heli karo Adeegyada;" ,
+
+        "termConditionIndemnification": "Caafimaadka",
+        "termConditionIndemnificationDesc": "Waxaad ogolaatay in aad magdhowdo, difaacdo, oo aad haysato dhib la'aan",
+        "termConditionIndemnificationDesc1": " saraakiisheeda, agaasimayaasheeda, shaqaalaheeda, wakiiladeeda, shati bixiyaasha, iyo alaab-qeybiyeyaasha ka soo horjeeda iyo ka soo horjeeda dhammaan sheegashooyinka, deymaha, khasaaraha, khasaaraha, kharashyada, iyo kharashyada (oo ay ku jiraan khidmadaha qareennada macquulka ah) ee ka dhasha ama la xiriira isticmaalkaaga Adeegyada, jebintaada Shuruudahan, ama ku xadgudubka xuquuq kasta oo qof kale leeyahay.",    
+
+        "termConditionChangeTerm": "Isbeddelka Shuruudaha",
+        "termConditionChangeTermDesc1": "Waxa laga yaabaa inaan wax ka beddelno Shuruudahan wakhti kasta. Isbeddel kastaa wuxuu dhaqan geli doonaa isla markaaba marka la soo dhejiyo Shuruudaha dib loo eegay mareegahayaga. Isticmaalkaaga joogtada ah ee adeegyada ka dib dhejinta isbeddelada waxay ka dhigan tahay oggolaanshahaaga isbeddelladaas." ,
+
+        "termConditionGoverningLaw": "Sharciga maamulka",
+        "termConditionGoverningLawDesc1": "Shuruudahan iyo khilaaf kasta oo ka dhasha ama la xidhiidha Shuruudahan ama isticmaalka Adeegyada waxa lagu maamuli doonaa oo loo fasiri doonaa si waafaqsan shuruucda Itoobiya, iyada oo aan loo eegin khilaafkeeda mabaadi'da sharciga.",
+        
+        "termConditionContact": "Nala Soo Xiriir",
+        "termConditionContactDesc1": "Haddii aad wax su'aalo ah ka qabto Shuruudahan, fadlan nagala soo xidhiidh:"
     }
       
 }

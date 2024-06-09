@@ -133,12 +133,21 @@
         "bookedBy": "የተያዘው"
     },
     "landingPage":{
-        "hiPatientName":"hi",
-        "feelingToday": "How You feel Today?",
-        "happy": "Happy",
-        "normal": "Normal",
-        "sad": "Sad",
-        "ourTherapist": "Our Therapist"
+        "hiPatientName":"ሃይ",
+        "feelingToday": "ዛሬ ምን ተሰማህ?",
+        "searchTherapist": "የፍለጋ ቴራፒስት",
+        "viewProfile": "መገለጫ አሳይ",
+        "searchResult": "የፍለጋ ውጤቶች",
+        "upcomingAppointment": "መጪ ቀጠሮዎች",
+        "dateAndTime": "ቀን እና ሰዓት",
+        "therapistName": "የቴራፒስት ስም",
+        "cancel":"ሰርዝ",
+        "recommendTherapist": "የሚመከሩ ቴራፒስቶች",
+        "type": "አይነት",
+        "action" :"ድርጊት",
+        "ourTherapist": "የእኛ ቴራፒስት",
+        "delete":"ሰርዝ",
+        "close":"ዝጋ"
     },
     "notification":{
 
@@ -163,7 +172,6 @@
     },
     "viewTherapist":{
         "bookAppointment":"የመጽሐፍ ቀጠሮ",
-        "payforAppointment": "ለቀጠሮ ይክፈሉ",
         "emailAddress":"ኢሜል አድራሻ",
         "phoneNumber": "ስልክ ቁጥር",
         "therapistCity":"ከተማ",
@@ -171,7 +179,30 @@
         "therapistBio": "ባዮ",
         "therapistGender":"ጾታ",
         "preferedLanguage": "የተመረጠ ቋንቋ",
-        "therapistReligion": "ሃይማኖት"
+        "therapistReligion": "ሃይማኖት",
+        "payForAppointment": "ለቀጠሮ ይክፈሉ",
+        "message": "መልእክት",
+        "rate": "ደረጃ",
+        "submitRating": "ደረጃው በተሳካ ሁኔታ ገብቷል",
+        "rateTherapist": "የቲራፒስት ደረጃ ይስጡ",
+        "description": "መግለጫ",
+        "writeDescription": "አጭር መግለጫ ጻፍ...",       
+        "Rating": "ደረጃ",
+        "submit": "አስረክብ",
+        "dateAndTime": "ቀን እና ሰዓት",
+        "type": "አይነት",
+        "action": "እርምጃ",
+        "cancel": "ሰርዝ",
+        "noAppointmentFound": "ምንም ቀጠሮ አልተገኘም።",
+        "therapistAvailability": "የቴራፒስት ተገኝነት",
+        "date": "ቀን",
+        "startTime": "የመጀመሪያ ጊዜ",
+        "endTime": "የመጨረሻ ጊዜ",
+        "notFound": "ተገኝነት አልተገኘም",
+        "delete":"ሰርዝ",
+        "close": "ዝጋ",        
+        "thisTherapist": "ይህ ቴራፒስት ባዮ የለውም",
+        "upcomingTherapist": "ከቴራፒስት ጋር መጪ ቀጠሮዎች"
     },
     "questionnaire": {
         "questionnaireName": "መጠይቅ",
@@ -257,6 +288,68 @@
         "enterYourEmail": "ኢሜልዎን ያስገቡ",
         "submit": "አስረክብ"
 
+    },
+    "termsAndConditions":{
+        "termCondition": "ደንቦች እና ሁኔታዎች",
+        "termConditionIntroduction": "መግቢያ",
+        "termConditionWelcome": "እንኳን በደህና መጡ",
+        "termConditionOverView": "እነዚህ ውሎች እና ሁኔታዎች የእኛን ድረ-ገጽ፣ የሞባይል አፕሊኬሽን እና ሌሎች በእኛ የሚቀርቡ ምርቶችን እና አገልግሎቶችን ይቆጣጠራሉ። አገልግሎቶቻችንን በማግኘት ወይም በመጠቀም፣ በእነዚህ ውሎች እና የግላዊነት መመሪያችን ለመገዛት ተስማምተዋል። በእነዚህ ውሎች አልተስማሙም፣ እባክዎ አገልግሎቶቻችንን አይጠቀሙ",
+
+        "termConditionUserAccount": "የተጠቃሚ መለያዎች",
+        "termConditionUserAccount1": "የተጠቃሚ ምዝገባ",
+        "termConditionUserAccountDesc1": "የተወሰኑ የአገልግሎቶቻችንን ባህሪያት ለማግኘት መለያ መመዝገብ አለብህ። በምዝገባ ወቅት ትክክለኛ እና የተሟላ መረጃ ለመስጠት ተስማምተሃል እናም ይህን መረጃ ወቅታዊ ለማድረግ ተስማምተሃል። እያንዳንዱ ምዝገባ ለአንድ ተጠቃሚ ብቻ ነው። በግልጽ ካልተስማማን በቀር",
+        "termConditionUserAccount2": "የመለያ ደህንነት",
+        "termConditionUserAccountDesc2": "የመለያ መግቢያ መረጃን ምስጢራዊነት የመጠበቅ እና በመለያዎ ስር ለሚከናወኑ ተግባራት በሙሉ ሀላፊነት አለብዎት። ማንኛውንም ያልተፈቀደ የመለያ አጠቃቀም ወይም ሌላ ማንኛውንም የደህንነት ጥሰት ለእኛ ለማሳወቅ ተስማምተሃል።",
+        "termConditionUserAccount3": "ማረጋገጫ",
+        "termConditionUserAccountDesc3": "ከተመዘገቡ በኋላ የኢሜል አድራሻዎን እንዲያረጋግጡ ሊጠየቁ ይችላሉ. በምዝገባ ወቅት ወደ ሰጡት የኢሜል አድራሻ የማረጋገጫ አገናኝ እንልካለን. የምዝገባ ሂደቱን ለማጠናቀቅ የማረጋገጫ ማገናኛ ላይ ጠቅ ማድረግ አለብዎት. መብታችን የተጠበቀ ነው. ያልተረጋገጠ መለያን ለማሰናከል",
+
+        "termConditionUserConduct": "የተጠቃሚ ምግባር",
+        "termConditionUserConduct1": "የተከለከሉ ተግባራት",
+        "termConditionUserConductDesc1": "ከሚከተሉት የተከለከሉ ተግባራት ውስጥ ላለመሳተፍ ተስማምተሃል::",
+        "termConditionUserConductDesc2": "አገልግሎቶቹን ለማንኛውም ህገወጥ ዓላማ መጠቀም ወይም ማንኛውንም የአካባቢ፣ ግዛት፣ ብሔራዊ ወይም ዓለም አቀፍ ህግን በመጣስ።",
+        "termConditionUserConductDesc3": "የሚጥስ፣ ስም አጥፊ፣ ስም አጥፊ፣ ተሳዳቢ፣ አፀያፊ፣ ጸያፍ ወይም ሌላ የሚቃወም ይዘትን መለጠፍ ወይም ማስተላለፍ።",
+        "termConditionUserConductDesc4": "ማንኛውንም ሰው ወይም አካል ማስመሰል፣ ወይም ከአንድ ሰው ወይም አካል ጋር ያለዎትን ግንኙነት በሐሰት በመግለጽ ወይም በሌላ መንገድ ማሳሳት።",
+        "termConditionUserConductDesc5": "የአገልግሎቶቹን ወይም የአገልግሎቶቹን አገልግሎት ለመስጠት የሚያገለግሉ አገልጋዮችን ወይም አውታረ መረቦችን ጣልቃ መግባት ወይም ማሰናከል።",
+        "termConditionUserConductDesc6": "አገልግሎቶቹን ሊጎዳ፣ ሊያሰናክል፣ ሸክም ሊጨምር ወይም ሊያዳክም በሚችል በማንኛውም እንቅስቃሴ ውስጥ መሳተፍ።",
+
+        "termConditionIntellectualProperty": "Intellectual Property",
+        "termConditionIntellectualProperty1": "ባለቤትነት",
+        "termConditionIntellectualPropertyDesc": "ጽሑፍ፣ ግራፊክስ፣ አርማዎች፣ አዶዎች፣ ምስሎች፣ ኦዲዮ ክሊፖች፣ ቪዲዮ ክሊፖች፣ የውሂብ ስብስቦች፣ ሶፍትዌሮች እና ሌሎች ቁሶችን ጨምሮ በአገልግሎታችን የሚገኙ ሁሉም ይዘቶች፣ ባህሪያት እና ተግባራት ",
+        "termConditionIntellectualPropertyDesc1":" ወይም የፍቃድ ሰጪዎቹ እና በሚመለከታቸው የአእምሮአዊ ንብረት ህጎች የተጠበቁ ናቸው።",
+        "termConditionIntellectualProperty2": "ፍቃድ",
+        "termConditionIntellectualPropertyDesc2": "በእነዚህ ውሎች መሰረት አገልግሎቶቹን እና ይዘቱን ለግል ለንግድ ላልሆነ አገልግሎት ለመጠቀም የተገደበ፣ የማይካተት፣ የማይተላለፍ እና ሊሻር የሚችል ፍቃድ እንሰጥዎታለን። ማባዛት አይችሉም። ያለእኛ የጽሁፍ ፍቃድ ማንኛውንም ይዘቱን ማሰራጨት፣ ማሻሻል፣ የመነሻ ስራዎችን መፍጠር፣ በይፋ ማሳየት፣ በይፋ ማሳየት፣ እንደገና ማተም፣ ማውረድ፣ ማከማቸት ወይም ማስተላለፍ።",
+
+        "termConditionDataPrivacy": "የውሂብ ግላዊነት",
+        "termConditionDataPrivacyDesc1": "የእርስዎን ግላዊነት እናከብራለን እናም የግል ውሂብዎን ለመጠበቅ ቁርጠኞች ነን። የግላዊነት መመሪያችን አገልግሎቶቻችንን ሲጠቀሙ ስለእርስዎ መረጃ እንዴት እንደምንሰበስብ፣ እንደሚጠቀሙበት እና እንደምናጋራ ያብራራል። አገልግሎቶቻችንን በመጠቀም እርስዎ እንድንሰበስብ ተስማምተዋል። በግላዊነት መመሪያው ላይ እንደተገለጸው የእርስዎን ውሂብ ይጠቀሙ።",
+        "termConditionDataPrivacy1": "ለወደፊት ምርት የግል መረጃን መጠቀም",
+        "termConditionDataPrivacyDesc2": "የግል መረጃህን የአጠቃቀም ውሂብህን፣ ምርጫዎችህን እና ከአገልግሎቶቻችን ጋር ያለህን ግንኙነት ጨምሮ ነገር ግን ሳይወሰን ልንጠቀምበት እንችላለን አገልግሎቶቻችንን ለማሻሻል እና ለማሻሻል። ይህ በማሽን መማርን እና ሌሎች በመረጃ ላይ የተመሰረተ መረጃን መጠቀምን ሊያካትት ይችላል። የተጠቃሚ ባህሪን ለመተንተን እና ለመተንበይ፣ ልምድዎን ለግል ለማበጀት እና አዳዲስ ባህሪያትን ለማዳበር ቴክኖሎጂዎች አገልግሎቶቻችንን በመጠቀም የግል መረጃዎን ለመጠቀም ተስማምተዋል።",
+
+        "termConditionBookingAndPayment": "ቦታ ማስያዝ እና ክፍያ",
+        "termConditionBookingAndPayment1": "ቀጠሮዎች",
+        "termConditionBookingAndPaymentDesc1": "ቴራፒስቶች በአገልግሎታችን በኩል መገኘታቸውን ሊወስኑ ይችላሉ. ታካሚዎች በተገኙት የጊዜ ክፍተቶች ላይ ተመስርተው ቀጠሮ መያዝ ይችላሉ. የጊዜ ክፍተት ከተያዘ በኋላ ለሌሎች ታካሚዎች አይገኝም.",
+        "termConditionBookingAndPayment2": "ክፍያ",
+        "termConditionBookingAndPaymentDesc2": "ታካሚዎች በሚያዙበት ጊዜ ለቀጠሮዎች ክፍያ እንዲከፍሉ ይጠበቅባቸዋል። የክፍያ ማቀናበሪያ አገልግሎቶች በሶስተኛ ወገን የክፍያ አቀናባሪዎች ይሰጣሉ። ከክፍያ ሂደት ጋር ለተያያዙ ማናቸውም ስህተቶች ወይም ጉዳዮች ተጠያቂ አይደለንም።",
+        "termConditionBookingAndPayment3": "ስረዛዎች እና ተመላሽ ገንዘቦች",
+        "termConditionBookingAndPaymentDesc3": "ቀጠሮዎችን የመሰረዝ እና የተመላሽ ገንዘብ ፖሊሲዎች ሊለያዩ ይችላሉ እና በተያዘበት ጊዜ በግልጽ ይገለጻሉ። እባክዎ ቦታ ከማስያዝዎ በፊት እነዚህን መመሪያዎች በጥንቃቄ ይከልሱ።",
+
+        "termConditionDesclaimer": "ክህደቶች እና የተጠያቂነት ገደብ",
+        "termConditionDesclaimer1": "ኃላፊዎች",
+        "termConditionDesclaimerDesc1": "አገልግሎቶቹ የሚቀርቡት ባለው እና ባለው መሰረት ነው። አገልግሎቶቹን ወይም ይዘቱን በተመለከተ ምንም አይነት ውክልና ወይም ዋስትና አንሰጥም፣ በግልፅም ሆነ በተዘዋዋሪ፣ የሸቀጣሸቀጥ ዋስትናዎችን ጨምሮ ግን አይወሰንም ፣ ብቃት ለ አንድ የተለየ ዓላማ፣ አለመተላለፍ ወይም ትክክለኛነት።",
+        "termConditionDesclaimer2": "የተጠያቂነት ገደብ",
+        "termConditionDesclaimerDesc2": "የሚመለከተው ህግ በሚፈቀደው ከፍተኛ መጠን ለተዘዋዋሪ፣ ድንገተኛ፣ ልዩ፣ ተከታይ ወይም ለቅጣት ጉዳት፣ ወይም ማንኛውም ትርፍ ወይም ገቢ መጥፋት፣ በቀጥታም ሆነ በተዘዋዋሪ ወይም ለማንኛውም ኪሳራ ተጠያቂ አንሆንም። (ሀ) አገልግሎቶቹን መጠቀም ወይም አለመቻል፣ (ለ) ማንኛውም ያልተፈቀደ የአገልጋዮቻችን መዳረሻ እና/ወይም በውስጡ የተከማቸ የግል መረጃን በመጠቀም የተገኘ መረጃ፣ የመልካም ፈቃድ ወይም ሌላ የማይጨበጥ ኪሳራ፤ ወደ ወይም ከአገልግሎቶቹ የሚተላለፉ ማናቸውም መቋረጥ ወይም መቋረጥ፤ (መ) በማንኛውም ሶስተኛ ወገን ወደ አገልግሎቶቹ ሊተላለፉ የሚችሉ ማናቸውም ስህተቶች፣ ቫይረሶች፣ ትሮጃን ፈረሶች ወይም የመሳሰሉት ወይም በማንኛውም ይዘት በተለጠፈ፣ በኢሜል የተላከ፣ የተላለፈ፣ ወይም በሌላ መልኩ በአገልግሎቶቹ በኩል እንዲገኝ ለተደረገው ማንኛውም ኪሳራ ወይም ጉዳት",
+
+        "termConditionIndemnification": "ማካካሻ",
+        "termConditionIndemnificationDesc": "ካሳ ለመክሰስ፣ ለመከላከል እና ጉዳት የሌለበትን ለመያዝ ተስማምተሃል",
+        "termConditionIndemnificationDesc1": "የእሱ ኃላፊዎች፣ ዳይሬክተሮች፣ ሰራተኞች፣ ወኪሎች፣ ፍቃድ ሰጪዎች እና አቅራቢዎች ከሁሉም የይገባኛል ጥያቄዎች፣ እዳዎች፣ ጉዳቶች፣ ኪሳራዎች፣ ወጪዎች እና ወጪዎች (የተመጣጣኝ የጠበቆች ክፍያን ጨምሮ) ከእርስዎ አጠቃቀም ጋር በተያያዘ አገልግሎቶቹን፣ እነዚህን ውሎች መጣስዎ ወይም የሌላውን መብት መጣስዎ።",
+
+        "termConditionChangeTerm": "ለውጥ ውሎች",
+        "termConditionChangeTermDesc1": "እነዚህን ውሎች በማንኛውም ጊዜ ልንቀይራቸው እንችላለን። ማንኛውም ለውጦች የተሻሻሉትን ውሎች በድረ-ገፃችን ላይ ከተለጠፉ በኋላ ወዲያውኑ ተግባራዊ ይሆናሉ። ለውጦችን ከተለጠፉ በኋላ አገልግሎቱን መቀጠልዎ እንደዚህ አይነት ለውጦችን መቀበልዎን ያካትታል።" ,
+
+        "termConditionGoverningLaw": "የአስተዳደር ህግ",
+        "termConditionGoverningLawDesc1": "እነዚህ ውሎች እና በነዚህ ውሎች ወይም በአገልግሎት አጠቃቀሞች ምክንያት የሚነሱ ማናቸውም አለመግባባቶች የህግ መርሆዎች ግጭት ሳያስከትሉ በኢትዮጵያ ህጎች መሰረት የሚተዳደሩ እና የሚተረጎሙ ይሆናሉ።",      
+
+       "termConditionContact": "አግኙን",
+        "termConditionContactDesc1": "ስለእነዚህ ውሎች ማንኛቸውም ጥያቄዎች ካሉዎት እባክዎን በሚከተለው ያግኙን"
     }
 
 }

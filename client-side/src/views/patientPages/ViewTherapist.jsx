@@ -399,7 +399,7 @@ export default function ViewTherapist() {
                           }
                           key={`pay-appointment-${selectedTherapist.profile.user.id}`}
                         >
-                          Pay for appointment
+                          {t("viewTherapist.payForAppointment")}
                         </button>
                       </>
                     )}
@@ -414,7 +414,7 @@ export default function ViewTherapist() {
                             icon={faEnvelope}
                             key={`message-${selectedTherapist.profile.user.id}`}
                           />
-                          Message
+                          {t("viewTherapist.message")}
                         </button>
 
                         <button
@@ -426,7 +426,7 @@ export default function ViewTherapist() {
                             icon={faStar}
                             key={`ratting-${selectedTherapist.profile.user.id}`}
                           />{" "}
-                          Rate
+                          {t("viewTherapist.rate")}
                         </button>
                       </div>
                     ) : (
@@ -445,28 +445,28 @@ export default function ViewTherapist() {
                 className="mt-3 fw-bold"
                 style={{ width: "90%", left: "5%" }}
               >
-                Rating submitted successfully!
+                {t("viewTherapist.submitRating")}
               </Alert>
             )}
 
             {showRateCard && (
               <div className="card card-custom-rating shadow mt-3">
                 <div className="card-body">
-                  <h5 className="card-title">Rate the Therapist</h5>
+                  <h5 className="card-title">{t("viewTherapist.rateTherapist")}</h5>
                   <form onSubmit={handleRateSubmit}>
                     <div className="form-group text-start d-block rate-group">
-                      <label htmlFor="description ">Description</label>
+                      <label htmlFor="description ">{t("viewTherapist.description")}</label>
                       <textarea
                         id="description"
                         className="form-control"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         required
-                        placeholder="Write a brief description..."
+                        placeholder={t("viewTherapist.writeDescription")}
                       ></textarea>
                     </div>
                     <div className="form-group text-start d-block rate-group mt-2">
-                      <label>Rating</label>
+                      <label>{t("viewTherapist.rating")}</label>
                       <div className="rating-options">
                         {[0, 1, 2, 3, 4, 5].map((rate) => (
                           <label key={rate} className="rating-label">
@@ -487,7 +487,7 @@ export default function ViewTherapist() {
                       type="submit"
                       className="btn-success-rating btn btn-success"
                     >
-                      Submit
+                      {t("viewTherapist.submit")}
                     </button>
                   </form>
                 </div>
@@ -553,12 +553,12 @@ export default function ViewTherapist() {
                 {" "}
                 {selectedTherapist.profile.bio
                   ? selectedTherapist.profile.bio
-                  : "This therapist doesn't have a bio "}
+                  : t("viewTherapist.thisTherapist")}
               </p>
             </div>
             <div className="container row mt-4 p-3 shadow">
               <h4>
-                Upcoming appointments with therapist{" "}
+                {t("viewTherapist.upcomingTherapist")}{" "}
                 {selectedTherapist.profile.first_name +
                   " " +
                   selectedTherapist.profile.last_name}
@@ -568,9 +568,9 @@ export default function ViewTherapist() {
                   <table className="table table-striped">
                     <thead>
                       <tr>
-                        <th>Date and Time</th>
-                        <th>Type</th>
-                        <th>Action</th>
+                        <th>{t("viewTherapist.dateAndTime")}</th>
+                        <th>{t("viewTherapist.type")}</th>
+                        <th>{t("viewTherapist.action")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -602,7 +602,7 @@ export default function ViewTherapist() {
                                 ()=>handleDeleteAppointmentModal(appointment.id)
                               }
                             >
-                              Cancel
+                              {t("viewTherapist.cancel")}
                             </button>
                           </td>
                         </tr>
@@ -611,19 +611,19 @@ export default function ViewTherapist() {
                   </table>
                 </div>
               ) : (
-                <p>No appointments found.</p>
+                <p>{t("viewTherapist.noAppointmentFound")}</p>
               )}
             </div>
             <div className="container row mt-4 mb-4 p-3 shadow">
-              <h4 className=" mt-3">Therapist Availability</h4>
+              <h4 className=" mt-3">{t("viewTherapist.therapistAvailability")}</h4>
               {availability.length > 0 ? (
                 <div className="table-responsive ms-3 mt-3">
                   <table className="table table-striped table-bordered table-hover shadow">
                     <thead>
                       <tr>
-                        <th>Date</th>
-                        <th>Start Time</th>
-                        <th>End Time</th>
+                        <th>{t("viewTherapist.date")}</th>
+                        <th>{t("viewTherapist.startTime")}</th>
+                        <th>{t("viewTherapist.endTime")}</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -658,7 +658,7 @@ export default function ViewTherapist() {
                               onClick={() => handleBookAppointment(user_id, slot.id)}
                               disabled={hasFutureAppointment}
                             >
-                              Book Appointment
+                              {t("viewTherapist.bookAppointment")}
                             </button>
                               : " "}
                               
@@ -672,7 +672,7 @@ export default function ViewTherapist() {
                   </table>
                 </div>
               ) : (
-                <p>Avalability not found.</p>
+                <p>{t("viewTherapist.notFound")}</p>
               )}
             </div>
           </div>
@@ -688,11 +688,11 @@ export default function ViewTherapist() {
         <Modal.Footer>
           {cancelAppointment ? 
           (<Button variant="outline-danger" onClick={()=>handleDeleteAppointmentSubmit(cancelAppointment)}>
-            Delete
+            {t("viewTherapist.delete")}
           </Button>)
           :
           (<Button variant="primary" onClick={handleModalClose}>
-            Close
+            {t("viewTherapist.close")}
           </Button>)
           }
           
