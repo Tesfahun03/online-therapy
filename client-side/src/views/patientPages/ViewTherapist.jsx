@@ -598,12 +598,30 @@ export default function ViewTherapist() {
                           </td>
                           <td>
                             {" "}
-                            <button
-                              className="btn btn-outline-success"
-                              onClick={() => handleVideo(appointment.id)}
-                            >
-                              <FontAwesomeIcon icon={faVideo} />
-                            </button>
+                            <OverlayTrigger
+                            overlay={
+                              <Tooltip>
+                                {isVideoButtonEnabled(appointment.date, appointment.start_time)
+                                  ? "Start Video"
+                                  : "Video will be available at the appointment time"}
+                              </Tooltip>
+                            }
+                          >
+                            <span className="d-inline-block">
+                              <button
+                                className="btn btn-outline-success"
+                                onClick={() => handleVideo(appointment.id)}
+                                disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
+                                style={{
+                                  pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
+                                    ? "auto"
+                                    : "none",
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faVideo} />
+                              </button>
+                            </span>
+                          </OverlayTrigger>
                           </td>
                           <td>
                             <button
