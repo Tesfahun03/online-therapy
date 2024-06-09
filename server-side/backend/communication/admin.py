@@ -44,11 +44,14 @@ class ReviewAdmin(admin.ModelAdmin):
         return obj.therapist.profile.user.email
     get_therapist.short_description = 'Therapist'
 
+class StatusRecordAdmin(admin.ModelAdmin):
+    list_display = ('patient', 'therapist_name', 'note', 'date')
+    
 admin.site.register( ChatMessage,ChatMessageAdmin)
 admin.site.register(TherapistAvailability, TherapistAvailabilityAdmin)
 admin.site.register(Appointments, AppointmentsAdmin)
 admin.site.register(RoomInsights)
 admin.site.register(Counter)
-admin.site.register(StatusRecord)
+admin.site.register(StatusRecord, StatusRecordAdmin)
 admin.site.register(Notification, NotificationAdmin)
 admin.site.register(Review, ReviewAdmin)
