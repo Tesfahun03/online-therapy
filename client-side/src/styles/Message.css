@@ -1,5 +1,5 @@
 .message {
-    padding-top: 7vw;
+  padding-top: var(--navbar-height);
   }
   
   .chat-online {
@@ -55,7 +55,7 @@
   
   @media (max-width: 990.98px) {
     .message {
-      padding-top: 5vw;
+      padding-top: var(--navbar-height);
     }
   
     .chat-messages {
@@ -83,7 +83,7 @@
   
     .col-lg-9,
     .col-xl-9 {
-      padding-top: 1rem;
+      padding-top: 2vw;
     }
     .input-group{
       width: 100%;

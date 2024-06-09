@@ -1,5 +1,5 @@
 .video-chat{
-    padding-top: 7vw;
+    padding-top: var(--navbar-height);
 }
 .wellcome-video{
     font-size: 2vw;

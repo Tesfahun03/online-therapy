@@ -51,7 +51,7 @@ export default function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  const patientData = async () => {
+  const userData = async () => {
     if (user_type === "therapist") {
       try {
         const response = await axios.get(
@@ -78,7 +78,7 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    patientData();
+    userData();
   }, [user_id]);
 
   const handleInputChange = (e) => {

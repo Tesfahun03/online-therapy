@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import ParentComponent from "../../component/ParentBar";
 import jwtDecode from "jwt-decode";
 import { useTranslation } from "react-i18next";
 import useAxios from "../../utils/useAxios";
@@ -100,7 +99,6 @@ export default function Records() {
           <option value="tigrigna">Tig</option>
         </select>
       </div>
-      <ParentComponent/>
       <div className="main-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4 min-vh-100" style={{width:"75%"}}>
         <h2>{t("record.recordPayment")}</h2>
         <table className="table table-striped table-bordered table-hover shadow">

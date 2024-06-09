@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-around;
     margin-top: 2vw;
-    padding-top: 7vw;
+    padding-top: var(--navbar-height);
 }
 .Home-img{
     display: flex;

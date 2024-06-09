@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     padding-left: 5vw;
+    padding-top: var(--navbar-height);
 }
 .languageForTranslate {
     position: fixed;
