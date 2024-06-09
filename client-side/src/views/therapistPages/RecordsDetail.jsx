@@ -3,7 +3,6 @@ import {
   useHistory,
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
-import ParentComponent from "../../component/ParentBar";
 import jwtDecode from "jwt-decode";
 import useAxios from "../../utils/useAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -120,8 +119,7 @@ export default function RecordsDetail() {
 
   return (
     <div className="therapist-home d-flex flex-column m-0">
-      <ParentComponent/>
-      <div className="main-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4 min-vh-100" >
+      <div className="main-content col-lg-12 col-md-12 col-sm-8 px-4 min-vh-100" >
         {patient && (
           <div>
             <div className="container-fluid">
@@ -264,7 +262,7 @@ export default function RecordsDetail() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-12 col-sm-12 ms-sm-0 ms-lg-3 mt-4 border shadow">
+                  <div className="col-lg-4 col-md-12 col-sm-12 ms-sm-0 ms-lg-3 mt-4 border shadow min-vh-100">
                     <h6 className="p-2">
                       Your list of records related to{" "}
                       {patient.profile.first_name}

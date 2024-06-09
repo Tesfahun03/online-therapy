@@ -38,13 +38,15 @@ export default function ViewTherapist() {
   const [isLoading, setIsLoading] = useState(true);
   const [relationChecker, setRelation] = useState();
 
-  // const [showModal, setShowModal] = useState(false);
-  // const handleClose = () => setShowModal(false);
-  // const handleShow = () => setShowModal(true);
+  const [showPaymentModal, setPaymentModal] = useState(false);
+  const handlePaymentModalClose = () => setPaymentModal(false);
+  const handlePaymentModalShow = () => setPaymentModal(true);
 
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
   const user_id = decoded.user_id;
+  const first_name = decoded.first_name;
+  const last_name = decoded.last_name;
 
   const [showRateCard, setShowRateCard] = useState(false);
   const [description, setDescription] = useState("");
@@ -56,22 +58,24 @@ export default function ViewTherapist() {
   const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [modalBody, setModalBody] = useState("");
   const [modalTitle, setModalTitle] = useState("");
-  const [cancelAppointment, setCancleAppointment] = useState(null)
+  const [cancelAppointment, setCancleAppointment] = useState(null);
 
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/session/therapist/${id}/availability/`)
-      .then((response) => 
-        {
-        const data = response.data
+      .then((response) => {
+        const data = response.data;
         const now = moment();
         // Filter out appointments that are in the past or have ended
-        const filteredAvailabilities = data.filter(availability => {
-        const availabilityEnd = moment(`${availability.date} ${availability.end_time}`, "YYYY-MM-DD HH:mm:ss");
-        return availabilityEnd.isAfter(now);
-    });
+        const filteredAvailabilities = data.filter((availability) => {
+          const availabilityEnd = moment(
+            `${availability.date} ${availability.end_time}`,
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          return availabilityEnd.isAfter(now);
+        });
         setAvailability(filteredAvailabilities);
-        })
+      })
       .catch((error) => console.error("Error fetching availability:", error));
   }, [id]);
 
@@ -83,10 +87,13 @@ export default function ViewTherapist() {
       const data = await appointmentResponse.data;
       const now = moment();
       // Filter out appointments that are in the past or have ended
-      const filteredAppointments = data.filter(appointment => {
-      const appointmentEnd = moment(`${appointment.date} ${appointment.end_time}`, "YYYY-MM-DD HH:mm:ss");
-      return appointmentEnd.isAfter(now);
-    });
+      const filteredAppointments = data.filter((appointment) => {
+        const appointmentEnd = moment(
+          `${appointment.date} ${appointment.end_time}`,
+          "YYYY-MM-DD HH:mm:ss"
+        );
+        return appointmentEnd.isAfter(now);
+      });
       setAppointments(filteredAppointments);
     } catch (error) {
       console.error("Error fetching patient data:", error);
@@ -106,19 +113,20 @@ export default function ViewTherapist() {
     console.log("Filtered Appointments:", filteredAppointments);
     const now = moment();
     if (filteredAppointments.length > 0) {
-      availability.forEach(slot => {
+      availability.forEach((slot) => {
         const hasFutureAppointment = filteredAppointments.some(
           (appointment) =>
-            moment(appointment.date).isAfter(now) &&
-            moment(appointment.date).isSameOrBefore(slot.date) ||
+            (moment(appointment.date).isAfter(now) &&
+              moment(appointment.date).isSameOrBefore(slot.date)) ||
             moment(appointment.date).isSameOrAfter(slot.date)
-           // moment(appointment.end_time).isBefore(slot.start_time)
+          // moment(appointment.end_time).isBefore(slot.start_time)
         );
-        console.log(`Slot: ${slot.date} ${slot.start_time} - ${slot.end_time}, Has Future Appointment: ${hasFutureAppointment}`);
+        console.log(
+          `Slot: ${slot.date} ${slot.start_time} - ${slot.end_time}, Has Future Appointment: ${hasFutureAppointment}`
+        );
       });
     }
   }, [availability, filteredAppointments]);
-  
 
   useEffect(() => {
     if (appointments.length > 0) {
@@ -265,7 +273,7 @@ export default function ViewTherapist() {
   };
 
   const handleDeleteAppointmentModal = (appointmentID) => {
-    setCancleAppointment(appointmentID)
+    setCancleAppointment(appointmentID);
     setModalTitle("Cancle Appointment");
     setModalBody("Are you sure you want to cancle the appointment!");
     setShowSuccessModal(true);
@@ -275,9 +283,9 @@ export default function ViewTherapist() {
       `http://127.0.0.1:8000/session/patient/${user_id}/appointments/${appointmentID}`
     );
 
-    if(response.status === 204){
-      setShowSuccessModal(false)
-      window.location.reload()
+    if (response.status === 204) {
+      setShowSuccessModal(false);
+      window.location.reload();
     }
   };
 
@@ -314,7 +322,10 @@ export default function ViewTherapist() {
       second: moment(startTime, "HH:mm:ss").second(),
     });
     // Subtract 5 minutes from the appointment time
-    const videoAvailableTime = moment(appointmentDateTime).subtract(5, "minutes");
+    const videoAvailableTime = moment(appointmentDateTime).subtract(
+      5,
+      "minutes"
+    );
     return moment().isSameOrAfter(videoAvailableTime);
   };
 
@@ -325,6 +336,10 @@ export default function ViewTherapist() {
   const renderTooltip = (message) => (
     <Tooltip id="disabled-button-tooltip">{message}</Tooltip>
   );
+
+  if (!selectedTherapist) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="view-therapist min-vh-100">
@@ -391,13 +406,8 @@ export default function ViewTherapist() {
                         </h6>
                         <button
                           className="btn btn-success"
-                          onClick={() =>
-                            handlePayment(
-                              user_id,
-                              selectedTherapist.profile.user.id
-                            )
-                          }
                           key={`pay-appointment-${selectedTherapist.profile.user.id}`}
+                          onClick={handlePaymentModalShow}
                         >
                           {t("viewTherapist.payForAppointment")}
                         </button>
@@ -594,12 +604,12 @@ export default function ViewTherapist() {
                             >
                               <FontAwesomeIcon icon={faVideo} />
                             </button>
-                          </td> 
+                          </td>
                           <td>
                             <button
                               className="btn btn-outline-danger"
-                              onClick={
-                                ()=>handleDeleteAppointmentModal(appointment.id)
+                              onClick={() =>
+                                handleDeleteAppointmentModal(appointment.id)
                               }
                             >
                               {t("viewTherapist.cancel")}
@@ -628,18 +638,20 @@ export default function ViewTherapist() {
                       </tr>
                     </thead>
                     <tbody>
-                    {availability.map((slot) => {
-                      const now = moment()
-                      const hasFutureAppointment = filteredAppointments.some(
-                        (appointment) =>
-                          moment(appointment.date).isAfter(now) && 
-                          moment(appointment.date).isSameOrBefore(slot.date) || 
-                          moment(appointment.date).isSameOrAfter(slot.date)
-                      );
+                      {availability.map((slot) => {
+                        const now = moment();
+                        const hasFutureAppointment = filteredAppointments.some(
+                          (appointment) =>
+                            (moment(appointment.date).isAfter(now) &&
+                              moment(appointment.date).isSameOrBefore(
+                                slot.date
+                              )) ||
+                            moment(appointment.date).isSameOrAfter(slot.date)
+                        );
 
-                      const disabledMessage = hasFutureAppointment
-                        ? "You already have an appointment."
-                         : " ";
+                        const disabledMessage = hasFutureAppointment
+                          ? "You already have an appointment."
+                          : " ";
 
                       return (
                         <tr key={`${slot.date}-${slot.start_time}`}>

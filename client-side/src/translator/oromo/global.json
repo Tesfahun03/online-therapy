@@ -7,7 +7,11 @@
         "therapistLoginbtn": "Gali",
         "therapistForgot":"Jecha icciitii dagadhe",
         "therapistLoginEmail": "Email",
-        "therapistLoginPassword": "Jecha iccitii"
+        "therapistLoginPassword": "Jecha iccitii",
+        "loginClient": "Fuula Galmee Maamilaa", 
+        "signinAsTherapist": "Akka wal'aansaatti galmaa'i",
+        "dontHaveAccount": "Akkaawuntii hin qabduu?",
+        "signup": "Mallatteessi"
     },
     "register": {
         "welcomeTitle": "Baga gara BunnaMind dhufte",
@@ -40,7 +44,14 @@
         "registerLabelLiscence": "Faayilii Hayyamaa filadhu:",
         "registerBtn": "Galmeessi",
         "registerForgetPassword": "Jecha icciitii dagattee?",
-        "registerHaveAccount": "Duraanis akkaawuntii qabda? "
+        "registerHaveAccount": "Duraanis akkaawuntii qabda? ",
+        "clientRegistration": "Fuula Galmee Maamilaa", 
+        "termAndCondition": "Haala fi dambiiwwan BunnaMind",
+        "youAccept": "Galmaa'uuf haalawwanii fi dambiiwwan fudhachuu qabda.",
+        "signin": "Galmaa", 
+        "registerTherapist": "Akka teraapistii ta'ii galmaa'i",
+        "therapistRegistartion": "Fuula Galmee Therapist", 
+        "registerClient": "Akka maamilaatti galmaa'i"
     },
     "home":{
         "homeIntroTitleH3": "Sammuu Guddisuu, Jireenya Angoomsuu.",
@@ -80,7 +91,7 @@
     "profile": {
         "accountSetting": "Qajeelcha Herregaa",
         "changePassword": "Jecha Iccitii Jijjiiri",
-        "additionalInformation": "Odeeffannoo Dabalataa",
+        "additionalProfile": "Odeeffannoo Dabalataa",
         "notification": "Beeksisa",
         "firstName": "Maqaa Jalqabaa",
         "lastName": "Maqaa Dhumaa",
@@ -102,7 +113,21 @@
         "currentPassword": "Jecha Iccitii Ammaa",
         "newPassword": "Jecha Iccitii Haaraa",
         "confirmPassword": "Jecha Iccitii Mirkaneessi",
-        "updatePassword": "Jecha Iccitii Fooyyessi"
+        "updatePassword": "Jecha Iccitii Fooyyessi",
+        "updateProfile": "Suuraa Profaayilii Fooyyessi",
+        "balancedRelated": "Walqabatee madaalawaa",
+        "religion": "Amantaa",
+        "specialization": "Ispeeshaalaayizeeshinii",
+        "experience": "Muuxannoo",
+        "withdrawableBalance": "Hafnaan baafamuu danda'u",
+        "totalBalance": "Madaallii Waliigalaa",
+        "withdraw": "Baasuu",
+        "aboutMe": "Waa'ee koo ...",
+        "updateBio": "Baayoo Fooyyessi",
+        "paymentRate": "Safartuu Kaffaltii",
+        "yourPaymentRate1": "Safartuu Kaffaltii keessanii ji'atti (ETB/ji'atti) 0 ETB dha",
+        "enterNumber": "Lakkoofsa galchi", 
+        "yourPaymentRate2": "Safartuu kaffaltii kee ji'a tokkoof"
     },
     "dashboard":{
         "totalCounceling": "Gorsa Waliigalaa", 
@@ -262,12 +287,6 @@
         "recordLastName" :"Maqaa Dhumaa", 
         "recordPaymentAmount" :"Hanga Kaffaltii", 
         "recordPaymentdate" :"Guyyaa Kaffaltii"
-    },
-    "setting":{
-        "yourpaymentRate1": "Safartuu Kaffaltii keessanii ji'atti (ETB/ji'atti) 0 ETB dha",
-        "enterNumber": "Lakkoofsa galchi", 
-        "yourpaymentRate2": "Safartuu kaffaltii kee ji'a tokkoof",
-        "update": "Haaromsa"
     },
     "resetPassword": {
         "resetPasswordTitle": "Jecha Iccitii Irra Deebi'ii Saagi", 

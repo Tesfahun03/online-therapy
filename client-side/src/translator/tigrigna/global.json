@@ -7,7 +7,11 @@
         "therapistLoginbtn": "ምእታው",
         "therapistForgot": "ፓስዎርድ ረሲዐ",
         "therapistLoginEmail": "ኢመይል",
-        "therapistLoginPassword": "መሕለፊ ቃል"
+        "therapistLoginPassword": "መሕለፊ ቃል",
+        "loginClient": "ገጽ መእተዊ ዓሚል",
+        "signinAsTherapist": "ከም ቴራፒስት ምእታው",
+        "dontHaveAccount": "ኣካውንት የብልካን?",
+        "signup": "ምዝገባ"
     },
     "register": {
         "welcomeTitle": "እንቋዕ ናብ BunnaMind ብደሓን መጻእኩም",
@@ -34,13 +38,20 @@
         "registerCity": "ከተማ",
         "registerRegion": "ዞባ",
         "registerOccupation": "ሞያ",
-        "registerስፔሻላይዜሽን": "ስፔሻላይዜሽን",
+        "registerSpecialization": "ስፔሻላይዜሽን",
         "registerExperience": "ተመኩሮ",
         "registerReligion": "ሃይማኖት",
         "registerLabelLiscence": "ናይ ፍቓድ ፋይል ምረጽ",
         "registerBtn": "ምዝገባ",
         "registerForgetPassword": "መሕለፊ ቃል ረሲዕካ?",
-        "registerHaveAccount": "ድሮ ኣካውንት ኣለካ ድዩ? "
+        "registerHaveAccount": "ድሮ ኣካውንት ኣለካ ድዩ? ",
+        "clientRegistration": "ገጽ ምዝገባ ዓሚል",
+        "termAndCondition": "ውዕላትን ቅጥዕታትን BunnaMind",
+        "youAccept": "ንምምዝጋብ ውዕላትን ቅጥዕታትን ክትቅበል ኣለካ።",
+        "signin": "ምእታው",
+        "registerTherapist": "ከም ቴራፒስት ተመዝገብ",
+        "therapistRegistartion": "ገጽ ምዝገባ ቴራፒስት",
+        "registerClient": "ከም ዓሚል ተመዝገብ"
     },
     "home":{
         "homeIntroTitleH3": "ምሕብሓብ ኣእምሮ፡ ምሕያል ህይወት።",
@@ -81,7 +92,7 @@
     "profile": {
         "accountSetting": "ኣቀማምጣ ሕሳብ",
         "changePassword": "መሕለፊ ቃል ምቕያር",
-        "additionalInformation": "ተወሳኺ ሓበሬታ",
+        "additionalProfile": "ተወሳኺ ሓበሬታ",
         "notification": "መፍለጢ",
         "firstName": "ቀዳማይ ስም",
         "lastName": "መወዳእታ ስም",
@@ -103,7 +114,21 @@
         "currentPassword": "ናይ ሕጂ ምልክት ቃል",
         "newPassword": "ሓድሽ ምልክት ቃል",
         "confirmPassword": "ምልክት ቃል ኣረጋግጽ",
-        "updatePassword": "መሕለፊ ቃል ኣዘምን"
+        "updatePassword": "መሕለፊ ቃል ኣዘምን",
+        "updateProfile": "ስእሊ ፕሮፋይል ምዕራፍ",
+        "balancedRelated": "ሚዛናዊ ዝተኣሳሰር",
+        "religion": "ሃይማኖት",
+        "specialization": "ስፔሻላይዜሽን",
+        "experience": "ተመኩሮ",
+        "withdrawableBalance": "ዝውሰድ ሚዛን",
+        "totalBalance": "ጠቕላላ ሚዛን",
+        "withdraw": "ምስሓብ",
+        "aboutMe": "ብዛዕባይ ...",
+        "updateBio": "ባዮ ምዕባለ",
+        "paymentRate": "ደረጃ ክፍሊት",
+        "yourPaymentRate1": "ደረጃ ክፍሊትካ ኣብ ወርሒ (ETB/ወርሒ) 0 ETB እዩ",
+        "enterNumber": "ቁጽሪ ኣእቱ",
+        "yourPaymentRate2": "ደረጃ ክፍሊትካ ኣብ ነፍሲ ወከፍ ወርሒ"
     },
     "dashboard":{
         "totalCounceling": "ጠቕላላ ምምኽኻር",
@@ -263,12 +288,6 @@
         "recordLastName" :"መወዳእታ ስም",
         "recordPaymentAmount" :"ዓቐን ክፍሊት",
         "recordPaymentdate" :"ዕለት ክፍሊት"
-    },
-    "setting":{
-        "yourpaymentRate1": "ደረጃ ክፍሊትካ ኣብ ወርሒ (ETB/ወርሒ) 0 ETB እዩ",
-        "enterNumber": "ቁጽሪ ኣእቱ",
-        "yourpaymentRate2": "ደረጃ ክፍሊትካ ኣብ ነፍሲ ወከፍ ወርሒ",
-        "update": "ምዕራፍ"
     },
     "resetPassword": {
         "resetPasswordTitle": "መሕለፊ ቃል ዳግማይ ምቕማጥ",

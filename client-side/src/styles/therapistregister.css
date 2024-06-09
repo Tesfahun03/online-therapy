@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 7.5vw;
+  padding-top: var(--navbar-height);
   padding-bottom: 23px;
 }
 .registerTherapist .container .welcome-title {

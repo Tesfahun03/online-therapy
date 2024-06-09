@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     padding-left: 5vw;
+    padding-top: var(--navbar-height);
 }
 .languageForTranslate {
     position: fixed;
@@ -109,22 +110,22 @@
 
 .therapistLoginInput {
     width: 100%;
-    padding: 1vw;
+    padding: 0.5vw;
     margin-bottom: 2vw;
-    border: 0.25vw solid #ccc;
-    border-radius: 2vw;
-    font-size: 3vw;
+    border: 0.1vw solid #ccc;
+    border-radius: 0.5vw;
+    font-size: 1.5vw;
 }
 
 .loginbtn {
     width: 100%;
-    padding: 1vw;
+    padding: 0.5vw;
     border: none;
-    border-radius: 1.5vw;
+    border-radius: 0.5vw;
     background-color: #9A616D;
     color: white;
     margin-bottom: 2vw;
-    font-size: 2vw;
+    font-size: 1.5vw;
     cursor: pointer;
 }
 
@@ -139,23 +140,20 @@
 
     .therapistLogin {
         background-color: #4fec3018;
-        /* margin-top: -5vw; */
         width: 90vw;
-        /* margin-left: -3vw; */
         height: auto;
     }
 
     .colomnTitle {
-        font-size: 6vw;
+        font-size: 3vw;
     }
 
     .loginRow {
-        width: 80vw;
+        width: 70vw;
         flex-direction: column;
     }
 
     .loginLeft {
-        width: 80%;
         width: 50vw;
         margin-left: 7vw;
         height: 25vw;
@@ -163,34 +161,36 @@
 
     }
     .loginRight {
-        width: 80%;
-        margin-left: 7vw;
-        padding: 2vw;
-        border-radius: 2vw;
+
+        width: 50vw;
+        margin-left: 10vw;
+        padding: 4vw;
+        border-radius: 1vw;
         order: 1;
     }
 
     .loginImg img {
-        width: 25vw;
-        height: auto;
-        border-radius: 5vw;
+        width: 50vw;
+        background-color: aqua;
+        height: 45vw;
+        margin-left: 3.2vw;
     }
 
     .therapistLoginInput {
-        padding: 3vw;
+        padding: 1.5vw;
         margin-bottom: 3vw;
-        border-radius: 3vw;
-        font-size: 4vw;
+        border-radius: 1vw;
+        font-size: 2vw;
     }
 
     .loginbtn {
-        padding: 2vw;
+        padding: 1.5vw;
         border-radius: 5vw;
-        font-size: 4vw;
-        border-radius: 1.5vw;
+        font-size: 2vw;
+        border-radius: 1vw;
     }
     .therapistForgot{
-        font-size: 4vw;
+        font-size: 2vw;
     }
 }
 @media (max-width: 768px) {

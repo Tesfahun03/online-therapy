@@ -11,11 +11,15 @@ import {
   faGlobe,
   faUser,
   faBars,
+  faNoteSticky,
+  faDashboard,
+  faCalendar,
+  faDoorOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { use } from "i18next";
-import { Button } from "react-bootstrap";
+import { Offcanvas, Button, Dropdown } from "react-bootstrap";
 
-export default function NavBar({ toggleOffcanvas }) {
+export default function NavBar() {
   const { user, logoutUser } = useContext(AuthContext);
   const axios = useAxios();
 
@@ -31,6 +35,10 @@ export default function NavBar({ toggleOffcanvas }) {
 
   const user_type = decodedToken && decodedToken.user_type;
   const user_id = decodedToken && decodedToken.user_id;
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const handleCloseOffcanvas = () => setShowOffcanvas(false);
+  const handleShowOffcanvas = () => setShowOffcanvas(true);
+  const style = { color: "inherit", textDecoration: "none" };
 
   useEffect(() => {
     const handleTokenChange = () => {
@@ -200,51 +208,284 @@ export default function NavBar({ toggleOffcanvas }) {
     }
   };
 
-  return (
-    <nav ref={navbarRef} className="navBar">
-      {isLoggedIn ? (
-        <>
-          {user_type === "therapist" && (
-            <div
-              className="text-end"
-              style={{ position: "relative", zIndex: 2000 }}
-            >
-              <Button
-                className="toogle-button mt-2 me-2"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasExample"
-                aria-controls="offcanvasExample"
-                onClick={toggleOffcanvas}
-                style={{ position: "relative", zIndex: 3000 }} // Updated zIndex here
-              >
-                <FontAwesomeIcon icon={faBars} />
-              </Button>
-            </div>
-          )}
-          <Link
-            to={user_type === "therapist" ? "/dashboard-t" : "/home-p"}
-            style={{ textDecoration: "none" }}
-          >
-            <div className="navImgName">
-              <img
-                src="../Images/logo/BunnaLogo.png"
-                alt=""
-                className="bunnaLogo"
-              />
-              <h3 className="bunnaName">BunnaMind</h3>
-            </div>
-          </Link>
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 992) { // Set your desired width threshold
+        handleCloseOffcanvas();
+      }
+    };
 
-          <div className="navButton">
-            <div className="navButtonFlex">
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [handleCloseOffcanvas]);
+  return (
+    <>
+      <nav ref={navbarRef} className="navBar">
+        {isLoggedIn ? (
+          <>
+            <Link
+              to={user_type === "therapist" ? "/dashboard-t" : "/home-p"}
+              style={{ textDecoration: "none" }}
+            >
+              <div className="navImgName">
+                <img
+                  src="../Images/logo/BunnaLogo.png"
+                  alt=""
+                  className="bunnaLogo"
+                />
+                <h3 className="bunnaName">BunnaMind</h3>
+              </div>
+            </Link>
+            <div className="navButton">
+              <div className="navButtonFlex">
+                {user_type === "patient" && (
+                  <Link
+                    to="/notification-p"
+                    style={{ textDecoration: "none" }}
+                    onClick={handleNotificationClick}
+                  >
+                    <div className="notification">
+                      <FontAwesomeIcon
+                        icon={faBell}
+                        color="beige"
+                        style={{ width: "2.5vw", height: "2.5vw" }}
+                      />
+                      {newNotificationCount > 0 && (
+                        <span className="badge_notification">
+                          {newNotificationCount}
+                        </span>
+                      )}
+                      <h5>Notification</h5>
+                    </div>
+                  </Link>
+                )}
+                {user_type === "therapist" && (
+                  <Link
+                    to="/notification-t"
+                    style={{ textDecoration: "none" }}
+                    onClick={handleNotificationClick}
+                  >
+                    <div className="notification">
+                      <FontAwesomeIcon
+                        icon={faBell}
+                        color="beige"
+                        style={{ width: "2.5vw", height: "2.5vw" }}
+                      />
+                      {newNotificationCount > 0 && (
+                        <span className="badge_notification">
+                          {newNotificationCount}
+                        </span>
+                      )}
+                      <h5>Notification</h5>
+                    </div>
+                  </Link>
+                )}
+                {relationIds && relationIds.length > 0 ? (
+                  <Link
+                    to="/message-box"
+                    style={{ textDecoration: "none" }}
+                    onClick={handleMessageClick}
+                  >
+                    <div className="message-box">
+                      <FontAwesomeIcon
+                        icon={faEnvelope}
+                        color="beige"
+                        style={{ width: "2.5vw", height: "2.5vw" }}
+                      />
+                      {newMessageCount > 0 && (
+                        <span className="badge_message">{newMessageCount}</span>
+                      )}
+                      <h5>Message</h5>
+                    </div>
+                  </Link>
+                ) : (
+                  ""
+                )}
+                {user_type === "patient" && (
+                  <Link
+                    to="/community-space"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="community-space">
+                      <FontAwesomeIcon
+                        icon={faGlobe}
+                        color="beige"
+                        style={{ width: "2.5vw", height: "2.5vw" }}
+                      />
+                      <h5>Community Space</h5>
+                    </div>
+                  </Link>
+                )}
+
+                <Link to="/profile" style={{ textDecoration: "none" }}>
+                  <div className="profile-button">
+                    <FontAwesomeIcon
+                      icon={faUser}
+                      color="beige"
+                      style={{ width: "2.5vw", height: "2.5vw" }}
+                    />
+                    <h5>Profile</h5>
+                  </div>
+                </Link>
+                {user_type === "patient" && (
+                  <h3
+                    className="logoutButton"
+                    onClick={() => logoutUser(user_type)}
+                  >
+                    Logout
+                  </h3>
+                )}
+                {user_type === "therapist" && (
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="secondary"
+                      id="dropdown-basic"
+                      className="custom-toggle-button"
+                    >
+                      <FontAwesomeIcon icon={faBars} className="icon" />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu
+                      style={{
+                        minWidth: "300px",
+                        minHeight: "300px",
+                        marginTop:"20px"
+                      }}
+                    >
+                      <div style={{ height: "250px" }}>
+                        <Dropdown.Item
+                          as={Link}
+                          to="/dashboard-t"
+                          className="mb-3 fs-5"
+                        >
+                          <FontAwesomeIcon icon={faDashboard} /> Dashboard
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          as={Link}
+                          to="/appointments-t"
+                          className="mb-3 fs-5"
+                        >
+                          <FontAwesomeIcon icon={faCalendar} /> Appointments
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          as={Link}
+                          to="/records-t"
+                          className="mb-3 fs-5"
+                        >
+                          <FontAwesomeIcon icon={faNoteSticky} /> Record
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          as={Link}
+                          to="/community-space"
+                          className="mb-3 fs-5"
+                        >
+                          <FontAwesomeIcon icon={faGlobe} /> Community Space
+                        </Dropdown.Item>
+                      </div>
+                      <Dropdown.Divider />
+                      <Dropdown.Item onClick={() => logoutUser(user_type)}>
+                        <FontAwesomeIcon icon={faDoorOpen} />
+                        Logout
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <div className="navImgName">
+                <img
+                  src="../Images/logo/BunnaLogo.png"
+                  alt=""
+                  className="bunnaLogo"
+                />
+                <h3 className="bunnaName">BunnaMind</h3>
+              </div>
+            </Link>
+            <div className="navLink">
+              {location.pathname === "/" && (
+                <div className="navLinkFlex">
+                  <Link to="/register-t" style={{ textDecoration: "none" }}>
+                    <h3>For Therapist</h3>
+                  </Link>
+                  <h3 onClick={() => scrollToSection("Faq")}>FAQ</h3>
+                  <h3 onClick={() => scrollToSection("AboutUs")}>About Us</h3>
+                  <h3 onClick={() => scrollToSection("ContactUs")}>
+                    Contact Us
+                  </h3>
+                </div>
+              )}
+            </div>
+
+            <div className="navButton">
+              {location.pathname === "/login-p" ? (
+                <div className="navButtonFlex">
+                  <Link to="/register-p" style={{ textDecoration: "none" }}>
+                    <h3 className="registerButton">Register</h3>
+                  </Link>
+                </div>
+              ) : location.pathname === "/login-t" ? (
+                <div className="navButtonFlex">
+                  <Link to="/register-t" style={{ textDecoration: "none" }}>
+                    <h3 className="registerButton">Register</h3>
+                  </Link>
+                </div>
+              ) : (
+                <div className="navButtonFlex">
+                  {location.pathname === "/register-t" ? (
+                    <Link to="/login-t" style={{ textDecoration: "none" }}>
+                      <h3 className="loginButton">Login</h3>{" "}
+                    </Link>
+                  ) : (
+                    <Link to="/login-p" style={{ textDecoration: "none" }}>
+                      <h3 className="loginButton">Login</h3>{" "}
+                    </Link>
+                  )}
+
+                  {location.pathname === "/" && (
+                    <Link to="/register-p" style={{ textDecoration: "none" }}>
+                      {" "}
+                      <h3 className="registerButton">Register</h3>{" "}
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
+          </>
+        )}
+        <Button
+          className="navbar-toggler"
+          type="button"
+          onClick={handleShowOffcanvas}
+          style={{ background: "beige" }}
+        >
+          <FontAwesomeIcon icon={faBars} />
+        </Button>
+      </nav>
+
+      <Offcanvas
+        show={showOffcanvas}
+        onHide={handleCloseOffcanvas}
+        placement="end"
+        style={{ maxWidth: "250px" }}
+      >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Menu</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {isLoggedIn ? (
+            <>
               {user_type === "patient" && (
                 <Link
                   to="/notification-p"
-                  style={{ textDecoration: "none" }}
+                  style={style}
                   onClick={handleNotificationClick}
                 >
-                  <div className="notification">
+                  <div className="notification" onClick={handleCloseOffcanvas}>
                     <FontAwesomeIcon
                       icon={faBell}
                       color="beige"
@@ -262,10 +503,10 @@ export default function NavBar({ toggleOffcanvas }) {
               {user_type === "therapist" && (
                 <Link
                   to="/notification-t"
-                  style={{ textDecoration: "none" }}
+                  style={style}
                   onClick={handleNotificationClick}
                 >
-                  <div className="notification">
+                  <div className="notification" onClick={handleCloseOffcanvas}>
                     <FontAwesomeIcon
                       icon={faBell}
                       color="beige"
@@ -280,13 +521,13 @@ export default function NavBar({ toggleOffcanvas }) {
                   </div>
                 </Link>
               )}
-              {relationIds && relationIds.length > 0 ? (
+              {relationIds && relationIds.length > 0 && (
                 <Link
                   to="/message-box"
-                  style={{ textDecoration: "none" }}
+                  style={style}
                   onClick={handleMessageClick}
                 >
-                  <div className="message-box">
+                  <div className="message-box" onClick={handleCloseOffcanvas}>
                     <FontAwesomeIcon
                       icon={faEnvelope}
                       color="beige"
@@ -298,21 +539,24 @@ export default function NavBar({ toggleOffcanvas }) {
                     <h5>Message</h5>
                   </div>
                 </Link>
-              ) : (
-                ""
               )}
-              <Link to="/community-space" style={{ textDecoration: "none" }}>
-                <div className="community-space">
-                  <FontAwesomeIcon
-                    icon={faGlobe}
-                    color="beige"
-                    style={{ width: "2.5vw", height: "2.5vw" }}
-                  />
-                  <h5>Community Space</h5>
-                </div>
-              </Link>
-
-              <Link to="/profile" style={{ textDecoration: "none" }}>
+              {user_type === "patient" && (
+                <Link
+                  to="/community-space"
+                  style={style}
+                  onClick={handleCloseOffcanvas}
+                >
+                  <div className="community-space">
+                    <FontAwesomeIcon
+                      icon={faGlobe}
+                      color="beige"
+                      style={{ width: "2.5vw", height: "2.5vw" }}
+                    />
+                    <h5>Community Space</h5>
+                  </div>
+                </Link>
+              )}
+              <Link to="/profile" style={style} onClick={handleCloseOffcanvas}>
                 <div className="profile-button">
                   <FontAwesomeIcon
                     icon={faUser}
@@ -322,76 +566,119 @@ export default function NavBar({ toggleOffcanvas }) {
                   <h5>Profile</h5>
                 </div>
               </Link>
-              <h3
-                className="logoutButton"
-                onClick={() => logoutUser(user_type)}
-              >
-                Logout
-              </h3>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <div className="navImgName">
-              <img
-                src="../Images/logo/BunnaLogo.png"
-                alt=""
-                className="bunnaLogo"
-              />
-              <h3 className="bunnaName">BunnaMind</h3>
-            </div>
-          </Link>
-          <div className="navLink">
-            {location.pathname === "/" && (
-              <div className="navLinkFlex">
-                <Link to="/register-t" style={{ textDecoration: "none" }}>
-                  <h3>For Therapist</h3>
-                </Link>
-                <h3 onClick={() => scrollToSection("Faq")}>FAQ</h3>
-                <h3 onClick={() => scrollToSection("AboutUs")}>About Us</h3>
-                <h3 onClick={() => scrollToSection("ContactUs")}>Contact Us</h3>
-              </div>
-            )}
-          </div>
-
-          <div className="navButton">
-            {location.pathname === "/login-p" ? (
-              <div className="navButtonFlex">
-                <Link to="/register-p" style={{ textDecoration: "none" }}>
-                  <h3 className="registerButton">Register</h3>
-                </Link>
-              </div>
-            ) : location.pathname === "/login-t" ? (
-              <div className="navButtonFlex">
-                <Link to="/register-t" style={{ textDecoration: "none" }}>
-                  <h3 className="registerButton">Register</h3>
-                </Link>
-              </div>
-            ) : (
-              <div className="navButtonFlex">
-                {location.pathname === "/register-t" ? (
-                  <Link to="/login-t" style={{ textDecoration: "none" }}>
-                    <h3 className="loginButton">Login</h3>{" "}
+              {user_type === "patient" && (
+                <div onClick={handleCloseOffcanvas}>
+                  <h4
+                    className="logoutButton"
+                    onClick={() => logoutUser(user_type)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Logout
+                  </h4>
+                </div>
+              )}
+              {user_type === "therapist" && (
+                <>
+                  <Link to="/dashboard-t" onClick={handleCloseOffcanvas}>
+                    <div className="menu-link">
+                      <FontAwesomeIcon
+                        icon={faDashboard}
+                        style={{ width: "2.5vw", height: "2.5vw" }}
+                      />
+                      <h5>Dashboard</h5>
+                    </div>
                   </Link>
-                ) : (
-                  <Link to="/login-p" style={{ textDecoration: "none" }}>
-                    <h3 className="loginButton">Login</h3>{" "}
+                  <Link to="/appointments-t" onClick={handleCloseOffcanvas}>
+                    <div className="menu-link">
+                      <FontAwesomeIcon
+                        icon={faCalendar}
+                        style={{ width: "2.5vw", height: "2.5vw" }}
+                      />
+                      <h5>Appointments</h5>
+                    </div>
                   </Link>
-                )}
-
-                {location.pathname === "/" && (
-                  <Link to="/register-p" style={{ textDecoration: "none" }}>
-                    {" "}
-                    <h3 className="registerButton">Register</h3>{" "}
+                  <Link to="/records-t" onClick={handleCloseOffcanvas}>
+                    <div className="menu-link">
+                      <FontAwesomeIcon
+                        icon={faNoteSticky}
+                        style={{ width: "2.5vw", height: "2.5vw" }}
+                      />
+                      <h5>Record</h5>
+                    </div>
                   </Link>
-                )}
-              </div>
-            )}
-          </div>
-        </>
-      )}
-    </nav>
+                  <Link to="/community-space" onClick={handleCloseOffcanvas}>
+                    <div className="menu-link">
+                      <FontAwesomeIcon
+                        icon={faGlobe}
+                        style={{ width: "2.5vw", height: "2.5vw" }}
+                      />
+                      <h5>Community Space</h5>
+                    </div>
+                  </Link>
+                  <div onClick={handleCloseOffcanvas}>
+                    <h4
+                      className="logoutButton"
+                      onClick={() => logoutUser(user_type)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Logout
+                    </h4>
+                  </div>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              {location.pathname === "/login-p" ? (
+                <div className="navButtonFlex">
+                  <Link
+                    to="/register-p"
+                    style={style}
+                    onClick={handleCloseOffcanvas}
+                  >
+                    <h4 className="registerButton">Register</h4>
+                  </Link>
+                </div>
+              ) : location.pathname === "/login-t" ? (
+                <div className="navButtonFlex">
+                  <Link
+                    to="/register-t"
+                    style={style}
+                    onClick={handleCloseOffcanvas}
+                  >
+                    <h4 className="registerButton">Register</h4>
+                  </Link>
+                </div>
+              ) : (
+                <div className="navButtonFlex">
+                  {location.pathname === "/register-t" ? (
+                    <Link
+                      to="/login-t"
+                      style={style}
+                      onClick={handleCloseOffcanvas}
+                    >
+                      <h4 className="loginButton">Login</h4>
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/login-p"
+                      style={style}
+                      onClick={handleCloseOffcanvas}
+                    >
+                      <h4 className="loginButton">Login</h4>
+                    </Link>
+                  )}
+                  {location.pathname === "/" && (
+                    <Link to="/register-p" style={style}>
+                      <h4 className="registerButton">Register</h4>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </Offcanvas.Body>
+      </Offcanvas>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 .landingPage {
-    padding-top: 7vw;
+    padding-top: var(--navbar-height);
     /* text-align: center; */
 }
 

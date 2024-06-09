@@ -7,7 +7,11 @@
         "therapistLoginbtn": "Login",
         "therapistForgot": "Forgot Password",
         "therapistLoginEmail": "Email",
-        "therapistLoginPassword": "Password"
+        "therapistLoginPassword": "Password",
+        "loginClient": "Client Login Page",
+        "signinAsTherapist": "Sign in as therapist",
+        "dontHaveAccount": "Don't have an account?",
+        "signup": "Sign Up"
     },
     "register": {
         "welcomeTitle": "Welcome to BunnaMind",
@@ -40,7 +44,14 @@
         "registerLabelLiscence": "Select Liscence File:",
         "registerBtn": "Register",
         "registerForgetPassword": "Forget password?",
-        "registerHaveAccount": "Already have an account? "
+        "registerHaveAccount": "Already have an account? ",
+        "clientRegistration": "Client Registration Page",
+        "termAndCondition": "BunnaMind's terms and conditions",
+        "youAccept": "You must accept the terms and conditions to register.",
+        "signin": "Sign In",
+        "registerTherapist": "Register as a therapist",
+        "therapistRegistartion": "Therapist Registration Page",
+        "registerClient": "Register as a client"
     },
     "home":{
         "homeIntroTitleH3": "Nurturing Minds, Empowering Lives.",
@@ -80,7 +91,7 @@
     "profile": {
         "accountSetting": "Account Setting",
         "changePassword": "Change Password",
-        "additionalInformation": "Additional Information",
+        "additionalProfile": "Additional Information",
         "notification": "Notification",
         "firstName": "First Name",
         "lastName": "Last Name",
@@ -89,6 +100,7 @@
         "gender": "Gender",
         "male": "Male",
         "female": "Female",
+        "bio": "Bio",
         "age": "Age",
         "city": "City",
         "region": "Region",
@@ -98,11 +110,27 @@
         "divorced": "Divorced",
         "languagePreference": "Language Preference",
         "occupation": "Occupation",
-        "update": "Update",
         "currentPassword": "Current Password",
         "newPassword": "New Password",
         "confirmPassword": "Confirm Password",
-        "updatePassword": "Update Password"
+        "updatePassword": "Update Password",
+        "updateProfile": "Update Profile Picture",
+        "balancedRelated": "Balanced Related",
+        "religion": "Religion",
+        "specialization": "Specialization",
+        "experience": "Experience",
+        "withdrawableBalance": "Withdrawable Balance",
+        "totalBalance": "Total Balance",
+        "withdraw": "Withdraw",
+        "aboutMe": "About me ...",
+        "updateBio": "Update Bio",
+        "paymentRate": "Payment Rate",
+        "yourPaymentRate1": "Your Payment rate per month (ETB/month) is 0 ETB",
+        "enterNumber": "Enter a number",
+        "yourPaymentRate2": "Your payment rate per month",
+        "update": "Update"
+        
+
     },
     "dashboard":{
         "totalCounceling": "Total Counceling",
@@ -263,12 +291,6 @@
         "recordLastName" :"Last Name",
         "recordPaymentAmount" :"Payment Amount",
         "recordPaymentdate" :"Payment Date"
-    },
-    "setting":{
-        "yourpaymentRate1": "Your Payment rate per month (ETB/month) is 0 ETB",
-        "enterNumber": "Enter a number",
-        "yourpaymentRate2": "Your payment rate per mounth",
-        "update": "Update"
     },
     "resetPassword": {
         "resetPasswordTitle": "Reset Password",

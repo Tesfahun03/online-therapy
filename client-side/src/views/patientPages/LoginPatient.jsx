@@ -59,7 +59,7 @@ export default function LoginPatient() {
         <div className="loginFormLogo">
           <img src="../Images/login/LoginLogo.png" alt="" />
           <h2 className="mb-2">{t("login.patientLoginTitle")}</h2>
-          <h5 className="fw-light mb-3 p-0">Client Login Page</h5>
+          <h5 className="fw-light mb-3 p-0">{t("login.loginClient")}</h5>
         </div>
         <div className="loginCard">
           <form onSubmit={handleLoginSubmit}>
@@ -89,7 +89,7 @@ export default function LoginPatient() {
               </p>
             </Link>
             <p className="p-0 m-0">
-              Don't have an account?{" "}
+            {t("login.dontHaveAccount")}{" "}
               <Link
                 to="/register-p"
                 style={{
@@ -98,7 +98,7 @@ export default function LoginPatient() {
                   fontWeight: "500",
                 }}
               >
-                Sign up
+                {t("login.signup")}
               </Link>
             </p>
             <Link to="/login-t" style={{ textDecoration: "none" }}>
@@ -106,7 +106,7 @@ export default function LoginPatient() {
                 className="mb-3 mt-2"
                 style={{ color: "brown", fontWeight: "500" }}
               >
-                Sign in as a therapist
+                {t("login.signinAsTherapist")}
               </p>
             </Link>
           </form>
