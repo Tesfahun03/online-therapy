@@ -7,7 +7,11 @@
         "therapistLoginbtn": "Login",
         "therapistForgot": "La ilaaway Password",
         "therapistLoginEmail": "Email",
-        "therapistLoginPassword": "Password"
+        "therapistLoginPassword": "Password",
+        "loginClient": "Bogga Galitaanka Macmiilka",
+        "signinAsTherapist": "Soo gal sidii daaweeyaha",
+        "dontHaveAccount": "Akoon ma lihi?",
+        "signup": "Sign Up"
     },
     "register": {
         "welcomeTitle": "Ku soo dhawoow BunnaMind",
@@ -40,7 +44,14 @@
         "registerLabelLiscence": "Dooro Faylka Shatiga:",
         "registerBtn": "Diiwaangeli",
         "registerForgetPassword": "Ma ilowdey erayga sirta ah?",
-        "registerHaveAccount": "Haddaba akoon ma leedahay?"
+        "registerHaveAccount": "Haddaba akoon ma leedahay?",
+        "clientRegistration": "Bogga Diiwaangelinta Macmiilka",
+        "termAndCondition": "Xeerka iyo shuruudaha BunnaMind",
+        "youAccept": "Waa inaad aqbashaa shuruudaha iyo shuruudaha si aad isu diiwaangeliso.",
+        "signin": "Sign in",
+        "registerTherapist": "Is diwaangeli sidii daaweeyaha",
+        "therapistRegistartion": "Bogga Diiwaangelinta Daaweeye",
+        "registerClient": "Is diwaangeli macmiil ahaan"
     },
     "home":{
         "homeIntroTitleH3": "Kurrinta Maskaxda, Awoodsiinta Nolosha.",
@@ -79,7 +90,7 @@
     "profile": {
         "accountSetting": "Dejinta Koontada",
         "changePassword": "Beddel erayga sirta ah",
-        "additionalInformation": "Macluumaad Dheeraad ah",
+        "additionalProfile": "Macluumaad Dheeraad ah",
         "notification": "Ogaysiis",
         "firstName": "Magaca koowaad",
         "lastName": "Magaca Dambe",
@@ -101,7 +112,21 @@
         "currentPassword": "Current Password",
         "newPassword": "Password cusub",
         "confirmPassword": "Xaqiiji erayga sirta ah",
-        "updatePassword": "Cusbooneysii erayga sirta ah"
+        "updatePassword": "Cusbooneysii erayga sirta ah",
+        "updateProfile": "Cusbooneysii sawirka Profile",
+        "balancedRelated": "La Xiriira dheelitiran",
+        "religion": "Diinta",
+        "specialization": "Specialization",
+        "experience": "Khibrad",
+        "withdrawableBalance": "Balance la bixi karo",
+        "totalBalance": "Dhammaan wadarta guud",
+        "withdraw": "ka bixid",
+        "aboutMe": "Aniga igu saabsan...",
+        "updateBio": "Cusbooneysii Bio",
+        "PaymentRate": "Qiimaha Lacag-bixinta",
+        "yourPaymentRate1": "Heerka lacag-bixintaada bishii (ETB/bishii) waa 0 ETB",
+        "enterNumber": "Gali nambar",
+        "yourPaymentRate2": "Qiimaha lacag bixinta halkii bil"
     },
     "dashboard":{
         "totalCounceling": "Isugaynta Guud",
@@ -261,12 +286,6 @@
         "recordLastName" :"Magaca Dambe",
         "recordPaymentAmount" :"Lacagta Bixinta",
         "recordPaymentdate" :"Taariikhda lacag bixinta"
-    },
-    "setting":{
-        "yourpaymentRate1": "Heerka lacag-bixintaada bishii (ETB/bishii) waa 0 ETB",
-        "enterNumber": "Gali nambar",
-        "yourpaymentRate2": "Qiimaha lacag bixinta halkii bil",
-        "update": "Cusbooneysiin"
     },
     "resetPassword": {
         "resetPasswordTitle": "Dib u deji erayga sirta ah",

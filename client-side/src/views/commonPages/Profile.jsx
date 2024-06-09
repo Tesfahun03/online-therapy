@@ -374,7 +374,7 @@ export default function Profile() {
                       cursor: "pointer",
                     }}
                   >
-                    Update Profile Picture
+                    {t("profile.updateProfile")}
                   </button>
                 )}
               </div>
@@ -422,7 +422,7 @@ export default function Profile() {
                       }}
                       onClick={() => handleButtonId("AdditionalInformation")}
                     >
-                      Additional Information
+                      {t("profile.additionalProfile")}
                     </h6>
                     <h6
                       style={{
@@ -434,7 +434,7 @@ export default function Profile() {
                       }}
                       onClick={() => handleButtonId("Balance")}
                     >
-                      Balance Related
+                      {t("profile.balancedRelated")}
                     </h6>
                   </>
                 )}
@@ -678,7 +678,7 @@ export default function Profile() {
                           style={{ width: "max-content" }}
                           className="form-label m-0 p-0 ms-2 mb-1 "
                         >
-                          Religion
+                          {t("profile.religion")}
                         </label>
                         <select
                           name="religion"
@@ -699,7 +699,7 @@ export default function Profile() {
                               style={{ width: "max-content" }}
                               className="form-label m-0 p-0 ms-2 mb-1"
                             >
-                              Specialization
+                              {t("profile.specialization")}
                             </label>
                             <input
                               name="specialization"
@@ -717,7 +717,7 @@ export default function Profile() {
                               style={{ width: "max-content" }}
                               className="form-label m-0 p-0 ms-2 mb-1"
                             >
-                              Experience
+                              {t("profile.experience")}
                             </label>
                             <input
                               type="number"
@@ -798,7 +798,7 @@ export default function Profile() {
                 {activeButton === "Balance" && (
                   <div className="main-content">
                     <div className="row">
-                      <h6>Payment Rate</h6>
+                      <h6>{t("profile.paymentRate")}</h6>
                       {therapists.paymentRate === 0 && (
                         <Alert
                           variant="danger"
@@ -806,7 +806,7 @@ export default function Profile() {
                           dismissible
                         >
                           <h6>
-                            Your Payment rate per month (ETB/month) is 0 ETB
+                          {t("profile.yourPaymentRate1")}
                           </h6>
                         </Alert>
                       )}
@@ -830,7 +830,7 @@ export default function Profile() {
                               type="number"
                               className="form-control"
                               id="floatingInput"
-                              placeholder="Enter a number"
+                              placeholder={t("profile.enterNumber")}
                               value={paymentRate}
                               onChange={handlePaymentRateChange}
                             />
@@ -838,24 +838,24 @@ export default function Profile() {
                               htmlFor="floatingInput"
                               style={{ width: "100%" }}
                             >
-                              Your payment rate per month
+                              {t("profile.yourPaymentRate2")}
                             </label>
                           </div>
                           <span className="input-group-text">ETH Birr</span>
                         </div>
                         <button className="btn btn-outline-success ms-2">
-                          Update
+                        {t("profile.update")}
                         </button>
                       </form>
                     </div>
                     <div className="row">
-                      <h6 className="mt-3">Withdrawable Balance</h6>
+                      <h6 className="mt-3">{t("profile.withdrawableBalance")}</h6>
                       <div className="input-group" style={{ width: "25%" }}>
                         <input
                           type="number"
                           className="form-control"
                           id="floatingInput"
-                          placeholder="Enter a number"
+                          placeholder={t("profile.enterNumber")}
                           value={therapists.withdrawableBalance}
                           readOnly
                         />
@@ -864,13 +864,13 @@ export default function Profile() {
                     </div>
 
                     <div className="row">
-                      <h6 className="mt-3">Total Balance</h6>
+                      <h6 className="mt-3">{t("profile.totalBalance")}</h6>
                       <div className="input-group" style={{ width: "25%" }}>
                         <input
                           type="number"
                           className="form-control"
                           id="floatingInput"
-                          placeholder="Enter a number"
+                          placeholder={t("profile.enterNumber")}
                           value={therapists.totalBalance}
                           readOnly
                         />
@@ -882,7 +882,7 @@ export default function Profile() {
                         className="btn btn-outline-secondary ms-3 mt-2"
                         style={{ width: "10%" }}
                       >
-                        Withdraw
+                        {t("profile.withdraw")}
                       </button>
                     </div>
                   </div>
@@ -902,7 +902,7 @@ export default function Profile() {
                         name="bio"
                         type="text"
                         className="form-control w-100 profile-input"
-                        placeholder="About me ... "
+                        placeholder={t("profile.aboutMe")}
                         id="Bio"
                         style={{ width: "auto", height:"200px" }}
                         value={profile.bio}
@@ -914,7 +914,7 @@ export default function Profile() {
                       style={{ width: "25%" }}
                       onClick={handleSubmit}
                     >
-                      Update Bio
+                      {t("profile.updateBio")}
                     </button>
                   </div>
                 )}

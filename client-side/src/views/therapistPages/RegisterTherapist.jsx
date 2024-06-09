@@ -215,7 +215,7 @@ export default function RegisterTherapist() {
         <div className="reg-thera-form">
           <div className="reg-thera-card-header">
             <h4>{t("register.therapistRegisterHeader")}</h4>
-            <h6 className="fw-light mt-2 mb-0">Therapist Registration Page</h6>
+            <h6 className="fw-light mt-2 mb-0">{t("register.therapistRegistartion")}</h6>
           </div>
           <form
             onSubmit={handleRegisterTherapistSubmit}
@@ -553,7 +553,7 @@ export default function RegisterTherapist() {
               >
                 I accept{" "}
                 <Link to="/terms-and-conditions">
-                  BunnaMind's terms and conditions
+                  {t("register.termAndCondition")}
                 </Link>
               </label>
             </div>
@@ -564,7 +564,7 @@ export default function RegisterTherapist() {
               overlay={
                 !acceptedTerms ? (
                   <Tooltip id="button-tooltip">
-                    You must accept the terms and conditions to register.
+                    {t("register.youAccept")}
                   </Tooltip>
                 ) : (
                   <></>
@@ -604,7 +604,7 @@ export default function RegisterTherapist() {
                   fontWeight: "500",
                 }}
               >
-                Sign in
+                {t("register.signin")}
               </Link>
             </p>
             <p className="m-0 p-0">
@@ -616,7 +616,7 @@ export default function RegisterTherapist() {
                   fontWeight: "500",
                 }}
               >
-                Register as a client
+                {t("register.registerClient")}
               </Link>
             </p>
           </form>

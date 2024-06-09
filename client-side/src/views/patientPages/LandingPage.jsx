@@ -11,15 +11,7 @@ import {
   faStar,
   faArrowCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  Tooltip,
-  OverlayTrigger,
-  Card,
-  Button,
-  Table,
-  Alert,
-  Modal,
-} from "react-bootstrap";
+import { Tooltip, OverlayTrigger, Card, Button, Table, Alert, Modal } from "react-bootstrap";
 import moment from "moment";
 
 export default function LandingPage() {
@@ -109,50 +101,37 @@ export default function LandingPage() {
   const handleTherapistSelect = (therapistid) => {
     history.push(`/viewtherapist/${therapistid}`);
   };
-
+  
   const handleVideo = (appointmentID) => {
     history.push(`/videochat-p/${appointmentID}`);
   };
 
-  const SearchTherapist = async (searchQuery) => {
+  const SearchTherapist = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/core/search/${searchQuery}`
+        'http://127.0.0.1:8000/core/search/' + searchTherapist.username + '/'
       );
       if (response.status === 200) {
-        if (response.data.length === 0) {
-          setSearchResults(["No users found"]);
-        } else {
-          setSearchResults(response.data);
-        }
+        setSearchResults(response.data);
       } else if (response.status === 404) {
         console.log(response.data.detail);
-        setSearchResults(["No users found"]);
+        alert("User does not exist");
       }
     } catch (error) {
       console.error("Error searching therapist:", error);
-      setSearchResults(["No users found"]);
-    }
-  };
+      alert("Error searching therapist");
+    }    
+};
 
   function handelSearch(event) {
-    const { value } = event.target;
+    const { name, value } = event.target;
 
     setSearchTherapist((prevSetSearchTherapist) => {
       return {
         ...prevSetSearchTherapist,
-        search: value,
+        [name]: value,
       };
     });
-
-    // Call the search function directly
-    if (value.trim() !== "") {
-      // Only call the API if the search query is not empty
-      SearchTherapist(value);
-    } else {
-      // Clear the search results if the search query is empty
-      setSearchResults([]);
-    }
   }
 
   useEffect(() => {
@@ -186,17 +165,13 @@ export default function LandingPage() {
       try {
         const response = await axios.get(
           `http://127.0.0.1:8000/session/patient/${user_id}/appointments`
-        );
-        const data = await response.data;
+        );const data = await response.data;
         const now = moment();
         // Filter out appointments that are in the past or have ended
-        const filteredAppointments = data.filter((appointment) => {
-          const appointmentEnd = moment(
-            `${appointment.date} ${appointment.end_time}`,
-            "YYYY-MM-DD HH:mm:ss"
-          );
-          return appointmentEnd.isAfter(now);
-        });
+        const filteredAppointments = data.filter(appointment => {
+        const appointmentEnd = moment(`${appointment.date} ${appointment.end_time}`, "YYYY-MM-DD HH:mm:ss");
+        return appointmentEnd.isAfter(now);
+      });
         setAppointments(filteredAppointments);
       } catch (error) {
         console.error("Error fetching appointments:", error);
@@ -234,21 +209,17 @@ export default function LandingPage() {
       second: moment(startTime, "HH:mm:ss").second(),
     });
     // Subtract 5 minutes from the appointment time
-    const videoAvailableTime = moment(appointmentDateTime).subtract(
-      5,
-      "minutes"
-    );
+    const videoAvailableTime = moment(appointmentDateTime).subtract(5, "minutes");
     return moment().isSameOrAfter(videoAvailableTime);
   };
 
-  console.log(searchResults)
   return (
     <div className="landingPage">
       <div className="languageForTranslate">
         <select
           className="preferedLanguage"
           onChange={handleChangeLanguage}
-          value={selectedLanguage}
+          value={selectedLanguage} // Set value to the selected language
         >
           <option value="english">Eng</option>
           <option value="amharic">Amh</option>
@@ -269,7 +240,7 @@ export default function LandingPage() {
             className="searchBar form-control rounded-0 w-100"
             onChange={handelSearch}
           />
-          <button onClick={SearchTherapist} className="searchButton btn btn-secondary rounded-0">
+          <button onClick = {SearchTherapist} className="searchButton btn btn-secondary rounded-0">
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </form>
@@ -295,7 +266,7 @@ export default function LandingPage() {
                         height={40}
                       />
                       <div className="flex-grow-1 ml-3">
-                        {capitalizeFirstLetter(user.first_name)}{" "}{capitalizeFirstLetter(user.last_name)}
+                        {capitalizeFirstLetter(user.first_name)} {" "} {capitalizeFirstLetter(user.last_name)}
                         <div className="small">
                           <small>
                             <i className="fas fa-envelope"> {t("landingPage.viewProfile")}</i>
@@ -306,16 +277,17 @@ export default function LandingPage() {
                   </Link>
                 );
               } else {
-                return null;
+                return null; // Skip rendering if user is not a therapist
               }
             })}
           </div>
         )}
       </div>
-
+      
       {appointments.length > 0 && (
         <div className="container mt-4">
           <h2 className="text-center my-4">{t("landingPage.upcomingAppointment")}</h2>
+
           <div className="table-responsive">
             <Table striped bordered hover>
               <thead>
@@ -330,45 +302,55 @@ export default function LandingPage() {
                 {appointments.map((appointment) => (
                   <tr key={appointment.id}>
                     <td>
-                      {moment(appointment.appointment_date).format("DD MMM YYYY")}{" "}
-                      ,{" "}
-                      {moment(appointment.start_time, "HH:mm:ss").format("hh:mm A")}{" "}
+                      {moment(appointment.appointment_date).format(
+                        "DD MMM YYYY"
+                      )}  ,{" "}
+                      {moment(appointment.start_time, "HH:mm:ss").format(
+                        "hh:mm A"
+                      )}{" "}
                       -{" "}
-                      {moment(appointment.end_time, "HH:mm:ss").format("hh:mm A")}
+                      {moment(appointment.end_time, "HH:mm:ss").format(
+                        "hh:mm A"
+                      )}
                     </td>
                     <td>
-                      {appointment.therapist_first_name + " " + appointment.therapist_last_name}
+                      {appointment.therapist_first_name +
+                        " " +
+                        appointment.therapist_last_name}
                     </td>
                     <td>
+                      {" "}
                       <OverlayTrigger
-                        overlay={
-                          <Tooltip>
-                            {isVideoButtonEnabled(appointment.appointment_date, appointment.start_time)
-                              ? "Start Video"
-                              : "Video will be available at the appointment time"}
-                          </Tooltip>
-                        }
-                      >
-                        <span className="d-inline-block">
-                          <button
-                            className="btn btn-outline-success"
-                            onClick={() => handleVideo(appointment.id)}
-                            disabled={!isVideoButtonEnabled(appointment.appointment_date, appointment.start_time)}
-                            style={{
-                              pointerEvents: isVideoButtonEnabled(appointment.appointment_date, appointment.start_time)
-                                ? "auto"
-                                : "none",
-                            }}
-                          >
-                            <FontAwesomeIcon icon={faVideo} />
-                          </button>
-                        </span>
-                      </OverlayTrigger>
+                      overlay={
+                        <Tooltip>
+                          {isVideoButtonEnabled(appointment.date, appointment.start_time)
+                            ? "Start Video"
+                            : "Video will be available at the appointment time"}
+                        </Tooltip>
+                      }
+                    >
+                      <span className="d-inline-block">
+                        <button
+                          className="btn btn-outline-success"
+                          onClick={() => handleVideo(appointment.id)}
+                          disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
+                          style={{
+                            pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
+                              ? "auto"
+                              : "none",
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faVideo} />
+                        </button>
+                      </span>
+                    </OverlayTrigger>
                     </td>
                     <td>
                       <button
                         className="btn btn-outline-danger"
-                        onClick={() => handleDeleteAppointmentModal(appointment.id)}
+                        onClick={() =>
+                          handleDeleteAppointmentModal(appointment.id)
+                        }
                       >
                         {t("landingPage.cancel")}
                       </button>
@@ -381,11 +363,75 @@ export default function LandingPage() {
         </div>
       )}
 
-      <div className="recommendedTherapists mt-4">
+      <div className="recommendedTherapists  mt-4">
         <h2 className="text-center">{t("landingPage.recommendTherapist")}</h2>
-        <div className="container row ms-sm-0 ms-lg-2 ms-md-2d-flex align-items-center">
-          {filteredTherapists &&
-            filteredTherapists.map((therapist) => (
+        <div className="container row ms-sm-0 ms-lg-2 ms-md-2 d-flex align-items-center">
+          {recommendedTherapists &&
+            recommendedTherapists.map((therapist) => (
+              <div className="col-md-4 mb-4" key={therapist.id}>
+                <div class="container mt-3">
+                  <div class="card card-custom-recomended shadow border-0">
+                    <div class="star-rating">
+                      <span>
+                        <FontAwesomeIcon icon={faStar} color="#f59505a4" />{" "}
+                        {therapist.rating.toFixed(1)}
+                      </span>
+                    </div>
+                    <img
+                      src={therapist.profile.image}
+                      class="profile-img img-fluid"
+                      alt="Doctor Image"
+                      width="150"
+                      height="150"
+                    />
+                    <div className="d-flex align-items-center justify-content-between px-2">
+                      <div>
+                        <h5 class="card-title-view ms-2">
+                          {capitalizeFirstLetter(therapist.profile.first_name) +
+                            " " +
+                            capitalizeFirstLetter(therapist.profile.last_name)}
+                        </h5>
+                        <div class="speciality">{therapist.specialization}</div>
+                      </div>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() =>
+                          handleTherapistSelect(therapist.profile.user.id)
+                        }
+                      >
+                        <FontAwesomeIcon icon={faArrowCircleRight} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* <div className="feeling text-center">
+        <h2 className="mb-3 mt-5">How You feel Today?</h2>
+        <div className="how-you-feel row row-auto d-flex m-0 p-0">
+          <div className="emoji col col-4 col-auto">
+            <h3>😊</h3>
+            <h4>Happy</h4>
+          </div>
+          <div className="emoji col col-4 col-auto">
+            <h3>🙂</h3>
+            <h4>Normal</h4>
+          </div>
+          <div className="emoji col col-4 col-auto">
+            <h3>😐</h3>
+            <h4>Sad</h4>
+          </div>
+        </div>
+      </div> */}
+
+      <div className="ourTherapist mt-4 ">
+        <h3 className="text-center">{t("landingPage.ourTherapist")}</h3>
+        <div className="container row ms-sm-0 ms-lg-2 ms-md-2 d-flex align-items-center">
+          {recommendedTherapists &&
+            recommendedTherapists.map((therapist) => (
               <div className="col-md-4 mb-4" key={therapist.id}>
                 <div class="container mt-3">
                   <div class="card card-custom-recomended shadow border-0">
@@ -447,6 +493,5 @@ export default function LandingPage() {
         </Modal.Footer>
       </Modal>
     </div>
-    
   );
 }
