@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from "react-i18next";
+import jwtDecode from "jwt-decode";
 import "../../styles/Home.css"
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 
 export default function Home(){
     const [t, i18n] = useTranslation("global");
     const [selectedLanguage, setSelectedLanguage] = useState("english"); // State to store selected language
-
+    const history = useHistory();
     useEffect(() => {
         // Check if a language is saved in local storage
         const savedLanguage = localStorage.getItem("preferredLanguage");
+        const token = localStorage.getItem("authTokens");
+        if(token){
+            const decoded = jwtDecode(token);
+            const user_type = decoded.user_type;
+            if(user_type === "therapist"){
+                history.push("/dashboard-t");
+            } else if (user_type === "patient"){
+                history.push("/home-p");
+            }
+        }
         if (savedLanguage) {
             i18n.changeLanguage(savedLanguage);
             setSelectedLanguage(savedLanguage); // Set selected language from local storage

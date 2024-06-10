@@ -161,15 +161,15 @@ SIMPLE_JWT = {
 }
 
 JAZZMIN_SETTINGS = {
-    "site_title": "your_site_name",
+    "site_title": "BunnaMind",
     "site_header": "your_site_header",
-    "site_brand": "your_site_brand",
+    "site_brand": "BunnaMind",
     "site_icon": "images/favicon.png",
     # Add your own branding here
     "site_logo": None,
-    "welcome_sign": "Welcome to the your_site_name",
+    "welcome_sign": "Welcome to BunnaMind",
     # Copyright on the footer
-    "copyright": "your_site_name",
+    "copyright": "BunnaMind",
     "user_avatar": None,
     ############
     # Top Menu #
@@ -177,7 +177,7 @@ JAZZMIN_SETTINGS = {
     # Links to put along the top menu
     "topmenu_links": [
         # Url that gets reversed (Permissions can be added)
-        {"name": "your_site_name", "url": "home", "permissions": ["auth.view_user"]},
+        {"name": "BunnaMind", "url": "home", "permissions": ["auth.view_user"]},
         # model admin to link to (Permissions checked against model)
         {"model": "auth.User"},
     ],

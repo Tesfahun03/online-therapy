@@ -32,7 +32,8 @@
   font-weight: 400;
   font-style: normal;
   font-size: 1vw;
-  color: #683030;
+  /* color: #683030; */
+  color: #ffffff;
 }
 .navBar .navButton .navButtonFlex {
   display: flex;
