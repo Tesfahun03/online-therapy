@@ -11,7 +11,15 @@ import {
   faStar,
   faArrowCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { Tooltip, OverlayTrigger, Card, Button, Table, Alert, Modal } from "react-bootstrap";
+import {
+  Tooltip,
+  OverlayTrigger,
+  Card,
+  Button,
+  Table,
+  Alert,
+  Modal,
+} from "react-bootstrap";
 import moment from "moment";
 
 export default function LandingPage() {
@@ -101,37 +109,50 @@ export default function LandingPage() {
   const handleTherapistSelect = (therapistid) => {
     history.push(`/viewtherapist/${therapistid}`);
   };
-  
+
   const handleVideo = (appointmentID) => {
     history.push(`/videochat-p/${appointmentID}`);
   };
 
-  const SearchTherapist = async () => {
+  const SearchTherapist = async (searchQuery) => {
     try {
       const response = await axios.get(
-        'http://127.0.0.1:8000/core/search/' + searchTherapist.username + '/'
+        `http://127.0.0.1:8000/core/search/${searchQuery}`
       );
       if (response.status === 200) {
-        setSearchResults(response.data);
+        if (response.data.length === 0) {
+          setSearchResults(["No users found"]);
+        } else {
+          setSearchResults(response.data);
+        }
       } else if (response.status === 404) {
         console.log(response.data.detail);
-        alert("User does not exist");
+        setSearchResults(["No users found"]);
       }
     } catch (error) {
       console.error("Error searching therapist:", error);
-      alert("Error searching therapist");
-    }    
-};
+      setSearchResults(["No users found"]);
+    }
+  };
 
   function handelSearch(event) {
-    const { name, value } = event.target;
+    const { value } = event.target;
 
     setSearchTherapist((prevSetSearchTherapist) => {
       return {
         ...prevSetSearchTherapist,
-        [name]: value,
+        search: value,
       };
     });
+
+    // Call the search function directly
+    if (value.trim() !== "") {
+      // Only call the API if the search query is not empty
+      SearchTherapist(value);
+    } else {
+      // Clear the search results if the search query is empty
+      setSearchResults([]);
+    }
   }
 
   useEffect(() => {
@@ -165,13 +186,17 @@ export default function LandingPage() {
       try {
         const response = await axios.get(
           `http://127.0.0.1:8000/session/patient/${user_id}/appointments`
-        );const data = await response.data;
+        );
+        const data = await response.data;
         const now = moment();
         // Filter out appointments that are in the past or have ended
-        const filteredAppointments = data.filter(appointment => {
-        const appointmentEnd = moment(`${appointment.date} ${appointment.end_time}`, "YYYY-MM-DD HH:mm:ss");
-        return appointmentEnd.isAfter(now);
-      });
+        const filteredAppointments = data.filter((appointment) => {
+          const appointmentEnd = moment(
+            `${appointment.date} ${appointment.end_time}`,
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          return appointmentEnd.isAfter(now);
+        });
         setAppointments(filteredAppointments);
       } catch (error) {
         console.error("Error fetching appointments:", error);
@@ -209,7 +234,10 @@ export default function LandingPage() {
       second: moment(startTime, "HH:mm:ss").second(),
     });
     // Subtract 5 minutes from the appointment time
-    const videoAvailableTime = moment(appointmentDateTime).subtract(5, "minutes");
+    const videoAvailableTime = moment(appointmentDateTime).subtract(
+      5,
+      "minutes"
+    );
     return moment().isSameOrAfter(videoAvailableTime);
   };
 
@@ -231,62 +259,71 @@ export default function LandingPage() {
       <h2 className="hi text-center fw-bold fs-1 mt-3 mb-3">
         {t("landingPage.hiPatientName")}, {first_name}!
       </h2>
-      <div className="row search d-flex justify-content-around">
-        <form className="d-flex w-50" onSubmit={(e) => { e.preventDefault(); }}>
-          <input
-            type="text"
-            placeholder={t("landingPage.searchTherapist")}
-            name="username"
-            className="searchBar form-control rounded-0 w-100"
-            onChange={handelSearch}
-          />
-          <button onClick = {SearchTherapist} className="searchButton btn btn-secondary rounded-0">
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
-        </form>
-      </div>
-      <div className="searchResults mt-4 justify-content-center d-flex">
-        {searchResults.length > 0 && (
-          <div>
-            <h2 className="text-center">{t("landingPage.searchResult")}</h2>
-            {searchResults.map((user) => {
-              if (user.user_type === 'therapist') {
-                return (
-                  <Link
-                    to={`/viewtherapist/${user.user_id}`}
-                    className="list-group-item list-group-item-action border-0"
-                    key={user.user_id}
-                  >
-                    <div className="d-flex align-items-start">
-                      <img
-                        src={user.image}
-                        className="rounded-circle mr-1"
-                        alt="Profile"
-                        width={40}
-                        height={40}
-                      />
-                      <div className="flex-grow-1 ml-3">
-                        {capitalizeFirstLetter(user.first_name)} {" "} {capitalizeFirstLetter(user.last_name)}
-                        <div className="small">
-                          <small>
-                            <i className="fas fa-envelope"> {t("landingPage.viewProfile")}</i>
-                          </small>
+      <div className="searchContainer">
+        <div className="row m-0 p-0 search d-flex justify-content-around">
+          <form
+            className="d-flex w-50"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Search Therapist"
+              name="username"
+              className="searchBar form-control rounded-0 w-100"
+              onChange={handelSearch}
+            />
+            <button className="searchButton btn btn-secondary rounded-0">
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+          </form>
+        </div>
+        <div className="searchResults mt-4 justify-content-center d-flex">
+          {searchResults.length > 0 && (
+            <div className="searchResultsContainer w-50 shadow">
+              <h2 className="text-center">{t("landingPage.searchResult")}</h2>
+              {searchResults.map((user) => {
+                if (user.user_type === "therapist") {
+                  return (
+                    <Link
+                      to={`/viewtherapist/${user.user_id}`}
+                      className="list-group-item list-group-item-action border-0"
+                      key={user.user_id}
+                    >
+                      <div className="search-result d-flex align-items-start mb-2 hover border p-2">
+                        <img
+                          src={user.image}
+                          className="rounded-circle mr-1"
+                          alt="Profile"
+                          width={40}
+                          height={40}
+                        />
+                        <div className="flex-grow-1 ms-3">
+                          {capitalizeFirstLetter(user.first_name)}{" "}
+                          {capitalizeFirstLetter(user.last_name)}
+                          <div className="small" style={{ color: "gray" }}>
+                            View profile{" "}
+                            <FontAwesomeIcon icon={faArrowCircleRight} />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                );
-              } else {
-                return null; // Skip rendering if user is not a therapist
-              }
-            })}
-          </div>
-        )}
+                    </Link>
+                  );
+                } else {
+                  return null; // Skip rendering if user is not a therapist
+                }
+              })}
+            </div>
+          )}
+        </div>
       </div>
-      
+
       {appointments.length > 0 && (
         <div className="container mt-4">
-          <h2 className="text-center my-4">{t("landingPage.upcomingAppointment")}</h2>
+          <h2 className="text-center my-4">
+            {t("landingPage.upcomingAppointment")}
+          </h2>
 
           <div className="table-responsive">
             <Table striped bordered hover>
@@ -304,7 +341,8 @@ export default function LandingPage() {
                     <td>
                       {moment(appointment.appointment_date).format(
                         "DD MMM YYYY"
-                      )}  ,{" "}
+                      )}{" "}
+                      ,{" "}
                       {moment(appointment.start_time, "HH:mm:ss").format(
                         "hh:mm A"
                       )}{" "}
@@ -321,29 +359,40 @@ export default function LandingPage() {
                     <td>
                       {" "}
                       <OverlayTrigger
-                      overlay={
-                        <Tooltip>
-                          {isVideoButtonEnabled(appointment.date, appointment.start_time)
-                            ? "Start Video"
-                            : "Video will be available at the appointment time"}
-                        </Tooltip>
-                      }
-                    >
-                      <span className="d-inline-block">
-                        <button
-                          className="btn btn-outline-success"
-                          onClick={() => handleVideo(appointment.id)}
-                          disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
-                          style={{
-                            pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
-                              ? "auto"
-                              : "none",
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faVideo} />
-                        </button>
-                      </span>
-                    </OverlayTrigger>
+                        overlay={
+                          <Tooltip>
+                            {isVideoButtonEnabled(
+                              appointment.date,
+                              appointment.start_time
+                            )
+                              ? "Start Video"
+                              : "Video will be available at the appointment time"}
+                          </Tooltip>
+                        }
+                      >
+                        <span className="d-inline-block">
+                          <button
+                            className="btn btn-outline-success"
+                            onClick={() => handleVideo(appointment.id)}
+                            disabled={
+                              !isVideoButtonEnabled(
+                                appointment.date,
+                                appointment.start_time
+                              )
+                            }
+                            style={{
+                              pointerEvents: isVideoButtonEnabled(
+                                appointment.date,
+                                appointment.start_time
+                              )
+                                ? "auto"
+                                : "none",
+                            }}
+                          >
+                            <FontAwesomeIcon icon={faVideo} />
+                          </button>
+                        </span>
+                      </OverlayTrigger>
                     </td>
                     <td>
                       <button

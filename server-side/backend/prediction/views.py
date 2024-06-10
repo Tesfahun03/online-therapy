@@ -36,10 +36,26 @@ class PredictDisorder(APIView):
                 data['q26'], data['q27']
             ]], dtype=object) 
            
-            prediction = model.predict(input_data)
-            res = model.predict_proba(input_data)
-            print(res)
-            result = prediction[0]
+            predicted_disorders = model.predict(input_data)
+            probability = model.predict_proba(input_data)
+
+            Disorders = ['MDD', 'ASD', 'Loneliness', 'bipolar', 'anexiety', 'PTSD',
+       'sleeping disorder', 'psychotic deprission', 'eating disorder',
+       'ADHD', 'PDD', 'OCD']  
+            
+        
+            for i in range(len(predicted_disorders)):
+                top_disorder_indices = np.argsort(probability[i])[::-1][:3]
+                top_disorders = [Disorders[idx] for idx in top_disorder_indices]
+                top_probs = probability[i][top_disorder_indices]
+                result = [
+                      f'{top_disorders[0]} -> {round(top_probs[0] * 100, 2)} %',
+                      f'{top_disorders[1]} -> {round(top_probs[1] * 100, 2)} %',
+                      f'{top_disorders[2]} -> {round(top_probs[2] * 100, 2)} %'
+             ]
+                
+            
+            
             patient.prediction_result = result
 
             predicted_value = PredictedValues(patient = patient, predicted_result = result)
@@ -48,7 +64,7 @@ class PredictDisorder(APIView):
 # 'WITH PROBABILITY OF: ': res
         
 
-            return Response({'prediction ': result }, status = status.HTTP_200_OK )
+            return Response( result , status = status.HTTP_200_OK )
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -59,3 +75,4 @@ class PredictedValueViews(APIView):
         result_list = PredictedValues.objects.filter(patient = patient).order_by('-predicted_at')
         serializer = PredictedValueSerializer(result_list, many = True)
         return Response(serializer.data)
+    

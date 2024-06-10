@@ -33,9 +33,33 @@ export default function RecordsDetail() {
   const [appointments, setAppointments] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const handleShow = () => setShowModal(true);
-
   const handleClose = () => {
     setShowModal(false);
+  };
+
+  //edit the note
+  const [editMode, setEditMode] = useState(false);
+  const [editRecordId, setEditRecordId] = useState(null);
+
+  const handleEditClick = (recordId, note) => {
+    setRecord(note);
+    setEditRecordId(recordId);
+    setEditMode(true);
+    setShowModal(true);
+  };
+
+  const truncateNote = (note, length) => {
+    if (note.length <= length) return note;
+    return note.substring(0, length) + "...";
+  };
+
+  const [expandedNotes, setExpandedNotes] = useState({});
+
+  const handleToggleReadMore = (id) => {
+    setExpandedNotes((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   const handleRecord = (e) => {
@@ -95,19 +119,28 @@ export default function RecordsDetail() {
 
   const handleRecordSubmit = async (e) => {
     e.preventDefault();
-    console.log(id);
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/session/patient/${id}/record/`,
-        { note: record, therapist_name: user_id, patient: id }
-      );
-
-      console.log("Record posted successfully:", response.data);
+      if (editMode) {
+        const response = await axios.put(
+          `http://127.0.0.1:8000/session/patient/${id}/record/${editRecordId}/`,
+          { note: record, therapist_name: user_id, patient: id }
+        );
+        console.log("Record updated successfully:", response.data);
+      } else {
+        const response = await axios.post(
+          `http://127.0.0.1:8000/session/patient/${id}/record/`,
+          { note: record, therapist_name: user_id, patient: id }
+        );
+        console.log("Record posted successfully:", response.data);
+      }
       setShowModal(false);
+      setRecord("");
+      setEditMode(false);
+      setEditRecordId(null);
       window.location.reload();
     } catch (error) {
       console.error(
-        "Error on posting record:",
+        "Error on submitting record:",
         error.response ? error.response.data : error.message
       );
     }
@@ -119,11 +152,11 @@ export default function RecordsDetail() {
 
   return (
     <div className="therapist-home d-flex flex-column m-0">
-      <div className="main-content col-lg-12 col-md-12 col-sm-8 px-4 min-vh-100" >
+      <div className="main-content col-lg-12 col-md-12 col-sm-8 px-4 min-vh-100">
         {patient && (
           <div>
             <div className="container-fluid">
-              <div className="row shadow mt-4" >
+              <div className="row shadow mt-4">
                 <div className="col-12 d-lg-flex d-sm-block">
                   <div className="content m-0 p-0">
                     <div className="row">
@@ -144,7 +177,7 @@ export default function RecordsDetail() {
                         </div>
                       </div>
                     </div>
-                    <div className="row mt-4"style={{zIndex:500}}>
+                    <div className="row mt-4" style={{ zIndex: 500 }}>
                       <div className="col-12">
                         <div className="card card-custom p-4">
                           <div className="d-flex align-items-start justify-content-between">
@@ -152,7 +185,7 @@ export default function RecordsDetail() {
                               <img
                                 src={patient.profile.image}
                                 className="rounded-circle me-1"
-                                alt="Esther Flores"
+                                alt="Profile image"
                                 width={60}
                               />
                               <div className="ms-3">
@@ -219,45 +252,49 @@ export default function RecordsDetail() {
                       <div className="col-12 mt-4">
                         <div className="card card-custom p-4 mb-4">
                           <h5>Upcoming Appointments</h5>
-                          <table className="table">
-                            <thead>
-                              <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Type</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {filteredAppointments.map((appointment) => (
-                                <tr key={appointment.id}>
-                                  <td>
-                                    {new Date(
-                                      appointment.startDate
-                                    ).toLocaleDateString()}
-                                  </td>
-                                  <td>
-                                    {new Date(
-                                      appointment.startDate
-                                    ).toLocaleTimeString([], {
-                                      hour: "2-digit",
-                                      minute: "2-digit",
-                                    })}
-                                  </td>
-                                  <td>
-                                    {" "}
-                                    <button
-                                      className="btn btn-success"
-                                      onClick={() =>
-                                        handleVideo(appointment.id)
-                                      }
-                                    >
-                                      <FontAwesomeIcon icon={faVideo} />
-                                    </button>
-                                  </td>
+                          {filteredAppointments.length > 0 ? (
+                            <table className="table">
+                              <thead>
+                                <tr>
+                                  <th>Date</th>
+                                  <th>Time</th>
+                                  <th>Type</th>
                                 </tr>
-                              ))}
-                            </tbody>
-                          </table>
+                              </thead>
+                              <tbody>
+                                {filteredAppointments.map((appointment) => (
+                                  <tr key={appointment.id}>
+                                    <td>
+                                      {new Date(
+                                        appointment.startDate
+                                      ).toLocaleDateString()}
+                                    </td>
+                                    <td>
+                                      {new Date(
+                                        appointment.startDate
+                                      ).toLocaleTimeString([], {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                      })}
+                                    </td>
+                                    <td>
+                                      {" "}
+                                      <button
+                                        className="btn btn-success"
+                                        onClick={() =>
+                                          handleVideo(appointment.id)
+                                        }
+                                      >
+                                        <FontAwesomeIcon icon={faVideo} />
+                                      </button>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          ) : (
+                            <p>No upcoming appointments with this patient.</p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -302,6 +339,12 @@ export default function RecordsDetail() {
                                 icon={faPen}
                                 className="me-1"
                                 style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  handleEditClick(
+                                    patientRecord.id,
+                                    patientRecord.note
+                                  )
+                                }
                               />
                               <FontAwesomeIcon
                                 icon={faTrash}
@@ -313,16 +356,23 @@ export default function RecordsDetail() {
                               />
                             </div>
                           </div>
-                          <div className="row d-block align-items-start">
-                            {patientRecord.note}
+                          <div className="row d-block align-items-start note-text">
+                            {expandedNotes[patientRecord.id]
+                              ? patientRecord.note
+                              : truncateNote(patientRecord.note, 100)}
                           </div>
                           <div className="row">
-                            <h6
-                              className="m-0 p-0"
-                              style={{ color: "lightblue", fontWeight: "600" }}
+                            <span
+                              className=""
+                              style={{ cursor: "pointer", color: "brown" }}
+                              onClick={() =>
+                                handleToggleReadMore(patientRecord.id)
+                              }
                             >
-                              Click to read
-                            </h6>
+                              {expandedNotes[patientRecord.id]
+                                ? " Show less"
+                                : " Read more"}
+                            </span>
                           </div>
                         </div>
                       ))}
@@ -341,7 +391,9 @@ export default function RecordsDetail() {
             centered
           >
             <Modal.Header closeButton>
-              <Modal.Title centered>Add a new record</Modal.Title>
+              <Modal.Title centered>
+                {editMode ? "Edit Record" : "Add a new record"}
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div className="input-group" style={{ width: "100%" }}>
@@ -358,7 +410,7 @@ export default function RecordsDetail() {
             </Modal.Body>
             <Modal.Footer className="d-flex">
               <Button variant="success" onClick={handleRecordSubmit}>
-                Save
+                {editMode ? "Update" : "Save"}
               </Button>
             </Modal.Footer>
           </Modal>

@@ -255,6 +255,10 @@ export default function Dashboard() {
     history.push(`/message/${patientId}`);
   };
 
+  const getCurrentTime = () => {
+    return moment().format("HH:mm:ss");
+  };
+
   return (
     <div className="container-fluid min-vh-100 px-1 m-0">
       <div className="row therapist-home d-flex flex-row m-0">
@@ -379,12 +383,18 @@ export default function Dashboard() {
                                   >
                                     <FontAwesomeIcon icon={faMessage} />
                                   </button>
-                                  <button
-                                    className="btn btn-outline-success"
-                                    onClick={handleAppointment}
-                                  >
-                                    Appointment page
-                                  </button>
+                                  {getCurrentTime() > appointment.end_time ? (
+                                    <button className="btn btn-outline-success">
+                                      Passed
+                                    </button>
+                                  ) : (
+                                    <button
+                                      className="btn btn-outline-success"
+                                      onClick={handleAppointment}
+                                    >
+                                      Appointment page
+                                    </button>
+                                  )}
                                 </div>
                               </td>
                             </tr>

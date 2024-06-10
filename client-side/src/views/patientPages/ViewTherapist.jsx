@@ -728,6 +728,61 @@ export default function ViewTherapist() {
           
         </Modal.Footer>
       </Modal>
+
+      <Modal show={showPaymentModal} onHide={handlePaymentModalClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Request for payment</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="d-flex flex-column align-items-center">
+            <img src="../Images/Chappa.jpeg" alt="" />
+          </div>
+          <h6>
+            Payment Method:{" "}
+            <span className="fw-light">
+              Using Chappa, secure payment platform
+            </span>{" "}
+          </h6>
+          <h6>
+            Therapist name:{" "}
+            <span className="fw-light">
+              {selectedTherapist.profile.first_name +
+                " " +
+                selectedTherapist.profile.last_name}
+            </span>{" "}
+          </h6>
+          <h6>
+            Client name:{" "}
+            <span className="fw-light">{first_name + " " + last_name}</span>{" "}
+          </h6>
+          <h6>
+            Payment Amount:{" "}
+            <span className="fw-light">
+              {selectedTherapist.paymentRate} birr for month
+            </span>{" "}
+          </h6>
+          <div>
+            <h6>Payment Benefits:</h6>
+            <ul>
+              <li>Unlimited messaging with the therapist</li>
+              <li>Bi-weekly video chat sessions</li>
+              {/* Add more benefits as needed */}
+            </ul>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary">Cancle</Button>
+          <Button
+            variant="outline-success"
+            onClick={() =>
+              handlePayment(user_id, selectedTherapist.profile.user.id)
+            }
+          >
+            Proceed to Chappa for Payment
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      
     </div>
   );
 }

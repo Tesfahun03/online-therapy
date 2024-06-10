@@ -73,7 +73,7 @@ export default function RegisterPatient() {
     const errors = {};
     const phoneRegex = /^(\+251|0)?9\d{8}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+\.com$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!phoneRegex.test(registerData.phoneNumber)) {
       errors.phoneNumber =
