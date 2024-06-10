@@ -54,6 +54,8 @@ export default function LandingPage() {
   const [modalTitle, setModalTitle] = useState("");
   const [cancelAppointment, setCancleAppointment] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const therapistsPerPage = 9;
 
   //Getting the token and decode using jwtDecode
   const token = localStorage.getItem("authTokens");
@@ -240,6 +242,39 @@ export default function LandingPage() {
     );
     return moment().isSameOrAfter(videoAvailableTime);
   };
+
+  // Pagination logic
+  const indexOfLastTherapist = currentPage * therapistsPerPage;
+  const indexOfFirstTherapist = indexOfLastTherapist - therapistsPerPage;
+  const currentTherapists = therapists.slice(
+    indexOfFirstTherapist,
+    indexOfLastTherapist
+  );
+
+  const totalPages = Math.ceil(therapists.length / therapistsPerPage);
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  const nextPage = () => {
+    setCurrentPage((prevPage) => {
+      const nextPage = prevPage + 1;
+      window.scrollTo(0, 0); // Scroll to top
+      return nextPage;
+    });
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prevPage) => {
+      const previousPage = prevPage - 1;
+      window.scrollTo(0, 0); // Scroll to top
+      return previousPage;
+    });
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0); // Scroll to top
+  };
+
 
   return (
     <div className="landingPage">
@@ -479,8 +514,8 @@ export default function LandingPage() {
       <div className="ourTherapist mt-4 ">
         <h3 className="text-center">{t("landingPage.ourTherapist")}</h3>
         <div className="container row ms-sm-0 ms-lg-2 ms-md-2 d-flex align-items-center">
-          {recommendedTherapists &&
-            recommendedTherapists.map((therapist) => (
+          {currentTherapists &&
+            currentTherapists.map((therapist) => (
               <div className="col-md-4 mb-4" key={therapist.id}>
                 <div class="container mt-3">
                   <div class="card card-custom-recomended shadow border-0">
@@ -519,6 +554,32 @@ export default function LandingPage() {
                 </div>
               </div>
             ))}
+        </div>
+        <div className="d-flex justify-content-center">
+          {pageNumbers.map((number) => (
+            <Button
+              key={number}
+              onClick={() => handlePageClick(number)}
+              disabled={currentPage === number}
+              className={`me-2 ${currentPage === number ? "active" : ""}`}
+            >
+              {number}
+            </Button>
+          ))}
+        </div>
+        <div className="d-flex justify-content-between">
+          <Button
+            onClick={prevPage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={nextPage}
+            disabled={indexOfLastTherapist >= therapists.length}
+          >
+            Next
+          </Button>
         </div>
       </div>
       <Modal show={showModal} onHide={handleModalClose}>

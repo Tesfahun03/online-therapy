@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import "../../styles/Records.css";
-import { Button, Modal } from "react-bootstrap";
+import { Tooltip, OverlayTrigger, Button, Modal } from "react-bootstrap";
 
 export default function RecordsDetail() {
   //Getting the token and decode using jwtDecode
@@ -32,6 +32,7 @@ export default function RecordsDetail() {
   const [record, setRecord] = useState("");
   const [appointments, setAppointments] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [predictionResult, setPredictionResult] = useState([]);
   const handleShow = () => setShowModal(true);
   const handleClose = () => {
     setShowModal(false);
@@ -112,6 +113,31 @@ export default function RecordsDetail() {
   const filteredAppointments = appointments.filter(
     (appointment) => appointment.therapistID === user_id
   );
+  const displayPredictionResult = () => {
+    return (
+      <ul>
+        {predictionResult.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    );
+  };
+
+  const fetchPredictionResult = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/predictions/${id}`
+      );
+      setPredictionResult(response.data);
+    } catch (error) {
+      console.error("Error fetching prediction result:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPredictionResult();
+  }, []);
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -148,6 +174,20 @@ export default function RecordsDetail() {
 
   const handleVideo = (appointmentID) => {
     history.push(`/videochat-t/${appointmentID}`);
+  };
+
+  const isVideoButtonEnabled = (appointmentDate, startTime) => {
+    const appointmentDateTime = moment(appointmentDate).set({
+      hour: moment(startTime, "HH:mm:ss").hour(),
+      minute: moment(startTime, "HH:mm:ss").minute(),
+      second: moment(startTime, "HH:mm:ss").second(),
+    });
+    // Subtract 5 minutes from the appointment time
+    const videoAvailableTime = moment(appointmentDateTime).subtract(
+      5,
+      "minutes"
+    );
+    return moment().isSameOrAfter(videoAvailableTime);
   };
 
   return (
@@ -241,9 +281,11 @@ export default function RecordsDetail() {
                                 <strong>
                                   Recent ilnness prediction result:{" "}
                                 </strong>{" "}
-                                {patient.prediction_result === "null"
-                                  ? "Not found"
-                                  : patient.prediction_result}
+                                {predictionResult.length > 0 ? (
+                                  displayPredictionResult()
+                                ) : (
+                                  <span>No prediction result available.</span>
+                                )}
                               </p>
                             </div>
                           </div>
@@ -279,14 +321,38 @@ export default function RecordsDetail() {
                                     </td>
                                     <td>
                                       {" "}
-                                      <button
+                                      <OverlayTrigger
+                                        overlay={
+                                          <Tooltip>
+                                            {isVideoButtonEnabled(appointment.date, appointment.start_time)
+                                              ? "Start Video"
+                                              : "Video will be available at the appointment time"}
+                                          </Tooltip>
+                                        }
+                                      >
+                                        <span className="d-inline-block">
+                                          <button
+                                            className="btn btn-success"
+                                            onClick={() => handleVideo(appointment.id)}
+                                            disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
+                                            style={{
+                                              pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
+                                                ? "auto"
+                                                : "none",
+                                            }}
+                                          >
+                                            <FontAwesomeIcon icon={faVideo} />
+                                          </button>
+                                        </span>
+                                      </OverlayTrigger>
+                                      {/* <button
                                         className="btn btn-success"
                                         onClick={() =>
                                           handleVideo(appointment.id)
                                         }
                                       >
                                         <FontAwesomeIcon icon={faVideo} />
-                                      </button>
+                                      </button> */}
                                     </td>
                                   </tr>
                                 ))}
