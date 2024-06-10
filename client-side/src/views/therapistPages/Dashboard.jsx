@@ -384,9 +384,7 @@ export default function Dashboard() {
                                     <FontAwesomeIcon icon={faMessage} />
                                   </button>
                                   {getCurrentTime() > appointment.end_time ? (
-                                    <button className="btn btn-outline-success">
-                                      Passed
-                                    </button>
+                                      "Passed"
                                   ) : (
                                     <button
                                       className="btn btn-outline-success"

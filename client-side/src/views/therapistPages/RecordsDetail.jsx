@@ -16,6 +16,7 @@ import {
 import moment from "moment";
 import "../../styles/Records.css";
 import { Tooltip, OverlayTrigger, Button, Modal } from "react-bootstrap";
+import { decode } from "punycode";
 
 export default function RecordsDetail() {
   //Getting the token and decode using jwtDecode
@@ -23,6 +24,9 @@ export default function RecordsDetail() {
   const decoded = jwtDecode(token);
   const user_id = decoded.user_id;
   const history = useHistory();
+  const first_name = decoded.first_name;
+  const last_name = decoded.last_name;
+  const therapist_name = first_name + " " + last_name
 
   const { id } = useParams();
   const axios = useAxios();
@@ -32,6 +36,7 @@ export default function RecordsDetail() {
   const [record, setRecord] = useState("");
   const [appointments, setAppointments] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [photo, setPhoto] = useState(null);
   const [predictionResult, setPredictionResult] = useState([]);
   const handleShow = () => setShowModal(true);
   const handleClose = () => {
@@ -65,6 +70,10 @@ export default function RecordsDetail() {
 
   const handleRecord = (e) => {
     setRecord(e.target.value); // Convert to number
+  };
+
+  const handlePhotoChange = (e) => {
+    setPhoto(e.target.files[0]);
   };
 
   const patientData = async () => {
@@ -145,33 +154,57 @@ export default function RecordsDetail() {
 
   const handleRecordSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("note", record);
+    formData.append("therapist_name", therapist_name);
+    formData.append("patient", id);
+    if (photo) {
+      formData.append("prescription", photo);
+    }
+    console.log(id);
     try {
-      if (editMode) {
-        const response = await axios.put(
-          `http://127.0.0.1:8000/session/patient/${id}/record/${editRecordId}/`,
-          { note: record, therapist_name: user_id, patient: id }
-        );
-        console.log("Record updated successfully:", response.data);
-      } else {
-        const response = await axios.post(
-          `http://127.0.0.1:8000/session/patient/${id}/record/`,
-          { note: record, therapist_name: user_id, patient: id }
-        );
-        console.log("Record posted successfully:", response.data);
-      }
-      setShowModal(false);
-      setRecord("");
-      setEditMode(false);
-      setEditRecordId(null);
-      window.location.reload();
+      const response = await axios.post(
+        `http://127.0.0.1:8000/session/patient/${id}/record/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    } catch(error) {
+      console.error(
+        "Error on submitting record:",
+      );
+    }
+      
+      try {
+        if (editMode) {
+          const response = await axios.put(
+            `http://127.0.0.1:8000/session/patient/${id}/record/${editRecordId}/`,
+            { note: record, therapist_name: user_id, patient: id }
+          );
+          console.log("Record updated successfully:", response.data);
+        } else {
+          const response = await axios.post(
+            `http://127.0.0.1:8000/session/patient/${id}/record/`,
+            { note: record, therapist_name: user_id, patient: id }
+          );
+          console.log("Record posted successfully:", response.data);
+        }
+        setShowModal(false);
+        setRecord("");
+        setEditMode(false);
+        setEditRecordId(null);
+        window.location.reload();
     } catch (error) {
       console.error(
         "Error on submitting record:",
         error.response ? error.response.data : error.message
       );
     }
-  };
-
+  }; 
+    
   const handleVideo = (appointmentID) => {
     history.push(`/videochat-t/${appointmentID}`);
   };
@@ -472,6 +505,15 @@ export default function RecordsDetail() {
                   rows="12" // Increase the number of rows to make it higher
                   cols="8"
                 ></textarea>
+              </div>
+              <div className="row input-group mt-3" style={{ width: "100%" }}>
+                <p>Upload a photo of prescription if there is one.</p>
+                <input
+                  type="file"
+                  name="photo"
+                  className="form-control"
+                  onChange={handlePhotoChange}
+                />
               </div>
             </Modal.Body>
             <Modal.Footer className="d-flex">

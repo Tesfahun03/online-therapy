@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import axios from "axios";
 import { useTranslation } from "react-i18next";
 import jwtDecode from "jwt-decode";
 import "../../styles/Home.css"
 import { Link, useHistory } from 'react-router-dom';
+const swal = require("sweetalert2");
 
 
 export default function Home(){
@@ -35,29 +37,49 @@ export default function Home(){
         localStorage.setItem("preferredLanguage", language); // Save selected language in local storage
     };
 
-    const[sendMessage, setSendMessage]= useState({
-        firstName:"",
-        lastName:"",
-        emailAddress:"",
-        message:""
-    })
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+    const [first_name, setFirstName] = useState("");
+    const [last_name, setLastName] = useState("");
 
-    function handleSendMessage(event){
-
-        const{name, value} = event.target;
-        setSendMessage(prevSendMessage=>{
-            return{
-                ...prevSendMessage,
-                [name]:value
+    const handelSendMessageSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const response = await axios.post(
+              "http://127.0.0.1:8000/core/feedback/",
+              { first_name, last_name, email, message }
+            );
+            if (response.status === 200){
+                swal.fire({
+                    title: "Your message is recieved successfully.",
+                    icon: "success",
+                    toast: true,
+                    timer: 2000,
+                    position: "top",
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    showCancelButton: true,
+                  });
+                  window.location.reload()
+            } else {
+                swal.fire({
+                    title: "Your message is not recieved. Please try again",
+                    icon: "error",
+                    toast: true,
+                    timer: 2000,
+                    position: "top",
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    showCancelButton: true,
+                  });
             }
-        })
+            
+          } catch (error) {
+            alert("no")
+          }
+        
+        
     }
-
-    function handelSendMessageSubmit(event){
-        event.preventDefault()
-        console.log(sendMessage)
-    }
-
 
     return(
         <>
@@ -174,31 +196,35 @@ export default function Home(){
                                 placeholder={t('home.homeContactUsFirstName')}
                                 name='firstName'
                                 className='firstName-input'
-                                onChange={handleSendMessage}
-                                value={sendMessage.firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                value={first_name}
+                                required
                             />
                             <input
                                 type="text"
                                 placeholder={t('home.homeContactUsLastName')}
                                 name='lastName'
                                 className='lastName-input'
-                                onChange={handleSendMessage}
-                                value={sendMessage.lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                value={last_name}
+                                required
                             />
                             <input
                                 type="email"
                                 placeholder={t('home.homeContactUsEmail')}
                                 name='emailAddress'
                                 className='emailAddress-input'
-                                onChange={handleSendMessage}
-                                value={sendMessage.emailAddress}
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                                required
                             />
                             <textarea
                                 placeholder={t('home.homeContactUsMessage')}
                                 name='message'
                                 className='message'
-                                onChange={handleSendMessage}
-                                value={sendMessage.message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                value={message}
+                                required
                             ></textarea>
                             <button className='sendButton'>{t('home.homeSendButton')}</button>
                         </form>
