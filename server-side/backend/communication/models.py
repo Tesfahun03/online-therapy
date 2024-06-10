@@ -115,5 +115,6 @@ class StatusRecord(models.Model):
     date = models.DateField(auto_now_add=True)
     note = models.TextField()
     therapist_name = models.CharField(max_length = 255)
+    prescription = models.ImageField(null = True, blank = True, upload_to="prescriptions")
     
     

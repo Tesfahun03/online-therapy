@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Profile, Patient, Therapist
+from .models import User, Profile, Patient, Therapist, Feedback
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -49,10 +49,13 @@ class TherapistAdmin(admin.ModelAdmin):
     get_gender.short_description = 'Gender'
     get_age.short_description = 'Age'
 
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'last_name', 'email', 'message']
 
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Profile,ProfileAdmin)
 admin.site.register(Patient,PatientAdmin)
 admin.site.register(Therapist,TherapistAdmin)
+admin.site.register(Feedback, FeedbackAdmin)
 

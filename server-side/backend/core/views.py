@@ -3,11 +3,11 @@ from django.http import Http404, JsonResponse, HttpResponseRedirect
 from django.db.models import OuterRef, Subquery
 from django.db.models import Q
 
-from core.models import User, Profile, Patient, Therapist
+from core.models import User, Profile, Patient, Therapist, Feedback
 
 from core.serializer import MyTokenObtainPairSerializer, RegisterSerializer, ProfileSerializer, \
                                 UserSerializer, PatientSerializer, TherapistSerializer, \
-                                    ProfileUpdateSerializer, ChangePasswordSerializer
+                                    ProfileUpdateSerializer, ChangePasswordSerializer, FeedbackSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -394,3 +394,50 @@ class SearchUser(generics.ListAPIView):
 
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data)
+
+class FeedbackView(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
+        message = request.data.get('message')
+        
+        html_content = f"""
+        <p>Hello {first_name},</p>
+        <p>Thank you for your feedback. We will get back to you soon.</p>
+        <p>BunnaMind</p>
+        """
+        
+        mailjet = Client(auth=(settings.MAILJET_API_KEY, settings.MAILJET_API_SECRET), version='v3.1')
+        data = {
+            'Messages': [
+                {
+                    'From': {
+                        'Email': 'lenchofikru93@gmail.com',
+                        'Name': 'Bunna Mind'
+                    },
+                    'To': [
+                        {
+                            'Email': email,
+                            'Name': first_name
+                        }
+                    ],
+                    'Subject': 'Message Recieved',
+                    'TextPart': f'We have received the message you sent us',
+                    'HTMLPart': html_content,
+                }
+            ]
+        }
+        
+        result = mailjet.send.create(data=data)
+        
+        if result.status_code == 200:
+            Feedback.objects.create(
+                    first_name=first_name,
+                    last_name=last_name,
+                    email = email,
+                    message=message,
+                )
+            return Response({'message': 'Your message is recieved successfully.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Failed to send email.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

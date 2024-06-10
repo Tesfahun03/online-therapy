@@ -26,6 +26,9 @@ urlpatterns = [
     path('patients/', views.PatientDetailViews.as_view(), name='patient_detail'),
     path('patients/<int:user_id>/', views.PatientDetailView.as_view(), name='patient_detail'),
     path('', views.getRoutes),
+    
+    # Feedback
+    path('feedback/', views.FeedbackView.as_view(), name='client-feedback'),
 
     # Get profile
     path("profile/<int:pk>/", views.ProfileDetail.as_view()),

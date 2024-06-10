@@ -84,9 +84,12 @@ class Therapist(models.Model):
     withdrawableBalance = models.FloatField(default = 0)
     is_verified = models.BooleanField(default=False) #A field to be updated after a therapist is verified by an Admin
 
-
-
-
+class Feedback(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    sent_at = models.DateTimeField(auto_now_add=True)
 
 
 

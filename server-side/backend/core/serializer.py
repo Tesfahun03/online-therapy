@@ -1,4 +1,4 @@
-from .models import User, Profile, Patient, Therapist
+from .models import User, Profile, Patient, Therapist, Feedback
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
@@ -157,3 +157,8 @@ class ChangePasswordSerializer(serializers.Serializer):
         if attrs['new_password'] != attrs['confirm_new_password']:
             raise serializers.ValidationError({"new_password": "New passwords do not match."})
         return attrs
+    
+class FeedbackSerializer(serializers.Serializer):
+    class Meta:
+        model = Feedback
+        fields = "__all__"
