@@ -51,7 +51,19 @@
         "signin": "Sign in",
         "registerTherapist": "Is diwaangeli sidii daaweeyaha",
         "therapistRegistartion": "Bogga Diiwaangelinta Daaweeye",
-        "registerClient": "Is diwaangeli macmiil ahaan"
+        "registerClient": "Is diwaangeli macmiil ahaan",
+        "ethiopiaPhone": "Lambarka teleefanku waa inuu noqdaa nambarka gacanta ee Itoobiya oo ansax ah.",
+        "firstNameStartCapital": "Magaca kowaad waa inuu ku bilowdaa xaraf weyn.",
+        "LastNameStartCapital": "Magaca dambe waa inuu ku bilowdaa xaraf weyn.",
+        "eightCharLong":"8 xaraf dheer, waxaa ku jira far waaweyn, far yar, iyo nambar.",
+        "validEmail": "Iimaylku waa inuu noqdaa ciwaan email sax ah.",
+        "notMatchPassword": "Password-ku isma dhigma.",
+        "ageLess": "Da'daadu waa inay ka weyn tahay ama la mid tahay 21",
+        "ageGreater": "Da'daadu waa inay ka yar tahay ama la mid tahay 65",
+        "genderRequired": "Labka iyo dheddigga ayaa loo baahan yahay.",
+        "maritalStatusRequired": "Xaaladda Martial waa loo baahan yahay.",
+        "languageRequired": "Luqadda Doorbida waa loo baahan yahay.",
+        "occupationRequired": "Shaqo waa loo baahan yahay."
     },
     "home":{
         "homeIntroTitleH3": "Kurrinta Maskaxda, Awoodsiinta Nolosha.",

@@ -51,7 +51,19 @@
         "signin": "ምእታው",
         "registerTherapist": "ከም ቴራፒስት ተመዝገብ",
         "therapistRegistartion": "ገጽ ምዝገባ ቴራፒስት",
-        "registerClient": "ከም ዓሚል ተመዝገብ"
+        "registerClient": "ከም ዓሚል ተመዝገብ",
+        "ethiopiaPhone": "ቁጽሪ ተሌፎን ቅኑዕ ናይ ኢትዮጵያ ሞባይል ቁጽሪ ክኸውን ኣለዎ።",
+        "firstNameStartCapital": "ቀዳማይ ስም ብዓቢ ፊደል ክጅምር ኣለዎ።",
+        "LastNameStartCapital": "መወዳእታ ስም ብዓቢ ፊደል ክጅምር ኣለዎ።",
+        "eightCharLong":"8 ፊደል ንውሓት ዘለዎ፣ ዓበይቲ፣ ንኣሽቱ ፊደላትን ቁጽርን ዘጠቓልል።",
+        "validEmail": "ኢመይል ቅኑዕ ኢመይል ኣድራሻ ክኸውን ኣለዎ።",
+        "notMatchPassword": "መሕለፊ ቃላት ኣይሰማምዑን እዮም።",
+        "ageLess": "ዕድሜኻ ካብ 21 ክዓቢ ወይ ማዕረ ክኸውን ኣለዎ",
+        "ageGreater": "ዕድሜኻ ካብ 65 ንታሕቲ ወይ ማዕረ ክኸውን ኣለዎ",
+        "genderRequired": "ጾታ የድሊ።",
+        "maritalStatusRequired": "ናይ ወተሃደራዊ ኩነታት የድሊ።",
+        "languageRequired": "ናይ ቋንቋ ምርጫ የድሊ።",
+        "occupationRequired": "ሞያ የድሊ።"
     },
     "home":{
         "homeIntroTitleH3": "ምሕብሓብ ኣእምሮ፡ ምሕያል ህይወት።",

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from "react-i18next";
+import "../../styles/TermandCondition.css"
 
 const TermsAndConditions = () => {
   const [t, i18n] = useTranslation("global");
@@ -21,7 +22,7 @@ const TermsAndConditions = () => {
     localStorage.setItem("preferredLanguage", language); // Save selected language in local storage
   };
   return (
-    <Container>
+    <Container className="terms">
       <div className="languageForTranslate">
         <select
           className="preferedLanguage"
@@ -31,11 +32,11 @@ const TermsAndConditions = () => {
           <option value="english">Eng</option>
           <option value="amharic">Amh</option>
           <option value="oromo">Oro</option>
-          <option value="sumalic">Sum</option>
+          <option value="sumalic">Som</option>
           <option value="tigrigna">Tig</option>
         </select>
       </div>
-      <Row className="justify-content-center mt-5">
+      <Row className=" justify-content-center">
         <Col md={10}>
           <h1 className="text-center mt-5 mb-4">{t("termsAndConditions.termCondition")}</h1>
 

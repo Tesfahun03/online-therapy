@@ -51,8 +51,21 @@
         "signin": "Sign In",
         "registerTherapist": "Register as a therapist",
         "therapistRegistartion": "Therapist Registration Page",
-        "registerClient": "Register as a client"
-    },
+        "registerClient": "Register as a client",
+        "ethiopiaPhone": "Phone number must be a valid Ethiopian mobile number.",
+        "firstNameStartCapital": "First name must start with a capital letter.",
+        "LastNameStartCapital": "Last name must start with a capital letter.",
+        "eightCharLong":"8 character long, include uppercase, lowercase, and number.",
+        "validEmail": "Email must be a valid email address.",
+        "notMatchPassword": "Passwords do not match.",
+        "ageLess": "Your age must be greater than or equal to 21",
+        "ageGreater": "Your age must be less than or equal to 65",
+        "genderRequired": "Gender is required.",
+        "maritalStatusRequired": "Martial Status is required.",
+        "languageRequired": "Language Preference is required.",
+        "occupationRequired": "Occupation is required."
+        
+    }, 
     "home":{
         "homeIntroTitleH3": "Nurturing Minds, Empowering Lives.",
         "homeIntroTitleH4": "Your mental well-being is just a click away. Find solace and support anytime, anywhere with our online therapy app.",
@@ -163,7 +176,7 @@
     },
     
     "landingPage":{
-        "hiPatientName":"hi",
+        "hiPatientName":"Hello",
         "feelingToday": "How You feel Today?",
         "searchTherapist": "Search Therapist",
         "viewProfile": "View Profile",

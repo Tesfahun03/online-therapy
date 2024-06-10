@@ -255,6 +255,10 @@ export default function Dashboard() {
     history.push(`/message/${patientId}`);
   };
 
+  const getCurrentTime = () => {
+    return moment().format("HH:mm:ss");
+  };
+
   return (
     <div className="container-fluid min-vh-100 px-1 m-0">
       <div className="row therapist-home d-flex flex-row m-0">
@@ -265,10 +269,10 @@ export default function Dashboard() {
             value={selectedLanguage}
           >
             <option value="english">Eng</option>
-            <option value="amharic">Amharic</option>
-            <option value="oromo">Oromo</option>
-            <option value="sumalic">Sumalic</option>
-            <option value="tigrigna">Tigrigna</option>
+            <option value="amharic">Amh</option>
+            <option value="oromo">Oro</option>
+            <option value="sumalic">Som</option>
+            <option value="tigrigna">Tig</option>
           </select>
         </div>
         <div className="dashboard row m-0 p-0">
@@ -379,12 +383,18 @@ export default function Dashboard() {
                                   >
                                     <FontAwesomeIcon icon={faMessage} />
                                   </button>
-                                  <button
-                                    className="btn btn-outline-success"
-                                    onClick={handleAppointment}
-                                  >
-                                    Appointment page
-                                  </button>
+                                  {getCurrentTime() > appointment.end_time ? (
+                                    <button className="btn btn-outline-success">
+                                      Passed
+                                    </button>
+                                  ) : (
+                                    <button
+                                      className="btn btn-outline-success"
+                                      onClick={handleAppointment}
+                                    >
+                                      Appointment page
+                                    </button>
+                                  )}
                                 </div>
                               </td>
                             </tr>

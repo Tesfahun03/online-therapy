@@ -51,7 +51,19 @@
         "signin": "ግባ",
         "registerTherapist": "እንደ ቴራፒስት ይመዝገቡ",
         "therapistRegistartion": "የቴራፒስት ምዝገባ ገጽ",
-        "registerClient": "እንደ ደንበኛ ይመዝገቡ"
+        "registerClient": "እንደ ደንበኛ ይመዝገቡ",
+        "ethiopiaPhone": "ስልክ ቁጥሩ ትክክለኛ የኢትዮጵያ ሞባይል ቁጥር መሆን አለበት።",
+        "firstNameStartCapital": "የመጀመሪያ ስም በትልቅ ፊደል መጀመር አለበት.",
+        "LastNameStartCapital": "የአያት ስም በትልቅ ፊደል መጀመር አለበት.",
+        "eightCharLong":" 8 ቁምፊ ይረዝማል፣ አቢይ ሆሄያት፣ ትንሽ ሆሄ እና ቁጥር ያካትታል።",
+        "validEmail": "ኢሜል ትክክለኛ የኢሜይል አድራሻ መሆን አለበት።",
+        "notMatchPassword": "የይለፍ ቃል አይዛመድም።",
+        "ageLess": "እድሜህ ከ21 በላይ ወይም እኩል መሆን አለበት",
+        "ageGreater": "እድሜህ ከ65 ያነሰ ወይም እኩል መሆን አለበት",
+        "genderRequired": "ጾታ ያስፈልጋል።",
+        "maritalStatusRequired": "Martial Status ያስፈልጋል::",
+        "languageRequired": "የቋንቋ ምርጫ ያስፈልጋል።",
+        "occupationRequired": "ስራ ያስፈልጋል።"
     },
     "home":{
         "homeIntroTitleH3": "አእምሮን መንከባከብ፣ ህይወትን ማበረታታት",
@@ -158,7 +170,7 @@
         "bookedBy": "የተያዘው"
     },
     "landingPage":{
-        "hiPatientName":"ሃይ",
+        "hiPatientName":"ሰላም",
         "feelingToday": "ዛሬ ምን ተሰማህ?",
         "searchTherapist": "የፍለጋ ቴራፒስት",
         "viewProfile": "መገለጫ አሳይ",

@@ -89,41 +89,41 @@ export default function RegisterTherapist() {
 
     if (!phoneRegex.test(registerTherapistData.phoneNumber)) {
       errors.phoneNumber =
-        "Phone number must be a valid Ethiopian mobile number.";
+        t("register.ethiopiaPhone");
     }
     if (!registerTherapistData.firstName.match(/^[A-Z][a-z]*$/)) {
-      errors.firstName = "First name must start with a capital letter.";
+      errors.firstName = t("register.firstNameStartCapital");
     }
     if (!registerTherapistData.lastName.match(/^[A-Z][a-z]*$/)) {
-      errors.lastName = "Last name must start with a capital letter.";
+      errors.lastName = t("register.eightCharLong");
     }
     if (!passwordRegex.test(registerTherapistData.password)) {
       errors.password =
-        "8 character long, include uppercase, lowercase, and number.";
+      t("register.eightCharLong");
     }
     if (!emailRegex.test(registerTherapistData.emailAddress)) {
-      errors.emailAddress = "Email must be a valid email address.";
+      errors.emailAddress = t("register.validEmail");
     }
 
     if (
       registerTherapistData.password !== registerTherapistData.confirmPassword
     ) {
-      errors.confirmPassword = "Passwords do not match.";
+      errors.confirmPassword = t("register.notMatchPassword");
     }
     if (registerTherapistData.age < 21) {
-      errors.age = "Your age must be greater than or equal to 21";
+      errors.age = t("register.ageLess");
     }
     if (registerTherapistData.age > 65) {
-      errors.age = "Your age must be less than or equal to 65";
+      errors.age = t("register.ageGreater");
     }
     if (!registerTherapistData.gender) {
-      errors.gender = "Gender is required.";
+      errors.gender = t("register.genderRequired");
     }
     if (!registerTherapistData.martialStatus) {
-      errors.martialStatus = "Martial Status is required.";
+      errors.martialStatus = t("register.maritalStatusRequired");
     }
     if (!registerTherapistData.languagePreference) {
-      errors.languagePreference = "Language Preference is required.";
+      errors.languagePreference = t("register.languageRequired");
     }
     if (!registerTherapistData.religion) {
       errors.religion = "Religion is required.";
@@ -203,7 +203,7 @@ export default function RegisterTherapist() {
           <option value="english">Eng</option>
           <option value="amharic">Amh</option>
           <option value="oromo">Oro</option>
-          <option value="sumalic">Sum</option>
+          <option value="sumalic">Som</option>
           <option value="tigrigna">Tig</option>
         </select>
       </div>
