@@ -326,7 +326,7 @@ export default function CommunitySpace() {
           <option value="english">Eng</option>
           <option value="amharic">Amh</option>
           <option value="oromo">Oro</option>
-          <option value="sumalic">Sum</option>
+          <option value="sumalic">Som</option>
           <option value="tigrigna">Tig</option>
         </select>
       </div>

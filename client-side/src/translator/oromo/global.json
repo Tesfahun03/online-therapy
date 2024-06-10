@@ -51,7 +51,19 @@
         "signin": "Galmaa", 
         "registerTherapist": "Akka teraapistii ta'ii galmaa'i",
         "therapistRegistartion": "Fuula Galmee Therapist", 
-        "registerClient": "Akka maamilaatti galmaa'i"
+        "registerClient": "Akka maamilaatti galmaa'i",
+        "ethiopiaPhone": "Lakkoofsi bilbilaa lakkoofsa moobaayila Itoophiyaa seera qabeessa ta'uu qaba.",
+        "firstNameStartCapital": "Maqaan jalqabaa qubee guddaatiin jalqabuu qaba.",
+        "LastNameStartCapital": "Maqaan dhumaa qubee guddaatiin jalqabuu qaba.",
+        "eightCharLong":"arfii 8 dheerata, qubee guddaa, qubee xiqqaa, fi lakkoofsa of keessatti qabata.",
+        "validEmail": "Imeelii teessoo imeelii sirrii ta'uu qaba.",
+        "notMatchPassword": "Jechoonni icciitii wal hin simne.",
+        "ageLess": "Umuriin kee 21 ol ykn qixa ta'uu qaba",
+        "ageGreater": "Umuriin kee 65 gadi ykn walqixa ta'uu qaba",
+        "genderRequired": "Koorniyaan barbaachisaadha.",
+        "maritalStatusRequired": "Haalli waraanaa barbaachisaadha.",
+        "languageRequired": "Filannoo Afaanii barbaachisa.",
+        "occupationRequired": "Hojiin barbaachisaadha."
     },
     "home":{
         "homeIntroTitleH3": "Sammuu Guddisuu, Jireenya Angoomsuu.",
