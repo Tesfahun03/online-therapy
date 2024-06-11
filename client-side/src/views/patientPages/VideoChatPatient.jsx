@@ -46,7 +46,7 @@ export default function VideoChatPatient(){
           <iframe
             title="Video Player"
             src={videoChat.room}
-            allow="camera; microphone; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; camera; microphone; speaker; fullscreen; display-capture"
             allowFullScreen
             style={{ width: "100%", minHeight: "75vh", border:"1px solid black" }}
             className="col-6 rounded shadow"

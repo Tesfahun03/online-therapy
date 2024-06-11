@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Patient
+from core.models import User
 # Create your models here.
 
 class Questionaries(models.Model):
@@ -46,7 +46,7 @@ class Questionaries(models.Model):
 
 
 class PredictedValues(models.Model):
-    patient = models.ForeignKey(Patient, on_delete= models.CASCADE)
+    patient = models.ForeignKey(User, related_name="predicted", on_delete= models.CASCADE)
     predicted_at = models.DateTimeField(auto_now_add = True)
     predicted_result = models.CharField(max_length = 20)
 

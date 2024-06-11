@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from prediction.Models.ml_model import model
 
-from core.models import Patient
+from core.models import Patient, User
 from .models import PredictedValues
 
 from .serializers import PredictionSerializer, PredictedValueSerializer
@@ -40,8 +40,8 @@ class PredictDisorder(APIView):
             probability = model.predict_proba(input_data)
 
             Disorders = ['MDD', 'ASD', 'Loneliness', 'bipolar', 'anexiety', 'PTSD',
-       'sleeping disorder', 'psychotic deprission', 'eating disorder',
-       'ADHD', 'PDD', 'OCD']  
+                         'sleeping disorder', 'psychotic deprission', 'eating disorder',
+                         'ADHD', 'PDD', 'OCD']  
             
         
             for i in range(len(predicted_disorders)):
@@ -58,7 +58,7 @@ class PredictDisorder(APIView):
             
             patient.prediction_result = result
 
-            predicted_value = PredictedValues(patient = patient, predicted_result = result)
+            predicted_value = PredictedValues(patient_id = user_id, predicted_result = result)
             predicted_value.save()
             patient.save()
 # 'WITH PROBABILITY OF: ': res
@@ -71,8 +71,7 @@ class PredictDisorder(APIView):
 
 class PredictedValueViews(APIView):
     def get(self, request, user_id, *args, **kwargs):
-        patient = Patient.objects.select_related('profile').get(profile__user_id = user_id)
-        result_list = PredictedValues.objects.filter(patient = patient).order_by('-predicted_at')
+        patient = User.objects.only('id').get(pk = user_id)
+        result_list = PredictedValues.objects.filter(patient_id = patient).order_by('-predicted_at')
         serializer = PredictedValueSerializer(result_list, many = True)
         return Response(serializer.data)
-    

@@ -79,3 +79,46 @@
 .search-result:hover{
     background-color: #f0f0f0;
 }
+
+.recommendedTherapists {
+    width: 100%;
+    padding: 0 15px; /* Add some padding for small screens */
+  }
+  
+  .card-custom-recomended {
+    margin: 0 auto;
+    width: 100%; /* Set width to 100% */
+    max-width: 350px; /* Limit the maximum width of the card */
+  }
+  
+  .star-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profile-img {
+    margin: 0 auto;
+    border-radius: 50%;
+  }
+  
+  .card-title-view {
+    text-align: left; /* Adjust text alignment if needed */
+  }
+  
+  .speciality {
+    text-align: left; /* Adjust text alignment if needed */
+  }
+  
+  .card-custom-our {
+    width: 100%; /* Set width to 100% */
+    max-width: 300px; /* Limit the maximum width of the card */
+    padding: 15px; /* Add padding inside the card */
+    margin-right: 15px; /* Add margin between cards */
+  }
+  
+  @media (min-width: 992px) {
+    .container {
+      max-width: unset; /* Remove max-width for large screens */
+    }
+  }

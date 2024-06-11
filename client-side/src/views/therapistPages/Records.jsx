@@ -99,8 +99,8 @@ export default function Records() {
           <option value="tigrigna">Tig</option>
         </select>
       </div>
-      <div className="main-content col-lg-10 col-md-10 col-sm-8 offset-lg-2 offset-md-2 offset-sm-4 min-vh-100" style={{width:"75%"}}>
-        <h2>{t("record.recordPayment")}</h2>
+      <div className="main-content col-lg-10 col-md-10 col-sm-8 min-vh-100 mt-3" style={{width:"75%", margin:"0 auto"}}>
+        <h4>{t("record.recordPayment")}</h4>
         <table className="table table-striped table-bordered table-hover shadow">
           <thead className="table-success">
             <tr>

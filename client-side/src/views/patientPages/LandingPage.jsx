@@ -55,7 +55,7 @@ export default function LandingPage() {
   const [cancelAppointment, setCancleAppointment] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const therapistsPerPage = 9;
+  const therapistsPerPage = 8;
 
   //Getting the token and decode using jwtDecode
   const token = localStorage.getItem("authTokens");
@@ -275,7 +275,6 @@ export default function LandingPage() {
     window.scrollTo(0, 0); // Scroll to top
   };
 
-
   return (
     <div className="landingPage">
       <div className="languageForTranslate">
@@ -447,35 +446,39 @@ export default function LandingPage() {
         </div>
       )}
 
-      <div className="recommendedTherapists  mt-4">
+      <div className="recommendedTherapists mt-4">
         <h2 className="text-center">{t("landingPage.recommendTherapist")}</h2>
-        <div className="container row ms-sm-0 ms-lg-2 ms-md-2 d-flex align-items-center">
-          {recommendedTherapists &&
-            recommendedTherapists.map((therapist) => (
-              <div className="col-md-4 mb-4" key={therapist.id}>
-                <div class="container mt-3">
-                  <div class="card card-custom-recomended shadow border-0">
-                    <div class="star-rating">
+        <div className="container">
+          <div className="row justify-content-center">
+            {recommendedTherapists &&
+              recommendedTherapists.map((therapist) => (
+                <div className="col-md-4 mb-4" key={therapist.id}>
+                  <div className="card card-custom-recomended shadow border-0">
+                    <div className="star-rating text-center mt-3">
                       <span>
                         <FontAwesomeIcon icon={faStar} color="#f59505a4" />{" "}
                         {therapist.rating.toFixed(1)}
                       </span>
                     </div>
-                    <img
-                      src={therapist.profile.image}
-                      class="profile-img img-fluid"
-                      alt="Doctor Image"
-                      width="150"
-                      height="150"
-                    />
-                    <div className="d-flex align-items-center justify-content-between px-2">
+                    <div className="text-center">
+                      <img
+                        src={therapist.profile.image}
+                        className="profile-img img-fluid"
+                        alt="Doctor Image"
+                        width="150"
+                        height="150"
+                      />
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between px-2 mt-3">
                       <div>
-                        <h5 class="card-title-view ms-2">
+                        <h5 className="card-title-view ms-2">
                           {capitalizeFirstLetter(therapist.profile.first_name) +
                             " " +
                             capitalizeFirstLetter(therapist.profile.last_name)}
                         </h5>
-                        <div class="speciality">{therapist.specialization}</div>
+                        <div className="speciality">
+                          {therapist.specialization}
+                        </div>
                       </div>
                       <Button
                         variant="outline-secondary"
@@ -488,8 +491,8 @@ export default function LandingPage() {
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
       </div>
 
@@ -511,15 +514,18 @@ export default function LandingPage() {
         </div>
       </div> */}
 
-      <div className="ourTherapist mt-4 ">
+      <div className="ourTherapist mt-4">
         <h3 className="text-center">{t("landingPage.ourTherapist")}</h3>
-        <div className="container row ms-sm-0 ms-lg-2 ms-md-2 d-flex align-items-center">
+        <div className="container row mx-auto justify-content-start">
           {currentTherapists &&
             currentTherapists.map((therapist) => (
-              <div className="col-md-4 mb-4" key={therapist.id}>
-                <div class="container mt-3">
-                  <div class="card card-custom-recomended shadow border-0">
-                    <div class="star-rating">
+              <div
+                className="col-lg-3 col-md-4 col-sm-6 mb-4"
+                key={therapist.id}
+              >
+                <div className="container mt-3">
+                  <div className="card card-custom-our shadow border-0">
+                    <div className="star-rating">
                       <span>
                         <FontAwesomeIcon icon={faStar} color="#f59505a4" />{" "}
                         {therapist.rating.toFixed(1)}
@@ -527,19 +533,21 @@ export default function LandingPage() {
                     </div>
                     <img
                       src={therapist.profile.image}
-                      class="profile-img img-fluid"
+                      className="profile-img img-fluid"
                       alt="Doctor Image"
                       width="150"
                       height="150"
                     />
                     <div className="d-flex align-items-center justify-content-between px-2">
                       <div>
-                        <h5 class="card-title-view ms-2">
+                        <h5 className="card-title-view ms-2">
                           {capitalizeFirstLetter(therapist.profile.first_name) +
                             " " +
                             capitalizeFirstLetter(therapist.profile.last_name)}
                         </h5>
-                        <div class="speciality">{therapist.specialization}</div>
+                        <div className="speciality">
+                          {therapist.specialization}
+                        </div>
                       </div>
                       <Button
                         variant="outline-secondary"
@@ -555,7 +563,7 @@ export default function LandingPage() {
               </div>
             ))}
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center mt-4">
           {pageNumbers.map((number) => (
             <Button
               key={number}
@@ -567,11 +575,8 @@ export default function LandingPage() {
             </Button>
           ))}
         </div>
-        <div className="d-flex justify-content-between">
-          <Button
-            onClick={prevPage}
-            disabled={currentPage === 1}
-          >
+        <div className="d-flex justify-content-between mt-4">
+          <Button onClick={prevPage} disabled={currentPage === 1}>
             Previous
           </Button>
           <Button
@@ -582,6 +587,7 @@ export default function LandingPage() {
           </Button>
         </div>
       </div>
+
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
           <Modal.Title>{modalTitle}</Modal.Title>

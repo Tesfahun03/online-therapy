@@ -383,7 +383,7 @@ export default function Appointments() {
   return (
     <div className="therapist-home d-flex flex-column m-0">
       <div className="appointment-content container">
-        <div className="row gap-5 mt-4">
+        <div className="row gap-5 mt-4 ms-lg-5 ms-md-5 ms-sm-0">
           <div className="col-lg-5 col-md-12">
             {showAvalability !== null && showAvalability !== undefined && (
               <div className="row shadow py-3 mb-4">

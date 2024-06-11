@@ -9,13 +9,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
   faComment,
+  faAngleUp,
+  faAngleDown,
   faPen,
   faTrash,
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import "../../styles/Records.css";
-import { Tooltip, OverlayTrigger, Button, Modal } from "react-bootstrap";
+import {
+  Tooltip,
+  OverlayTrigger,
+  Button,
+  Modal,
+  Collapse,
+} from "react-bootstrap";
 import { decode } from "punycode";
 
 export default function RecordsDetail() {
@@ -26,18 +34,20 @@ export default function RecordsDetail() {
   const history = useHistory();
   const first_name = decoded.first_name;
   const last_name = decoded.last_name;
-  const therapist_name = first_name + " " + last_name
+  const therapist_name = first_name + " " + last_name;
 
   const { id } = useParams();
   const axios = useAxios();
   const [patient, setPatient] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const [patientRecords, setPatientRecords] = useState([]);
+  const [predictions, setPredictions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [record, setRecord] = useState("");
   const [appointments, setAppointments] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [openCollapse, setOpenCollapse] = useState(null);
   const [photo, setPhoto] = useState(null);
-  const [predictionResult, setPredictionResult] = useState([]);
   const handleShow = () => setShowModal(true);
   const handleClose = () => {
     setShowModal(false);
@@ -75,12 +85,40 @@ export default function RecordsDetail() {
   const handlePhotoChange = (e) => {
     setPhoto(e.target.files[0]);
   };
+  const handlePhotoPreview = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPreviewUrl(null);
+    }
+  };
 
   const patientData = async () => {
     try {
       const response = await axios.get(
         `http://127.0.0.1:8000/core/patients/${id}`
       );
+
+      let fetchedPatient = response.data;
+      // Ensure prediction_result is an array
+      if (typeof fetchedPatient.prediction_result === "string") {
+        try {
+          // Replace single quotes with double quotes to make it valid JSON
+          const correctedString = fetchedPatient.prediction_result.replace(
+            /'/g,
+            '"'
+          );
+          fetchedPatient.prediction_result = JSON.parse(correctedString);
+        } catch (error) {
+          console.error("Error parsing prediction result:", error);
+          fetchedPatient.prediction_result = [];
+        }
+      }
       setPatient(response.data);
       setIsLoading(false);
       const appointmentResponse = await axios.get(
@@ -122,31 +160,40 @@ export default function RecordsDetail() {
   const filteredAppointments = appointments.filter(
     (appointment) => appointment.therapistID === user_id
   );
-  const displayPredictionResult = () => {
-    return (
-      <ul>
-        {predictionResult.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-    );
-  };
 
-  const fetchPredictionResult = async () => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/predictions/${id}`
-      );
-      setPredictionResult(response.data);
-    } catch (error) {
-      console.error("Error fetching prediction result:", error);
-    }
-  };
+  const filterPatientRecords = patientRecords.filter(
+    (patientRecord)=> (patientRecord.therapist_name === `${user_id}`)
+  )
+
+  console.log(filterPatientRecords)
 
   useEffect(() => {
-    fetchPredictionResult();
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/prediction/predicted_result/${id}/`
+        );
+        // Parse the predicted_result strings to arrays
+        const parsedPredictions = response.data.map((prediction) => {
+          return {
+            ...prediction,
+            predicted_result: JSON.parse(
+              prediction.predicted_result.replace(/'/g, '"')
+            ),
+          };
+        });
+        setPredictions(parsedPredictions);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching prediction data:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
+  console.log(predictions);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -156,55 +203,50 @@ export default function RecordsDetail() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("note", record);
-    formData.append("therapist_name", therapist_name);
+    formData.append("therapist_name", user_id);
     formData.append("patient", id);
     if (photo) {
       formData.append("prescription", photo);
     }
     console.log(id);
+
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/session/patient/${id}/record/`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    } catch(error) {
-      console.error(
-        "Error on submitting record:",
-      );
-    }
-      
-      try {
-        if (editMode) {
-          const response = await axios.put(
-            `http://127.0.0.1:8000/session/patient/${id}/record/${editRecordId}/`,
-            { note: record, therapist_name: user_id, patient: id }
-          );
-          console.log("Record updated successfully:", response.data);
-        } else {
-          const response = await axios.post(
-            `http://127.0.0.1:8000/session/patient/${id}/record/`,
-            { note: record, therapist_name: user_id, patient: id }
-          );
-          console.log("Record posted successfully:", response.data);
-        }
-        setShowModal(false);
-        setRecord("");
-        setEditMode(false);
-        setEditRecordId(null);
-        window.location.reload();
+      if (editMode) {
+        const response = await axios.put(
+          `http://127.0.0.1:8000/session/patient/${id}/record/${editRecordId}/`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log("Record updated successfully:", response.data);
+      } else {
+        const response = await axios.post(
+          `http://127.0.0.1:8000/session/patient/${id}/record/`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log("Record posted successfully:", response.data);
+      }
+      setShowModal(false);
+      setRecord("");
+      setEditMode(false);
+      setEditRecordId(null);
+      window.location.reload();
     } catch (error) {
       console.error(
         "Error on submitting record:",
         error.response ? error.response.data : error.message
       );
     }
-  }; 
-    
+  };
+
   const handleVideo = (appointmentID) => {
     history.push(`/videochat-t/${appointmentID}`);
   };
@@ -221,6 +263,10 @@ export default function RecordsDetail() {
       "minutes"
     );
     return moment().isSameOrAfter(videoAvailableTime);
+  };
+
+  const handleToggle = (index) => {
+    setOpenCollapse(openCollapse === index ? null : index);
   };
 
   return (
@@ -310,20 +356,87 @@ export default function RecordsDetail() {
                                 <strong>Prefered Language: </strong>{" "}
                                 {patient.profile.prefered_language}
                               </p>
-                              <p>
+                              <p className="mb-1">
                                 <strong>
-                                  Recent ilnness prediction result:{" "}
-                                </strong>{" "}
-                                {predictionResult.length > 0 ? (
-                                  displayPredictionResult()
+                                  Recent illness prediction result:
+                                </strong>
+                                {patient &&
+                                patient.prediction_result &&
+                                patient.prediction_result.length > 0 ? (
+                                  <ul>
+                                    {patient.prediction_result.map(
+                                      (prediction, index) => {
+                                        if (!prediction) return null;
+                                        const [disorder, percentage] =
+                                          prediction.split("->");
+                                        if (!disorder || !percentage)
+                                          return null;
+                                        return (
+                                          <li key={index}>
+                                            <strong>{disorder.trim()}</strong>{" "}
+                                            {"-> "} {percentage.trim()}
+                                          </li>
+                                        );
+                                      }
+                                    )}
+                                  </ul>
                                 ) : (
-                                  <span>No prediction result available.</span>
+                                  <p>No prediction results available.</p>
                                 )}
                               </p>
                             </div>
                           </div>
                         </div>
                       </div>
+
+                      <div className="col-12 mt-4">
+                      <div className="card card-custom p-4 mb-4">
+                        <h3>Predictions</h3>
+                        {isLoading ? (
+                          <div>Loading...</div>
+                        ) : (
+                          <div>
+                            {predictions.map((prediction, index) => (
+                              <div key={index}>
+                                <h6 className="d-flex align-items-center">
+                                  Predicted Result -{" "}
+                                  {moment(prediction.predicted_at).format(
+                                    "DD MMMM YYYY, hh:mm"
+                                  )}
+                                  <Button
+                                    className="btn btn-link"
+                                    variant="link"
+                                    onClick={() => handleToggle(index)}
+                                    aria-expanded={openCollapse === index}
+                                    aria-controls={`collapse-${index}`}
+                                  >
+                                    {openCollapse === index ? (
+                                      <FontAwesomeIcon icon={faAngleUp} />
+                                    ) : (
+                                      <FontAwesomeIcon icon={faAngleDown} />
+                                    )}
+                                  </Button>
+                                </h6>
+
+                                <Collapse
+                                  in={openCollapse === index}
+                                  id={`collapse-${index}`}
+                                >
+                                  <ul>
+                                    {prediction.predicted_result.map(
+                                      (result, idx) => (
+                                        <li key={idx}>{result}</li>
+                                      )
+                                    )}
+                                  </ul>
+                                </Collapse>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        </div>
+                      </div>
+
                       <div className="col-12 mt-4">
                         <div className="card card-custom p-4 mb-4">
                           <h5>Upcoming Appointments</h5>
@@ -357,7 +470,10 @@ export default function RecordsDetail() {
                                       <OverlayTrigger
                                         overlay={
                                           <Tooltip>
-                                            {isVideoButtonEnabled(appointment.date, appointment.start_time)
+                                            {isVideoButtonEnabled(
+                                              appointment.date,
+                                              appointment.start_time
+                                            )
                                               ? "Start Video"
                                               : "Video will be available at the appointment time"}
                                           </Tooltip>
@@ -366,26 +482,29 @@ export default function RecordsDetail() {
                                         <span className="d-inline-block">
                                           <button
                                             className="btn btn-success"
-                                            onClick={() => handleVideo(appointment.id)}
-                                            disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
+                                            onClick={() =>
+                                              handleVideo(appointment.id)
+                                            }
+                                            disabled={
+                                              !isVideoButtonEnabled(
+                                                appointment.date,
+                                                appointment.start_time
+                                              )
+                                            }
                                             style={{
-                                              pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
-                                                ? "auto"
-                                                : "none",
+                                              pointerEvents:
+                                                isVideoButtonEnabled(
+                                                  appointment.date,
+                                                  appointment.start_time
+                                                )
+                                                  ? "auto"
+                                                  : "none",
                                             }}
                                           >
                                             <FontAwesomeIcon icon={faVideo} />
                                           </button>
                                         </span>
                                       </OverlayTrigger>
-                                      {/* <button
-                                        className="btn btn-success"
-                                        onClick={() =>
-                                          handleVideo(appointment.id)
-                                        }
-                                      >
-                                        <FontAwesomeIcon icon={faVideo} />
-                                      </button> */}
                                     </td>
                                   </tr>
                                 ))}
@@ -398,6 +517,7 @@ export default function RecordsDetail() {
                       </div>
                     </div>
                   </div>
+
                   <div className="col-lg-4 col-md-12 col-sm-12 ms-sm-0 ms-lg-3 mt-4 border shadow min-vh-100">
                     <h6 className="p-2">
                       Your list of records related to{" "}
@@ -409,10 +529,10 @@ export default function RecordsDetail() {
                     >
                       Add new record <FontAwesomeIcon icon={faAdd} />
                     </button>
-                    {patientRecords &&
-                      patientRecords.map((patientRecord) => (
+                    {filterPatientRecords &&
+                      filterPatientRecords.map((patientRecord) => (
                         <div
-                          className="note-card row d-block align-items-start m-3 shadow p-2 rounded"
+                          className="note-card row d-block align-items-start mb-4 mx-3 shadow p-2 rounded"
                           key={patientRecord.id}
                         >
                           <div className="row d-flex justify-content-between">
@@ -504,6 +624,7 @@ export default function RecordsDetail() {
                   value={record}
                   rows="12" // Increase the number of rows to make it higher
                   cols="8"
+                  required
                 ></textarea>
               </div>
               <div className="row input-group mt-3" style={{ width: "100%" }}>
@@ -511,13 +632,31 @@ export default function RecordsDetail() {
                 <input
                   type="file"
                   name="photo"
-                  className="form-control"
-                  onChange={handlePhotoChange}
+                  className="form-control ms-3"
+                  onChange={(event) => {
+                    handlePhotoChange(event);
+                    handlePhotoPreview(event); // Call handlePhotoPreview to update the image preview
+                  }}
                 />
               </div>
+              {previewUrl && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "10px",
+                  }}
+                >
+                  <img
+                    src={previewUrl}
+                    alt="Preview"
+                    style={{ maxWidth: "300px", maxHeight: "300px" }}
+                  />
+                </div>
+              )}
             </Modal.Body>
             <Modal.Footer className="d-flex">
-              <Button variant="success" onClick={handleRecordSubmit}>
+              <Button variant="outline-success" onClick={handleRecordSubmit}>
                 {editMode ? "Update" : "Save"}
               </Button>
             </Modal.Footer>

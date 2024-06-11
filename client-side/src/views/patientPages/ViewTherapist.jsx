@@ -4,9 +4,22 @@ import jwtDecode from "jwt-decode";
 import "../../styles/ViewTherapist.css";
 import { useTranslation } from "react-i18next";
 import useAxios from "../../utils/useAxios";
-import { Tooltip, OverlayTrigger, Alert, Modal, Button } from "react-bootstrap";
+import {
+  Tooltip,
+  OverlayTrigger,
+  Alert,
+  Modal,
+  Button,
+  Collapse,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faVideo, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faVideo,
+  faStar,
+  faAngleDown,
+  faAngleUp,
+} from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import Appointments from "../therapistPages/Appointments";
 const swal = require("sweetalert2");
@@ -59,6 +72,9 @@ export default function ViewTherapist() {
   const [modalBody, setModalBody] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const [cancelAppointment, setCancleAppointment] = useState(null);
+  const [bookAppointment, setBookAppointment] = useState(null);
+  const [patientRecords, setPatientRecords] = useState([]);
+  const [openCollapse, setOpenCollapse] = useState(null);
 
   useEffect(() => {
     axios
@@ -207,6 +223,27 @@ export default function ViewTherapist() {
     }
   };
 
+  const patientRecordData = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/session/patient/${user_id}/record`
+      );
+      setPatientRecords(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching patient records:", error);
+    }
+  };
+  useEffect(() => {
+    patientRecordData();
+  }, []);
+
+  const filterPatientRecords = patientRecords.filter(
+    (patientRecord) => patientRecord.therapist_name === `${id}`
+  );
+
+  console.log(filterPatientRecords);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -247,7 +284,16 @@ export default function ViewTherapist() {
   //   history.push(`/bookappointment/${therapistid}`);
   // };
 
+  const handleBookAppointmentModal = (id) => {
+    setBookAppointment(id);
+    setModalTitle("Book Appointment");
+    setModalBody("Click save to book the appointment");
+    setShowSuccessModal(true);
+  };
+
   const handleBookAppointment = async (patientId, dateAvailable) => {
+
+    console.log(patientId, dateAvailable)
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/session/book-appointment/",
@@ -257,16 +303,18 @@ export default function ViewTherapist() {
         }
       );
       console.log(response.data);
-      setModalTitle("Appointment Booked");
-      setModalBody("Your appointment has been successfully booked!");
-      setShowSuccessModal(true);
+      setShowSuccessModal(false);
+      window.location.reload();
     } catch (error) {
       console.error("Error booking appointment:", error);
       // Handle error if needed
-      setModalTitle("Appointment Booked");
-      setModalBody("Faild to book appointment!");
+      setShowSuccessModal(true);
+      setModalTitle("Book Appointment");
+      setModalBody("Faild to book the appointment");
+      setBookAppointment("unable")
     }
   };
+
   const handleModalClose = () => {
     setShowSuccessModal(false);
     window.location.reload(); // Refresh the page
@@ -340,6 +388,10 @@ export default function ViewTherapist() {
   if (!selectedTherapist) {
     return <div>Loading...</div>;
   }
+
+  const handleToggle = (index) => {
+    setOpenCollapse(openCollapse === index ? null : index);
+  };
 
   return (
     <div className="view-therapist min-vh-100">
@@ -462,10 +514,14 @@ export default function ViewTherapist() {
             {showRateCard && (
               <div className="card card-custom-rating shadow mt-3">
                 <div className="card-body">
-                  <h5 className="card-title">{t("viewTherapist.rateTherapist")}</h5>
+                  <h5 className="card-title">
+                    {t("viewTherapist.rateTherapist")}
+                  </h5>
                   <form onSubmit={handleRateSubmit}>
                     <div className="form-group text-start d-block rate-group">
-                      <label htmlFor="description ">{t("viewTherapist.description")}</label>
+                      <label htmlFor="description ">
+                        {t("viewTherapist.description")}
+                      </label>
                       <textarea
                         id="description"
                         className="form-control"
@@ -503,6 +559,48 @@ export default function ViewTherapist() {
                 </div>
               </div>
             )}
+
+            <div className="row mt-5 ms-3">
+              <h5>Prescription from the therapist</h5>
+              {filterPatientRecords &&
+                filterPatientRecords.map((prescription, index) => (
+                  <div key={prescription.index}>
+                    {prescription.prescription ? (
+                      <div className="mb-3 d-flex flex-column">
+                        <h6>
+                          prescription ordered at {prescription.date}{" "}
+                          <Button
+                            className="btn btn-link"
+                            variant="link"
+                            onClick={() => handleToggle(index)}
+                            aria-expanded={openCollapse === index}
+                            aria-controls={`collapse-${index}`}
+                          >
+                            {openCollapse === index ? (
+                              <FontAwesomeIcon icon={faAngleUp} />
+                            ) : (
+                              <FontAwesomeIcon icon={faAngleDown} />
+                            )}
+                          </Button>
+                        </h6>
+
+                        <Collapse
+                          in={openCollapse === index}
+                          id={`collapse-${index}`}
+                        >
+                          <img
+                            src={prescription.prescription}
+                            alt=""
+                            width={320}
+                          />
+                        </Collapse>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                ))}
+            </div>
           </div>
 
           <div className="therapist-detail-info col col-auto col-lg-8 col-md-6 col-sm-6 card d-lg-flex flex-lg-column d-sm-block flex-sm-wrap border-0 pe-3 mt-5">
@@ -599,29 +697,40 @@ export default function ViewTherapist() {
                           <td>
                             {" "}
                             <OverlayTrigger
-                            overlay={
-                              <Tooltip>
-                                {isVideoButtonEnabled(appointment.date, appointment.start_time)
-                                  ? "Start Video"
-                                  : "Video will be available at the appointment time"}
-                              </Tooltip>
-                            }
-                          >
-                            <span className="d-inline-block">
-                              <button
-                                className="btn btn-outline-success"
-                                onClick={() => handleVideo(appointment.id)}
-                                disabled={!isVideoButtonEnabled(appointment.date, appointment.start_time)}
-                                style={{
-                                  pointerEvents: isVideoButtonEnabled(appointment.date, appointment.start_time)
-                                    ? "auto"
-                                    : "none",
-                                }}
-                              >
-                                <FontAwesomeIcon icon={faVideo} />
-                              </button>
-                            </span>
-                          </OverlayTrigger>
+                              overlay={
+                                <Tooltip>
+                                  {isVideoButtonEnabled(
+                                    appointment.date,
+                                    appointment.start_time
+                                  )
+                                    ? "Start Video"
+                                    : "Video will be available at the appointment time"}
+                                </Tooltip>
+                              }
+                            >
+                              <span className="d-inline-block">
+                                <button
+                                  className="btn btn-outline-success"
+                                  onClick={() => handleVideo(appointment.id)}
+                                  disabled={
+                                    !isVideoButtonEnabled(
+                                      appointment.date,
+                                      appointment.start_time
+                                    )
+                                  }
+                                  style={{
+                                    pointerEvents: isVideoButtonEnabled(
+                                      appointment.date,
+                                      appointment.start_time
+                                    )
+                                      ? "auto"
+                                      : "none",
+                                  }}
+                                >
+                                  <FontAwesomeIcon icon={faVideo} />
+                                </button>
+                              </span>
+                            </OverlayTrigger>
                           </td>
                           <td>
                             <button
@@ -643,7 +752,9 @@ export default function ViewTherapist() {
               )}
             </div>
             <div className="container row mt-4 mb-4 p-3 shadow">
-              <h4 className=" mt-3">{t("viewTherapist.therapistAvailability")}</h4>
+              <h4 className=" mt-3">
+                {t("viewTherapist.therapistAvailability")}
+              </h4>
               {availability.length > 0 ? (
                 <div className="table-responsive ms-3 mt-3">
                   <table className="table table-striped table-bordered table-hover shadow">
@@ -671,34 +782,43 @@ export default function ViewTherapist() {
                           ? "You already have an appointment."
                           : " ";
 
-                      return (
-                        <tr key={`${slot.date}-${slot.start_time}`}>
-                          <td>{moment(slot.date).format("DD MMM YYYY")}</td>
-                          <td>{moment(slot.start_time, "HH:mm").format("h:mm A")}</td>
-                          <td>{moment(slot.end_time, "HH:mm").format("h:mm A")}</td>
-                          <td>
-                          <OverlayTrigger
-                            placement="top"
-                            overlay={renderTooltip(disabledMessage)}
-                          >
-                            <span>
-                              {hasPaid ?
-                              <button
-                              className="btn btn-primary btn-primary-book"
-                              onClick={() => handleBookAppointment(user_id, slot.id)}
-                              disabled={hasFutureAppointment}
-                            >
-                              {t("viewTherapist.bookAppointment")}
-                            </button>
-                              : " "}
-                              
-                            </span>
-                          </OverlayTrigger>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
+                        return (
+                          <tr key={`${slot.date}-${slot.start_time}`}>
+                            <td>{moment(slot.date).format("DD MMM YYYY")}</td>
+                            <td>
+                              {moment(slot.start_time, "HH:mm").format(
+                                "h:mm A"
+                              )}
+                            </td>
+                            <td>
+                              {moment(slot.end_time, "HH:mm").format("h:mm A")}
+                            </td>
+                            <td>
+                              <OverlayTrigger
+                                placement="top"
+                                overlay={renderTooltip(disabledMessage)}
+                              >
+                                <span>
+                                  {hasPaid ? (
+                                    <button
+                                      className="btn btn-primary btn-primary-book"
+                                      onClick={() =>
+                                        handleBookAppointmentModal(slot.id)
+                                      }
+                                      disabled={hasFutureAppointment}
+                                    >
+                                      {t("viewTherapist.bookAppointment")}
+                                    </button>
+                                  ) : (
+                                    " "
+                                  )}
+                                </span>
+                              </OverlayTrigger>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
                   </table>
                 </div>
               ) : (
@@ -710,22 +830,32 @@ export default function ViewTherapist() {
       ) : (
         <h1>FORBIDDEN</h1>
       )}
-      <Modal show={showSuccessModal} onHide={handleModalClose}>
+      <Modal show={showSuccessModal} onHide={handleModalClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{modalBody}</Modal.Body>
         <Modal.Footer>
-          {cancelAppointment ? 
-          (<Button variant="outline-danger" onClick={()=>handleDeleteAppointmentSubmit(cancelAppointment)}>
-            {t("viewTherapist.delete")}
-          </Button>)
-          :
-          (<Button variant="primary" onClick={handleModalClose}>
-            {t("viewTherapist.close")}
-          </Button>)
-          }
-          
+        <Button variant="outline-secondary" onClick={handleModalClose}>
+              {t("viewTherapist.close")}
+            </Button>
+          {cancelAppointment && (
+            <Button
+              variant="outline-danger"
+              onClick={() => handleDeleteAppointmentSubmit(cancelAppointment)}
+            >
+              {t("viewTherapist.delete")}
+            </Button>)
+            }
+          {bookAppointment && (bookAppointment === "unable"? "":(
+            <Button
+              variant="outline-success"
+              onClick={() => handleBookAppointment(user_id, bookAppointment)}
+            >
+              save
+            </Button>)
+          ) }
+            
         </Modal.Footer>
       </Modal>
 
@@ -782,7 +912,6 @@ export default function ViewTherapist() {
           </Button>
         </Modal.Footer>
       </Modal>
-      
     </div>
   );
 }

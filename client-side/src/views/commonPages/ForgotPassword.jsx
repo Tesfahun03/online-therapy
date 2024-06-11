@@ -89,7 +89,7 @@ const ForgotPassword = () => {
                     required
                   />
                 </Form.Group>
-                <Button variant="primary" type="submit" className="w-100 mt-3">
+                <Button variant="outline-success" type="submit" className="w-50 mt-3 align-content-center" >
                 {t("forgotPassword.submit")}
                 </Button>
               </Form>

@@ -35,8 +35,14 @@ export default function Dashboard() {
   const [selectedLanguage, setSelectedLanguage] = useState("english");
   const [currentDateTime, setCurrentDateTime] = useState("");
   const [therapists, setTherapists] = useState([]);
+  const [reviewes, setReviewes] = useState([]);
+  const [viewReviews, setViewReviews] = useState(false)
   const axios = useAxios();
   const history = useHistory();
+
+  const handleViewReviews=()=>{
+    setViewReviews(prev => !prev)
+  }
 
   const therapistsData = async () => {
     try {
@@ -56,7 +62,25 @@ export default function Dashboard() {
   useEffect(() => {
     therapistsData();
   }, []);
-  console.log(therapists);
+
+  const ReviewData = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/session/therapist/${user_id}/reviews/`
+      );
+      if (response.status !== 200) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.data;
+      setReviewes(data);
+    } catch (error) {
+      console.error("There was a problem fetching the data", error);
+    }
+  };
+
+  useEffect(() => {
+    ReviewData();
+  }, []);
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem("preferredLanguage");
@@ -247,6 +271,23 @@ export default function Dashboard() {
     fetchAppointments();
   }, []);
 
+  const [availability, setAvailability] = useState([]);
+
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/session/therapist/${user_id}/availability/`
+        );
+        setAvailability(response.data);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+      }
+    };
+
+    fetchAvailability();
+  }, []);
+
   const handleAppointment = () => {
     history.push("/appointments-t");
   };
@@ -319,7 +360,7 @@ export default function Dashboard() {
                   </div>
                   <div className="col-auto text-start mt-2 ms-2">
                     <h5 className="fs-6">{t("dashboard.overallBooking")}</h5>
-                    <h5>1K</h5>
+                    <h5>{availability.length}</h5>
                   </div>
                 </div>
               </div>
@@ -330,7 +371,7 @@ export default function Dashboard() {
                   </div>
                   <div className="col-auto text-start mt-2 ms-2">
                     <h5 className="fs-6">{t("dashboard.appointmentsToday")}</h5>
-                    <h5>3</h5>
+                    <h5>{appointments.length}</h5>
                   </div>
                 </div>
               </div>
@@ -384,7 +425,7 @@ export default function Dashboard() {
                                     <FontAwesomeIcon icon={faMessage} />
                                   </button>
                                   {getCurrentTime() > appointment.end_time ? (
-                                      "Passed"
+                                    "Passed"
                                   ) : (
                                     <button
                                       className="btn btn-outline-success"
@@ -418,7 +459,7 @@ export default function Dashboard() {
           </div>
           <div className="col-lg-3 col-md-3 d-none d-lg-block min-vh-100 shadow">
             {therapists && therapists.profile && (
-              <div className="therapist-details-container">
+              <div className="therapist-details-container min-vh-100">
                 <div className="therapist-image">
                   <img src={therapists.profile.image} alt="Therapist" />
                 </div>
@@ -429,7 +470,7 @@ export default function Dashboard() {
                       therapists.profile.last_name}
                   </h3>
                   <p className="therapist-specialization">
-                    Clinical Psychologist
+                    {therapists.specialization}
                   </p>
                   <div className="rating-container">
                     {[...Array(5)].map((_, index) => (
@@ -446,9 +487,24 @@ export default function Dashboard() {
                         }`}
                       />
                     ))}
-                    <span className="rating">{therapists.rating}</span>
+                    <span className="rating">
+                      {therapists.rating.toFixed(1)}
+                    </span>
                   </div>
-                  <button className="view-reviews-btn">View Reviews</button>
+                  <button className="view-reviews-btn mb-2" onClick={handleViewReviews}>View Reviews</button>
+                  <div >
+                    {viewReviews && reviewes && reviewes.map((reviewe) => (
+                      <div className="mb-3 border p-2">
+                        <div className="d-flex align-items-center justify-content-between">
+                        <h6 className="fw-light">Anonymous</h6>
+                        <h6>Rate: {" "}{reviewe.rating}{"/5"}</h6>
+
+                        </div>
+                        
+                       { reviewe.description}
+                      </div>))}
+
+                  </div>
                 </div>
               </div>
             )}
