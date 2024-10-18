@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.http import Http404
 from rest_framework import generics, viewsets
 from rest_framework.permissions import AllowAny
 from .models import Comment, Post, Like
@@ -8,7 +8,7 @@ from django.dispatch import receiver
 
 # Create your views here.
 class PostList(viewsets.ModelViewSet):
-    queryset = Post.objects.all().order_by('-created_at')
+    queryset = Post.objects.all().order_by('created_at')
     serializer_class = PostSerializer
     permission_classes =[AllowAny]
 

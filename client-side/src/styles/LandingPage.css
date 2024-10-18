@@ -97,10 +97,19 @@
     align-items: center;
   }
   
-  .profile-img {
+  /* .profile-img {
     margin: 0 auto;
     border-radius: 50%;
+  } */
+  .profile-img {
+    width: 150px; /* Ensure the width is consistent */
+    height: 150px; /* Ensure the height is consistent */
+    object-fit: cover; /* Ensure the image covers the area */
+    border-radius: 50%; /* Optional: makes the image round */
+    display: block; /* Ensures proper alignment */
+    margin: 0 auto; /* Centers the image */
   }
+  
   
   .card-title-view {
     text-align: left; /* Adjust text alignment if needed */

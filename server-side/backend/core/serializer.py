@@ -120,7 +120,7 @@ class TherapistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Therapist
         fields =['profile', 'specialization', 'experience', 'licenses', 'religion', \
-                    'rating', 'paymentRate', 'totalBalance', 'withdrawableBalance']
+                    'rating', 'paymentRate', 'totalBalance', 'withdrawableBalance', 'is_verified']
 
     def create(self, validated_data):
         user_data = validated_data.pop('profile')

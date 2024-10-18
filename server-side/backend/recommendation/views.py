@@ -74,6 +74,6 @@ class TherapistRecommendation(ListAPIView):
 
         
         print("Filtered queryset:", queryset)
-        print('recommending for user id', user_id)
+        print('Reccommended for the user is of: ', user_id)
         return queryset
          

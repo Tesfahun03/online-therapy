@@ -11,6 +11,7 @@ import {
   Modal,
   Button,
   Collapse,
+  Spinner
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,9 +20,9 @@ import {
   faStar,
   faAngleDown,
   faAngleUp,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
-import Appointments from "../therapistPages/Appointments";
 const swal = require("sweetalert2");
 
 export default function ViewTherapist() {
@@ -75,6 +76,7 @@ export default function ViewTherapist() {
   const [bookAppointment, setBookAppointment] = useState(null);
   const [patientRecords, setPatientRecords] = useState([]);
   const [openCollapse, setOpenCollapse] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -293,7 +295,8 @@ export default function ViewTherapist() {
 
   const handleBookAppointment = async (patientId, dateAvailable) => {
 
-    console.log(patientId, dateAvailable)
+    setLoading(true);
+
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/session/book-appointment/",
@@ -304,6 +307,7 @@ export default function ViewTherapist() {
       );
       console.log(response.data);
       setShowSuccessModal(false);
+      setLoading(false); 
       window.location.reload();
     } catch (error) {
       console.error("Error booking appointment:", error);
@@ -311,7 +315,7 @@ export default function ViewTherapist() {
       setShowSuccessModal(true);
       setModalTitle("Book Appointment");
       setModalBody("Faild to book the appointment");
-      setBookAppointment("unable")
+      setBookAppointment("unable");
     }
   };
 
@@ -345,7 +349,7 @@ export default function ViewTherapist() {
 
   console.log(hasPaid);
 
-  const thirtyDaysCheck = relationChecker.some((relation) => {
+  const thirtyDaysCheck = relationChecker?.some((relation) => {
     if (relation.patient === user_id && relation.status === "success") {
       const relationDate = new Date(relation.created_at);
       const today = new Date();
@@ -588,11 +592,20 @@ export default function ViewTherapist() {
                           in={openCollapse === index}
                           id={`collapse-${index}`}
                         >
-                          <img
-                            src={prescription.prescription}
-                            alt=""
-                            width={320}
-                          />
+                          <div>
+                            <img
+                              src={prescription.prescription}
+                              alt="Prescription"
+                              width={320}
+                            />
+                            <a
+                              href={prescription.prescription}
+                              download={`prescription-${index}.jpg`}
+                              className="btn btn-outline-secondary mt-2"
+                            >
+                              Download Prescription <FontAwesomeIcon icon={faDownload}/>
+                            </a>
+                          </div>
                         </Collapse>
                       </div>
                     ) : (
@@ -830,34 +843,44 @@ export default function ViewTherapist() {
       ) : (
         <h1>FORBIDDEN</h1>
       )}
-      <Modal show={showSuccessModal} onHide={handleModalClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{modalBody}</Modal.Body>
-        <Modal.Footer>
-        <Button variant="outline-secondary" onClick={handleModalClose}>
+       <Modal show={showSuccessModal} onHide={handleModalClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>{modalTitle}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {loading ? (
+              <div className="d-flex justify-content-center">
+                <Spinner animation="border" />
+              </div>
+            ) : (
+              modalBody
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="outline-secondary" onClick={handleModalClose} disabled={loading}>
               {t("viewTherapist.close")}
             </Button>
-          {cancelAppointment && (
-            <Button
-              variant="outline-danger"
-              onClick={() => handleDeleteAppointmentSubmit(cancelAppointment)}
-            >
-              {t("viewTherapist.delete")}
-            </Button>)
-            }
-          {bookAppointment && (bookAppointment === "unable"? "":(
-            <Button
-              variant="outline-success"
-              onClick={() => handleBookAppointment(user_id, bookAppointment)}
-            >
-              save
-            </Button>)
-          ) }
-            
-        </Modal.Footer>
-      </Modal>
+            {cancelAppointment && !loading && (
+              <Button
+                variant="outline-danger"
+                onClick={() => handleDeleteAppointmentSubmit(cancelAppointment)}
+              >
+                {t("viewTherapist.delete")}
+              </Button>
+            )}
+            {bookAppointment && !loading &&
+              (bookAppointment === "unable" ? (
+                ""
+              ) : (
+                <Button
+                  variant="outline-success"
+                  onClick={() => handleBookAppointment(user_id, bookAppointment)}
+                >
+                  Save
+                </Button>
+              ))}
+          </Modal.Footer>
+        </Modal>
 
       <Modal show={showPaymentModal} onHide={handlePaymentModalClose} centered>
         <Modal.Header closeButton>

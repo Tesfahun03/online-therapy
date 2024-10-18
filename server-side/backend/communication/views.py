@@ -158,6 +158,7 @@ class TherapistAvailabilityViewSet(viewsets.ModelViewSet):
             queryset = queryset.exclude(pk__in=past_availability.values_list('pk', flat=True))
 
             return queryset
+        
     
     def create(self, request, *args, **kwargs):
         # Ensure date is not in the past

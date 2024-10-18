@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef  } from "react";
 import useAxios from "../../utils/useAxios";
 import { useTranslation } from "react-i18next";
 import jwtDecode from "jwt-decode";
@@ -61,6 +61,8 @@ export default function LandingPage() {
   const token = localStorage.getItem("authTokens");
   const decoded = jwtDecode(token);
   const history = useHistory();
+
+  const therapistSectionRef = useRef(null);
 
   //Get user data
   const first_name = decoded.first_name;
@@ -177,8 +179,9 @@ export default function LandingPage() {
   }, [user_id]);
 
   const filteredTherapists = therapists.filter(
-    (therapist) => therapist.paymentRate > 0
+    (therapist) => therapist.paymentRate > 0 && therapist.is_verified
   );
+  console.log(filteredTherapists)
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
@@ -243,36 +246,32 @@ export default function LandingPage() {
     return moment().isSameOrAfter(videoAvailableTime);
   };
 
-  // Pagination logic
   const indexOfLastTherapist = currentPage * therapistsPerPage;
   const indexOfFirstTherapist = indexOfLastTherapist - therapistsPerPage;
-  const currentTherapists = therapists.slice(
+  const currentTherapists = filteredTherapists.slice(
     indexOfFirstTherapist,
     indexOfLastTherapist
   );
 
-  const totalPages = Math.ceil(therapists.length / therapistsPerPage);
+  const totalPages = Math.ceil(filteredTherapists.length / therapistsPerPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  useEffect(() => {
+    if (therapistSectionRef.current) {
+      therapistSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [currentPage]);
+
+  const changePage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   const nextPage = () => {
-    setCurrentPage((prevPage) => {
-      const nextPage = prevPage + 1;
-      window.scrollTo(0, 0); // Scroll to top
-      return nextPage;
-    });
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
   const prevPage = () => {
-    setCurrentPage((prevPage) => {
-      const previousPage = prevPage - 1;
-      window.scrollTo(0, 0); // Scroll to top
-      return previousPage;
-    });
-  };
-
-  const handlePageClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo(0, 0); // Scroll to top
+    setCurrentPage((prevPage) => prevPage - 1);
   };
 
   return (
@@ -460,7 +459,7 @@ export default function LandingPage() {
                         {therapist.rating.toFixed(1)}
                       </span>
                     </div>
-                    <div className="text-center">
+                    <div className="text-center" >
                       <img
                         src={therapist.profile.image}
                         className="profile-img img-fluid"
@@ -485,6 +484,7 @@ export default function LandingPage() {
                         onClick={() =>
                           handleTherapistSelect(therapist.profile.user.id)
                         }
+                        ref={therapistSectionRef}
                       >
                         <FontAwesomeIcon icon={faArrowCircleRight} />
                       </Button>
@@ -495,26 +495,11 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+      <div >
 
-      {/* <div className="feeling text-center">
-        <h2 className="mb-3 mt-5">How You feel Today?</h2>
-        <div className="how-you-feel row row-auto d-flex m-0 p-0">
-          <div className="emoji col col-4 col-auto">
-            <h3>😊</h3>
-            <h4>Happy</h4>
-          </div>
-          <div className="emoji col col-4 col-auto">
-            <h3>🙂</h3>
-            <h4>Normal</h4>
-          </div>
-          <div className="emoji col col-4 col-auto">
-            <h3>😐</h3>
-            <h4>Sad</h4>
-          </div>
-        </div>
-      </div> */}
+      </div>
 
-      <div className="ourTherapist mt-4">
+      <div  className="ourTherapist mt-4">
         <h3 className="text-center">{t("landingPage.ourTherapist")}</h3>
         <div className="container row mx-auto justify-content-start">
           {currentTherapists &&
@@ -535,8 +520,8 @@ export default function LandingPage() {
                       src={therapist.profile.image}
                       className="profile-img img-fluid"
                       alt="Doctor Image"
-                      width="150"
-                      height="150"
+                      width={150}
+                      height={150}
                     />
                     <div className="d-flex align-items-center justify-content-between px-2">
                       <div>
@@ -563,11 +548,12 @@ export default function LandingPage() {
               </div>
             ))}
         </div>
-        <div className="d-flex justify-content-center mt-4">
+
+        <div className="d-flex justify-content-center m-4">
           {pageNumbers.map((number) => (
             <Button
               key={number}
-              onClick={() => handlePageClick(number)}
+              onClick={() => changePage(number)}
               disabled={currentPage === number}
               className={`me-2 ${currentPage === number ? "active" : ""}`}
             >
@@ -575,7 +561,7 @@ export default function LandingPage() {
             </Button>
           ))}
         </div>
-        <div className="d-flex justify-content-between mt-4">
+        <div className="d-flex justify-content-between m-5">
           <Button onClick={prevPage} disabled={currentPage === 1}>
             Previous
           </Button>
@@ -588,7 +574,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <Modal show={showModal} onHide={handleModalClose}>
+      <Modal show={showModal} onHide={handleModalClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
@@ -602,7 +588,7 @@ export default function LandingPage() {
               {t("landingPage.delete")}
             </Button>
           ) : (
-            <Button variant="primary" onClick={handleModalClose}>
+            <Button variant="outline-secondary" onClick={handleModalClose}>
               {t("landingPage.close")}
             </Button>
           )}
